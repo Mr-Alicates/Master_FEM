@@ -9,16 +9,14 @@ namespace POC3D.ViewModel
 {
     public class MainViewModel
     {
-        private CameraViewModel _cameraViewModel;
-        private BodyViewModel _bodyViewModel;
-
         public MainViewModel()
         {
-            _cameraViewModel = new CameraViewModel();
-            _bodyViewModel = new BodyViewModel();
+            Camera = new CameraViewModel();
+            Problem = new ProblemViewModel();
         }
 
-        public CameraViewModel Camera => _cameraViewModel;
-        public BodyViewModel Body => _bodyViewModel;
+        public CameraViewModel Camera { get; }
+
+        public ProblemViewModel Problem { get; }
     }    
 }

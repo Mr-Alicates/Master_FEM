@@ -55,10 +55,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ViewModel\BodyViewModel.cs" />
+    <Compile Include="Model\ModelBarElement.cs" />
+    <Compile Include="Model\IModelElement.cs" />
+    <Compile Include="Model\ModelNode.cs" />
+    <Compile Include="Model\ModelPoint.cs" />
+    <Compile Include="Model\ModelProblem.cs" />
     <Compile Include="ViewModel\CameraViewModel.cs" />
     <Compile Include="ViewModel\ElementViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\NodeViewModel.cs" />
+    <Compile Include="ViewModel\ProblemViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

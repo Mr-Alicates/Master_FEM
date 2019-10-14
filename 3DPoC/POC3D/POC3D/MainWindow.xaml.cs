@@ -31,15 +31,39 @@ namespace POC3D
             MainViewModel = new MainViewModel();
 
             MainViewModel.Camera.OnCameraViewModelChanged += OnCameraViewModelChanged;
-            MainViewModel.Body.Elements.CollectionChanged += OnBodyViewModelChanged;
+            MainViewModel.Problem.Nodes.CollectionChanged += RedrawProblem;
+            MainViewModel.Problem.Elements.CollectionChanged += RedrawProblem;
 
             MainViewModel.Camera.Position = new Point3D(-100, 0, 0);
-            MainViewModel.Body.Elements.Add(new ElementViewModel(new Point3D(0, 10, 0), 5));
-            MainViewModel.Body.Elements.Add(new ElementViewModel(new Point3D(0, 20, 0), 5));
-            MainViewModel.Body.Elements.Add(new ElementViewModel(new Point3D(0, 30, 0), 5));
+
+            var node1 = MainViewModel.Problem.AddNode(new Point3D(-10, -10, -10)).SetAsFixed();
+            var node2 = MainViewModel.Problem.AddNode(new Point3D(10, -10, -10)).SetAsFixed();
+            var node3 = MainViewModel.Problem.AddNode(new Point3D(10, 10, -10)).SetAsFixed();
+            var node4 = MainViewModel.Problem.AddNode(new Point3D(-10, 10, -10)).SetAsFixed();
+
+            var node5 = MainViewModel.Problem.AddNode(new Point3D(-10, -10, 10)).SetAsFixed();
+            var node6 = MainViewModel.Problem.AddNode(new Point3D(10, -10, 10)).SetAsFixed();
+            var node7 = MainViewModel.Problem.AddNode(new Point3D(10, 10, 10)).SetAsFixed();
+            var node8 = MainViewModel.Problem.AddNode(new Point3D(-10, 10, 10)).SetAsFixed();
+
+
+            MainViewModel.Problem.AddBarElement(node1, node2);
+            MainViewModel.Problem.AddBarElement(node2, node3);
+            MainViewModel.Problem.AddBarElement(node3, node4);
+            MainViewModel.Problem.AddBarElement(node4, node1);
+
+            MainViewModel.Problem.AddBarElement(node1, node5);
+            MainViewModel.Problem.AddBarElement(node2, node6);
+            MainViewModel.Problem.AddBarElement(node3, node7);
+            MainViewModel.Problem.AddBarElement(node4, node8);
+
+            MainViewModel.Problem.AddBarElement(node5, node6);
+            MainViewModel.Problem.AddBarElement(node6, node7);
+            MainViewModel.Problem.AddBarElement(node7, node8);
+            MainViewModel.Problem.AddBarElement(node8, node5);
         }
 
-        private void OnBodyViewModelChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void RedrawProblem(object sender, NotifyCollectionChangedEventArgs e)
         {
             //Remove all the elements
             Model3DGroup.Children.Clear();
@@ -51,64 +75,18 @@ namespace POC3D
             Model3DGroup.Children.Add(ambientLight);
             Model3DGroup.Children.Add(directionalLight);
 
-            foreach (var element in MainViewModel.Body.Elements)
+            foreach (var node in MainViewModel.Problem.Nodes)
             {
-                var cube = BuildCube3D(element);
-                Model3DGroup.Children.Add(cube);
+                Model3DGroup.Children.Add(node.Geometry);
             }
 
-        }
-
-        private GeometryModel3D BuildCube3D(ElementViewModel elementViewModel)
-        {
-            GeometryModel3D result = new GeometryModel3D();
-            result.Material = new DiffuseMaterial(Brushes.Red);
-
-            result.Geometry = new MeshGeometry3D()
+            foreach (var element in MainViewModel.Problem.Elements)
             {
-                Positions = new Point3DCollection()
-                {
-                    elementViewModel.Center + new Vector3D(-1, -1, -1) * elementViewModel.HalfSize,
-                    elementViewModel.Center + new Vector3D(1, -1, -1) * elementViewModel.HalfSize,
-                    elementViewModel.Center + new Vector3D(1, 1, -1) * elementViewModel.HalfSize,
-                    elementViewModel.Center + new Vector3D(-1, 1, -1) * elementViewModel.HalfSize,
-
-                    elementViewModel.Center + new Vector3D(-1, -1, 1) * elementViewModel.HalfSize,
-                    elementViewModel.Center + new Vector3D(1, -1, 1) * elementViewModel.HalfSize,
-                    elementViewModel.Center + new Vector3D(1, 1, 1) * elementViewModel.HalfSize,
-                    elementViewModel.Center + new Vector3D(-1, 1, 1) * elementViewModel.HalfSize,
-                },
-                TriangleIndices = new Int32Collection()
-                {
-                    //Bottom
-                    0,3,1,
-                    3,2,1,
-
-                    //Top
-                    7,4,5,
-                    7,5,6,
-
-                    //Left
-                    0,5,4,
-                    0,1,5,
-
-                    //Right
-                    7,6,3,
-                    3,6,2,
-
-                    //Back
-                    1,2,5,
-                    5,2,6,
-
-                    //Front
-                    7,3,4,
-                    4,3,0,
-                }
-            };
-
-
-            return result;
+                Model3DGroup.Children.Add(element.Geometry);
+            }
         }
+
+
 
         private void OnCameraViewModelChanged(object sender, EventArgs e)
         {

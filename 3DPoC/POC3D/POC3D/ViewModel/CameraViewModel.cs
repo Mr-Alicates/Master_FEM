@@ -11,47 +11,46 @@ namespace POC3D.ViewModel
     {
         public CameraViewModel()
         {
-            upDirection = new Vector3D(0, 0, 1);
-            lookDirectionX = 10;
-            lookDirectionY = 0;
+            UpDirection = new Vector3D(0, 0, 1);
+            _lookDirectionX = 10;
+            _lookDirectionY = 0;
         }
 
         public EventHandler OnCameraViewModelChanged;
 
-        private Point3D position;
-        private Vector3D upDirection;
-        private double lookDirectionX;
-        private double lookDirectionY;
+        private Point3D _position;
+        private double _lookDirectionX;
+        private double _lookDirectionY;
 
         public Point3D Position
         {
-            get => position;
+            get => _position;
             set
             {
-                position = value;
+                _position = value;
                 OnCameraViewModelChanged.Invoke(this, null);
             }
         }
 
-        public Vector3D UpDirection => upDirection;
+        public Vector3D UpDirection { get; }
 
         //Z is always the same as the position because we dont have any pitch for now
-        public Vector3D LookDirection => new Vector3D(lookDirectionX, lookDirectionY, 0);
+        public Vector3D LookDirection => new Vector3D(_lookDirectionX, _lookDirectionY, 0);
 
         public void RotateCounterClockwise()
         {
             int deltaX = 0;
             int deltaY = 0;
 
-            if (lookDirectionX >= 0)
+            if (_lookDirectionX >= 0)
             {
-                if (lookDirectionY == 10)
+                if (_lookDirectionY == 10)
                 {
                     // 2nd quarter
                     deltaX = -1;
                     deltaY = -1;
                 }
-                else if (lookDirectionY >= 0)
+                else if (_lookDirectionY >= 0)
                 {
                     // 1st quarter
                     deltaX = -1;
@@ -66,7 +65,7 @@ namespace POC3D.ViewModel
             }
             else
             {
-                if (lookDirectionY > 0)
+                if (_lookDirectionY > 0)
                 {
                     //2nd quarter
                     deltaX = -1;
@@ -80,8 +79,8 @@ namespace POC3D.ViewModel
                 }
             }
 
-            lookDirectionX += deltaX;
-            lookDirectionY += deltaY;
+            _lookDirectionX += deltaX;
+            _lookDirectionY += deltaY;
             OnCameraViewModelChanged.Invoke(this, null);
         }
 
@@ -90,15 +89,15 @@ namespace POC3D.ViewModel
             int deltaX = 0;
             int deltaY = 0;
 
-            if (lookDirectionX >= 0)
+            if (_lookDirectionX >= 0)
             {
-                if (lookDirectionY == -10)
+                if (_lookDirectionY == -10)
                 {
                     // 3rd quarter
                     deltaX = -1;
                     deltaY = +1;
                 }
-                else if (lookDirectionY >= 0)
+                else if (_lookDirectionY >= 0)
                 {
                     // 1st quarter
                     deltaX = +1;
@@ -113,7 +112,7 @@ namespace POC3D.ViewModel
             }
             else
             {
-                if (lookDirectionY > 0)
+                if (_lookDirectionY > 0)
                 {
                     //2nd quarter
                     deltaX = +1;
@@ -127,8 +126,8 @@ namespace POC3D.ViewModel
                 }
             }
 
-            lookDirectionX += deltaX;
-            lookDirectionY += deltaY;
+            _lookDirectionX += deltaX;
+            _lookDirectionY += deltaY;
             OnCameraViewModelChanged.Invoke(this, null);
         }
 
@@ -136,7 +135,7 @@ namespace POC3D.ViewModel
 
         private Vector3D _unaryUp => new Vector3D(0, 0, 1);
 
-        private Vector3D _unaryLeft => new Vector3D(-lookDirectionY, lookDirectionX, 0);
+        private Vector3D _unaryLeft => new Vector3D(-_lookDirectionY, _lookDirectionX, 0);
 
         private Vector3D _unaryForward
         {

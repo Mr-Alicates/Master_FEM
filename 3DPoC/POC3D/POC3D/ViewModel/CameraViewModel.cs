@@ -11,16 +11,27 @@ namespace POC3D.ViewModel
     {
         public CameraViewModel()
         {
-            UpDirection = new Vector3D(0, 0, 1);
-            _lookDirectionX = 180;
-            _lookDirectionY = 0;
+            _upDirection = new Vector3D(0, 0, 1);
         }
 
         public EventHandler OnCameraViewModelChanged;
 
+        private Vector3D _upDirection;
         private Point3D _position;
-        private double _lookDirectionX;
-        private double _lookDirectionY;
+        private int _cameraRotation;
+        private int _rotationY;
+        private int _rotationZ;
+
+
+        public int CameraRotation
+        {
+            get => _cameraRotation;
+            set
+            {
+                _cameraRotation = value;
+                OnCameraViewModelChanged.Invoke(this, null);
+            }
+        }
 
         public Point3D Position
         {
@@ -32,114 +43,99 @@ namespace POC3D.ViewModel
             }
         }
 
-        public Vector3D UpDirection { get; }
+        public Vector3D UpDirection => _upDirection;
 
-        //Z is always the same as the position because we dont have any pitch for now
-        public Vector3D LookDirection => new Vector3D(_lookDirectionX, _lookDirectionY, 0);
-
-        public void RotateLeft()
+        public Vector3D LookDirection
         {
-            int deltaX = 0;
-            int deltaY = 0;
-
-            if (_lookDirectionX >= 0)
+            get
             {
-                if (_lookDirectionY == 180)
-                {
-                    // 2nd quarter
-                    deltaX = -1;
-                    deltaY = -1;
-                }
-                else if (_lookDirectionY >= 0)
-                {
-                    // 1st quarter
-                    deltaX = -1;
-                    deltaY = +1;
-                }
-                else
-                {
-                    // 4th quarter
-                    deltaX = +1;
-                    deltaY = +1;
-                }
-            }
-            else
-            {
-                if (_lookDirectionY > 0)
-                {
-                    //2nd quarter
-                    deltaX = -1;
-                    deltaY = -1;
-                }
-                else
-                {
-                    //3rd quarter
-                    deltaX = +1;
-                    deltaY = -1;
-                }
-            }
+                Vector3D vector = new Vector3D(1, 0, 0);
 
-            _lookDirectionX += deltaX;
-            _lookDirectionY += deltaY;
-            OnCameraViewModelChanged.Invoke(this, null);
+                Transform3DGroup transformGroup = new Transform3DGroup()
+                {
+                    Children = new Transform3DCollection()
+                    {
+                        new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0,1,0), _rotationY)),
+                        new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0,0,1), _rotationZ)),
+                    }
+                };
+
+                var transformedVector = transformGroup.Transform(vector);
+                _upDirection.Normalize();
+
+                return transformedVector;
+            }
         }
 
-        public void RotateRight()
+        public void RollUp()
         {
-            int deltaX = 0;
-            int deltaY = 0;
+            CameraRotation = CameraRotation + 5;
+            OnCameraViewModelChanged.Invoke(null, null);
+        }
 
-            if (_lookDirectionX >= 0)
-            {
-                if (_lookDirectionY == -180)
-                {
-                    // 3rd quarter
-                    deltaX = -1;
-                    deltaY = +1;
-                }
-                else if (_lookDirectionY >= 0)
-                {
-                    // 1st quarter
-                    deltaX = +1;
-                    deltaY = -1;
-                }
-                else
-                {
-                    // 4th quarter
-                    deltaX = -1;
-                    deltaY = -1;
-                }
-            }
-            else
-            {
-                if (_lookDirectionY > 0)
-                {
-                    //2nd quarter
-                    deltaX = +1;
-                    deltaY = +1;
-                }
-                else
-                {
-                    //3rd quarter
-                    deltaX = -1;
-                    deltaY = +1;
-                }
-            }
+        public void RollDown()
+        {
+            CameraRotation = CameraRotation - 5;
+            OnCameraViewModelChanged.Invoke(null, null);
+        }
 
-            _lookDirectionX += deltaX;
-            _lookDirectionY += deltaY;
-            OnCameraViewModelChanged.Invoke(this, null);
+        public void YawUp()
+        {
+            _rotationZ = _rotationZ + 5;
+            OnCameraViewModelChanged.Invoke(null, null);
+        }
+
+        public void YawDown()
+        {
+            _rotationZ = _rotationZ - 5;
+            OnCameraViewModelChanged.Invoke(null, null);
+        }
+        
+        public void PitchUp()
+        {
+            _rotationY = _rotationY + 5;
+            OnCameraViewModelChanged.Invoke(null, null);
+        }
+
+        public void PitchDown()
+        {
+            _rotationY = _rotationY - 5;
+            OnCameraViewModelChanged.Invoke(null, null);
         }
 
         #region Movement
 
-        private Vector3D _unaryUp => new Vector3D(0, 0, 1);
-        
+        private Vector3D _unaryUp
+        {
+            get
+            {
+                Transform3DGroup transformGroup = new Transform3DGroup()
+                {
+                    Children = new Transform3DCollection()
+                    {
+                        new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0,1,0), -90)),
+                    }
+                };
+
+                var up = transformGroup.Transform(_unaryForward);
+                up.Normalize();
+                return up;
+            }
+        }
+
         private Vector3D _unaryLeft
         {
             get
             {
-                var left = new Vector3D(-_lookDirectionY, _lookDirectionX, 0);
+                Transform3DGroup transformGroup = new Transform3DGroup()
+                {
+                    Children = new Transform3DCollection()
+                    {
+                        new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0,0,1), 90)),
+                    }
+                };
+
+                var left = transformGroup.Transform(_unaryForward);
                 left.Normalize();
                 return left;
             }

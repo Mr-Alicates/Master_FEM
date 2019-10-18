@@ -93,14 +93,24 @@ namespace POC3D
 
                 var currentCursorPosition = e.GetPosition(this);
 
-                if(currentCursorPosition.X < _clickedPoint.X)
+                if (currentCursorPosition.X < _clickedPoint.X)
                 {
-                    MainViewModel.Camera.RotateLeft();
+                    MainViewModel.Camera.YawUp();
                 }
 
-                if(currentCursorPosition.X > _clickedPoint.X)
+                if (currentCursorPosition.X > _clickedPoint.X)
                 {
-                    MainViewModel.Camera.RotateRight();
+                    MainViewModel.Camera.YawDown();
+                }
+
+                if (currentCursorPosition.Y < _clickedPoint.Y)
+                {
+                    MainViewModel.Camera.PitchUp();
+                }
+
+                if (currentCursorPosition.Y > _clickedPoint.Y)
+                {
+                    MainViewModel.Camera.PitchDown();
                 }
             }
 
@@ -181,21 +191,62 @@ namespace POC3D
         private void OnCameraViewModelChanged(object sender, EventArgs e)
         {
             Camera.Position = MainViewModel.Camera.Position;
-            Camera.LookDirection = MainViewModel.Camera.LookDirection;
             Camera.UpDirection = MainViewModel.Camera.UpDirection;
+            Camera.LookDirection = MainViewModel.Camera.LookDirection;
+
+
+            Transform3DGroup transformGroup = new Transform3DGroup()
+            {
+                Children = new Transform3DCollection()
+                    {
+                        new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(1,0,0), MainViewModel.Camera.CameraRotation))
+                    }
+            };
+
+            Model3DGroup.Transform = transformGroup;
         }
 
         private void Viewport3D_KeyDown(object sender, KeyEventArgs e)
         {
-            switch (e.Key)
+            if(Keyboard.IsKeyDown(Key.LeftShift))
             {
+                CheckRotation(e.Key);
+            }
+            else
+            {
+                CheckMovement(e.Key);
+            }
+        }
+
+        private void CheckRotation(Key key)
+        {
+            switch (key)
+            {
+                case Key.A:
+                    MainViewModel.Camera.YawUp();
+                    break;
+                case Key.D:
+                    MainViewModel.Camera.YawDown();
+                    break;
+                case Key.S:
+                    MainViewModel.Camera.PitchUp();
+                    break;
+                case Key.W:
+                    MainViewModel.Camera.PitchDown();
+                    break;
                 case Key.Q:
-                    MainViewModel.Camera.RotateLeft();
+                    MainViewModel.Camera.RollUp();
                     break;
                 case Key.E:
-                    MainViewModel.Camera.RotateRight();
+                    MainViewModel.Camera.RollDown();
                     break;
+            }
+        }
 
+        private void CheckMovement(Key key)
+        {
+            switch (key)
+            {
                 case Key.A:
                     MainViewModel.Camera.MoveLeft();
                     break;
@@ -208,11 +259,10 @@ namespace POC3D
                 case Key.S:
                     MainViewModel.Camera.MoveBackwards();
                     break;
-
-                case Key.Space:
+                case Key.R:
                     MainViewModel.Camera.MoveUp();
                     break;
-                case Key.C:
+                case Key.F:
                     MainViewModel.Camera.MoveDown();
                     break;
             }

@@ -70,10 +70,20 @@ namespace POC3D
 
         private Point _clickedPoint;
         private MouseButton? _pressedButton;
-                
+        private DateTime _lastButtonPress;
+
+        private TimeSpan GetTimeSinceLastMovement => DateTime.Now - _lastButtonPress;
+        
         private void mainWindow_MouseMove(object sender, MouseEventArgs e)
         {
-            if(_pressedButton == MouseButton.Middle)
+            if (GetTimeSinceLastMovement.TotalMilliseconds < 50)
+            {
+                return;
+            }
+
+            _lastButtonPress = DateTime.Now;
+
+            if (_pressedButton == MouseButton.Middle)
             {
                 if(e.MiddleButton == MouseButtonState.Released)
                 {
@@ -85,24 +95,49 @@ namespace POC3D
 
                 if(currentCursorPosition.X < _clickedPoint.X)
                 {
-                    MainViewModel.Camera.RotateCounterClockwise();
+                    MainViewModel.Camera.RotateLeft();
                 }
 
                 if(currentCursorPosition.X > _clickedPoint.X)
                 {
-                    MainViewModel.Camera.RotateClockwise();
+                    MainViewModel.Camera.RotateRight();
+                }
+            }
+
+            if (_pressedButton == MouseButton.Right)
+            {
+                if (e.RightButton == MouseButtonState.Released)
+                {
+                    _pressedButton = null;
+                    return;
+                }
+                
+                var currentCursorPosition = e.GetPosition(this);
+
+                if (currentCursorPosition.X < _clickedPoint.X)
+                {
+                    MainViewModel.Camera.MoveLeft();
+                }
+
+                if (currentCursorPosition.X > _clickedPoint.X)
+                {
+                    MainViewModel.Camera.MoveRight();
+                }
+
+                if (currentCursorPosition.Y < _clickedPoint.Y)
+                {
+                    MainViewModel.Camera.MoveUp();
+                }
+
+                if (currentCursorPosition.Y > _clickedPoint.Y)
+                {
+                    MainViewModel.Camera.MoveDown();
                 }
             }
         }
 
         private void mainViewport_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if(_pressedButton != null)
-            {
-                //If there is a button pressed, ignore the new pressed button
-                return;
-            }
-
             _clickedPoint = e.GetPosition(this);
             _pressedButton = e.ChangedButton;
         }
@@ -155,10 +190,10 @@ namespace POC3D
             switch (e.Key)
             {
                 case Key.Q:
-                    MainViewModel.Camera.RotateCounterClockwise();
+                    MainViewModel.Camera.RotateLeft();
                     break;
                 case Key.E:
-                    MainViewModel.Camera.RotateClockwise();
+                    MainViewModel.Camera.RotateRight();
                     break;
 
                 case Key.A:

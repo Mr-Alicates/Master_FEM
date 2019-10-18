@@ -37,7 +37,7 @@ namespace POC3D.ViewModel
         //Z is always the same as the position because we dont have any pitch for now
         public Vector3D LookDirection => new Vector3D(_lookDirectionX, _lookDirectionY, 0);
 
-        public void RotateCounterClockwise()
+        public void RotateLeft()
         {
             int deltaX = 0;
             int deltaY = 0;
@@ -84,7 +84,7 @@ namespace POC3D.ViewModel
             OnCameraViewModelChanged.Invoke(this, null);
         }
 
-        public void RotateClockwise()
+        public void RotateRight()
         {
             int deltaX = 0;
             int deltaY = 0;
@@ -134,8 +134,16 @@ namespace POC3D.ViewModel
         #region Movement
 
         private Vector3D _unaryUp => new Vector3D(0, 0, 1);
-
-        private Vector3D _unaryLeft => new Vector3D(-_lookDirectionY, _lookDirectionX, 0);
+        
+        private Vector3D _unaryLeft
+        {
+            get
+            {
+                var left = new Vector3D(-_lookDirectionY, _lookDirectionX, 0);
+                left.Normalize();
+                return left;
+            }
+        }
 
         private Vector3D _unaryForward
         {

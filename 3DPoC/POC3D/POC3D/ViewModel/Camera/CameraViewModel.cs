@@ -5,45 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Media3D;
 
-namespace POC3D.ViewModel
+namespace POC3D.ViewModel.Camera
 {
-    public class CameraViewModel
+    public class CameraViewModel : BaseCameraViewModel
     {
-        public CameraViewModel()
-        {
-            _upDirection = new Vector3D(0, 0, 1);
-        }
-
-        public EventHandler OnCameraViewModelChanged;
-
-        private Vector3D _upDirection;
-        private Point3D _position;
-        private int _cameraRotation;
-        private int _rotationY;
-        private int _rotationZ;
-
-
-        public int CameraRotation
-        {
-            get => _cameraRotation;
-            set
-            {
-                _cameraRotation = value;
-                OnCameraViewModelChanged.Invoke(this, null);
-            }
-        }
-
-        public Point3D Position
-        {
-            get => _position;
-            set
-            {
-                _position = value;
-                OnCameraViewModelChanged.Invoke(this, null);
-            }
-        }
-
-        public Vector3D UpDirection => _upDirection;
+        private const int RotationDelta = 1;
 
         public Vector3D LookDirection
         {
@@ -55,55 +21,15 @@ namespace POC3D.ViewModel
                 {
                     Children = new Transform3DCollection()
                     {
-                        new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0,1,0), _rotationY)),
-                        new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0,0,1), _rotationZ)),
+                        new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0,1,0), RotationY)),
+                        new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0,0,1), RotationZ)),
                     }
                 };
 
                 var transformedVector = transformGroup.Transform(vector);
-                _upDirection.Normalize();
-
                 return transformedVector;
             }
         }
-
-        public void RollUp()
-        {
-            CameraRotation = CameraRotation + 5;
-            OnCameraViewModelChanged.Invoke(null, null);
-        }
-
-        public void RollDown()
-        {
-            CameraRotation = CameraRotation - 5;
-            OnCameraViewModelChanged.Invoke(null, null);
-        }
-
-        public void YawUp()
-        {
-            _rotationZ = _rotationZ + 5;
-            OnCameraViewModelChanged.Invoke(null, null);
-        }
-
-        public void YawDown()
-        {
-            _rotationZ = _rotationZ - 5;
-            OnCameraViewModelChanged.Invoke(null, null);
-        }
-        
-        public void PitchUp()
-        {
-            _rotationY = _rotationY + 5;
-            OnCameraViewModelChanged.Invoke(null, null);
-        }
-
-        public void PitchDown()
-        {
-            _rotationY = _rotationY - 5;
-            OnCameraViewModelChanged.Invoke(null, null);
-        }
-
-        #region Movement
 
         private Vector3D _unaryUp
         {
@@ -150,6 +76,43 @@ namespace POC3D.ViewModel
                 return forward;
             }
         }
+
+
+        #region Rotation
+
+        public void RollUp()
+        {
+            RotationX = RotationX + RotationDelta;
+        }
+
+        public void RollDown()
+        {
+            RotationX = RotationX - RotationDelta;
+        }
+
+        public void YawUp()
+        {
+            RotationZ = RotationZ + RotationDelta;
+        }
+
+        public void YawDown()
+        {
+            RotationZ = RotationZ - RotationDelta;
+        }
+        
+        public void PitchUp()
+        {
+            RotationY = RotationY + RotationDelta;
+        }
+
+        public void PitchDown()
+        {
+            RotationY = RotationY - RotationDelta;
+        }
+
+        #endregion
+
+        #region Movement
 
         public void MoveForward()
         {

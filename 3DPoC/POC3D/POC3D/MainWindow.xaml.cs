@@ -30,9 +30,9 @@ namespace POC3D
             InitializeComponent();
             MainViewModel = new MainViewModel();
 
-            Viewport.MouseWheel += mainViewport_MouseWheel;
-            Viewport.MouseDown += mainViewport_MouseDown;
-            Viewport.MouseMove += mainWindow_MouseMove;
+            Viewport.MouseWheel += CameraControl_MouseWheel;
+            Viewport.MouseDown += CameraControl_MouseButtonDown;
+            Viewport.MouseMove += CameraControl_MouseMove;
 
             MainViewModel.Camera.OnCameraViewModelChanged += OnCameraViewModelChanged;
             MainViewModel.Problem.Nodes.CollectionChanged += RedrawProblem;
@@ -66,103 +66,25 @@ namespace POC3D
             MainViewModel.Problem.AddBarElement(node7, node8);
             MainViewModel.Problem.AddBarElement(node8, node5);
         }
-
-
-        private Point _clickedPoint;
-        private MouseButton? _pressedButton;
-        private DateTime _lastButtonPress;
-
-        private TimeSpan GetTimeSinceLastMovement => DateTime.Now - _lastButtonPress;
-        
-        private void mainWindow_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (GetTimeSinceLastMovement.TotalMilliseconds < 50)
-            {
-                return;
-            }
-
-            _lastButtonPress = DateTime.Now;
-
-            if (_pressedButton == MouseButton.Middle)
-            {
-                if(e.MiddleButton == MouseButtonState.Released)
-                {
-                    _pressedButton = null;
-                    return;
-                }
-
-                var currentCursorPosition = e.GetPosition(this);
-
-                if (currentCursorPosition.X < _clickedPoint.X)
-                {
-                    MainViewModel.Camera.YawUp();
-                }
-
-                if (currentCursorPosition.X > _clickedPoint.X)
-                {
-                    MainViewModel.Camera.YawDown();
-                }
-
-                if (currentCursorPosition.Y < _clickedPoint.Y)
-                {
-                    MainViewModel.Camera.PitchUp();
-                }
-
-                if (currentCursorPosition.Y > _clickedPoint.Y)
-                {
-                    MainViewModel.Camera.PitchDown();
-                }
-            }
-
-            if (_pressedButton == MouseButton.Right)
-            {
-                if (e.RightButton == MouseButtonState.Released)
-                {
-                    _pressedButton = null;
-                    return;
-                }
                 
-                var currentCursorPosition = e.GetPosition(this);
-
-                if (currentCursorPosition.X < _clickedPoint.X)
-                {
-                    MainViewModel.Camera.MoveLeft();
-                }
-
-                if (currentCursorPosition.X > _clickedPoint.X)
-                {
-                    MainViewModel.Camera.MoveRight();
-                }
-
-                if (currentCursorPosition.Y < _clickedPoint.Y)
-                {
-                    MainViewModel.Camera.MoveUp();
-                }
-
-                if (currentCursorPosition.Y > _clickedPoint.Y)
-                {
-                    MainViewModel.Camera.MoveDown();
-                }
-            }
+        private void CameraControl_MouseMove(object sender, MouseEventArgs e)
+        {
+            MainViewModel.CameraControlViewModel.ReactToMouseMovement(e.MiddleButton, e.RightButton, e.GetPosition(this));
         }
 
-        private void mainViewport_MouseDown(object sender, MouseButtonEventArgs e)
+        private void CameraControl_MouseButtonDown(object sender, MouseButtonEventArgs e)
         {
-            _clickedPoint = e.GetPosition(this);
-            _pressedButton = e.ChangedButton;
+            MainViewModel.CameraControlViewModel.ReactToMouseButtonDown(e.ChangedButton, e.GetPosition(this));
         }
 
-        private void mainViewport_MouseWheel(object sender, MouseWheelEventArgs e)
+        private void CameraControl_MouseWheel(object sender, MouseWheelEventArgs e)
         {
-            if(e.Delta > 0)
-            {
-                MainViewModel.Camera.MoveForward();
-            }
+            MainViewModel.CameraControlViewModel.ReactToMouseWheelMovement(e.Delta);
+        }
 
-            if(e.Delta < 0)
-            {
-                MainViewModel.Camera.MoveBackwards();
-            }
+        private void CameraControl_KeyboardKeyDown(object sender, KeyEventArgs e)
+        {
+            MainViewModel.CameraControlViewModel.ReactToKeyBoardKeyDown(Keyboard.IsKeyDown(Key.LeftShift), e.Key);
         }
 
         private void RedrawProblem(object sender, NotifyCollectionChangedEventArgs e)
@@ -194,78 +116,15 @@ namespace POC3D
             Camera.UpDirection = MainViewModel.Camera.UpDirection;
             Camera.LookDirection = MainViewModel.Camera.LookDirection;
 
-
             Transform3DGroup transformGroup = new Transform3DGroup()
             {
                 Children = new Transform3DCollection()
                     {
-                        new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(1,0,0), MainViewModel.Camera.CameraRotation))
+                        new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(1,0,0), MainViewModel.Camera.RotationX))
                     }
             };
 
             Model3DGroup.Transform = transformGroup;
-        }
-
-        private void Viewport3D_KeyDown(object sender, KeyEventArgs e)
-        {
-            if(Keyboard.IsKeyDown(Key.LeftShift))
-            {
-                CheckRotation(e.Key);
-            }
-            else
-            {
-                CheckMovement(e.Key);
-            }
-        }
-
-        private void CheckRotation(Key key)
-        {
-            switch (key)
-            {
-                case Key.A:
-                    MainViewModel.Camera.YawUp();
-                    break;
-                case Key.D:
-                    MainViewModel.Camera.YawDown();
-                    break;
-                case Key.S:
-                    MainViewModel.Camera.PitchUp();
-                    break;
-                case Key.W:
-                    MainViewModel.Camera.PitchDown();
-                    break;
-                case Key.Q:
-                    MainViewModel.Camera.RollUp();
-                    break;
-                case Key.E:
-                    MainViewModel.Camera.RollDown();
-                    break;
-            }
-        }
-
-        private void CheckMovement(Key key)
-        {
-            switch (key)
-            {
-                case Key.A:
-                    MainViewModel.Camera.MoveLeft();
-                    break;
-                case Key.D:
-                    MainViewModel.Camera.MoveRight();
-                    break;
-                case Key.W:
-                    MainViewModel.Camera.MoveForward();
-                    break;
-                case Key.S:
-                    MainViewModel.Camera.MoveBackwards();
-                    break;
-                case Key.R:
-                    MainViewModel.Camera.MoveUp();
-                    break;
-                case Key.F:
-                    MainViewModel.Camera.MoveDown();
-                    break;
-            }
         }
     }
 }

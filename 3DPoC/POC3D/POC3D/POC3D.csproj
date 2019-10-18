@@ -60,7 +60,9 @@
     <Compile Include="Model\ModelNode.cs" />
     <Compile Include="Model\ModelPoint.cs" />
     <Compile Include="Model\ModelProblem.cs" />
-    <Compile Include="ViewModel\CameraViewModel.cs" />
+    <Compile Include="ViewModel\Camera\CameraControlViewModel.cs" />
+    <Compile Include="ViewModel\Camera\CameraViewModel.cs" />
+    <Compile Include="ViewModel\Camera\BaseCameraViewModel.cs" />
     <Compile Include="ViewModel\ElementViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\NodeViewModel.cs" />

@@ -30,10 +30,14 @@ namespace POC3D
             InitializeComponent();
             MainViewModel = new MainViewModel();
 
+            Viewport.MouseWheel += mainViewport_MouseWheel;
+            Viewport.MouseDown += mainViewport_MouseDown;
+            Viewport.MouseMove += mainWindow_MouseMove;
+
             MainViewModel.Camera.OnCameraViewModelChanged += OnCameraViewModelChanged;
             MainViewModel.Problem.Nodes.CollectionChanged += RedrawProblem;
             MainViewModel.Problem.Elements.CollectionChanged += RedrawProblem;
-
+            
             MainViewModel.Camera.Position = new Point3D(-100, 0, 0);
 
             var node1 = MainViewModel.Problem.AddNode(new Point3D(-10, -10, -10)).SetAsFixed();
@@ -41,10 +45,10 @@ namespace POC3D
             var node3 = MainViewModel.Problem.AddNode(new Point3D(10, 10, -10)).SetAsFixed();
             var node4 = MainViewModel.Problem.AddNode(new Point3D(-10, 10, -10)).SetAsFixed();
 
-            var node5 = MainViewModel.Problem.AddNode(new Point3D(-10, -10, 10)).SetAsFixed();
-            var node6 = MainViewModel.Problem.AddNode(new Point3D(10, -10, 10)).SetAsFixed();
-            var node7 = MainViewModel.Problem.AddNode(new Point3D(10, 10, 10)).SetAsFixed();
-            var node8 = MainViewModel.Problem.AddNode(new Point3D(-10, 10, 10)).SetAsFixed();
+            var node5 = MainViewModel.Problem.AddNode(new Point3D(-10, -10, 10)).SetAsFree();
+            var node6 = MainViewModel.Problem.AddNode(new Point3D(10, -10, 10)).SetAsFree();
+            var node7 = MainViewModel.Problem.AddNode(new Point3D(10, 10, 10)).SetAsFree();
+            var node8 = MainViewModel.Problem.AddNode(new Point3D(-10, 10, 10)).SetAsFree();
 
 
             MainViewModel.Problem.AddBarElement(node1, node2);
@@ -61,6 +65,59 @@ namespace POC3D
             MainViewModel.Problem.AddBarElement(node6, node7);
             MainViewModel.Problem.AddBarElement(node7, node8);
             MainViewModel.Problem.AddBarElement(node8, node5);
+        }
+
+
+        private Point _clickedPoint;
+        private MouseButton? _pressedButton;
+                
+        private void mainWindow_MouseMove(object sender, MouseEventArgs e)
+        {
+            if(_pressedButton == MouseButton.Middle)
+            {
+                if(e.MiddleButton == MouseButtonState.Released)
+                {
+                    _pressedButton = null;
+                    return;
+                }
+
+                var currentCursorPosition = e.GetPosition(this);
+
+                if(currentCursorPosition.X < _clickedPoint.X)
+                {
+                    MainViewModel.Camera.RotateCounterClockwise();
+                }
+
+                if(currentCursorPosition.X > _clickedPoint.X)
+                {
+                    MainViewModel.Camera.RotateClockwise();
+                }
+            }
+        }
+
+        private void mainViewport_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if(_pressedButton != null)
+            {
+                //If there is a button pressed, ignore the new pressed button
+                return;
+            }
+
+            _clickedPoint = e.GetPosition(this);
+            _pressedButton = e.ChangedButton;
+        }
+
+        private void mainViewport_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if(e.Delta > 0)
+            {
+                MainViewModel.Camera.MoveForward();
+            }
+
+            if(e.Delta < 0)
+            {
+                MainViewModel.Camera.MoveBackwards();
+            }
         }
 
         private void RedrawProblem(object sender, NotifyCollectionChangedEventArgs e)
@@ -85,8 +142,6 @@ namespace POC3D
                 Model3DGroup.Children.Add(element.Geometry);
             }
         }
-
-
 
         private void OnCameraViewModelChanged(object sender, EventArgs e)
         {

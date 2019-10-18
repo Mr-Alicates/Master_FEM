@@ -10,18 +10,22 @@
         d:DataContext="{Binding MainViewModel}"
         >
     <Grid>
-        <Viewport3D>
-            
-            <Viewport3D.Camera>
-                <PerspectiveCamera x:Name="Camera" />
-            </Viewport3D.Camera>
+        <Border
+                Background="White"
+                x:Name="Viewport">
+            <Viewport3D>
 
-            <ModelVisual3D>
-                <ModelVisual3D.Content>
-                    <Model3DGroup x:Name="Model3DGroup"> 
-                    </Model3DGroup>
-                </ModelVisual3D.Content>
-            </ModelVisual3D>
-        </Viewport3D>
+                <Viewport3D.Camera>
+                    <PerspectiveCamera x:Name="Camera" />
+                </Viewport3D.Camera>
+
+                <ModelVisual3D>
+                    <ModelVisual3D.Content>
+                        <Model3DGroup x:Name="Model3DGroup">
+                        </Model3DGroup>
+                    </ModelVisual3D.Content>
+                </ModelVisual3D>
+            </Viewport3D>
+        </Border>
     </Grid>
 </Window>

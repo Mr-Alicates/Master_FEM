@@ -12,7 +12,7 @@ namespace POC3D.ViewModel
         public CameraViewModel()
         {
             UpDirection = new Vector3D(0, 0, 1);
-            _lookDirectionX = 10;
+            _lookDirectionX = 180;
             _lookDirectionY = 0;
         }
 
@@ -44,7 +44,7 @@ namespace POC3D.ViewModel
 
             if (_lookDirectionX >= 0)
             {
-                if (_lookDirectionY == 10)
+                if (_lookDirectionY == 180)
                 {
                     // 2nd quarter
                     deltaX = -1;
@@ -91,7 +91,7 @@ namespace POC3D.ViewModel
 
             if (_lookDirectionX >= 0)
             {
-                if (_lookDirectionY == -10)
+                if (_lookDirectionY == -180)
                 {
                     // 3rd quarter
                     deltaX = -1;

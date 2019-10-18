@@ -35,13 +35,15 @@ namespace POC3D.ViewModel
             return this;
         }
 
-        public GeometryModel3D Geometry => BuildCube3D(Coordinates, IsFixed);
+        public GeometryModel3D Geometry => IsFixed ? 
+                                            BuildPyramid3D(Coordinates) : 
+                                            BuildCube3D(Coordinates);
 
-        private static GeometryModel3D BuildCube3D(Point3D center, bool isFixed)
+        private static GeometryModel3D BuildCube3D(Point3D center)
         {
-            var material = isFixed ? Brushes.Red : Brushes.Green;
+            var material = Brushes.Red;
             const int halfSize = 1;
-            
+
             GeometryModel3D result = new GeometryModel3D();
             result.Material = new DiffuseMaterial(material);
 
@@ -84,6 +86,48 @@ namespace POC3D.ViewModel
                     //Front
                     7,3,4,
                     4,3,0,
+                }
+            };
+
+
+            return result;
+        }
+        private static GeometryModel3D BuildPyramid3D(Point3D center)
+        {
+            var material = Brushes.Green;
+            const int halfSize = 2;
+
+            GeometryModel3D result = new GeometryModel3D();
+            result.Material = new DiffuseMaterial(material);
+
+            result.Geometry = new MeshGeometry3D()
+            {
+                Positions = new Point3DCollection()
+                {
+                    center + new Vector3D(-1, -1, -1) * halfSize,
+                    center + new Vector3D(1, -1, -1) * halfSize,
+                    center + new Vector3D(1, 1, -1) * halfSize,
+                    center + new Vector3D(-1, 1, -1) * halfSize,
+
+                    center + new Vector3D(0, 0, 1) * halfSize,
+                },
+                TriangleIndices = new Int32Collection()
+                {
+                    //Bottom
+                    0,3,1,
+                    3,2,1,
+                    
+                    //Left
+                    0,1,4,
+
+                    //Right
+                    1,2,4,
+
+                    //Back
+                    2,3,4,
+
+                    //Front
+                    3,0,4
                 }
             };
 

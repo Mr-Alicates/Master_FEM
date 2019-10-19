@@ -21,8 +21,8 @@ namespace POC3D.ViewModel.Camera
                 {
                     Children = new Transform3DCollection()
                     {
-                        new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0,1,0), RotationY)),
-                        new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0,0,1), RotationZ)),
+                        new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0,1,0), CameraRotationY)),
+                        new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0,0,1), CameraRotationZ)),
                     }
                 };
 
@@ -31,7 +31,7 @@ namespace POC3D.ViewModel.Camera
             }
         }
 
-        private Vector3D _unaryUp
+        public Vector3D UnaryUp
         {
             get
             {
@@ -43,13 +43,13 @@ namespace POC3D.ViewModel.Camera
                     }
                 };
 
-                var up = transformGroup.Transform(_unaryForward);
+                var up = transformGroup.Transform(UnaryForward);
                 up.Normalize();
                 return up;
             }
         }
 
-        private Vector3D _unaryLeft
+        public Vector3D UnaryLeft
         {
             get
             {
@@ -61,13 +61,13 @@ namespace POC3D.ViewModel.Camera
                     }
                 };
 
-                var left = transformGroup.Transform(_unaryForward);
+                var left = transformGroup.Transform(UnaryForward);
                 left.Normalize();
                 return left;
             }
         }
 
-        private Vector3D _unaryForward
+        public Vector3D UnaryForward
         {
             get
             {
@@ -77,37 +77,26 @@ namespace POC3D.ViewModel.Camera
             }
         }
 
+        #region CameraRotation
 
-        #region Rotation
-
-        public void RollUp()
+        public void CameraRotationZUp()
         {
-            RotationX = RotationX + RotationDelta;
+            CameraRotationZ = CameraRotationZ + RotationDelta;
         }
 
-        public void RollDown()
+        public void CameraRotationZDown()
         {
-            RotationX = RotationX - RotationDelta;
-        }
-
-        public void YawUp()
-        {
-            RotationZ = RotationZ + RotationDelta;
-        }
-
-        public void YawDown()
-        {
-            RotationZ = RotationZ - RotationDelta;
+            CameraRotationZ = CameraRotationZ - RotationDelta;
         }
         
-        public void PitchUp()
+        public void CameraRotationYUp()
         {
-            RotationY = RotationY + RotationDelta;
+            CameraRotationY = CameraRotationY + RotationDelta;
         }
 
-        public void PitchDown()
+        public void CameraRotationYDown()
         {
-            RotationY = RotationY - RotationDelta;
+            CameraRotationY = CameraRotationY - RotationDelta;
         }
 
         #endregion
@@ -116,32 +105,32 @@ namespace POC3D.ViewModel.Camera
 
         public void MoveForward()
         {
-            Position = Position + _unaryForward;
+            Position = Position + UnaryForward;
         }
 
         public void MoveBackwards()
         {
-            Position = Position - _unaryForward;
+            Position = Position - UnaryForward;
         }
 
         public void MoveUp()
         {
-            Position = Position + _unaryUp;
+            Position = Position + UnaryUp;
         }
 
         public void MoveDown()
         {
-            Position = Position - _unaryUp;
+            Position = Position - UnaryUp;
         }
 
         public void MoveLeft()
         {
-            Position = Position + _unaryLeft;
+            Position = Position + UnaryLeft;
         }
 
         public void MoveRight()
         {
-            Position = Position - _unaryLeft;
+            Position = Position - UnaryLeft;
         }
 
         #endregion

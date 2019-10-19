@@ -31,7 +31,6 @@ namespace POC3D
             MainViewModel = new MainViewModel();
 
             Viewport.MouseWheel += CameraControl_MouseWheel;
-            Viewport.MouseDown += CameraControl_MouseButtonDown;
             Viewport.MouseMove += CameraControl_MouseMove;
 
             MainViewModel.Camera.OnCameraViewModelChanged += OnCameraViewModelChanged;
@@ -72,11 +71,6 @@ namespace POC3D
             MainViewModel.CameraControlViewModel.ReactToMouseMovement(e.MiddleButton, e.RightButton, e.GetPosition(this));
         }
 
-        private void CameraControl_MouseButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            MainViewModel.CameraControlViewModel.ReactToMouseButtonDown(e.ChangedButton, e.GetPosition(this));
-        }
-
         private void CameraControl_MouseWheel(object sender, MouseWheelEventArgs e)
         {
             MainViewModel.CameraControlViewModel.ReactToMouseWheelMovement(e.Delta);
@@ -115,16 +109,6 @@ namespace POC3D
             Camera.Position = MainViewModel.Camera.Position;
             Camera.UpDirection = MainViewModel.Camera.UpDirection;
             Camera.LookDirection = MainViewModel.Camera.LookDirection;
-
-            Transform3DGroup transformGroup = new Transform3DGroup()
-            {
-                Children = new Transform3DCollection()
-                    {
-                        new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(1,0,0), MainViewModel.Camera.RotationX))
-                    }
-            };
-
-            Model3DGroup.Transform = transformGroup;
         }
     }
 }

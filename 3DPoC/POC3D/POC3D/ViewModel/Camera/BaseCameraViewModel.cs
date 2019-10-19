@@ -13,9 +13,13 @@ namespace POC3D.ViewModel.Camera
 
         private Vector3D _upDirection;
         private Point3D _position;
-        private int _rotationX;
-        private int _rotationY;
-        private int _rotationZ;
+
+        private int _environmentRotationX;
+        private int _environmentRotationY;
+        private int _environmentRotationZ;
+
+        private int _cameraRotationY;
+        private int _cameraRotationZ;
 
         public BaseCameraViewModel()
         {
@@ -24,32 +28,22 @@ namespace POC3D.ViewModel.Camera
 
         public Vector3D UpDirection => _upDirection;
 
-        public int RotationX
+        public int CameraRotationY
         {
-            get => _rotationX;
-            set
+            get => _cameraRotationY;
+            protected set
             {
-                _rotationX = value;
+                _cameraRotationY = value;
                 OnCameraViewModelChanged.Invoke(this, null);
             }
         }
 
-        public int RotationY
+        public int CameraRotationZ
         {
-            get => _rotationY;
-            set
+            get => _cameraRotationZ;
+            protected set
             {
-                _rotationY = value;
-                OnCameraViewModelChanged.Invoke(this, null);
-            }
-        }
-
-        public int RotationZ
-        {
-            get => _rotationZ;
-            set
-            {
-                _rotationZ = value;
+                _cameraRotationZ = value;
                 OnCameraViewModelChanged.Invoke(this, null);
             }
         }

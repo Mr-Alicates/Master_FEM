@@ -17,7 +17,7 @@ namespace POC3D.ViewModel.Camera
         {
             _cameraViewModel = cameraViewModel;
         }
-        
+                
         public void ReactToMouseWheelMovement(int delta)
         {
             int movements = Math.Abs(delta / 10);

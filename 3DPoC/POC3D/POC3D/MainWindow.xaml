@@ -3,29 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:POC3D"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
-        Keyboard.KeyDown="CameraControl_KeyboardKeyDown"
-        d:DataContext="{Binding MainViewModel}"
-        >
-    <Grid>
-        <Border
-                Background="White"
-                x:Name="Viewport">
-            <Viewport3D>
-
-                <Viewport3D.Camera>
-                    <PerspectiveCamera x:Name="Camera" />
-                </Viewport3D.Camera>
-
-                <ModelVisual3D>
-                    <ModelVisual3D.Content>
-                        <Model3DGroup x:Name="Model3DGroup">
-                        </Model3DGroup>
-                    </ModelVisual3D.Content>
-                </ModelVisual3D>
-            </Viewport3D>
-        </Border>
+        xmlns:controls="clr-namespace:POC3D.Controls"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid Background="Black">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <controls:VisualAreaControl Grid.Column="1" MainViewModel="{Binding Path=.}" x:Name="Viewport"/>
     </Grid>
 </Window>

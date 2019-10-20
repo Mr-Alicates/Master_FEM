@@ -23,20 +23,26 @@ namespace POC3D
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly MainViewModel MainViewModel;
+        public MainViewModel MainViewModel { get; }
 
         public MainWindow()
         {
             InitializeComponent();
             MainViewModel = new MainViewModel();
+            DataContext = MainViewModel;
 
-            Viewport.MouseWheel += CameraControl_MouseWheel;
-            Viewport.MouseMove += CameraControl_MouseMove;
+            Init();
 
-            MainViewModel.Camera.OnCameraViewModelChanged += OnCameraViewModelChanged;
-            MainViewModel.Problem.Nodes.CollectionChanged += RedrawProblem;
-            MainViewModel.Problem.Elements.CollectionChanged += RedrawProblem;
-            
+            Viewport.Focus();
+
+            //I had to wire this events here because the events are not reaching the custom user control
+            MouseWheel += CameraControl_MouseWheel;
+            MouseMove += CameraControl_MouseMove;
+            KeyDown += CameraControl_KeyboardKeyDown;
+        }
+
+        public void Init()
+        {
             MainViewModel.Camera.Position = new Point3D(-100, 0, 0);
 
             var node1 = MainViewModel.Problem.AddNode(new Point3D(-10, -10, -10)).SetAsFixed();
@@ -65,50 +71,36 @@ namespace POC3D
             MainViewModel.Problem.AddBarElement(node7, node8);
             MainViewModel.Problem.AddBarElement(node8, node5);
         }
-                
+
         private void CameraControl_MouseMove(object sender, MouseEventArgs e)
         {
-            MainViewModel.CameraControlViewModel.ReactToMouseMovement(e.MiddleButton, e.RightButton, e.GetPosition(this));
+            if (!Viewport.IsMouseOver)
+            {
+                return;
+            }
+
+            MainViewModel.CameraControlViewModel.ReactToMouseMovement(e.MiddleButton, e.RightButton, e.GetPosition(Viewport));
         }
 
         private void CameraControl_MouseWheel(object sender, MouseWheelEventArgs e)
         {
+            if (!Viewport.IsMouseOver)
+            {
+                return;
+            }
+
             MainViewModel.CameraControlViewModel.ReactToMouseWheelMovement(e.Delta);
         }
 
         private void CameraControl_KeyboardKeyDown(object sender, KeyEventArgs e)
         {
+            if (!Viewport.IsMouseOver)
+            {
+                return;
+            }
+
             MainViewModel.CameraControlViewModel.ReactToKeyBoardKeyDown(Keyboard.IsKeyDown(Key.LeftShift), e.Key);
         }
 
-        private void RedrawProblem(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            //Remove all the elements
-            Model3DGroup.Children.Clear();
-
-            //Add general lighting to the scene
-            AmbientLight ambientLight = new AmbientLight(Colors.Black);
-            DirectionalLight directionalLight = new DirectionalLight(Colors.White, new Vector3D(0, 0, -1));
-
-            Model3DGroup.Children.Add(ambientLight);
-            Model3DGroup.Children.Add(directionalLight);
-
-            foreach (var node in MainViewModel.Problem.Nodes)
-            {
-                Model3DGroup.Children.Add(node.Geometry);
-            }
-
-            foreach (var element in MainViewModel.Problem.Elements)
-            {
-                Model3DGroup.Children.Add(element.Geometry);
-            }
-        }
-
-        private void OnCameraViewModelChanged(object sender, EventArgs e)
-        {
-            Camera.Position = MainViewModel.Camera.Position;
-            Camera.UpDirection = MainViewModel.Camera.UpDirection;
-            Camera.LookDirection = MainViewModel.Camera.LookDirection;
-        }
     }
 }

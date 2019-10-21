@@ -8,7 +8,7 @@ using System.Windows.Media.Media3D;
 
 namespace POC3D.ViewModel
 {
-    public class MainViewModel
+    public class MainViewModel : Observable
     {
         public MainViewModel()
         {

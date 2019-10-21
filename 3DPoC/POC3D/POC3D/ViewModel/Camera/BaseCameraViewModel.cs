@@ -7,7 +7,7 @@ using System.Windows.Media.Media3D;
 
 namespace POC3D.ViewModel.Camera
 {
-    public class BaseCameraViewModel
+    public class BaseCameraViewModel : Observable
     {
         public EventHandler OnCameraViewModelChanged;
 

@@ -8,9 +8,9 @@ using System.Windows.Input;
 
 namespace POC3D.ViewModel.Camera
 {
-    public class VisualControlViewModel
+    public class VisualControlViewModel : Observable
     {
-        private CameraViewModel _cameraViewModel;
+        private readonly CameraViewModel _cameraViewModel;
         private Point _lastMousePosition;
 
         public VisualControlViewModel(CameraViewModel cameraViewModel)

@@ -4,8 +4,12 @@ using POC3D.Model;
 
 namespace POC3D.ViewModel
 {
-    public class NodeViewModel
+    public class NodeViewModel : Observable
     {
+        private static readonly Brush FreeNodeBrush = Brushes.LightGreen;
+        private static readonly Brush FixedNodeBrush = Brushes.DarkGreen;
+        private static readonly Brush SelectedNodeBrush = Brushes.Red;
+
         private readonly ModelNode _modelNode;
 
         public NodeViewModel(ModelNode modelNode)
@@ -23,6 +27,8 @@ namespace POC3D.ViewModel
 
         public bool IsFixed => _modelNode.IsFixed;
 
+        public bool IsSelected { get; set; }
+
         public NodeViewModel SetAsFixed()
         {
             _modelNode.SetAsFixed();
@@ -35,13 +41,27 @@ namespace POC3D.ViewModel
             return this;
         }
 
-        public GeometryModel3D Geometry => IsFixed ? 
-                                            BuildPyramid3D(Coordinates) : 
-                                            BuildCube3D(Coordinates);
-
-        private static GeometryModel3D BuildCube3D(Point3D center)
+        public GeometryModel3D Geometry
         {
-            var material = Brushes.Red;
+            get
+            {
+                if (IsFixed)
+                {
+                    var brush = IsSelected ? SelectedNodeBrush : FixedNodeBrush;
+
+                    return BuildPyramid3D(Coordinates, brush);
+                }
+                else
+                {
+                    var brush = IsSelected ? SelectedNodeBrush : FreeNodeBrush;
+
+                    return BuildCube3D(Coordinates, brush);
+                }
+            }
+        }
+
+        private static GeometryModel3D BuildCube3D(Point3D center, Brush material)
+        {
             const int halfSize = 1;
 
             GeometryModel3D result = new GeometryModel3D();
@@ -92,9 +112,9 @@ namespace POC3D.ViewModel
 
             return result;
         }
-        private static GeometryModel3D BuildPyramid3D(Point3D center)
+
+        private static GeometryModel3D BuildPyramid3D(Point3D center, Brush material)
         {
-            var material = Brushes.Green;
             const int halfSize = 2;
 
             GeometryModel3D result = new GeometryModel3D();
@@ -134,5 +154,7 @@ namespace POC3D.ViewModel
 
             return result;
         }
+
+        public string Name => $"({Coordinates.ToString()})";
     }
 }

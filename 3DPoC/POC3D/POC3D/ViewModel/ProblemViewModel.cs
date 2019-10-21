@@ -9,8 +9,11 @@ using System.Windows.Media.Media3D;
 
 namespace POC3D.ViewModel
 {
-    public class ProblemViewModel
+    public class ProblemViewModel : Observable
     {
+        public EventHandler SelectedNodeChanged;
+
+        private NodeViewModel _selectedNode;
         private readonly ModelProblem _modelProblem;
 
         public ProblemViewModel()
@@ -19,6 +22,30 @@ namespace POC3D.ViewModel
 
             Nodes = new ObservableCollection<NodeViewModel>();
             Elements = new ObservableCollection<ElementViewModel>();
+        }
+
+        public NodeViewModel SelectedNode
+        {
+            get => _selectedNode;
+            set
+            {
+                if (_selectedNode != value)
+                {
+                    if (_selectedNode != null)
+                    {
+                        _selectedNode.IsSelected = false;
+                    }
+
+                    _selectedNode = value;
+
+                    if (_selectedNode != null)
+                    {
+                        _selectedNode.IsSelected = true;
+                    }
+
+                    SelectedNodeChanged?.Invoke(null, null);
+                }
+            }
         }
 
         public ObservableCollection<NodeViewModel> Nodes { get; }

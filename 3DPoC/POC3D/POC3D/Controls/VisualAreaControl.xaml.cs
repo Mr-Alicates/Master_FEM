@@ -52,7 +52,10 @@ namespace POC3D.Controls
             Viewport.MouseMove += CameraControl_MouseMove;
             Viewport.KeyDown += CameraControl_KeyboardKeyDown;
 
+
             MainViewModel.Camera.OnCameraViewModelChanged += (a, b) => UpdateCamera();
+
+            MainViewModel.Problem.SelectedNodeChanged += (a, b) => UpdateProblem();
             MainViewModel.Problem.Nodes.CollectionChanged += (a, b) => UpdateProblem();
             MainViewModel.Problem.Elements.CollectionChanged += (a, b) => UpdateProblem();
 

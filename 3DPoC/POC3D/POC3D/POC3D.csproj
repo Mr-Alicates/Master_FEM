@@ -69,6 +69,7 @@
     <Compile Include="ViewModel\ElementViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\NodeViewModel.cs" />
+    <Compile Include="ViewModel\Observable.cs" />
     <Compile Include="ViewModel\ProblemViewModel.cs" />
     <Page Include="Controls\VisualAreaControl.xaml">
       <SubType>Designer</SubType>

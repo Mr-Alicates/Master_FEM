@@ -4,13 +4,45 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:POC3D.Controls"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid Background="Black">
+        xmlns:x1="http://schemas.microsoft.com/netfx/2009/xaml/presentation"
+        xmlns:viewModel="clr-namespace:POC3D.ViewModel"
+        Title="MainWindow">
+
+    <Grid Background="Gray">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+    
+    <Grid Grid.Row="1">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="200"/>
         </Grid.ColumnDefinitions>
         
-        <controls:VisualAreaControl Grid.Column="1" MainViewModel="{Binding Path=.}" x:Name="Viewport"/>
+        <controls:VisualAreaControl Grid.Column="0" MainViewModel="{Binding Path=.}" x:Name="Viewport"/>
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="200"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <ListView Grid.Row="1" 
+                      ItemsSource="{x1:Binding Path=Problem.Nodes,Mode=OneWay}"
+                      SelectedItem="{x1:Binding Path=Problem.SelectedNode,Mode=TwoWay}"
+            >
+                <ListView.ItemTemplate>
+                    <DataTemplate DataType="viewModel:NodeViewModel">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Name,Mode=OneWay}" FontWeight="Bold"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+            </ListView>
+        </Grid>
+
+        </Grid>
     </Grid>
 </Window>

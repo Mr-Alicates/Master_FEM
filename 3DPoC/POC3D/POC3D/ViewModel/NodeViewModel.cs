@@ -25,7 +25,15 @@ namespace POC3D.ViewModel
             _modelNode.Coordinates.Y,
             _modelNode.Coordinates.Z);
 
-        public bool IsFixed => _modelNode.IsFixed;
+        public bool IsFixed
+        {
+            get => _modelNode.IsFixed;
+            set
+            {
+                _modelNode.IsFixed = value;
+                OnPropertyChanged(nameof(IsFixed));
+            }
+        }
 
         public bool IsSelected { get; set; }
 

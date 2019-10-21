@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +24,8 @@ namespace POC3D.ViewModel
 
             Nodes = new ObservableCollection<NodeViewModel>();
             Elements = new ObservableCollection<ElementViewModel>();
+
+            Nodes.CollectionChanged += NodeAdded;
         }
 
         public NodeViewModel SelectedNode
@@ -29,23 +33,38 @@ namespace POC3D.ViewModel
             get => _selectedNode;
             set
             {
-                if (_selectedNode != value)
+                if (_selectedNode == value) return;
+
+                if (_selectedNode != null)
                 {
-                    if (_selectedNode != null)
-                    {
-                        _selectedNode.IsSelected = false;
-                    }
+                    _selectedNode.IsSelected = false;
+                }
 
-                    _selectedNode = value;
+                _selectedNode = value;
 
-                    if (_selectedNode != null)
-                    {
-                        _selectedNode.IsSelected = true;
-                    }
+                if (_selectedNode != null)
+                {
+                    _selectedNode.IsSelected = true;
+                }
 
-                    SelectedNodeChanged?.Invoke(null, null);
+                SelectedNodeChanged?.Invoke(null, null);
+            }
+        }
+
+        private void NodeAdded(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.NewItems != null)
+            {
+                foreach (NodeViewModel node in e.NewItems)
+                {
+                    node.PropertyChanged += NodePropertyChanged;
                 }
             }
+        }
+
+        private void NodePropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
+        {
+            SelectedNodeChanged?.Invoke(null, null);
         }
 
         public ObservableCollection<NodeViewModel> Nodes { get; }

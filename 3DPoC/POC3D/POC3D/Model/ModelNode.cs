@@ -15,7 +15,7 @@ namespace POC3D.Model
 
         public ModelPoint Coordinates { get; }
 
-        public bool IsFixed { get; private set; }
+        public bool IsFixed { get; set; }
 
         public void SetAsFixed()
         {

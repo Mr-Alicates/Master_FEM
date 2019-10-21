@@ -35,7 +35,8 @@
                 <ListView.ItemTemplate>
                     <DataTemplate DataType="viewModel:NodeViewModel">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Name,Mode=OneWay}" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding Name,Mode=OneWay}"/>
+                            <CheckBox IsChecked="{Binding IsFixed, Mode=TwoWay}"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>

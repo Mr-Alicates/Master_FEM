@@ -20,7 +20,7 @@ namespace POC3D.Model
 
         public IEnumerable<IModelElement> Elements => _elements;
 
-        public IEnumerable<ModelNode> Nodes => _nodes;
+        public List<ModelNode> Nodes => _nodes;
 
         public ModelNode AddNode()
         {
@@ -46,6 +46,11 @@ namespace POC3D.Model
             _elements.Add(element);
 
             return element;
+        }
+
+        public void DeleteNode(ModelNode selectedNodeNode)
+        {
+            _nodes.Remove(selectedNodeNode);
         }
     }
 }

@@ -88,11 +88,15 @@
 
 
                 <StackPanel Grid.Row="2" 
-                            Orientation="Vertical">
-                    
+                            Orientation="Horizontal">
+
                     <Button x:Name="AddNodeButton" 
                             Content="Add new node"
                             Command="{Binding Path=Problem.AddNodeCommand}"/>
+
+                    <Button x:Name="DeleteNodeButton" 
+                            Content="Delete selected node"
+                            Command="{Binding Path=Problem.DeleteNodeCommand}"/>
 
                 </StackPanel>
 

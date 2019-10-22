@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Media3D;
 
@@ -83,6 +84,15 @@ namespace POC3D.ViewModel
             return nodeViewModel;
         }
 
+        public void DeleteSelectedNode()
+        {
+            var selectedNode = SelectedNode;
+
+            _modelProblem.DeleteNode(selectedNode.Node);
+            Nodes.Remove(selectedNode);
+            SelectedNode = null;
+        }
+
         public ElementViewModel AddBarElement(NodeViewModel node1, NodeViewModel node2)
         {
             var element = _modelProblem.AddBarElement(node1.Node, node2.Node);
@@ -93,9 +103,40 @@ namespace POC3D.ViewModel
 
             return result;
         }
-        
+
         public ICommand AddNodeCommand => new Command(o => true, o => AddNode());
+        public ICommand DeleteNodeCommand => new DeleteNodeCommand(this);
     }
+
+    public class DeleteNodeCommand : ICommand
+    {
+        private readonly ProblemViewModel _problemViewModel;
+        public event EventHandler CanExecuteChanged;
+
+        public DeleteNodeCommand(ProblemViewModel problemViewModel)
+        {
+            _problemViewModel = problemViewModel;
+
+            _problemViewModel.SelectedNodeChanged += SelectedNodeChanged;
+        }
+
+        private void SelectedNodeChanged(object sender, EventArgs e)
+        {
+            CanExecuteChanged?.Invoke(this, null);
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            return _problemViewModel.SelectedNode != null;
+        }
+
+        public void Execute(object parameter)
+        {
+            _problemViewModel.DeleteSelectedNode();
+        }
+
+    }
+
     public class Command : ICommand
     {
         private readonly Func<object, bool> _canExecute;

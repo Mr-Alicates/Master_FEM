@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:POC3D.Controls"
-        xmlns:x1="http://schemas.microsoft.com/netfx/2009/xaml/presentation"
         xmlns:viewModel="clr-namespace:POC3D.ViewModel"
         Title="MainWindow">
 
@@ -24,25 +23,80 @@
 
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="200"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+                    <RowDefinition Height="200"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
 
-            <ListView Grid.Row="1" 
-                      ItemsSource="{x1:Binding Path=Problem.Nodes,Mode=OneWay}"
-                      SelectedItem="{x1:Binding Path=Problem.SelectedNode,Mode=TwoWay}"
-            >
-                <ListView.ItemTemplate>
-                    <DataTemplate DataType="viewModel:NodeViewModel">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Name,Mode=OneWay}"/>
-                            <CheckBox IsChecked="{Binding IsFixed, Mode=TwoWay}"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
+                <Grid Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
 
-            </ListView>
-        </Grid>
+
+                    <StackPanel Grid.Row="0" 
+                                Orientation="Horizontal">
+
+                        <TextBox Text="{Binding Path=Problem.SelectedNode.X,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        <TextBlock Text="X coordinate"/>
+
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1" 
+                                Orientation="Horizontal">
+
+                        <TextBox Text="{Binding Path=Problem.SelectedNode.Y,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        <TextBlock Text="Y coordinate"/>
+
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="2" 
+                                Orientation="Horizontal">
+
+                        <TextBox Text="{Binding Path=Problem.SelectedNode.Z,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        <TextBlock Text="Z coordinate"/>
+
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="3" 
+                                Orientation="Horizontal">
+
+                        <CheckBox IsChecked="{Binding Path=Problem.SelectedNode.IsFixed, Mode=TwoWay}"/>
+                        <TextBlock Text="Is fixed node"/>
+
+                    </StackPanel>
+
+
+                </Grid>
+
+                <ListView Grid.Row="1" 
+                      ItemsSource="{Binding Path=Problem.Nodes,Mode=OneWay}"
+                      SelectedItem="{Binding Path=Problem.SelectedNode,Mode=TwoWay}">
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate DataType="viewModel:NodeViewModel">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Name,Mode=OneWay}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+
+                </ListView>
+
+
+                <StackPanel Grid.Row="2" 
+                            Orientation="Vertical">
+                    
+                    <Button x:Name="AddNodeButton" 
+                            Content="Add new node"
+                            Command="{Binding Path=Problem.AddNodeCommand}"/>
+
+                </StackPanel>
+
+            </Grid>
 
         </Grid>
     </Grid>

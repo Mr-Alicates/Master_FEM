@@ -15,9 +15,9 @@ namespace POC3D.Model
             Z = z;
         }
 
-        public double X { get; }
-        public double Y { get; }
-        public double Z { get; }
+        public double X { get; set; }
+        public double Y { get; set; }
+        public double Z { get; set; }
 
         public override bool Equals(object obj)
         {

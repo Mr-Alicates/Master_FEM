@@ -45,31 +45,31 @@ namespace POC3D
         {
             MainViewModel.Camera.Position = new Point3D(-100, 0, 0);
 
-            var node1 = MainViewModel.Problem.AddNode(new Point3D(-10, -10, -10)).SetAsFixed();
-            var node2 = MainViewModel.Problem.AddNode(new Point3D(10, -10, -10)).SetAsFixed();
-            var node3 = MainViewModel.Problem.AddNode(new Point3D(10, 10, -10)).SetAsFixed();
-            var node4 = MainViewModel.Problem.AddNode(new Point3D(-10, 10, -10)).SetAsFixed();
+            //var node1 = MainViewModel.Problem.AddNode(new Point3D(-10, -10, -10)).SetAsFixed();
+            //var node2 = MainViewModel.Problem.AddNode(new Point3D(10, -10, -10)).SetAsFixed();
+            //var node3 = MainViewModel.Problem.AddNode(new Point3D(10, 10, -10)).SetAsFixed();
+            //var node4 = MainViewModel.Problem.AddNode(new Point3D(-10, 10, -10)).SetAsFixed();
 
-            var node5 = MainViewModel.Problem.AddNode(new Point3D(-10, -10, 10)).SetAsFree();
-            var node6 = MainViewModel.Problem.AddNode(new Point3D(10, -10, 10)).SetAsFree();
-            var node7 = MainViewModel.Problem.AddNode(new Point3D(10, 10, 10)).SetAsFree();
-            var node8 = MainViewModel.Problem.AddNode(new Point3D(-10, 10, 10)).SetAsFree();
+            //var node5 = MainViewModel.Problem.AddNode(new Point3D(-10, -10, 10)).SetAsFree();
+            //var node6 = MainViewModel.Problem.AddNode(new Point3D(10, -10, 10)).SetAsFree();
+            //var node7 = MainViewModel.Problem.AddNode(new Point3D(10, 10, 10)).SetAsFree();
+            //var node8 = MainViewModel.Problem.AddNode(new Point3D(-10, 10, 10)).SetAsFree();
 
 
-            MainViewModel.Problem.AddBarElement(node1, node2);
-            MainViewModel.Problem.AddBarElement(node2, node3);
-            MainViewModel.Problem.AddBarElement(node3, node4);
-            MainViewModel.Problem.AddBarElement(node4, node1);
+            //MainViewModel.Problem.AddBarElement(node1, node2);
+            //MainViewModel.Problem.AddBarElement(node2, node3);
+            //MainViewModel.Problem.AddBarElement(node3, node4);
+            //MainViewModel.Problem.AddBarElement(node4, node1);
 
-            MainViewModel.Problem.AddBarElement(node1, node5);
-            MainViewModel.Problem.AddBarElement(node2, node6);
-            MainViewModel.Problem.AddBarElement(node3, node7);
-            MainViewModel.Problem.AddBarElement(node4, node8);
+            //MainViewModel.Problem.AddBarElement(node1, node5);
+            //MainViewModel.Problem.AddBarElement(node2, node6);
+            //MainViewModel.Problem.AddBarElement(node3, node7);
+            //MainViewModel.Problem.AddBarElement(node4, node8);
 
-            MainViewModel.Problem.AddBarElement(node5, node6);
-            MainViewModel.Problem.AddBarElement(node6, node7);
-            MainViewModel.Problem.AddBarElement(node7, node8);
-            MainViewModel.Problem.AddBarElement(node8, node5);
+            //MainViewModel.Problem.AddBarElement(node5, node6);
+            //MainViewModel.Problem.AddBarElement(node6, node7);
+            //MainViewModel.Problem.AddBarElement(node7, node8);
+            //MainViewModel.Problem.AddBarElement(node8, node5);
         }
 
         private void CameraControl_MouseMove(object sender, MouseEventArgs e)
@@ -101,6 +101,5 @@ namespace POC3D
 
             MainViewModel.CameraControlViewModel.ReactToKeyBoardKeyDown(Keyboard.IsKeyDown(Key.LeftShift), e.Key);
         }
-
     }
 }

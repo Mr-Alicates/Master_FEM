@@ -10,27 +10,54 @@ namespace POC3D.ViewModel
         private static readonly Brush FixedNodeBrush = Brushes.DarkGreen;
         private static readonly Brush SelectedNodeBrush = Brushes.Red;
 
-        private readonly ModelNode _modelNode;
-
         public NodeViewModel(ModelNode modelNode)
         {
-            _modelNode = modelNode;
+            Node = modelNode;
         }
 
-        //To be deleted...
-        public ModelNode Node => _modelNode;
-        
+        public int Id => Node.Id;
+
+        public ModelNode Node { get; }
+
         public Point3D Coordinates => new Point3D(
-            _modelNode.Coordinates.X,
-            _modelNode.Coordinates.Y,
-            _modelNode.Coordinates.Z);
+            Node.Coordinates.X,
+            Node.Coordinates.Y,
+            Node.Coordinates.Z);
+
+        public double X
+        {
+            get => Node.Coordinates.X;
+            set
+            {
+                Node.Coordinates.X = value;
+                OnPropertyChanged(nameof(X));
+            }
+        }
+        public double Y
+        {
+            get => Node.Coordinates.Y;
+            set
+            {
+                Node.Coordinates.Y = value;
+                OnPropertyChanged(nameof(Y));
+            }
+        }
+        public double Z
+        {
+            get => Node.Coordinates.Z;
+            set
+            {
+                Node.Coordinates.Z = value;
+                OnPropertyChanged(nameof(Z));
+            }
+        }
 
         public bool IsFixed
         {
-            get => _modelNode.IsFixed;
+            get => Node.IsFixed;
             set
             {
-                _modelNode.IsFixed = value;
+                Node.IsFixed = value;
                 OnPropertyChanged(nameof(IsFixed));
             }
         }
@@ -39,13 +66,13 @@ namespace POC3D.ViewModel
 
         public NodeViewModel SetAsFixed()
         {
-            _modelNode.SetAsFixed();
+            Node.SetAsFixed();
             return this;
         }
 
         public NodeViewModel SetAsFree()
         {
-            _modelNode.SetAsFree();
+            Node.SetAsFree();
             return this;
         }
 
@@ -163,6 +190,6 @@ namespace POC3D.ViewModel
             return result;
         }
 
-        public string Name => $"({Coordinates.ToString()})";
+        public string Name => $"{Id} ({Coordinates.ToString()})";
     }
 }

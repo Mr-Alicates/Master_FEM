@@ -22,12 +22,10 @@ namespace POC3D.Model
 
         public IEnumerable<ModelNode> Nodes => _nodes;
 
-        public ModelNode AddNode(double x, double y, double z)
+        public ModelNode AddNode()
         {
-            ModelNode result = new ModelNode(new ModelPoint(x, y, z));
-
+            ModelNode result = ModelNode.CreateNewNode();
             _nodes.Add(result);
-
             return result;
         }
 

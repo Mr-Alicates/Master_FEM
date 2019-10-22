@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using System.Windows.Media.Media3D;
 
 namespace POC3D.ViewModel
@@ -47,6 +48,7 @@ namespace POC3D.ViewModel
                     _selectedNode.IsSelected = true;
                 }
 
+                OnPropertyChanged(nameof(SelectedNode));
                 SelectedNodeChanged?.Invoke(null, null);
             }
         }
@@ -70,13 +72,13 @@ namespace POC3D.ViewModel
         public ObservableCollection<NodeViewModel> Nodes { get; }
         public ObservableCollection<ElementViewModel> Elements { get; }
 
-        public NodeViewModel AddNode(Point3D point)
+        public NodeViewModel AddNode()
         {
-            var modelNode = _modelProblem.AddNode(point.X, point.Y, point.Z);
-
+            var modelNode = _modelProblem.AddNode();
             var nodeViewModel = new NodeViewModel(modelNode);
 
             Nodes.Add(nodeViewModel);
+            SelectedNode = nodeViewModel;
 
             return nodeViewModel;
         }
@@ -90,6 +92,30 @@ namespace POC3D.ViewModel
             Elements.Add(result);
 
             return result;
+        }
+        
+        public ICommand AddNodeCommand => new Command(o => true, o => AddNode());
+    }
+    public class Command : ICommand
+    {
+        private readonly Func<object, bool> _canExecute;
+        private readonly Action<object> _execute;
+        public event EventHandler CanExecuteChanged;
+
+        public Command(Func<object,bool> canExecute, Action<object> execute)
+        {
+            _canExecute = canExecute;
+            _execute = execute;
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            return _canExecute(parameter);
+        }
+
+        public void Execute(object parameter)
+        {
+            _execute(parameter);
         }
     }
 }

@@ -104,7 +104,7 @@ namespace POC3D.ViewModel
             return result;
         }
 
-        public ICommand AddNodeCommand => new Command(o => true, o => AddNode());
+        public ICommand AddNodeCommand => new AddNodeCommand(this);
         public ICommand DeleteNodeCommand => new DeleteNodeCommand(this);
     }
 
@@ -137,26 +137,24 @@ namespace POC3D.ViewModel
 
     }
 
-    public class Command : ICommand
+    public class AddNodeCommand : ICommand
     {
-        private readonly Func<object, bool> _canExecute;
-        private readonly Action<object> _execute;
+        private readonly ProblemViewModel _problemViewModel;
         public event EventHandler CanExecuteChanged;
 
-        public Command(Func<object,bool> canExecute, Action<object> execute)
+        public AddNodeCommand(ProblemViewModel problemViewModel)
         {
-            _canExecute = canExecute;
-            _execute = execute;
+            _problemViewModel = problemViewModel;
         }
 
         public bool CanExecute(object parameter)
         {
-            return _canExecute(parameter);
+            return true;
         }
 
         public void Execute(object parameter)
         {
-            _execute(parameter);
+            _problemViewModel.AddNode();
         }
     }
 }

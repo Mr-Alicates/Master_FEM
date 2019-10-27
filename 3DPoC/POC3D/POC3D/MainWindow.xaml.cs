@@ -23,7 +23,14 @@ namespace POC3D
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainViewModel MainViewModel { get; }
+        public static readonly DependencyProperty MainViewModelProperty = DependencyProperty.Register(
+            nameof(MainViewModel), typeof(MainViewModel), typeof(MainWindow));
+
+        public MainViewModel MainViewModel
+        {
+            get { return (MainViewModel)this.GetValue(MainViewModelProperty); }
+            set { this.SetValue(MainViewModelProperty, value); }
+        }
 
         public MainWindow()
         {
@@ -32,9 +39,7 @@ namespace POC3D
             DataContext = MainViewModel;
 
             Init();
-
-            Viewport.Focus();
-
+            
             //I had to wire this events here because the events are not reaching the custom user control
             MouseWheel += CameraControl_MouseWheel;
             MouseMove += CameraControl_MouseMove;
@@ -43,33 +48,33 @@ namespace POC3D
 
         public void Init()
         {
-            MainViewModel.Camera.Position = new Point3D(-100, 0, 0);
+            MainViewModel.CameraViewModel.Position = new Point3D(-100, 0, 0);
 
-            //var node1 = MainViewModel.Problem.AddNode(new Point3D(-10, -10, -10)).SetAsFixed();
-            //var node2 = MainViewModel.Problem.AddNode(new Point3D(10, -10, -10)).SetAsFixed();
-            //var node3 = MainViewModel.Problem.AddNode(new Point3D(10, 10, -10)).SetAsFixed();
-            //var node4 = MainViewModel.Problem.AddNode(new Point3D(-10, 10, -10)).SetAsFixed();
+            var node1 = MainViewModel.ProblemViewModel.AddNode(new Point3D(-10, -10, -10)).SetAsFixed();
+            var node2 = MainViewModel.ProblemViewModel.AddNode(new Point3D(10, -10, -10)).SetAsFixed();
+            var node3 = MainViewModel.ProblemViewModel.AddNode(new Point3D(10, 10, -10)).SetAsFixed();
+            var node4 = MainViewModel.ProblemViewModel.AddNode(new Point3D(-10, 10, -10)).SetAsFixed();
 
-            //var node5 = MainViewModel.Problem.AddNode(new Point3D(-10, -10, 10)).SetAsFree();
-            //var node6 = MainViewModel.Problem.AddNode(new Point3D(10, -10, 10)).SetAsFree();
-            //var node7 = MainViewModel.Problem.AddNode(new Point3D(10, 10, 10)).SetAsFree();
-            //var node8 = MainViewModel.Problem.AddNode(new Point3D(-10, 10, 10)).SetAsFree();
+            var node5 = MainViewModel.ProblemViewModel.AddNode(new Point3D(-10, -10, 10)).SetAsFree();
+            var node6 = MainViewModel.ProblemViewModel.AddNode(new Point3D(10, -10, 10)).SetAsFree();
+            var node7 = MainViewModel.ProblemViewModel.AddNode(new Point3D(10, 10, 10)).SetAsFree();
+            var node8 = MainViewModel.ProblemViewModel.AddNode(new Point3D(-10, 10, 10)).SetAsFree();
 
 
-            //MainViewModel.Problem.AddBarElement(node1, node2);
-            //MainViewModel.Problem.AddBarElement(node2, node3);
-            //MainViewModel.Problem.AddBarElement(node3, node4);
-            //MainViewModel.Problem.AddBarElement(node4, node1);
+            MainViewModel.ProblemViewModel.AddBarElement(node1, node2);
+            MainViewModel.ProblemViewModel.AddBarElement(node2, node3);
+            MainViewModel.ProblemViewModel.AddBarElement(node3, node4);
+            MainViewModel.ProblemViewModel.AddBarElement(node4, node1);
 
-            //MainViewModel.Problem.AddBarElement(node1, node5);
-            //MainViewModel.Problem.AddBarElement(node2, node6);
-            //MainViewModel.Problem.AddBarElement(node3, node7);
-            //MainViewModel.Problem.AddBarElement(node4, node8);
+            MainViewModel.ProblemViewModel.AddBarElement(node1, node5);
+            MainViewModel.ProblemViewModel.AddBarElement(node2, node6);
+            MainViewModel.ProblemViewModel.AddBarElement(node3, node7);
+            MainViewModel.ProblemViewModel.AddBarElement(node4, node8);
 
-            //MainViewModel.Problem.AddBarElement(node5, node6);
-            //MainViewModel.Problem.AddBarElement(node6, node7);
-            //MainViewModel.Problem.AddBarElement(node7, node8);
-            //MainViewModel.Problem.AddBarElement(node8, node5);
+            MainViewModel.ProblemViewModel.AddBarElement(node5, node6);
+            MainViewModel.ProblemViewModel.AddBarElement(node6, node7);
+            MainViewModel.ProblemViewModel.AddBarElement(node7, node8);
+            MainViewModel.ProblemViewModel.AddBarElement(node8, node5);
         }
 
         private void CameraControl_MouseMove(object sender, MouseEventArgs e)

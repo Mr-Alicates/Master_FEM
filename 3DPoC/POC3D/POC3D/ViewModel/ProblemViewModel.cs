@@ -73,6 +73,21 @@ namespace POC3D.ViewModel
         public ObservableCollection<NodeViewModel> Nodes { get; }
         public ObservableCollection<ElementViewModel> Elements { get; }
 
+        public NodeViewModel AddNode(Point3D point)
+        {
+            var modelNode = _modelProblem.AddNode();
+            modelNode.Coordinates.X = point.X;
+            modelNode.Coordinates.Y = point.Y;
+            modelNode.Coordinates.Z = point.Z;
+
+            var nodeViewModel = new NodeViewModel(modelNode);
+
+            Nodes.Add(nodeViewModel);
+            SelectedNode = nodeViewModel;
+
+            return nodeViewModel;
+        }
+
         public NodeViewModel AddNode()
         {
             var modelNode = _modelProblem.AddNode();

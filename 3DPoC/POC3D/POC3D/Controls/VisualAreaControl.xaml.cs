@@ -53,11 +53,11 @@ namespace POC3D.Controls
             Viewport.KeyDown += CameraControl_KeyboardKeyDown;
 
 
-            MainViewModel.Camera.OnCameraViewModelChanged += (a, b) => UpdateCamera();
+            MainViewModel.CameraViewModel.OnCameraViewModelChanged += (a, b) => UpdateCamera();
 
-            MainViewModel.Problem.SelectedNodeChanged += (a, b) => UpdateProblem();
-            MainViewModel.Problem.Nodes.CollectionChanged += (a, b) => UpdateProblem();
-            MainViewModel.Problem.Elements.CollectionChanged += (a, b) => UpdateProblem();
+            MainViewModel.ProblemViewModel.SelectedNodeChanged += (a, b) => UpdateProblem();
+            MainViewModel.ProblemViewModel.Nodes.CollectionChanged += (a, b) => UpdateProblem();
+            MainViewModel.ProblemViewModel.Elements.CollectionChanged += (a, b) => UpdateProblem();
 
             UpdateCamera();
             UpdateProblem();
@@ -90,12 +90,12 @@ namespace POC3D.Controls
             Model3DGroup.Children.Add(ambientLight);
             Model3DGroup.Children.Add(directionalLight);
 
-            foreach (var node in MainViewModel.Problem.Nodes)
+            foreach (var node in MainViewModel.ProblemViewModel.Nodes)
             {
                 Model3DGroup.Children.Add(node.Geometry);
             }
 
-            foreach (var element in MainViewModel.Problem.Elements)
+            foreach (var element in MainViewModel.ProblemViewModel.Elements)
             {
                 Model3DGroup.Children.Add(element.Geometry);
             }
@@ -103,9 +103,9 @@ namespace POC3D.Controls
 
         public void UpdateCamera()
         {
-            Camera.Position = MainViewModel.Camera.Position;
-            Camera.UpDirection = MainViewModel.Camera.UpDirection;
-            Camera.LookDirection = MainViewModel.Camera.LookDirection;
+            Camera.Position = MainViewModel.CameraViewModel.Position;
+            Camera.UpDirection = MainViewModel.CameraViewModel.UpDirection;
+            Camera.LookDirection = MainViewModel.CameraViewModel.LookDirection;
         }
     }
 }

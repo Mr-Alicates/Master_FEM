@@ -60,6 +60,7 @@ namespace POC3D
             var node7 = MainViewModel.ProblemViewModel.AddNode(new Point3D(10, 10, 10)).SetAsFree();
             var node8 = MainViewModel.ProblemViewModel.AddNode(new Point3D(-10, 10, 10)).SetAsFree();
 
+            MainViewModel.ProblemViewModel.SelectedNode = null;
 
             MainViewModel.ProblemViewModel.AddBarElement(node1, node2);
             MainViewModel.ProblemViewModel.AddBarElement(node2, node3);
@@ -75,6 +76,8 @@ namespace POC3D
             MainViewModel.ProblemViewModel.AddBarElement(node6, node7);
             MainViewModel.ProblemViewModel.AddBarElement(node7, node8);
             MainViewModel.ProblemViewModel.AddBarElement(node8, node5);
+
+            MainViewModel.ProblemViewModel.SelectedElement = null;
         }
 
         private void CameraControl_MouseMove(object sender, MouseEventArgs e)

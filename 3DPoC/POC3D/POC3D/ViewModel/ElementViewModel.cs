@@ -9,8 +9,12 @@ using POC3D.Model;
 
 namespace POC3D.ViewModel
 {
-    public class ElementViewModel
+    public class ElementViewModel : Observable
     {
+        private static readonly Brush BarBrush = Brushes.Blue;
+        private static readonly Brush SelectedBarBrush = Brushes.Red;
+
+
         private readonly IModelElement _modelElement;
 
         public ElementViewModel(IModelElement modelElement)
@@ -18,15 +22,17 @@ namespace POC3D.ViewModel
             _modelElement = modelElement;
         }
 
+        public bool IsSelected { get; set; }
+
         public NodeViewModel Origin => new NodeViewModel(_modelElement.Nodes.First());
 
         public NodeViewModel Destination => new NodeViewModel(_modelElement.Nodes.Last());
 
-        public GeometryModel3D Geometry => BuildBar3D(Origin.Coordinates, Destination.Coordinates);
+        public GeometryModel3D Geometry => BuildBar3D(Origin.Coordinates, Destination.Coordinates, IsSelected);
 
-        private static GeometryModel3D BuildBar3D(Point3D origin, Point3D destination)
+        private static GeometryModel3D BuildBar3D(Point3D origin, Point3D destination, bool isSelected)
         {
-            var material = Brushes.Blue;
+            var material = isSelected? SelectedBarBrush : BarBrush;
             const double halfSize = 0.5;
             
             GeometryModel3D result = new GeometryModel3D();
@@ -100,5 +106,7 @@ namespace POC3D.ViewModel
 
             return result;
         }
+
+        public string Name => $"({Origin.Id}) ---> ({Destination.Id})";
     }
 }

@@ -55,9 +55,7 @@ namespace POC3D.Controls
 
             MainViewModel.CameraViewModel.OnCameraViewModelChanged += (a, b) => UpdateCamera();
 
-            MainViewModel.ProblemViewModel.SelectedNodeChanged += (a, b) => UpdateProblem();
-            MainViewModel.ProblemViewModel.Nodes.CollectionChanged += (a, b) => UpdateProblem();
-            MainViewModel.ProblemViewModel.Elements.CollectionChanged += (a, b) => UpdateProblem();
+            MainViewModel.ProblemViewModel.ProblemChanged += (a, b) => UpdateProblem();
 
             UpdateCamera();
             UpdateProblem();

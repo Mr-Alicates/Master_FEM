@@ -55,6 +55,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\ElementManagerControl.xaml.cs">
+      <DependentUpon>ElementManagerControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\NodeManagerControl.xaml.cs">
       <DependentUpon>NodeManagerControl.xaml</DependentUpon>
     </Compile>
@@ -66,7 +69,7 @@
     <Compile Include="Model\ModelNode.cs" />
     <Compile Include="Model\ModelPoint.cs" />
     <Compile Include="Model\ModelProblem.cs" />
-    <Compile Include="ViewModel\Camera\VisualControlViewModel.cs" />
+    <Compile Include="ViewModel\InterfaceControlViewModel.cs" />
     <Compile Include="ViewModel\Camera\CameraViewModel.cs" />
     <Compile Include="ViewModel\Camera\BaseCameraViewModel.cs" />
     <Compile Include="ViewModel\ElementViewModel.cs" />
@@ -74,6 +77,10 @@
     <Compile Include="ViewModel\NodeViewModel.cs" />
     <Compile Include="ViewModel\Observable.cs" />
     <Compile Include="ViewModel\ProblemViewModel.cs" />
+    <Page Include="Controls\ElementManagerControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\NodeManagerControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

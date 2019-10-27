@@ -1,43 +1,40 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using POC3D.ViewModel.Camera;
 
-namespace POC3D.ViewModel.Camera
+namespace POC3D.ViewModel
 {
     public class InterfaceControlViewModel : Observable
     {
         private readonly CameraViewModel _cameraViewModel;
         private Point _lastMousePosition;
 
-        public Visibility NodeControlsVisibility { get; private set; } = Visibility.Hidden;
-        public Visibility ElementControlsVisibility { get; private set; } = Visibility.Hidden;
+        public Visibility NodesControlVisibility { get; private set; } = Visibility.Hidden;
+        public Visibility ElementsControlVisibility { get; private set; } = Visibility.Hidden;
 
         public InterfaceControlViewModel(CameraViewModel cameraViewModel)
         {
             _cameraViewModel = cameraViewModel;
         }
 
-        public ICommand ShowNodeControlsCommand => new ButtonCommand(ShowNodeControls);
+        public ICommand ShowNodesControlCommand => new ButtonCommand(ShowNodeControls);
 
-        public ICommand ShowElementControlsCommand => new ButtonCommand(ShowElementControls);
+        public ICommand ShowElementsControlCommand => new ButtonCommand(ShowElementControls);
 
         public void ShowNodeControls()
         {
-            NodeControlsVisibility = Visibility.Visible;
-            ElementControlsVisibility = Visibility.Hidden;
-            OnPropertyChanged(nameof(NodeControlsVisibility));
-            OnPropertyChanged(nameof(ElementControlsVisibility));
+            NodesControlVisibility = Visibility.Visible;
+            ElementsControlVisibility = Visibility.Hidden;
+            OnPropertyChanged(nameof(NodesControlVisibility));
+            OnPropertyChanged(nameof(ElementsControlVisibility));
         }
         public void ShowElementControls()
         {
-            NodeControlsVisibility = Visibility.Hidden;
-            ElementControlsVisibility = Visibility.Visible;
-            OnPropertyChanged(nameof(NodeControlsVisibility));
-            OnPropertyChanged(nameof(ElementControlsVisibility));
+            NodesControlVisibility = Visibility.Hidden;
+            ElementsControlVisibility = Visibility.Visible;
+            OnPropertyChanged(nameof(NodesControlVisibility));
+            OnPropertyChanged(nameof(ElementsControlVisibility));
         }
 
         public void ReactToMouseWheelMovement(int delta)

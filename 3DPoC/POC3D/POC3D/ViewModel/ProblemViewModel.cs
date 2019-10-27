@@ -15,9 +15,10 @@ namespace POC3D.ViewModel
 {
     public class ProblemViewModel : Observable
     {
-        public EventHandler SelectedNodeChanged;
+        public EventHandler ProblemChanged;
 
         private NodeViewModel _selectedNode;
+        private ElementViewModel _selectedElement;
         private readonly ModelProblem _modelProblem;
 
         public ProblemViewModel()
@@ -28,6 +29,7 @@ namespace POC3D.ViewModel
             Elements = new ObservableCollection<ElementViewModel>();
 
             Nodes.CollectionChanged += NodeAdded;
+            Elements.CollectionChanged += ElementAdded;
         }
 
         public NodeViewModel SelectedNode
@@ -47,10 +49,36 @@ namespace POC3D.ViewModel
                 if (_selectedNode != null)
                 {
                     _selectedNode.IsSelected = true;
+                    SelectedElement = null;
                 }
 
                 OnPropertyChanged(nameof(SelectedNode));
-                SelectedNodeChanged?.Invoke(null, null);
+                ProblemChanged?.Invoke(null, null);
+            }
+        }
+
+        public ElementViewModel SelectedElement
+        {
+            get => _selectedElement;
+            set
+            {
+                if (_selectedElement == value) return;
+
+                if (_selectedElement != null)
+                {
+                    _selectedElement.IsSelected = false;
+                }
+
+                _selectedElement = value;
+
+                if (_selectedElement != null)
+                {
+                    _selectedElement.IsSelected = true;
+                    SelectedNode = null;
+                }
+
+                OnPropertyChanged(nameof(SelectedElement));
+                ProblemChanged?.Invoke(null, null);
             }
         }
 
@@ -63,27 +91,38 @@ namespace POC3D.ViewModel
                     node.PropertyChanged += NodePropertyChanged;
                 }
             }
+
+            ProblemChanged?.Invoke(null, null);
+        }
+
+        private void ElementAdded(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.NewItems != null)
+            {
+                foreach (ElementViewModel element in e.NewItems)
+                {
+                    element.PropertyChanged += NodePropertyChanged;
+                }
+            }
+
+            ProblemChanged?.Invoke(null, null);
         }
 
         private void NodePropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
         {
-            SelectedNodeChanged?.Invoke(null, null);
+            ProblemChanged?.Invoke(null, null);
         }
 
         public ObservableCollection<NodeViewModel> Nodes { get; }
+
         public ObservableCollection<ElementViewModel> Elements { get; }
 
         public NodeViewModel AddNode(Point3D point)
         {
-            var modelNode = _modelProblem.AddNode();
-            modelNode.Coordinates.X = point.X;
-            modelNode.Coordinates.Y = point.Y;
-            modelNode.Coordinates.Z = point.Z;
-
-            var nodeViewModel = new NodeViewModel(modelNode);
-
-            Nodes.Add(nodeViewModel);
-            SelectedNode = nodeViewModel;
+            var nodeViewModel = AddNode();
+            nodeViewModel.X = point.X;
+            nodeViewModel.Y = point.Y;
+            nodeViewModel.Z = point.Z;
 
             return nodeViewModel;
         }
@@ -115,6 +154,7 @@ namespace POC3D.ViewModel
             var result = new ElementViewModel(element);
 
             Elements.Add(result);
+            SelectedElement = result;
 
             return result;
         }
@@ -132,7 +172,7 @@ namespace POC3D.ViewModel
         {
             _problemViewModel = problemViewModel;
 
-            _problemViewModel.SelectedNodeChanged += SelectedNodeChanged;
+            _problemViewModel.ProblemChanged += SelectedNodeChanged;
         }
 
         private void SelectedNodeChanged(object sender, EventArgs e)

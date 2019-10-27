@@ -65,17 +65,17 @@ namespace POC3D.Controls
 
         private void CameraControl_MouseMove(object sender, MouseEventArgs e)
         {
-            MainViewModel.CameraControlViewModel.ReactToMouseMovement(e.MiddleButton, e.RightButton, e.GetPosition(this));
+            MainViewModel.InterfaceControlViewModel.ReactToMouseMovement(e.MiddleButton, e.RightButton, e.GetPosition(this));
         }
 
         private void CameraControl_MouseWheel(object sender, MouseWheelEventArgs e)
         {
-            MainViewModel.CameraControlViewModel.ReactToMouseWheelMovement(e.Delta);
+            MainViewModel.InterfaceControlViewModel.ReactToMouseWheelMovement(e.Delta);
         }
 
         private void CameraControl_KeyboardKeyDown(object sender, KeyEventArgs e)
         {
-            MainViewModel.CameraControlViewModel.ReactToKeyBoardKeyDown(Keyboard.IsKeyDown(Key.LeftShift), e.Key);
+            MainViewModel.InterfaceControlViewModel.ReactToKeyBoardKeyDown(Keyboard.IsKeyDown(Key.LeftShift), e.Key);
         }
 
         public void UpdateProblem()

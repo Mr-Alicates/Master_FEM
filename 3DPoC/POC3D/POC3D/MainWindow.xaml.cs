@@ -84,7 +84,7 @@ namespace POC3D
                 return;
             }
 
-            MainViewModel.CameraControlViewModel.ReactToMouseMovement(e.MiddleButton, e.RightButton, e.GetPosition(Viewport));
+            MainViewModel.InterfaceControlViewModel.ReactToMouseMovement(e.MiddleButton, e.RightButton, e.GetPosition(Viewport));
         }
 
         private void CameraControl_MouseWheel(object sender, MouseWheelEventArgs e)
@@ -94,7 +94,7 @@ namespace POC3D
                 return;
             }
 
-            MainViewModel.CameraControlViewModel.ReactToMouseWheelMovement(e.Delta);
+            MainViewModel.InterfaceControlViewModel.ReactToMouseWheelMovement(e.Delta);
         }
 
         private void CameraControl_KeyboardKeyDown(object sender, KeyEventArgs e)
@@ -104,7 +104,7 @@ namespace POC3D
                 return;
             }
 
-            MainViewModel.CameraControlViewModel.ReactToKeyBoardKeyDown(Keyboard.IsKeyDown(Key.LeftShift), e.Key);
+            MainViewModel.InterfaceControlViewModel.ReactToKeyBoardKeyDown(Keyboard.IsKeyDown(Key.LeftShift), e.Key);
         }
     }
 }

@@ -21,33 +21,6 @@ namespace POC3D.Controls
     /// </summary>
     public partial class NodeManagerControl : UserControl
     {
-
-        public static readonly DependencyProperty ProblemViewModelProperty = DependencyProperty.Register(
-            nameof(ProblemViewModel), typeof(ProblemViewModel), typeof(NodeManagerControl), new PropertyMetadata(null, Callback));
-
-        public ProblemViewModel ProblemViewModel
-        {
-            get { return (ProblemViewModel)this.GetValue(ProblemViewModelProperty); }
-            set
-            {
-                this.SetValue(ProblemViewModelProperty, value);
-                DataContext = value;
-            }
-        }
-
-        private static void Callback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is NodeManagerControl control)
-            {
-                control.InitViewModel(e.NewValue as ProblemViewModel);
-            }
-        }
-
-        private void InitViewModel(ProblemViewModel value)
-        {
-            DataContext = null;
-        }
-
         public NodeManagerControl()
         {
             InitializeComponent();

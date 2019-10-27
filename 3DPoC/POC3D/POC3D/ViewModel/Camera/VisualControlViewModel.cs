@@ -8,16 +8,38 @@ using System.Windows.Input;
 
 namespace POC3D.ViewModel.Camera
 {
-    public class VisualControlViewModel : Observable
+    public class InterfaceControlViewModel : Observable
     {
         private readonly CameraViewModel _cameraViewModel;
         private Point _lastMousePosition;
 
-        public VisualControlViewModel(CameraViewModel cameraViewModel)
+        public Visibility NodeControlsVisibility { get; private set; } = Visibility.Hidden;
+        public Visibility ElementControlsVisibility { get; private set; } = Visibility.Hidden;
+
+        public InterfaceControlViewModel(CameraViewModel cameraViewModel)
         {
             _cameraViewModel = cameraViewModel;
         }
-                
+
+        public ICommand ShowNodeControlsCommand => new ButtonCommand(ShowNodeControls);
+
+        public ICommand ShowElementControlsCommand => new ButtonCommand(ShowElementControls);
+
+        public void ShowNodeControls()
+        {
+            NodeControlsVisibility = Visibility.Visible;
+            ElementControlsVisibility = Visibility.Hidden;
+            OnPropertyChanged(nameof(NodeControlsVisibility));
+            OnPropertyChanged(nameof(ElementControlsVisibility));
+        }
+        public void ShowElementControls()
+        {
+            NodeControlsVisibility = Visibility.Hidden;
+            ElementControlsVisibility = Visibility.Visible;
+            OnPropertyChanged(nameof(NodeControlsVisibility));
+            OnPropertyChanged(nameof(ElementControlsVisibility));
+        }
+
         public void ReactToMouseWheelMovement(int delta)
         {
             int movements = Math.Abs(delta / 10);
@@ -155,5 +177,27 @@ namespace POC3D.ViewModel.Camera
                     break;
             }
         }
+    }
+
+    public class ButtonCommand : ICommand
+    {
+        private readonly Action _buttonAction;
+
+        public ButtonCommand(Action buttonAction)
+        {
+            _buttonAction = buttonAction;
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            return true;
+        }
+
+        public void Execute(object parameter)
+        {
+            _buttonAction();
+        }
+
+        public event EventHandler CanExecuteChanged;
     }
 }

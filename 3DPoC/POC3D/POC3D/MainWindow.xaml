@@ -9,19 +9,30 @@
 
     <Grid Background="Gray">
         <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
     
+        <StackPanel Orientation="Horizontal"  Grid.Row="0">
+
+            <Button Content="Nodes" Command="{Binding InterfaceControlViewModel.ShowNodeControlsCommand}" />
+            <Button Content="Elements" Command="{Binding InterfaceControlViewModel.ShowElementControlsCommand}" />
+
+        </StackPanel>
+
+
     <Grid Grid.Row="1">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="200"/>
-        </Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="200"/>
+            </Grid.ColumnDefinitions>
         
         <controls:VisualAreaControl Grid.Column="0" MainViewModel="{Binding Path=.}" x:Name="Viewport"/>
 
-            <controls:NodeManagerControl Grid.Column="1"/>
+        <controls:NodeManagerControl 
+            Grid.Column="1" 
+            Visibility="{Binding Path=InterfaceControlViewModel.NodeControlsVisibility}"
+            DataContext="{Binding Path=.}"/>
 
         </Grid>
     </Grid>

@@ -30,6 +30,7 @@ namespace POC3D.ViewModel
 
             Nodes.CollectionChanged += NodeAdded;
             Elements.CollectionChanged += ElementAdded;
+            NewElementViewModel = new NewElementViewModel(this);
         }
 
         public NodeViewModel SelectedNode
@@ -81,6 +82,8 @@ namespace POC3D.ViewModel
                 ProblemChanged?.Invoke(null, null);
             }
         }
+
+        public NewElementViewModel NewElementViewModel { get; }
 
         private void NodeAdded(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -147,6 +150,15 @@ namespace POC3D.ViewModel
             SelectedNode = null;
         }
 
+        public void DeleteSelectedElement()
+        {
+            var selectedElement = SelectedElement;
+
+            _modelProblem.DeleteElement(selectedElement.Element);
+            Elements.Remove(selectedElement);
+            SelectedElement = null;
+        }
+
         public ElementViewModel AddBarElement(NodeViewModel node1, NodeViewModel node2)
         {
             var element = _modelProblem.AddBarElement(node1.Node, node2.Node);
@@ -160,36 +172,70 @@ namespace POC3D.ViewModel
         }
 
         public ICommand AddNodeCommand => new AddNodeCommand(this);
+
         public ICommand DeleteNodeCommand => new DeleteNodeCommand(this);
+
+        public ICommand DeleteElementCommand => new DeleteElementCommand(this);
+    }
+
+    public class DeleteElementCommand : ICommand
+    {
+        private readonly ProblemViewModel _problemViewModel;
+        public event EventHandler CanExecuteChanged;
+        private bool _canExecute;
+
+        public DeleteElementCommand(ProblemViewModel problemViewModel)
+        {
+            _problemViewModel = problemViewModel;
+
+            problemViewModel.PropertyChanged += PropertiesChanged;
+        }
+
+        private void PropertiesChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            _canExecute = _problemViewModel.SelectedElement != null;
+            CanExecuteChanged?.Invoke(this, new EventArgs());
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            return _canExecute;
+        }
+
+        public void Execute(object parameter)
+        {
+            _problemViewModel.DeleteSelectedElement();
+        }
     }
 
     public class DeleteNodeCommand : ICommand
     {
         private readonly ProblemViewModel _problemViewModel;
         public event EventHandler CanExecuteChanged;
+        private bool _canExecute;
 
         public DeleteNodeCommand(ProblemViewModel problemViewModel)
         {
             _problemViewModel = problemViewModel;
 
-            _problemViewModel.ProblemChanged += SelectedNodeChanged;
+            problemViewModel.PropertyChanged += PropertiesChanged;
         }
 
-        private void SelectedNodeChanged(object sender, EventArgs e)
+        private void PropertiesChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            CanExecuteChanged?.Invoke(this, null);
+            _canExecute = _problemViewModel.SelectedNode != null;
+            CanExecuteChanged?.Invoke(this, new EventArgs());
         }
 
         public bool CanExecute(object parameter)
         {
-            return _problemViewModel.SelectedNode != null;
+            return _canExecute;
         }
 
         public void Execute(object parameter)
         {
             _problemViewModel.DeleteSelectedNode();
         }
-
     }
 
     public class AddNodeCommand : ICommand

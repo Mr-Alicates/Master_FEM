@@ -52,5 +52,10 @@ namespace POC3D.Model
         {
             _nodes.Remove(selectedNodeNode);
         }
+
+        public void DeleteElement(IModelElement element)
+        {
+            _elements.Remove(element);
+        }
     }
 }

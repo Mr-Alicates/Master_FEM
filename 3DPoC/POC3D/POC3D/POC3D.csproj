@@ -55,6 +55,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\ElementAddingControl.xaml.cs">
+      <DependentUpon>ElementAddingControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ElementListingControl.xaml.cs">
       <DependentUpon>ElementListingControl.xaml</DependentUpon>
     </Compile>
@@ -74,9 +77,14 @@
     <Compile Include="ViewModel\Camera\BaseCameraViewModel.cs" />
     <Compile Include="ViewModel\ElementViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\NewElementViewModel.cs" />
     <Compile Include="ViewModel\NodeViewModel.cs" />
     <Compile Include="ViewModel\Observable.cs" />
     <Compile Include="ViewModel\ProblemViewModel.cs" />
+    <Page Include="Controls\ElementAddingControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\ElementListingControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

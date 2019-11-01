@@ -14,19 +14,18 @@ namespace POC3D.ViewModel
         private static readonly Brush BarBrush = Brushes.Blue;
         private static readonly Brush SelectedBarBrush = Brushes.Red;
 
-
-        private readonly IModelElement _modelElement;
-
         public ElementViewModel(IModelElement modelElement)
         {
-            _modelElement = modelElement;
+            Element = modelElement;
         }
 
         public bool IsSelected { get; set; }
 
-        public NodeViewModel Origin => new NodeViewModel(_modelElement.Nodes.First());
+        public IModelElement Element { get; }
 
-        public NodeViewModel Destination => new NodeViewModel(_modelElement.Nodes.Last());
+        public NodeViewModel Origin => new NodeViewModel(Element.Nodes.First());
+
+        public NodeViewModel Destination => new NodeViewModel(Element.Nodes.Last());
 
         public GeometryModel3D Geometry => BuildBar3D(Origin.Coordinates, Destination.Coordinates, IsSelected);
 

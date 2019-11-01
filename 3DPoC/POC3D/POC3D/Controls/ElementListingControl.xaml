@@ -11,8 +11,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
@@ -37,30 +35,7 @@
                    Grid.Column="1"
                    Text="Destination node"/>
 
-
-        <!--<TextBox Grid.Row="1"
-                 Grid.Column="0"
-                 Text="{Binding ProblemViewModel.SelectedNode.Y,Mode=TwoWay}"/>
-        <TextBlock Grid.Row="1"
-                 Grid.Column="1"
-                 Text="Y coordinate"/>
-
-        <TextBox Grid.Row="2"
-                 Grid.Column="0"
-                 Text="{Binding ProblemViewModel.SelectedNode.Z,Mode=TwoWay}"/>
-        <TextBlock Grid.Row="2"
-                 Grid.Column="1"
-                 Text="Z coordinate"/>
-        
-        <CheckBox Grid.Row="3"
-                  Grid.Column="0"
-                  HorizontalAlignment="Right"
-                  IsChecked="{Binding ProblemViewModel.SelectedNode.IsFixed, Mode=TwoWay}"/>
-        <TextBlock Grid.Row="3"
-                 Grid.Column="1"
-                 Text="Is fixed node"/>-->
-
-        <ListView Grid.Row="4" 
+        <ListView Grid.Row="2" 
                   Grid.ColumnSpan="2"
                   ItemsSource="{Binding ProblemViewModel.Elements,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding ProblemViewModel.SelectedElement,Mode=TwoWay}">
@@ -74,19 +49,11 @@
             </ListView.ItemTemplate>
 
         </ListView>
-
-
-        <!--<Button Grid.Row="5"
-                Grid.Column="0"
-                x:Name="AddNodeButton"
-                Content="Add new node"
-                Command="{Binding ProblemViewModel.AddNodeCommand}"/>
-
-        <Button Grid.Row="5"
+        
+        <Button Grid.Row="3"
                 Grid.Column="1"
-                x:Name="DeleteNodeButton"
-                Content="Delete selected node"
-                Command="{Binding ProblemViewModel.DeleteNodeCommand}"/>-->
+                Content="Delete selected element"
+                Command="{Binding ProblemViewModel.DeleteElementCommand}"/>
 
     </Grid>
 </UserControl>

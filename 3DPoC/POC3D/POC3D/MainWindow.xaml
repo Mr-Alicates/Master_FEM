@@ -39,6 +39,7 @@
             Visibility="{Binding Path=InterfaceControlViewModel.ElementsControlVisibility}"
             Orientation="Vertical">
 
+                <controls:ElementAddingControl DataContext="{Binding Path=.}"/>
                 <controls:ElementListingControl DataContext="{Binding Path=.}"/>
         </StackPanel>        
 

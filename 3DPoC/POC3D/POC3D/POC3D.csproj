@@ -55,8 +55,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Controls\ElementManagerControl.xaml.cs">
-      <DependentUpon>ElementManagerControl.xaml</DependentUpon>
+    <Compile Include="Controls\ElementListingControl.xaml.cs">
+      <DependentUpon>ElementListingControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\NodeManagerControl.xaml.cs">
       <DependentUpon>NodeManagerControl.xaml</DependentUpon>
@@ -77,7 +77,7 @@
     <Compile Include="ViewModel\NodeViewModel.cs" />
     <Compile Include="ViewModel\Observable.cs" />
     <Compile Include="ViewModel\ProblemViewModel.cs" />
-    <Page Include="Controls\ElementManagerControl.xaml">
+    <Page Include="Controls\ElementListingControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

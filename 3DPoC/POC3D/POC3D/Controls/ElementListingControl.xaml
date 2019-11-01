@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="POC3D.Controls.ElementManagerControl"
+﻿<UserControl x:Class="POC3D.Controls.ElementListingControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -23,15 +23,22 @@
         </Grid.ColumnDefinitions>
 
 
-        <!--<TextBox Grid.Row="0"
+        <TextBlock Grid.Row="0"
                  Grid.Column="0"
-                 Text="{Binding ProblemViewModel.SelectedNode.X,Mode=TwoWay}"/>
+                 Text="{Binding ProblemViewModel.SelectedElement.Origin.Name,Mode=OneWay}"/>
         <TextBlock Grid.Row="0"
                    Grid.Column="1"
-                   Text="X coordinate"/>
+                   Text="Origin node"/>
+
+        <TextBlock Grid.Row="1"
+                 Grid.Column="0"
+                 Text="{Binding ProblemViewModel.SelectedElement.Destination.Name,Mode=OneWay}"/>
+        <TextBlock Grid.Row="1"
+                   Grid.Column="1"
+                   Text="Destination node"/>
 
 
-        <TextBox Grid.Row="1"
+        <!--<TextBox Grid.Row="1"
                  Grid.Column="0"
                  Text="{Binding ProblemViewModel.SelectedNode.Y,Mode=TwoWay}"/>
         <TextBlock Grid.Row="1"

@@ -19,9 +19,9 @@ namespace POC3D.Controls
     /// <summary>
     /// Interaction logic for NodeManagerControl.xaml
     /// </summary>
-    public partial class ElementManagerControl : UserControl
+    public partial class ElementListingControl : UserControl
     {
-        public ElementManagerControl()
+        public ElementListingControl()
         {
             InitializeComponent();
         }

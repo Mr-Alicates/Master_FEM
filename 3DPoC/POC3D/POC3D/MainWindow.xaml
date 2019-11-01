@@ -34,10 +34,13 @@
             Visibility="{Binding Path=InterfaceControlViewModel.NodesControlVisibility}"
             DataContext="{Binding Path=.}"/>
 
-        <controls:ElementManagerControl
+        <StackPanel
             Grid.Column="1" 
             Visibility="{Binding Path=InterfaceControlViewModel.ElementsControlVisibility}"
-            DataContext="{Binding Path=.}"/>
+            Orientation="Vertical">
+
+                <controls:ElementListingControl DataContext="{Binding Path=.}"/>
+        </StackPanel>        
 
         </Grid>
     </Grid>

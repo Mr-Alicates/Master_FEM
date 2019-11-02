@@ -7,15 +7,55 @@ namespace POC3D.ViewModel
 {
     public class InterfaceControlViewModel : Observable
     {
+        private readonly ProblemViewModel _problemViewModel;
         private readonly CameraViewModel _cameraViewModel;
         private Point _lastMousePosition;
+        private Visibility nodesControlVisibility = Visibility.Hidden;
+        private Visibility elementsControlVisibility = Visibility.Hidden;
 
-        public Visibility NodesControlVisibility { get; private set; } = Visibility.Hidden;
-        public Visibility ElementsControlVisibility { get; private set; } = Visibility.Hidden;
-
-        public InterfaceControlViewModel(CameraViewModel cameraViewModel)
+        public Visibility NodesControlVisibility
         {
+            get => nodesControlVisibility;
+            private set
+            {
+                nodesControlVisibility = value;
+                OnPropertyChanged(nameof(NodesControlVisibility));
+            }
+        }
+
+        public Visibility ElementsControlVisibility 
+        { 
+            get => elementsControlVisibility;
+            private set 
+            { 
+                elementsControlVisibility = value;
+                OnPropertyChanged(nameof(ElementsControlVisibility));
+            }
+        }
+
+        public InterfaceControlViewModel(ProblemViewModel problemViewModel, CameraViewModel cameraViewModel)
+        {
+            _problemViewModel = problemViewModel;
             _cameraViewModel = cameraViewModel;
+
+            problemViewModel.PropertyChanged += ProblemViewModel_PropertyChanged;
+        }
+
+        private void ProblemViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(_problemViewModel.SelectedNode) &&
+                _problemViewModel.SelectedNode != null)
+            {
+                NodesControlVisibility = Visibility.Visible;
+                ElementsControlVisibility = Visibility.Hidden;
+            }
+
+            if (e.PropertyName == nameof(_problemViewModel.SelectedElement) &&
+                _problemViewModel.SelectedElement != null)
+            {
+                NodesControlVisibility = Visibility.Hidden;
+                ElementsControlVisibility = Visibility.Visible;
+            }
         }
 
         public ICommand ShowNodesControlCommand => new ButtonCommand(ShowNodeControls);
@@ -29,6 +69,7 @@ namespace POC3D.ViewModel
             OnPropertyChanged(nameof(NodesControlVisibility));
             OnPropertyChanged(nameof(ElementsControlVisibility));
         }
+
         public void ShowElementControls()
         {
             NodesControlVisibility = Visibility.Hidden;
@@ -56,8 +97,8 @@ namespace POC3D.ViewModel
         }
 
         public void ReactToMouseMovement(
-            MouseButtonState middleButton, 
-            MouseButtonState rightButton, 
+            MouseButtonState middleButton,
+            MouseButtonState rightButton,
             Point currentCursorPosition)
         {
             if (middleButton == MouseButtonState.Pressed)
@@ -107,7 +148,7 @@ namespace POC3D.ViewModel
                 _cameraViewModel.CameraRotationYUp();
             }
         }
-        
+
         private void ReactToCameraPanMouse(Point currentCursorPosition)
         {
             if (currentCursorPosition.X < _lastMousePosition.X)

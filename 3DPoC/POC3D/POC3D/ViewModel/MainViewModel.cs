@@ -14,7 +14,7 @@ namespace POC3D.ViewModel
         {
             CameraViewModel = new CameraViewModel();
             ProblemViewModel = new ProblemViewModel();
-            InterfaceControlViewModel = new InterfaceControlViewModel(CameraViewModel);
+            InterfaceControlViewModel = new InterfaceControlViewModel(ProblemViewModel, CameraViewModel);
         }
 
         public CameraViewModel CameraViewModel { get; }

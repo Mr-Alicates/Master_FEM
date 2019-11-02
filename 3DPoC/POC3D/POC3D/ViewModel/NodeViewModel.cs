@@ -76,6 +76,8 @@ namespace POC3D.ViewModel
             return this;
         }
 
+        public GeometryModel3D LastGeometry { get; private set; }
+
         public GeometryModel3D Geometry
         {
             get
@@ -84,14 +86,16 @@ namespace POC3D.ViewModel
                 {
                     var brush = IsSelected ? SelectedNodeBrush : FixedNodeBrush;
 
-                    return BuildPyramid3D(Coordinates, brush);
+                    LastGeometry = BuildPyramid3D(Coordinates, brush);
                 }
                 else
                 {
                     var brush = IsSelected ? SelectedNodeBrush : FreeNodeBrush;
 
-                    return BuildCube3D(Coordinates, brush);
+                    LastGeometry = BuildCube3D(Coordinates, brush);
                 }
+
+                return LastGeometry;
             }
         }
 

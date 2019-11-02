@@ -39,11 +39,6 @@ namespace POC3D
             DataContext = MainViewModel;
 
             Init();
-            
-            //I had to wire this events here because the events are not reaching the custom user control
-            MouseWheel += CameraControl_MouseWheel;
-            MouseMove += CameraControl_MouseMove;
-            KeyDown += CameraControl_KeyboardKeyDown;
         }
 
         public void Init()
@@ -78,36 +73,6 @@ namespace POC3D
             MainViewModel.ProblemViewModel.AddBarElement(node8, node5);
 
             MainViewModel.ProblemViewModel.SelectedElement = null;
-        }
-
-        private void CameraControl_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (!Viewport.IsMouseOver)
-            {
-                return;
-            }
-
-            MainViewModel.InterfaceControlViewModel.ReactToMouseMovement(e.MiddleButton, e.RightButton, e.GetPosition(Viewport));
-        }
-
-        private void CameraControl_MouseWheel(object sender, MouseWheelEventArgs e)
-        {
-            if (!Viewport.IsMouseOver)
-            {
-                return;
-            }
-
-            MainViewModel.InterfaceControlViewModel.ReactToMouseWheelMovement(e.Delta);
-        }
-
-        private void CameraControl_KeyboardKeyDown(object sender, KeyEventArgs e)
-        {
-            if (!Viewport.IsMouseOver)
-            {
-                return;
-            }
-
-            MainViewModel.InterfaceControlViewModel.ReactToKeyBoardKeyDown(Keyboard.IsKeyDown(Key.LeftShift), e.Key);
         }
     }
 }

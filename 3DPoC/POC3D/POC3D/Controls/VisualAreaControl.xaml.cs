@@ -48,10 +48,10 @@ namespace POC3D.Controls
 
         public void InitViewModel()
         {
-            Viewport.MouseWheel += CameraControl_MouseWheel;
-            Viewport.MouseMove += CameraControl_MouseMove;
-            Viewport.KeyDown += CameraControl_KeyboardKeyDown;
-
+            Viewport.PreviewMouseMove += Viewport_PreviewMouseMove;
+            Viewport.PreviewMouseWheel += Viewport_PreviewMouseWheel;
+            Viewport.PreviewKeyDown += Viewport_PreviewKeyDown;
+            Viewport.PreviewMouseDown += Viewport_PreviewMouseDown;
 
             MainViewModel.CameraViewModel.OnCameraViewModelChanged += (a, b) => UpdateCamera();
 
@@ -61,19 +61,43 @@ namespace POC3D.Controls
             UpdateProblem();
         }
 
-        private void CameraControl_MouseMove(object sender, MouseEventArgs e)
+        private void Viewport_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            MainViewModel.InterfaceControlViewModel.ReactToMouseMovement(e.MiddleButton, e.RightButton, e.GetPosition(this));
+            this.Focus();
+
+            var ptMouse = e.GetPosition(Viewport);
+            var result = VisualTreeHelper.HitTest(Viewport, ptMouse);
+
+            if (result is RayMeshGeometry3DHitTestResult meshResult)
+            {
+                var geometry = meshResult.MeshHit;
+
+                foreach (var node in MainViewModel.ProblemViewModel.Nodes)
+                {
+                    var nodeGeometry = node.LastGeometry.Geometry as MeshGeometry3D;
+
+                    if (geometry.Equals(nodeGeometry))
+                    {
+                        MainViewModel.ProblemViewModel.SelectedNode = node;
+                        break;
+                    }
+                }
+            }
         }
 
-        private void CameraControl_MouseWheel(object sender, MouseWheelEventArgs e)
+        private void Viewport_PreviewMouseMove(object sender, MouseEventArgs e)
         {
-            MainViewModel.InterfaceControlViewModel.ReactToMouseWheelMovement(e.Delta);
+            MainViewModel.InterfaceControlViewModel.ReactToMouseMovement(e.MiddleButton, e.RightButton, e.GetPosition(Viewport));
         }
 
-        private void CameraControl_KeyboardKeyDown(object sender, KeyEventArgs e)
+        private void Viewport_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             MainViewModel.InterfaceControlViewModel.ReactToKeyBoardKeyDown(Keyboard.IsKeyDown(Key.LeftShift), e.Key);
+        }
+
+        private void Viewport_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            MainViewModel.InterfaceControlViewModel.ReactToMouseWheelMovement(e.Delta);
         }
 
         public void UpdateProblem()

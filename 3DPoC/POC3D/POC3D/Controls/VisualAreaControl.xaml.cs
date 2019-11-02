@@ -83,6 +83,17 @@ namespace POC3D.Controls
                         break;
                     }
                 }
+
+                foreach (var element in MainViewModel.ProblemViewModel.Elements)
+                {
+                    var elementGeometry = element.Geometry.Geometry as MeshGeometry3D;
+
+                    if (geometry.Equals(elementGeometry))
+                    {
+                        MainViewModel.ProblemViewModel.SelectedElement = element;
+                        break;
+                    }
+                }
             }
         }
 

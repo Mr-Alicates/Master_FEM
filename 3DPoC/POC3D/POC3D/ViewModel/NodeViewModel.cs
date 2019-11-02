@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
+using POC3D.Helpers;
 using POC3D.Model;
 
 namespace POC3D.ViewModel
@@ -68,7 +69,6 @@ namespace POC3D.ViewModel
             set
             {
                 Node.IsFixed = value;
-                UpdateMaterial();
                 UpdateGeometry();
                 OnPropertyChanged(nameof(IsFixed));
             }
@@ -80,7 +80,7 @@ namespace POC3D.ViewModel
             set 
             {
                 _isSelected = value;
-                UpdateMaterial();
+                UpdateGeometry();
             } 
         }
 
@@ -117,111 +117,19 @@ namespace POC3D.ViewModel
             };
         }
 
-        private void UpdateMaterial()
-        {
-            _material.Brush = IsSelected ? SelectedNodeBrush : (IsFixed ? FixedNodeBrush : FreeNodeBrush);
-
-            OnPropertyChanged(nameof(Geometry));
-        }
-
         private void UpdateGeometry()
         {
             if (IsFixed)
             {
-                SetGeometryAsPyramid();
+                GraphicsHelper.BuildPyramidMesh(_meshGeometry3D, 4);
             }
             else
             {
-                SetGeometryAsCube();
+                GraphicsHelper.BuildCubeMesh(_meshGeometry3D, 2);
             }
-        }
 
-        private void SetGeometryAsCube()
-        {
-            const int halfSize = 1;
-            
-            _meshGeometry3D.TriangleIndices.Clear();
-            _meshGeometry3D.Positions.Clear();
-
-            _meshGeometry3D.Positions = new Point3DCollection()
-            {
-                Coordinates + new Vector3D(-1, -1, -1) * halfSize,
-                Coordinates + new Vector3D(1, -1, -1) * halfSize,
-                Coordinates + new Vector3D(1, 1, -1) * halfSize,
-                Coordinates + new Vector3D(-1, 1, -1) * halfSize,
-
-                Coordinates + new Vector3D(-1, -1, 1) * halfSize,
-                Coordinates + new Vector3D(1, -1, 1) * halfSize,
-                Coordinates + new Vector3D(1, 1, 1) * halfSize,
-                Coordinates + new Vector3D(-1, 1, 1) * halfSize,
-            };
-
-            _meshGeometry3D.TriangleIndices = new Int32Collection()
-            {
-                //Bottom
-                0,3,1,
-                3,2,1,
-
-                //Top
-                7,4,5,
-                7,5,6,
-
-                //Left
-                0,5,4,
-                0,1,5,
-
-                //Right
-                7,6,3,
-                3,6,2,
-
-                //Back
-                1,2,5,
-                5,2,6,
-
-                //Front
-                7,3,4,
-                4,3,0,
-            };
-
-            OnPropertyChanged(nameof(Geometry));
-        }
-        
-        private void SetGeometryAsPyramid()
-        {
-            const int halfSize = 2;
-
-            _meshGeometry3D.TriangleIndices.Clear();
-            _meshGeometry3D.Positions.Clear();
-
-            _meshGeometry3D.Positions = new Point3DCollection()
-            {
-                Coordinates + new Vector3D(-1, -1, -1) * halfSize,
-                Coordinates + new Vector3D(1, -1, -1) * halfSize,
-                Coordinates + new Vector3D(1, 1, -1) * halfSize,
-                Coordinates + new Vector3D(-1, 1, -1) * halfSize,
-
-                Coordinates + new Vector3D(0, 0, 1) * halfSize,
-            };
-
-            _meshGeometry3D.TriangleIndices = new Int32Collection()
-            {
-                //Bottom
-                0,3,1,
-                3,2,1,
-                    
-                //Left
-                0,1,4,
-
-                //Right
-                1,2,4,
-
-                //Back
-                2,3,4,
-
-                //Front
-                3,0,4
-            };
-
+            Geometry.Transform = new TranslateTransform3D(X, Y, Z);
+            _material.Brush = IsSelected ? SelectedNodeBrush : (IsFixed ? FixedNodeBrush : FreeNodeBrush);
 
             OnPropertyChanged(nameof(Geometry));
         }

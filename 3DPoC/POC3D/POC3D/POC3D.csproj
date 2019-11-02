@@ -67,6 +67,7 @@
     <Compile Include="Controls\VisualAreaControl.xaml.cs">
       <DependentUpon>VisualAreaControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\GraphicsHelper.cs" />
     <Compile Include="Model\ModelBarElement.cs" />
     <Compile Include="Model\IModelElement.cs" />
     <Compile Include="Model\ModelNode.cs" />

@@ -13,99 +13,144 @@ namespace POC3D.ViewModel
     {
         private static readonly Brush BarBrush = Brushes.Blue;
         private static readonly Brush SelectedBarBrush = Brushes.Red;
+        private MeshGeometry3D _meshGeometry3D;
+        private DiffuseMaterial _material;
+        private bool _isSelected;
 
-        public ElementViewModel(IModelElement modelElement)
+        public ElementViewModel(IModelElement modelElement, NodeViewModel origin, NodeViewModel destination)
         {
             Element = modelElement;
+            Origin = origin;
+            Destination = destination;
+
+            Geometry = BuildGeometry();
+            UpdateGeometry();
+
+            Origin.PropertyChanged += NodesChanged;
+            Destination.PropertyChanged += NodesChanged;
         }
 
-        public bool IsSelected { get; set; }
+        private void NodesChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName == nameof(Origin.Geometry))
+            {
+                UpdateGeometry();
+            }
+        }
+
+        public bool IsSelected 
+        { 
+            get => _isSelected;
+            set 
+            {
+                _isSelected = value;
+                UpdateMaterial();
+            }
+        }
 
         public IModelElement Element { get; }
 
-        public NodeViewModel Origin => new NodeViewModel(Element.Nodes.First());
+        public NodeViewModel Origin { get; }
 
-        public NodeViewModel Destination => new NodeViewModel(Element.Nodes.Last());
+        public NodeViewModel Destination { get; }
 
-        public GeometryModel3D Geometry => BuildBar3D(Origin.Coordinates, Destination.Coordinates, IsSelected);
+        public string Name => $"({Origin.Id}) ---> ({Destination.Id})";
 
-        private static GeometryModel3D BuildBar3D(Point3D origin, Point3D destination, bool isSelected)
+        public GeometryModel3D Geometry { get; }
+
+        private GeometryModel3D BuildGeometry()
         {
-            var material = isSelected? SelectedBarBrush : BarBrush;
-            const double halfSize = 0.5;
-            
-            GeometryModel3D result = new GeometryModel3D();
-            result.Material = new DiffuseMaterial(material);
+            _meshGeometry3D = new MeshGeometry3D()
+            {
+                Positions = new Point3DCollection(),
+                TriangleIndices = new Int32Collection()
+            };
 
-            var vector = destination - origin;
+            _material = new DiffuseMaterial(BarBrush);
+
+            return new GeometryModel3D()
+            {
+                Material = _material,
+                Geometry = _meshGeometry3D
+            };
+        }
+
+        private void UpdateMaterial()
+        {
+            _material.Brush = IsSelected ? SelectedBarBrush : BarBrush;
+
+            OnPropertyChanged(nameof(Geometry));
+        }
+
+        private void UpdateGeometry()
+        {
+            const double halfSize = 0.5;
+
+            _meshGeometry3D.TriangleIndices.Clear();
+            _meshGeometry3D.Positions.Clear();
+
+            var vector = (Destination.Coordinates - Origin.Coordinates);
             var height = vector.Length;
 
             Point3D floor = new Point3D();
             Point3D roof = new Point3D(0, 0, height);
 
-            MeshGeometry3D geometry = new MeshGeometry3D()
+            _meshGeometry3D.Positions = new Point3DCollection()
             {
-                Positions = new Point3DCollection()
-                {
-                    floor + new Vector3D(-1, -1, 0) * halfSize,
-                    floor + new Vector3D(1, -1, 0) * halfSize,
-                    floor + new Vector3D(1, 1, 0) * halfSize,
-                    floor + new Vector3D(-1, 1, 0) * halfSize,
+                floor + new Vector3D(-1, -1, 0) * halfSize,
+                floor + new Vector3D(1, -1, 0) * halfSize,
+                floor + new Vector3D(1, 1, 0) * halfSize,
+                floor + new Vector3D(-1, 1, 0) * halfSize,
 
-                    roof + new Vector3D(-1, -1, 0) * halfSize,
-                    roof + new Vector3D(1, -1, 0) * halfSize,
-                    roof + new Vector3D(1, 1, 0) * halfSize,
-                    roof + new Vector3D(-1, 1, 0) * halfSize,
-                },
-                TriangleIndices = new Int32Collection()
-                {
-                    //Bottom
-                    0,3,1,
-                    3,2,1,
-
-                    //Top
-                    7,4,5,
-                    7,5,6,
-
-                    //Left
-                    0,5,4,
-                    0,1,5,
-
-                    //Right
-                    7,6,3,
-                    3,6,2,
-
-                    //Back
-                    1,2,5,
-                    5,2,6,
-
-                    //Front
-                    7,3,4,
-                    4,3,0,
-                }
+                roof + new Vector3D(-1, -1, 0) * halfSize,
+                roof + new Vector3D(1, -1, 0) * halfSize,
+                roof + new Vector3D(1, 1, 0) * halfSize,
+                roof + new Vector3D(-1, 1, 0) * halfSize,
             };
+
+            _meshGeometry3D.TriangleIndices = new Int32Collection()
+            {
+                //Bottom
+                0,3,1,
+                3,2,1,
+
+                //Top
+                7,4,5,
+                7,5,6,
+
+                //Left
+                0,5,4,
+                0,1,5,
+
+                //Right
+                7,6,3,
+                3,6,2,
+
+                //Back
+                1,2,5,
+                5,2,6,
+
+                //Front
+                7,3,4,
+                4,3,0,
+            };
+
 
             var verticalVector = new Vector3D(0, 0, 1);
             var rotationAngle = Vector3D.AngleBetween(verticalVector, vector);
 
             var rotationVector = Vector3D.CrossProduct(verticalVector, vector);
-            
-            result.Geometry = geometry;
-            result.Transform = new Transform3DGroup()
+
+            Geometry.Transform = new Transform3DGroup()
             {
                 Children = new Transform3DCollection()
                 {
                     new RotateTransform3D(new AxisAngleRotation3D(rotationVector, rotationAngle)),
-                    new TranslateTransform3D(origin.X, origin.Y, origin.Z)
+                    new TranslateTransform3D(Origin.X, Origin.Y, Origin.Z)
                 }
             };
 
-
-            
-
-            return result;
+            OnPropertyChanged(nameof(Geometry));
         }
-
-        public string Name => $"({Origin.Id}) ---> ({Destination.Id})";
     }
 }

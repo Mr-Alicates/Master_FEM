@@ -55,7 +55,8 @@ namespace POC3D.Controls
 
             MainViewModel.CameraViewModel.OnCameraViewModelChanged += (a, b) => UpdateCamera();
 
-            MainViewModel.ProblemViewModel.ProblemChanged += (a, b) => UpdateProblem();
+            MainViewModel.ProblemViewModel.Nodes.CollectionChanged += ProblemNodesChanged;
+            MainViewModel.ProblemViewModel.Elements.CollectionChanged += ProblemElementsChanged;
 
             UpdateCamera();
             UpdateProblem();
@@ -74,7 +75,7 @@ namespace POC3D.Controls
 
                 foreach (var node in MainViewModel.ProblemViewModel.Nodes)
                 {
-                    var nodeGeometry = node.LastGeometry.Geometry as MeshGeometry3D;
+                    var nodeGeometry = node.Geometry.Geometry as MeshGeometry3D;
 
                     if (geometry.Equals(nodeGeometry))
                     {
@@ -128,6 +129,44 @@ namespace POC3D.Controls
             Camera.Position = MainViewModel.CameraViewModel.Position;
             Camera.UpDirection = MainViewModel.CameraViewModel.UpDirection;
             Camera.LookDirection = MainViewModel.CameraViewModel.LookDirection;
+        }
+
+        private void ProblemNodesChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.NewItems != null)
+            {
+                foreach (NodeViewModel node in e.NewItems)
+                {
+                    Model3DGroup.Children.Add(node.Geometry);
+                }
+            }
+
+            if (e.OldItems != null)
+            {
+                foreach (NodeViewModel node in e.OldItems)
+                {
+                    Model3DGroup.Children.Remove(node.Geometry);
+                }
+            }
+        }
+
+        private void ProblemElementsChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.NewItems != null)
+            {
+                foreach (ElementViewModel element in e.NewItems)
+                {
+                    Model3DGroup.Children.Add(element.Geometry);
+                }
+            }
+
+            if (e.OldItems != null)
+            {
+                foreach (ElementViewModel element in e.OldItems)
+                {
+                    Model3DGroup.Children.Remove(element.Geometry);
+                }
+            }
         }
     }
 }

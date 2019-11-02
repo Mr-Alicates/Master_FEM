@@ -1,4 +1,5 @@
-﻿using System.Windows.Media;
+﻿using System;
+using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using POC3D.Model;
 
@@ -9,10 +10,16 @@ namespace POC3D.ViewModel
         private static readonly Brush FreeNodeBrush = Brushes.LightGreen;
         private static readonly Brush FixedNodeBrush = Brushes.DarkGreen;
         private static readonly Brush SelectedNodeBrush = Brushes.Red;
+        private MeshGeometry3D _meshGeometry3D;
+        private DiffuseMaterial _material;
+
+        private bool _isSelected;
 
         public NodeViewModel(ModelNode modelNode)
         {
             Node = modelNode;
+            Geometry = BuildGeometry();
+            UpdateGeometry();
         }
 
         public int Id => Node.Id;
@@ -30,6 +37,7 @@ namespace POC3D.ViewModel
             set
             {
                 Node.Coordinates.X = value;
+                UpdateGeometry();
                 OnPropertyChanged(nameof(X));
             }
         }
@@ -39,6 +47,7 @@ namespace POC3D.ViewModel
             set
             {
                 Node.Coordinates.Y = value;
+                UpdateGeometry();
                 OnPropertyChanged(nameof(Y));
             }
         }
@@ -48,6 +57,7 @@ namespace POC3D.ViewModel
             set
             {
                 Node.Coordinates.Z = value;
+                UpdateGeometry();
                 OnPropertyChanged(nameof(Z));
             }
         }
@@ -58,142 +68,162 @@ namespace POC3D.ViewModel
             set
             {
                 Node.IsFixed = value;
+                UpdateMaterial();
+                UpdateGeometry();
                 OnPropertyChanged(nameof(IsFixed));
             }
         }
 
-        public bool IsSelected { get; set; }
+        public bool IsSelected 
+        { 
+            get => _isSelected;
+            set 
+            {
+                _isSelected = value;
+                UpdateMaterial();
+            } 
+        }
 
         public NodeViewModel SetAsFixed()
         {
-            Node.SetAsFixed();
+            IsFixed = true;
             return this;
         }
 
         public NodeViewModel SetAsFree()
         {
-            Node.SetAsFree();
+            IsFixed = false;
             return this;
         }
 
-        public GeometryModel3D LastGeometry { get; private set; }
+        public GeometryModel3D Geometry { get; }
+        
+        public string Name => $"{Id} ({Coordinates.ToString()})";
 
-        public GeometryModel3D Geometry
+        private GeometryModel3D BuildGeometry()
         {
-            get
+            _meshGeometry3D = new MeshGeometry3D()
             {
-                if (IsFixed)
-                {
-                    var brush = IsSelected ? SelectedNodeBrush : FixedNodeBrush;
+                Positions = new Point3DCollection(),
+                TriangleIndices = new Int32Collection()
+            };
 
-                    LastGeometry = BuildPyramid3D(Coordinates, brush);
-                }
-                else
-                {
-                    var brush = IsSelected ? SelectedNodeBrush : FreeNodeBrush;
+            _material = new DiffuseMaterial(FreeNodeBrush);
 
-                    LastGeometry = BuildCube3D(Coordinates, brush);
-                }
+            return new GeometryModel3D()
+            {
+                Material = _material,
+                Geometry = _meshGeometry3D
+            };
+        }
 
-                return LastGeometry;
+        private void UpdateMaterial()
+        {
+            _material.Brush = IsSelected ? SelectedNodeBrush : (IsFixed ? FixedNodeBrush : FreeNodeBrush);
+
+            OnPropertyChanged(nameof(Geometry));
+        }
+
+        private void UpdateGeometry()
+        {
+            if (IsFixed)
+            {
+                SetGeometryAsPyramid();
+            }
+            else
+            {
+                SetGeometryAsCube();
             }
         }
 
-        private static GeometryModel3D BuildCube3D(Point3D center, Brush material)
+        private void SetGeometryAsCube()
         {
             const int halfSize = 1;
+            
+            _meshGeometry3D.TriangleIndices.Clear();
+            _meshGeometry3D.Positions.Clear();
 
-            GeometryModel3D result = new GeometryModel3D();
-            result.Material = new DiffuseMaterial(material);
-
-            result.Geometry = new MeshGeometry3D()
+            _meshGeometry3D.Positions = new Point3DCollection()
             {
-                Positions = new Point3DCollection()
-                {
-                    center + new Vector3D(-1, -1, -1) * halfSize,
-                    center + new Vector3D(1, -1, -1) * halfSize,
-                    center + new Vector3D(1, 1, -1) * halfSize,
-                    center + new Vector3D(-1, 1, -1) * halfSize,
+                Coordinates + new Vector3D(-1, -1, -1) * halfSize,
+                Coordinates + new Vector3D(1, -1, -1) * halfSize,
+                Coordinates + new Vector3D(1, 1, -1) * halfSize,
+                Coordinates + new Vector3D(-1, 1, -1) * halfSize,
 
-                    center + new Vector3D(-1, -1, 1) * halfSize,
-                    center + new Vector3D(1, -1, 1) * halfSize,
-                    center + new Vector3D(1, 1, 1) * halfSize,
-                    center + new Vector3D(-1, 1, 1) * halfSize,
-                },
-                TriangleIndices = new Int32Collection()
-                {
-                    //Bottom
-                    0,3,1,
-                    3,2,1,
-
-                    //Top
-                    7,4,5,
-                    7,5,6,
-
-                    //Left
-                    0,5,4,
-                    0,1,5,
-
-                    //Right
-                    7,6,3,
-                    3,6,2,
-
-                    //Back
-                    1,2,5,
-                    5,2,6,
-
-                    //Front
-                    7,3,4,
-                    4,3,0,
-                }
+                Coordinates + new Vector3D(-1, -1, 1) * halfSize,
+                Coordinates + new Vector3D(1, -1, 1) * halfSize,
+                Coordinates + new Vector3D(1, 1, 1) * halfSize,
+                Coordinates + new Vector3D(-1, 1, 1) * halfSize,
             };
 
+            _meshGeometry3D.TriangleIndices = new Int32Collection()
+            {
+                //Bottom
+                0,3,1,
+                3,2,1,
 
-            return result;
+                //Top
+                7,4,5,
+                7,5,6,
+
+                //Left
+                0,5,4,
+                0,1,5,
+
+                //Right
+                7,6,3,
+                3,6,2,
+
+                //Back
+                1,2,5,
+                5,2,6,
+
+                //Front
+                7,3,4,
+                4,3,0,
+            };
+
+            OnPropertyChanged(nameof(Geometry));
         }
-
-        private static GeometryModel3D BuildPyramid3D(Point3D center, Brush material)
+        
+        private void SetGeometryAsPyramid()
         {
             const int halfSize = 2;
 
-            GeometryModel3D result = new GeometryModel3D();
-            result.Material = new DiffuseMaterial(material);
+            _meshGeometry3D.TriangleIndices.Clear();
+            _meshGeometry3D.Positions.Clear();
 
-            result.Geometry = new MeshGeometry3D()
+            _meshGeometry3D.Positions = new Point3DCollection()
             {
-                Positions = new Point3DCollection()
-                {
-                    center + new Vector3D(-1, -1, -1) * halfSize,
-                    center + new Vector3D(1, -1, -1) * halfSize,
-                    center + new Vector3D(1, 1, -1) * halfSize,
-                    center + new Vector3D(-1, 1, -1) * halfSize,
+                Coordinates + new Vector3D(-1, -1, -1) * halfSize,
+                Coordinates + new Vector3D(1, -1, -1) * halfSize,
+                Coordinates + new Vector3D(1, 1, -1) * halfSize,
+                Coordinates + new Vector3D(-1, 1, -1) * halfSize,
 
-                    center + new Vector3D(0, 0, 1) * halfSize,
-                },
-                TriangleIndices = new Int32Collection()
-                {
-                    //Bottom
-                    0,3,1,
-                    3,2,1,
+                Coordinates + new Vector3D(0, 0, 1) * halfSize,
+            };
+
+            _meshGeometry3D.TriangleIndices = new Int32Collection()
+            {
+                //Bottom
+                0,3,1,
+                3,2,1,
                     
-                    //Left
-                    0,1,4,
+                //Left
+                0,1,4,
 
-                    //Right
-                    1,2,4,
+                //Right
+                1,2,4,
 
-                    //Back
-                    2,3,4,
+                //Back
+                2,3,4,
 
-                    //Front
-                    3,0,4
-                }
+                //Front
+                3,0,4
             };
 
 
-            return result;
+            OnPropertyChanged(nameof(Geometry));
         }
-
-        public string Name => $"{Id} ({Coordinates.ToString()})";
     }
 }

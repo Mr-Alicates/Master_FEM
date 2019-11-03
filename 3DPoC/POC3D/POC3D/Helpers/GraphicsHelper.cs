@@ -139,5 +139,133 @@ namespace POC3D.Helpers
                 4,3,0,
             };
         }
+
+        public static Model3DGroup BuildOrigin()
+        {
+            var zArrow = new GeometryModel3D()
+            {
+                Geometry = BuildArrow(),
+                Material = new MaterialGroup()
+                {
+                    Children = new MaterialCollection()
+                    {
+                        new DiffuseMaterial(Brushes.Green),
+                        new EmissiveMaterial(Brushes.Green)
+                    }
+                }
+            };
+
+            var yArrow = new GeometryModel3D()
+            {
+                Geometry = BuildArrow(),
+                Transform = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(-1, 0, 0), 90)),
+                Material = new MaterialGroup()
+                {
+                    Children = new MaterialCollection()
+                    {
+                        new DiffuseMaterial(Brushes.Blue),
+                        new EmissiveMaterial(Brushes.Blue)
+                    }
+                }
+            };
+
+            var xArrow = new GeometryModel3D()
+            {
+                Geometry = BuildArrow(),
+                Transform = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 1, 0), 90)),
+                Material = new MaterialGroup()
+                {
+                    Children = new MaterialCollection()
+                    {
+                        new DiffuseMaterial(Brushes.Red),
+                        new EmissiveMaterial(Brushes.Red)
+                    }
+                }
+            };
+
+            var cubeMesh = new MeshGeometry3D();
+            BuildCubeMesh(cubeMesh, 0.5);
+
+            var center = new GeometryModel3D()
+            {
+                Geometry = cubeMesh,
+                Material = new MaterialGroup()
+                {
+                    Children = new MaterialCollection()
+                    {
+                        new DiffuseMaterial(Brushes.Black),
+                        new EmissiveMaterial(Brushes.Black)
+                    }
+                }
+            };
+
+            Model3DGroup result = new Model3DGroup()
+            {
+                Children = new Model3DCollection()
+                {
+                    zArrow,
+                    yArrow,
+                    xArrow,
+                    center
+                }
+            };
+
+            return result;
+        }
+        
+        public static MeshGeometry3D BuildArrow()
+        {
+            var mesh = new MeshGeometry3D();
+
+            var halfSize = 0.5;
+            var tenthSize = 0.05;
+
+            var length = 10;
+
+            mesh.TriangleIndices.Clear();
+            mesh.Positions.Clear();
+
+            mesh.Positions = new Point3DCollection()
+            {
+                new Point3D(-halfSize, -halfSize, length - halfSize),
+                new Point3D(halfSize, -halfSize, length - halfSize),
+                new Point3D(halfSize, halfSize, length - halfSize),
+                new Point3D(-halfSize, halfSize, length - halfSize),
+                new Point3D(0, 0, length),
+
+                new Point3D(-tenthSize, -tenthSize, length - halfSize),
+                new Point3D(tenthSize, -tenthSize, length - halfSize),
+                new Point3D(tenthSize, tenthSize, length - halfSize),
+                new Point3D(-tenthSize, tenthSize, length - halfSize),
+                new Point3D(0, 0, 0),
+            };
+
+            mesh.TriangleIndices = new Int32Collection()
+            {
+                //Bottom
+                0,3,1,
+                3,2,1,
+                    
+                //Left
+                0,1,4,
+
+                //Right
+                1,2,4,
+
+                //Back
+                2,3,4,
+
+                //Front
+                3,0,4,
+
+                //Stem
+                6,5,9,
+                7,6,9,
+                8,7,9,
+                5,8,9,
+            };
+
+            return mesh;
+        }
     }
 }

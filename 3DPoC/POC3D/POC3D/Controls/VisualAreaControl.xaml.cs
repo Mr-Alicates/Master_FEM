@@ -1,4 +1,5 @@
-﻿using POC3D.ViewModel;
+﻿using POC3D.Helpers;
+using POC3D.ViewModel;
 using POC3D.ViewModel.Camera;
 using System;
 using System.Collections.Generic;
@@ -111,7 +112,7 @@ namespace POC3D.Controls
         {
             MainViewModel.InterfaceControlViewModel.ReactToMouseWheelMovement(e.Delta);
         }
-
+        
         public void UpdateProblem()
         {
             //Remove all the elements
@@ -120,6 +121,9 @@ namespace POC3D.Controls
             //Add general lighting to the scene
             AmbientLight ambientLight = new AmbientLight(Colors.Black);
             DirectionalLight directionalLight = new DirectionalLight(Colors.White, new Vector3D(0, 0, -1));
+
+            var origin = GraphicsHelper.BuildOrigin();
+            Model3DGroup.Children.Add(origin);
 
             Model3DGroup.Children.Add(ambientLight);
             Model3DGroup.Children.Add(directionalLight);

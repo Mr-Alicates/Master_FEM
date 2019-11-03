@@ -1,5 +1,4 @@
-﻿using POC3D.ViewModel.Camera;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

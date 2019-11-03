@@ -74,8 +74,7 @@
     <Compile Include="Model\ModelPoint.cs" />
     <Compile Include="Model\ModelProblem.cs" />
     <Compile Include="ViewModel\InterfaceControlViewModel.cs" />
-    <Compile Include="ViewModel\Camera\CameraViewModel.cs" />
-    <Compile Include="ViewModel\Camera\BaseCameraViewModel.cs" />
+    <Compile Include="ViewModel\CameraViewModel.cs" />
     <Compile Include="ViewModel\ElementViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\NewElementViewModel.cs" />

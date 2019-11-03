@@ -7,8 +7,19 @@
              d:DesignHeight="450" d:DesignWidth="800"
              x:Name="Viewport"
              Background="White">
+    <Grid>
 
-            <Viewport3D>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="{Binding CameraViewModel.FriendlyPosition}"/>
+        <TextBlock Grid.Row="1" Text="{Binding CameraViewModel.FriendlyLookDirection}"/>
+
+        <Viewport3D Grid.Row="0"
+                    Grid.RowSpan="3">
 
                 <Viewport3D.Camera>
                     <PerspectiveCamera x:Name="Camera" />
@@ -22,4 +33,5 @@
                 </ModelVisual3D>
                 
             </Viewport3D>
+    </Grid>
 </UserControl>

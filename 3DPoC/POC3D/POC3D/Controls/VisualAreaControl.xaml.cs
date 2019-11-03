@@ -1,6 +1,5 @@
 ﻿using POC3D.Helpers;
 using POC3D.ViewModel;
-using POC3D.ViewModel.Camera;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -143,7 +142,7 @@ namespace POC3D.Controls
         {
             Camera.Position = MainViewModel.CameraViewModel.Position;
             Camera.UpDirection = MainViewModel.CameraViewModel.UpDirection;
-            Camera.LookDirection = MainViewModel.CameraViewModel.LookDirection;
+            Camera.LookDirection = MainViewModel.CameraViewModel.UnaryForward;
         }
 
         private void ProblemNodesChanged(object sender, NotifyCollectionChangedEventArgs e)

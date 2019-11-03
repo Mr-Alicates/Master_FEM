@@ -55,13 +55,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Controls\ElementAddingControl.xaml.cs">
+    <Compile Include="Controls\Elements\ElementAddingControl.xaml.cs">
       <DependentUpon>ElementAddingControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ElementListingControl.xaml.cs">
+    <Compile Include="Controls\Elements\ElementListingControl.xaml.cs">
       <DependentUpon>ElementListingControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\NodeManagerControl.xaml.cs">
+    <Compile Include="Controls\Forces\ForceListingControl.xaml.cs">
+      <DependentUpon>ForceListingControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Nodes\NodeManagerControl.xaml.cs">
       <DependentUpon>NodeManagerControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\VisualAreaControl.xaml.cs">
@@ -84,15 +87,19 @@
     <Compile Include="ViewModel\NodeViewModel.cs" />
     <Compile Include="ViewModel\Observable.cs" />
     <Compile Include="ViewModel\ProblemViewModel.cs" />
-    <Page Include="Controls\ElementAddingControl.xaml">
+    <Page Include="Controls\Elements\ElementAddingControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\ElementListingControl.xaml">
+    <Page Include="Controls\Elements\ElementListingControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\NodeManagerControl.xaml">
+    <Page Include="Controls\Forces\ForceListingControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Nodes\NodeManagerControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -9,8 +9,18 @@ namespace POC3D.ViewModel
         private readonly ProblemViewModel _problemViewModel;
         private readonly CameraViewModel _cameraViewModel;
         private Point _lastMousePosition;
+
         private Visibility nodesControlVisibility = Visibility.Hidden;
         private Visibility elementsControlVisibility = Visibility.Hidden;
+        private Visibility forcesControlVisibility = Visibility.Hidden;
+
+        public InterfaceControlViewModel(ProblemViewModel problemViewModel, CameraViewModel cameraViewModel)
+        {
+            _problemViewModel = problemViewModel;
+            _cameraViewModel = cameraViewModel;
+
+            problemViewModel.PropertyChanged += ProblemViewModel_PropertyChanged;
+        }
 
         public Visibility NodesControlVisibility
         {
@@ -22,24 +32,26 @@ namespace POC3D.ViewModel
             }
         }
 
-        public Visibility ElementsControlVisibility 
-        { 
+        public Visibility ElementsControlVisibility
+        {
             get => elementsControlVisibility;
-            private set 
-            { 
+            private set
+            {
                 elementsControlVisibility = value;
                 OnPropertyChanged(nameof(ElementsControlVisibility));
             }
         }
 
-        public InterfaceControlViewModel(ProblemViewModel problemViewModel, CameraViewModel cameraViewModel)
+        public Visibility ForcesControlVisibility
         {
-            _problemViewModel = problemViewModel;
-            _cameraViewModel = cameraViewModel;
-
-            problemViewModel.PropertyChanged += ProblemViewModel_PropertyChanged;
+            get => forcesControlVisibility;
+            private set
+            {
+                forcesControlVisibility = value;
+                OnPropertyChanged(nameof(ForcesControlVisibility));
+            }
         }
-
+        
         private void ProblemViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(_problemViewModel.SelectedNode) &&
@@ -47,6 +59,7 @@ namespace POC3D.ViewModel
             {
                 NodesControlVisibility = Visibility.Visible;
                 ElementsControlVisibility = Visibility.Hidden;
+                ForcesControlVisibility = Visibility.Hidden;
             }
 
             if (e.PropertyName == nameof(_problemViewModel.SelectedElement) &&
@@ -54,6 +67,15 @@ namespace POC3D.ViewModel
             {
                 NodesControlVisibility = Visibility.Hidden;
                 ElementsControlVisibility = Visibility.Visible;
+                ForcesControlVisibility = Visibility.Hidden;
+            }
+
+            if (e.PropertyName == nameof(_problemViewModel.SelectedForce) &&
+                _problemViewModel.SelectedElement != null)
+            {
+                NodesControlVisibility = Visibility.Hidden;
+                ElementsControlVisibility = Visibility.Hidden;
+                ForcesControlVisibility = Visibility.Visible;
             }
         }
 
@@ -61,20 +83,27 @@ namespace POC3D.ViewModel
 
         public ICommand ShowElementsControlCommand => new ButtonCommand(ShowElementControls);
 
+        public ICommand ShowForcesControlConmmand => new ButtonCommand(ShowForcesControls);
+
         public void ShowNodeControls()
         {
             NodesControlVisibility = Visibility.Visible;
             ElementsControlVisibility = Visibility.Hidden;
-            OnPropertyChanged(nameof(NodesControlVisibility));
-            OnPropertyChanged(nameof(ElementsControlVisibility));
+            ForcesControlVisibility = Visibility.Hidden;
         }
 
         public void ShowElementControls()
         {
             NodesControlVisibility = Visibility.Hidden;
             ElementsControlVisibility = Visibility.Visible;
-            OnPropertyChanged(nameof(NodesControlVisibility));
-            OnPropertyChanged(nameof(ElementsControlVisibility));
+            ForcesControlVisibility = Visibility.Hidden;
+        }
+
+        public void ShowForcesControls()
+        {
+            NodesControlVisibility = Visibility.Hidden;
+            ElementsControlVisibility = Visibility.Hidden;
+            ForcesControlVisibility = Visibility.Visible;
         }
 
         public void ReactToMouseWheelMovement(int delta)

@@ -57,6 +57,7 @@ namespace POC3D.Controls
 
             MainViewModel.ProblemViewModel.Nodes.CollectionChanged += ProblemNodesChanged;
             MainViewModel.ProblemViewModel.Elements.CollectionChanged += ProblemElementsChanged;
+            MainViewModel.ProblemViewModel.Forces.CollectionChanged += ProblemForcesChanged;
 
             UpdateCamera();
             UpdateProblem();
@@ -91,6 +92,17 @@ namespace POC3D.Controls
                     if (geometry.Equals(elementGeometry))
                     {
                         MainViewModel.ProblemViewModel.SelectedElement = element;
+                        break;
+                    }
+                }
+
+                foreach (var force in MainViewModel.ProblemViewModel.Forces)
+                {
+                    var forceGeometry = force.Geometry.Geometry as MeshGeometry3D;
+
+                    if (geometry.Equals(forceGeometry))
+                    {
+                        MainViewModel.ProblemViewModel.SelectedForce = force;
                         break;
                     }
                 }
@@ -136,6 +148,11 @@ namespace POC3D.Controls
             {
                 Model3DGroup.Children.Add(element.Geometry);
             }
+
+            foreach (var force in MainViewModel.ProblemViewModel.Forces)
+            {
+                Model3DGroup.Children.Add(force.Geometry);
+            }
         }
 
         public void UpdateCamera()
@@ -179,6 +196,25 @@ namespace POC3D.Controls
                 foreach (ElementViewModel element in e.OldItems)
                 {
                     Model3DGroup.Children.Remove(element.Geometry);
+                }
+            }
+        }
+
+        private void ProblemForcesChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.NewItems != null)
+            {
+                foreach (ForceViewModel force in e.NewItems)
+                {
+                    Model3DGroup.Children.Add(force.Geometry);
+                }
+            }
+
+            if (e.OldItems != null)
+            {
+                foreach (ForceViewModel force in e.OldItems)
+                {
+                    Model3DGroup.Children.Remove(force.Geometry);
                 }
             }
         }

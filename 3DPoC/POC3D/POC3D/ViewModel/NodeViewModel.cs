@@ -121,11 +121,11 @@ namespace POC3D.ViewModel
         {
             if (IsFixed)
             {
-                GraphicsHelper.BuildPyramidMesh(_meshGeometry3D, 4);
+                GraphicsHelper.BuildPyramidMesh(_meshGeometry3D, 2);
             }
             else
             {
-                GraphicsHelper.BuildCubeMesh(_meshGeometry3D, 2);
+                GraphicsHelper.BuildCubeMesh(_meshGeometry3D, 1);
             }
 
             Geometry.Transform = new TranslateTransform3D(X, Y, Z);

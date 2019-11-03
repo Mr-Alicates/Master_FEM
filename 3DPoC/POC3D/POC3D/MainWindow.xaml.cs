@@ -72,7 +72,14 @@ namespace POC3D
             MainViewModel.ProblemViewModel.AddBarElement(node7, node8);
             MainViewModel.ProblemViewModel.AddBarElement(node8, node5);
 
+            var force = MainViewModel.ProblemViewModel.AddForce(node8);
+            force.ApplicationVectorX = -10;
+            force.ApplicationVectorY = -10;
+            force.ApplicationVectorZ = -10;
+
             MainViewModel.ProblemViewModel.SelectedElement = null;
+            MainViewModel.ProblemViewModel.SelectedNode = null;
+            MainViewModel.ProblemViewModel.SelectedForce = null;
         }
     }
 }

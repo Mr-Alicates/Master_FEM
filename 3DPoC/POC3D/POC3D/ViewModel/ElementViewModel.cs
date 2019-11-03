@@ -82,7 +82,7 @@ namespace POC3D.ViewModel
 
             var vector = (Destination.Coordinates - Origin.Coordinates);
 
-            GraphicsHelper.BuildBarMesh(_meshGeometry3D, vector.Length, 1);
+            GraphicsHelper.BuildBarMesh(_meshGeometry3D, vector.Length, 0.5);
 
             var verticalVector = new Vector3D(0, 0, 1);
             var rotationAngle = Vector3D.AngleBetween(verticalVector, vector);

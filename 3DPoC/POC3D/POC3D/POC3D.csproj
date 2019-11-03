@@ -70,9 +70,12 @@
     <Compile Include="Helpers\GraphicsHelper.cs" />
     <Compile Include="Model\ModelBarElement.cs" />
     <Compile Include="Model\IModelElement.cs" />
+    <Compile Include="Model\ModelForce.cs" />
     <Compile Include="Model\ModelNode.cs" />
     <Compile Include="Model\ModelPoint.cs" />
     <Compile Include="Model\ModelProblem.cs" />
+    <Compile Include="Model\ModelVector.cs" />
+    <Compile Include="ViewModel\ForceViewModel.cs" />
     <Compile Include="ViewModel\InterfaceControlViewModel.cs" />
     <Compile Include="ViewModel\CameraViewModel.cs" />
     <Compile Include="ViewModel\ElementViewModel.cs" />

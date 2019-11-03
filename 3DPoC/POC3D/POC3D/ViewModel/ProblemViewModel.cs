@@ -17,6 +17,7 @@ namespace POC3D.ViewModel
     {
         private NodeViewModel _selectedNode;
         private ElementViewModel _selectedElement;
+        private ForceViewModel _selectedForce;
         private readonly ModelProblem _modelProblem;
 
         public ProblemViewModel()
@@ -25,6 +26,8 @@ namespace POC3D.ViewModel
 
             Nodes = new ObservableCollection<NodeViewModel>();
             Elements = new ObservableCollection<ElementViewModel>();
+            Forces = new ObservableCollection<ForceViewModel>();
+
             NewElementViewModel = new NewElementViewModel(this);
         }
 
@@ -46,6 +49,7 @@ namespace POC3D.ViewModel
                 {
                     _selectedNode.IsSelected = true;
                     SelectedElement = null;
+                    SelectedForce = null;
                 }
 
                 OnPropertyChanged(nameof(SelectedNode));
@@ -70,18 +74,45 @@ namespace POC3D.ViewModel
                 {
                     _selectedElement.IsSelected = true;
                     SelectedNode = null;
+                    SelectedForce = null;
                 }
 
                 OnPropertyChanged(nameof(SelectedElement));
             }
         }
 
-        public NewElementViewModel NewElementViewModel { get; }
+        public ForceViewModel SelectedForce
+        {
+            get => _selectedForce;
+            set
+            {
+                if (_selectedForce == value) return;
 
-        
+                if (_selectedForce != null)
+                {
+                    _selectedForce.IsSelected = false;
+                }
+
+                _selectedForce = value;
+
+                if (_selectedForce != null)
+                {
+                    _selectedForce.IsSelected = true;
+                    SelectedNode = null;
+                    SelectedElement = null;
+                }
+
+                OnPropertyChanged(nameof(SelectedForce));
+            }
+        }
+
+        public NewElementViewModel NewElementViewModel { get; }
+                
         public ObservableCollection<NodeViewModel> Nodes { get; }
 
         public ObservableCollection<ElementViewModel> Elements { get; }
+
+        public ObservableCollection<ForceViewModel> Forces { get; }
 
         public NodeViewModel AddNode(Point3D point)
         {
@@ -113,15 +144,6 @@ namespace POC3D.ViewModel
             SelectedNode = null;
         }
 
-        public void DeleteSelectedElement()
-        {
-            var selectedElement = SelectedElement;
-
-            _modelProblem.DeleteElement(selectedElement.Element);
-            Elements.Remove(selectedElement);
-            SelectedElement = null;
-        }
-
         public ElementViewModel AddBarElement(NodeViewModel node1, NodeViewModel node2)
         {
             var element = _modelProblem.AddBarElement(node1.Node, node2.Node);
@@ -132,6 +154,37 @@ namespace POC3D.ViewModel
             SelectedElement = result;
 
             return result;
+        }
+
+        public void DeleteSelectedElement()
+        {
+            var selectedElement = SelectedElement;
+
+            _modelProblem.DeleteElement(selectedElement.Element);
+            Elements.Remove(selectedElement);
+            SelectedElement = null;
+        }
+
+        public ForceViewModel AddForce(NodeViewModel node)
+        {
+            var force = _modelProblem.AddForce(node.Node);
+
+            var result = new ForceViewModel(force, node);
+
+            Forces.Add(result);
+            SelectedForce = result;
+
+            return result;
+        }
+
+        public void DeleteSelectedForce()
+        {
+            var selectedForce = SelectedForce;
+
+            _modelProblem.DeleteForce(selectedForce.Force);
+
+            Forces.Remove(selectedForce);
+            SelectedForce = null;
         }
 
         public ICommand AddNodeCommand => new AddNodeCommand(this);

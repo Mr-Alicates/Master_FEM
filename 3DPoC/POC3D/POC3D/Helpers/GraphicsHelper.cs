@@ -212,7 +212,56 @@ namespace POC3D.Helpers
 
             return result;
         }
-        
+
+        public static void BuildForceArrow(MeshGeometry3D mesh, double length, double width)
+        {
+            var halfSize = width / 2;
+            var tenthSize = width / 10;
+
+            mesh.TriangleIndices.Clear();
+            mesh.Positions.Clear();
+
+            mesh.Positions = new Point3DCollection()
+            {
+                new Point3D(-halfSize, -halfSize, width),
+                new Point3D(halfSize, -halfSize, width),
+                new Point3D(halfSize, halfSize, width),
+                new Point3D(-halfSize, halfSize, width),
+                new Point3D(0, 0, 0),
+
+                new Point3D(-tenthSize, -tenthSize, width),
+                new Point3D(tenthSize, -tenthSize, width),
+                new Point3D(tenthSize, tenthSize, width),
+                new Point3D(-tenthSize, tenthSize, width),
+                new Point3D(0, 0, length),
+            };
+
+            mesh.TriangleIndices = new Int32Collection()
+            {
+                //Bottom
+                0,3,1,
+                3,2,1,
+                    
+                //Left
+                0,1,4,
+
+                //Right
+                1,2,4,
+
+                //Back
+                2,3,4,
+
+                //Front
+                3,0,4,
+
+                //Stem
+                6,5,9,
+                7,6,9,
+                8,7,9,
+                5,8,9,
+            };
+        }
+
         public static MeshGeometry3D BuildArrow()
         {
             var mesh = new MeshGeometry3D();

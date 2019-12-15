@@ -14,10 +14,10 @@ namespace POC3D.Model
             ApplicationVector = new ModelVector();
         }
 
-        public ModelNode Node { get; }
+        public ModelNode Node { get; set; }
 
         public ModelVector ApplicationVector { get; }
 
-        public double Magnitude { get; }
+        public double Magnitude { get; set; }
     }
 }

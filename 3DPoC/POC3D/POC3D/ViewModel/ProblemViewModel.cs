@@ -192,6 +192,38 @@ namespace POC3D.ViewModel
         public ICommand DeleteNodeCommand => new DeleteNodeCommand(this);
 
         public ICommand DeleteElementCommand => new DeleteElementCommand(this);
+
+        public ICommand DeleteForceCommand => new DeleteForceCommand(this);
+    }
+
+    public class DeleteForceCommand : ICommand
+    {
+        private readonly ProblemViewModel _problemViewModel;
+        public event EventHandler CanExecuteChanged;
+        private bool _canExecute;
+
+        public DeleteForceCommand(ProblemViewModel problemViewModel)
+        {
+            _problemViewModel = problemViewModel;
+
+            problemViewModel.PropertyChanged += PropertiesChanged;
+        }
+
+        private void PropertiesChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            _canExecute = _problemViewModel.SelectedForce != null;
+            CanExecuteChanged?.Invoke(this, new EventArgs());
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            return _canExecute;
+        }
+
+        public void Execute(object parameter)
+        {
+            _problemViewModel.DeleteSelectedForce();
+        }
     }
 
     public class DeleteElementCommand : ICommand

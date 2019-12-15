@@ -71,7 +71,7 @@ namespace POC3D.ViewModel
             }
 
             if (e.PropertyName == nameof(_problemViewModel.SelectedForce) &&
-                _problemViewModel.SelectedElement != null)
+                _problemViewModel.SelectedForce != null)
             {
                 NodesControlVisibility = Visibility.Hidden;
                 ElementsControlVisibility = Visibility.Hidden;

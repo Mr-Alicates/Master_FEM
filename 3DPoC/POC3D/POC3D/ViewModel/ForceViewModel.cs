@@ -17,12 +17,13 @@ namespace POC3D.ViewModel
         private MeshGeometry3D _meshGeometry3D;
         private DiffuseMaterial _material;
         private bool _isSelected;
+        private NodeViewModel _nodeViewModel;
 
         public ForceViewModel(ModelForce force, NodeViewModel node)
         {
             Force = force;
 
-            Node = node;
+            _nodeViewModel = node;
 
             Geometry = BuildGeometry();
             UpdateGeometry();
@@ -33,7 +34,17 @@ namespace POC3D.ViewModel
         
         public ModelForce Force { get; }
 
-        public NodeViewModel Node { get; }
+        public NodeViewModel Node
+        {
+            get => _nodeViewModel;
+            set
+            {
+                _nodeViewModel = value;
+
+                Force.Node = _nodeViewModel.Node;
+                UpdateGeometry();
+            }
+        }
 
         public bool IsSelected
         {
@@ -79,7 +90,15 @@ namespace POC3D.ViewModel
 
         public Vector3D ApplicationVector => new Vector3D(ApplicationVectorX, ApplicationVectorY, ApplicationVectorZ);
 
+        public double Magnitude
+        {
+            get => Force.Magnitude;
+            set => Force.Magnitude = value;
+        }
+
         public GeometryModel3D Geometry { get; }
+
+        public string Name => $"({Node.Id}) ---> ({ApplicationVectorX:N}/{ApplicationVectorY:N}/{ApplicationVectorZ:N}) ({Magnitude:N})";
 
         private void NodesChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
@@ -88,6 +107,7 @@ namespace POC3D.ViewModel
                 UpdateGeometry();
             }
         }
+
         private GeometryModel3D BuildGeometry()
         {
             _meshGeometry3D = new MeshGeometry3D()

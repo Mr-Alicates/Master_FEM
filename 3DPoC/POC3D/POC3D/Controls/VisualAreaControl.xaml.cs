@@ -52,7 +52,7 @@ namespace POC3D.Controls
             Viewport.PreviewMouseWheel += Viewport_PreviewMouseWheel;
             Viewport.PreviewKeyDown += Viewport_PreviewKeyDown;
             Viewport.PreviewMouseDown += Viewport_PreviewMouseDown;
-
+            
             MainViewModel.CameraViewModel.OnCameraViewModelChanged += (a, b) => UpdateCamera();
 
             MainViewModel.ProblemViewModel.Nodes.CollectionChanged += ProblemNodesChanged;

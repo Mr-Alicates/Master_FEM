@@ -17,12 +17,14 @@ namespace POC3D.ViewModel
         private MeshGeometry3D _meshGeometry3D;
         private DiffuseMaterial _material;
         private bool _isSelected;
+        private NodeViewModel _origin;
+        private NodeViewModel _destination;
 
         public ElementViewModel(IModelElement modelElement, NodeViewModel origin, NodeViewModel destination)
         {
             Element = modelElement;
-            Origin = origin;
-            Destination = destination;
+            _origin = origin;
+            _destination = destination;
 
             Geometry = BuildGeometry();
             UpdateGeometry();
@@ -51,9 +53,29 @@ namespace POC3D.ViewModel
 
         public IModelElement Element { get; }
 
-        public NodeViewModel Origin { get; }
+        public NodeViewModel Origin
+        {
+            get => _origin;
+            set
+            {
+                _origin = value;
 
-        public NodeViewModel Destination { get; }
+                Element.OriginNode = _origin.Node;
+                UpdateGeometry();
+            }
+        }
+
+        public NodeViewModel Destination
+        {
+            get => _destination;
+            set
+            {
+                _destination = value;
+
+                Element.DestinationNode = _destination.Node;
+                UpdateGeometry();
+            }
+        }
 
         public string Name => $"({Origin.Id}) ---> ({Destination.Id})";
 

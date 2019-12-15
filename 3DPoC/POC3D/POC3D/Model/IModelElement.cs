@@ -12,6 +12,18 @@ namespace POC3D.Model
 
         int NumberOfNodes { get; }
 
-        IEnumerable<ModelNode> Nodes { get; }
+        ModelNode OriginNode { get; set; }
+
+        ModelNode DestinationNode { get; set; }
+
+        double YoungsModulus { get; set; }
+
+        double PoissonRatio { get; set; }
+
+        double CrossSectionArea { get; set; }
+
+        double Length { get; }
+
+        double K { get; }
     }
 }

@@ -8,21 +8,28 @@ namespace POC3D.Model
 {
     public class ModelBarElement : IModelElement
     {
-        private readonly ModelNode[] _nodes;
-
-        public ModelBarElement(ModelNode beggining, ModelNode end)
+        public ModelBarElement(ModelNode origin, ModelNode destination)
         {
-            _nodes = new ModelNode[]
-            {
-                beggining,
-                end
-            };
+            OriginNode = origin;
+            DestinationNode = destination;
         }
 
         public string Type => "Bar";
 
         public int NumberOfNodes => 2;
 
-        public IEnumerable<ModelNode> Nodes => _nodes;
+        public ModelNode OriginNode { get; set; }
+
+        public ModelNode DestinationNode { get; set; }
+
+        public double YoungsModulus { get; set; }
+
+        public double PoissonRatio { get; set; }
+
+        public double CrossSectionArea { get; set; }
+
+        public double Length => new ModelVector(DestinationNode.Coordinates, OriginNode.Coordinates).Modulus;
+
+        public double K => (YoungsModulus * CrossSectionArea) / Length;
     }
 }

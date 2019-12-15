@@ -21,16 +21,36 @@
         </Grid.ColumnDefinitions>
 
 
-        <TextBlock Grid.Row="0"
-                 Grid.Column="0"
-                 Text="{Binding ProblemViewModel.SelectedElement.Origin.Name,Mode=OneWay}"/>
+        <ComboBox Grid.Row="0"
+                   Grid.Column="0"
+                   SelectedItem="{Binding ProblemViewModel.SelectedElement.Origin,Mode=TwoWay}"
+                    ItemsSource="{Binding ProblemViewModel.Nodes}">
+
+            <ComboBox.ItemTemplate>
+                <DataTemplate DataType="viewModel:NodeViewModel">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Name, Mode=OneWay}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
         <TextBlock Grid.Row="0"
                    Grid.Column="1"
                    Text="Origin node"/>
 
-        <TextBlock Grid.Row="1"
-                 Grid.Column="0"
-                 Text="{Binding ProblemViewModel.SelectedElement.Destination.Name,Mode=OneWay}"/>
+        <ComboBox Grid.Row="1"
+                   Grid.Column="0"
+                   SelectedItem="{Binding ProblemViewModel.SelectedElement.Destination,Mode=TwoWay}"
+                    ItemsSource="{Binding ProblemViewModel.Nodes}">
+
+            <ComboBox.ItemTemplate>
+                <DataTemplate DataType="viewModel:NodeViewModel">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Name, Mode=OneWay}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
         <TextBlock Grid.Row="1"
                    Grid.Column="1"
                    Text="Destination node"/>

@@ -58,7 +58,13 @@ namespace POC3D.ViewModel
 
         private void ShowSelectedNodeDetails()
         {
-            HideAllControls();
+            ElementAddingControlVisibility = Visibility.Collapsed;
+            ElementDetailsControlVisibility = Visibility.Collapsed;
+            ElementListingControlVisibility = Visibility.Collapsed;
+
+            ForceAddingControlVisibility = Visibility.Collapsed;
+            ForceDetailsControlVisibility = Visibility.Collapsed;
+            ForceListingControlVisibility = Visibility.Collapsed;
 
             NodeDetailsControlVisibility = Visibility.Visible;
         }

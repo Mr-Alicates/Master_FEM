@@ -9,9 +9,9 @@ namespace POC3D.ViewModel
     {
         private readonly CameraViewModel _cameraViewModel;
         private readonly ProblemViewModel _problemViewModel;
-        private Point _lastMousePosition;
         private Visibility _elementsControlVisibility = Visibility.Collapsed;
         private Visibility _forcesControlVisibility = Visibility.Collapsed;
+        private Point _lastMousePosition;
         private Visibility _nodesControlVisibility = Visibility.Collapsed;
 
         public InterfaceControlViewModel(ProblemViewModel problemViewModel, CameraViewModel cameraViewModel)

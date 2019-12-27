@@ -64,6 +64,9 @@
     <Compile Include="Controls\Elements\ElementListingControl.xaml.cs">
       <DependentUpon>ElementListingControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Forces\ForceAddingControl.xaml.cs">
+      <DependentUpon>ForceAddingControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Forces\SelectedForceDetailsControl.xaml.cs">
       <DependentUpon>SelectedForceDetailsControl.xaml</DependentUpon>
     </Compile>
@@ -95,6 +98,7 @@
     <Compile Include="ViewModel\ElementViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\MaterialViewModel.cs" />
+    <Compile Include="ViewModel\NewForceViewModel.cs" />
     <Compile Include="ViewModel\NewElementViewModel.cs" />
     <Compile Include="ViewModel\NodeViewModel.cs" />
     <Compile Include="ViewModel\Observable.cs" />
@@ -108,6 +112,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\Elements\ElementListingControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Forces\ForceAddingControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

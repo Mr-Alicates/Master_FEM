@@ -26,6 +26,7 @@ namespace POC3D.ViewModel
             InitializeMaterials();
 
             NewElementViewModel = new NewElementViewModel(this);
+            NewForceViewModel = new NewForceViewModel(this);
         }
 
         public NodeViewModel SelectedNode
@@ -95,6 +96,8 @@ namespace POC3D.ViewModel
         }
 
         public NewElementViewModel NewElementViewModel { get; }
+
+        public NewForceViewModel NewForceViewModel { get; }
 
         public ObservableCollection<NodeViewModel> Nodes { get; }
 

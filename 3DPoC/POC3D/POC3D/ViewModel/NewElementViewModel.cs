@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Input;
 
 namespace POC3D.ViewModel
@@ -61,13 +62,22 @@ namespace POC3D.ViewModel
         public void Execute(object parameter)
         {
             _problemViewModel.AddBarElement(_newElementViewModel.OriginNode, _newElementViewModel.DestinationNode);
+
+            _newElementViewModel.OriginNode = null;
+            _newElementViewModel.DestinationNode = null;
         }
 
         private void PropertiesChanged(object sender, PropertyChangedEventArgs e)
         {
             _canExecute = _newElementViewModel.OriginNode != null &&
                           _newElementViewModel.DestinationNode != null &&
-                          _newElementViewModel.OriginNode.Name != _newElementViewModel.DestinationNode.Name;
+                          _newElementViewModel.OriginNode.Name != _newElementViewModel.DestinationNode.Name &&
+                          _problemViewModel.Elements.All(existingElement =>
+                              existingElement.Origin != _newElementViewModel.OriginNode ||
+                              existingElement.Destination != _newElementViewModel.DestinationNode) &&
+                          _problemViewModel.Elements.All(existingElement =>
+                              existingElement.Origin != _newElementViewModel.DestinationNode ||
+                              existingElement.Destination != _newElementViewModel.OriginNode);
             CanExecuteChanged?.Invoke(this, new EventArgs());
         }
     }

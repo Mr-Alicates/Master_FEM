@@ -58,6 +58,8 @@
 
                 <forces:SelectedForceDetailsControl DataContext="{Binding Path=.}" />
                 <forces:ForceListingControl DataContext="{Binding Path=.}" />
+                <forces:ForceAddingControl DataContext="{Binding Path=.}" />
+
             </StackPanel>
 
         </Grid>

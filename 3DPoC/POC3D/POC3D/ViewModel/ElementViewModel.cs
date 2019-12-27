@@ -13,9 +13,9 @@ namespace POC3D.ViewModel
         private NodeViewModel _destination;
         private bool _isSelected;
         private DiffuseMaterial _material;
+        private MaterialViewModel _materialViewModel;
         private MeshGeometry3D _meshGeometry3D;
         private NodeViewModel _origin;
-        private MaterialViewModel _materialViewModel;
 
         public ElementViewModel(IModelElement modelElement, NodeViewModel origin, NodeViewModel destination)
         {
@@ -94,6 +94,7 @@ namespace POC3D.ViewModel
                 OnPropertyChanged(nameof(K));
             }
         }
+
         public double Length => Element.Length;
 
 

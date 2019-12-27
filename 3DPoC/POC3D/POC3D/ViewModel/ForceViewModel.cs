@@ -1,12 +1,8 @@
-﻿using POC3D.Helpers;
-using POC3D.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
+using POC3D.Helpers;
+using POC3D.Model;
 
 namespace POC3D.ViewModel
 {
@@ -14,9 +10,9 @@ namespace POC3D.ViewModel
     {
         private static readonly Brush ForceBrush = Brushes.Yellow;
         private static readonly Brush SelectedForceBrush = Brushes.Red;
-        private MeshGeometry3D _meshGeometry3D;
-        private DiffuseMaterial _material;
         private bool _isSelected;
+        private DiffuseMaterial _material;
+        private MeshGeometry3D _meshGeometry3D;
         private NodeViewModel _nodeViewModel;
 
         public ForceViewModel(ModelForce force, NodeViewModel node)
@@ -31,7 +27,7 @@ namespace POC3D.ViewModel
 
             Node.PropertyChanged += NodesChanged;
         }
-        
+
         public ModelForce Force { get; }
 
         public NodeViewModel Node
@@ -67,6 +63,7 @@ namespace POC3D.ViewModel
                 OnPropertyChanged(nameof(ApplicationVectorX));
             }
         }
+
         public double ApplicationVectorY
         {
             get => Force.ApplicationVector.Y;
@@ -77,6 +74,7 @@ namespace POC3D.ViewModel
                 OnPropertyChanged(nameof(ApplicationVectorY));
             }
         }
+
         public double ApplicationVectorZ
         {
             get => Force.ApplicationVector.Z;
@@ -98,19 +96,17 @@ namespace POC3D.ViewModel
 
         public GeometryModel3D Geometry { get; }
 
-        public string Name => $"({Node.Id}) ---> ({ApplicationVectorX:N}/{ApplicationVectorY:N}/{ApplicationVectorZ:N}) ({Magnitude:N})";
+        public string Name =>
+            $"({Node.Id}) ---> ({ApplicationVectorX:N}/{ApplicationVectorY:N}/{ApplicationVectorZ:N}) ({Magnitude:N})";
 
-        private void NodesChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void NodesChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(Node.Geometry))
-            {
-                UpdateGeometry();
-            }
+            if (e.PropertyName == nameof(Node.Geometry)) UpdateGeometry();
         }
 
         private GeometryModel3D BuildGeometry()
         {
-            _meshGeometry3D = new MeshGeometry3D()
+            _meshGeometry3D = new MeshGeometry3D
             {
                 Positions = new Point3DCollection(),
                 TriangleIndices = new Int32Collection()
@@ -118,7 +114,7 @@ namespace POC3D.ViewModel
 
             _material = new DiffuseMaterial(ForceBrush);
 
-            return new GeometryModel3D()
+            return new GeometryModel3D
             {
                 Material = _material,
                 Geometry = _meshGeometry3D
@@ -135,9 +131,9 @@ namespace POC3D.ViewModel
             var rotationAngle = Vector3D.AngleBetween(verticalVector, -ApplicationVector);
             var rotationVector = Vector3D.CrossProduct(verticalVector, -ApplicationVector);
 
-            Geometry.Transform = new Transform3DGroup()
+            Geometry.Transform = new Transform3DGroup
             {
-                Children = new Transform3DCollection()
+                Children = new Transform3DCollection
                 {
                     new RotateTransform3D(new AxisAngleRotation3D(rotationVector, rotationAngle)),
                     new TranslateTransform3D(Node.X, Node.Y, Node.Z)

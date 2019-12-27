@@ -1,31 +1,22 @@
-﻿using POC3D.Helpers;
-using POC3D.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Specialized;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using POC3D.Helpers;
+using POC3D.ViewModel;
 
 namespace POC3D.Controls
 {
     /// <summary>
-    /// Lógica de interacción para VisualAreaControl.xaml
+    ///     Lógica de interacción para VisualAreaControl.xaml
     /// </summary>
     public partial class VisualAreaControl : UserControl
     {
         public static readonly DependencyProperty MainViewModelProperty = DependencyProperty.Register(
-          nameof(MainViewModel), typeof(MainViewModel), typeof(VisualAreaControl), new PropertyMetadata(null, Callback));
+            nameof(MainViewModel), typeof(MainViewModel), typeof(VisualAreaControl),
+            new PropertyMetadata(null, Callback));
 
         public VisualAreaControl()
         {
@@ -34,16 +25,13 @@ namespace POC3D.Controls
 
         public MainViewModel MainViewModel
         {
-            get { return (MainViewModel)this.GetValue(MainViewModelProperty); }
-            set { this.SetValue(MainViewModelProperty, value); }
+            get => (MainViewModel) GetValue(MainViewModelProperty);
+            set => SetValue(MainViewModelProperty, value);
         }
 
         private static void Callback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if(d is VisualAreaControl control)
-            {
-                control.InitViewModel();
-            }
+            if (d is VisualAreaControl control) control.InitViewModel();
         }
 
         public void InitViewModel()
@@ -52,7 +40,7 @@ namespace POC3D.Controls
             Viewport.PreviewMouseWheel += Viewport_PreviewMouseWheel;
             Viewport.PreviewKeyDown += Viewport_PreviewKeyDown;
             Viewport.PreviewMouseDown += Viewport_PreviewMouseDown;
-            
+
             MainViewModel.CameraViewModel.OnCameraViewModelChanged += (a, b) => UpdateCamera();
 
             MainViewModel.ProblemViewModel.Nodes.CollectionChanged += ProblemNodesChanged;
@@ -65,7 +53,7 @@ namespace POC3D.Controls
 
         private void Viewport_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            this.Focus();
+            Focus();
 
             var ptMouse = e.GetPosition(Viewport);
             var result = VisualTreeHelper.HitTest(Viewport, ptMouse);
@@ -111,7 +99,8 @@ namespace POC3D.Controls
 
         private void Viewport_PreviewMouseMove(object sender, MouseEventArgs e)
         {
-            MainViewModel.InterfaceControlViewModel.ReactToMouseMovement(e.MiddleButton, e.RightButton, e.GetPosition(Viewport));
+            MainViewModel.InterfaceControlViewModel.ReactToMouseMovement(e.MiddleButton, e.RightButton,
+                e.GetPosition(Viewport));
         }
 
         private void Viewport_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -123,15 +112,15 @@ namespace POC3D.Controls
         {
             MainViewModel.InterfaceControlViewModel.ReactToMouseWheelMovement(e.Delta);
         }
-        
+
         public void UpdateProblem()
         {
             //Remove all the elements
             Model3DGroup.Children.Clear();
 
             //Add general lighting to the scene
-            AmbientLight ambientLight = new AmbientLight(Colors.Black);
-            DirectionalLight directionalLight = new DirectionalLight(Colors.White, new Vector3D(0, 0, -1));
+            var ambientLight = new AmbientLight(Colors.Black);
+            var directionalLight = new DirectionalLight(Colors.White, new Vector3D(0, 0, -1));
 
             var origin = GraphicsHelper.BuildOrigin();
             Model3DGroup.Children.Add(origin);
@@ -139,20 +128,12 @@ namespace POC3D.Controls
             Model3DGroup.Children.Add(ambientLight);
             Model3DGroup.Children.Add(directionalLight);
 
-            foreach (var node in MainViewModel.ProblemViewModel.Nodes)
-            {
-                Model3DGroup.Children.Add(node.Geometry);
-            }
+            foreach (var node in MainViewModel.ProblemViewModel.Nodes) Model3DGroup.Children.Add(node.Geometry);
 
             foreach (var element in MainViewModel.ProblemViewModel.Elements)
-            {
                 Model3DGroup.Children.Add(element.Geometry);
-            }
 
-            foreach (var force in MainViewModel.ProblemViewModel.Forces)
-            {
-                Model3DGroup.Children.Add(force.Geometry);
-            }
+            foreach (var force in MainViewModel.ProblemViewModel.Forces) Model3DGroup.Children.Add(force.Geometry);
         }
 
         public void UpdateCamera()
@@ -165,58 +146,34 @@ namespace POC3D.Controls
         private void ProblemNodesChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.NewItems != null)
-            {
                 foreach (NodeViewModel node in e.NewItems)
-                {
                     Model3DGroup.Children.Add(node.Geometry);
-                }
-            }
 
             if (e.OldItems != null)
-            {
                 foreach (NodeViewModel node in e.OldItems)
-                {
                     Model3DGroup.Children.Remove(node.Geometry);
-                }
-            }
         }
 
         private void ProblemElementsChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.NewItems != null)
-            {
                 foreach (ElementViewModel element in e.NewItems)
-                {
                     Model3DGroup.Children.Add(element.Geometry);
-                }
-            }
 
             if (e.OldItems != null)
-            {
                 foreach (ElementViewModel element in e.OldItems)
-                {
                     Model3DGroup.Children.Remove(element.Geometry);
-                }
-            }
         }
 
         private void ProblemForcesChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.NewItems != null)
-            {
                 foreach (ForceViewModel force in e.NewItems)
-                {
                     Model3DGroup.Children.Add(force.Geometry);
-                }
-            }
 
             if (e.OldItems != null)
-            {
                 foreach (ForceViewModel force in e.OldItems)
-                {
                     Model3DGroup.Children.Remove(force.Geometry);
-                }
-            }
         }
     }
 }

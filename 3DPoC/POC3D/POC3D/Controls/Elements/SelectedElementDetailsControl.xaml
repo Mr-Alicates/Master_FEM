@@ -30,10 +30,12 @@
 
         <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="Selected element details" />
 
-        <TextBox IsReadOnly="True" Grid.Row="1" Grid.Column="0" Text="{Binding ProblemViewModel.SelectedElement.Id, Mode=OneWay}" />
+        <TextBox IsReadOnly="True" Grid.Row="1" Grid.Column="0"
+                 Text="{Binding ProblemViewModel.SelectedElement.Id, Mode=OneWay}" />
         <TextBlock Grid.Row="1" Grid.Column="1" Text="Id" />
 
-        <TextBox IsReadOnly="True" Grid.Row="2" Grid.Column="0" Text="{Binding ProblemViewModel.SelectedElement.Description, Mode=OneWay}" />
+        <TextBox IsReadOnly="True" Grid.Row="2" Grid.Column="0"
+                 Text="{Binding ProblemViewModel.SelectedElement.Description, Mode=OneWay}" />
         <TextBlock Grid.Row="2" Grid.Column="1" Text="Description" />
 
         <ComboBox Grid.Row="3"
@@ -81,20 +83,25 @@
         <TextBlock Grid.Row="5" Grid.Column="1" Text="Material" />
 
 
-        <TextBox IsReadOnly="True" Grid.Row="6" Grid.Column="0" Text="{Binding ProblemViewModel.SelectedElement.Material.YoungsModulus, Mode=OneWay}" />
+        <TextBox IsReadOnly="True" Grid.Row="6" Grid.Column="0"
+                 Text="{Binding ProblemViewModel.SelectedElement.Material.YoungsModulus, Mode=OneWay}" />
         <TextBlock Grid.Row="6" Grid.Column="1" Text="YoungsModulus" />
 
-        <TextBox IsReadOnly="True" Grid.Row="7" Grid.Column="0" Text="{Binding ProblemViewModel.SelectedElement.Material.PoissonRatio, Mode=OneWay}" />
+        <TextBox IsReadOnly="True" Grid.Row="7" Grid.Column="0"
+                 Text="{Binding ProblemViewModel.SelectedElement.Material.PoissonRatio, Mode=OneWay}" />
         <TextBlock Grid.Row="7" Grid.Column="1" Text="PoissonRatio" />
 
 
-        <TextBox Grid.Row="8" Grid.Column="0" Text="{Binding ProblemViewModel.SelectedElement.CrossSectionArea, Mode=TwoWay}" />
+        <TextBox Grid.Row="8" Grid.Column="0"
+                 Text="{Binding ProblemViewModel.SelectedElement.CrossSectionArea, Mode=TwoWay}" />
         <TextBlock Grid.Row="8" Grid.Column="1" Text="Cross section area (m^2)" />
 
-        <TextBox IsReadOnly="True" Grid.Row="9" Grid.Column="0" Text="{Binding ProblemViewModel.SelectedElement.Length, Mode=OneWay}" />
+        <TextBox IsReadOnly="True" Grid.Row="9" Grid.Column="0"
+                 Text="{Binding ProblemViewModel.SelectedElement.Length, Mode=OneWay}" />
         <TextBlock Grid.Row="9" Grid.Column="1" Text="Length" />
 
-        <TextBox IsReadOnly="True" Grid.Row="10" Grid.Column="0" Text="{Binding ProblemViewModel.SelectedElement.K, Mode=OneWay}" />
+        <TextBox IsReadOnly="True" Grid.Row="10" Grid.Column="0"
+                 Text="{Binding ProblemViewModel.SelectedElement.K, Mode=OneWay}" />
         <TextBlock Grid.Row="10" Grid.Column="1" Text="K constant" />
 
 

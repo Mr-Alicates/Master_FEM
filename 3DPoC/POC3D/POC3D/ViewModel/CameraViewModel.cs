@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media.Media3D;
 
 namespace POC3D.ViewModel
@@ -11,23 +7,23 @@ namespace POC3D.ViewModel
     {
         private const int RotationDelta = 1;
 
-        public EventHandler OnCameraViewModelChanged;
-
-        private Vector3D _upDirection;
-        private Point3D _position;
-
         private int _cameraRotationY;
         private int _cameraRotationZ;
+        private Point3D _position;
+
+        public EventHandler OnCameraViewModelChanged;
 
         public CameraViewModel()
         {
-            _upDirection = new Vector3D(0, 0, 1);
+            UpDirection = new Vector3D(0, 0, 1);
         }
 
         public string FriendlyPosition => $"Camera Position ({Position.X:0.##}/{Position.Y:0.##}/{Position.Z:0.##})";
-        public string FriendlyLookDirection => $"Look Direction ({UnaryForward.X:0.##}/{UnaryForward.Y:0.##}/{UnaryForward.Z:0.##})";
 
-        public Vector3D UpDirection => _upDirection;
+        public string FriendlyLookDirection =>
+            $"Look Direction ({UnaryForward.X:0.##}/{UnaryForward.Y:0.##}/{UnaryForward.Z:0.##})";
+
+        public Vector3D UpDirection { get; }
 
         public int CameraRotationY
         {
@@ -61,7 +57,7 @@ namespace POC3D.ViewModel
                 OnCameraViewModelChanged?.Invoke(this, null);
             }
         }
-        
+
         public Vector3D UnaryUp => new Vector3D(0, 0, 1);
 
         public Vector3D UnaryLeft
@@ -71,11 +67,11 @@ namespace POC3D.ViewModel
                 var forward = new Vector3D(UnaryForward.X, UnaryForward.Y, 0);
                 forward.Normalize();
 
-                Transform3DGroup transformGroup = new Transform3DGroup()
+                var transformGroup = new Transform3DGroup
                 {
-                    Children = new Transform3DCollection()
+                    Children = new Transform3DCollection
                     {
-                        new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0,0,1), 90)),
+                        new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 0, 1), 90))
                     }
                 };
 
@@ -89,14 +85,14 @@ namespace POC3D.ViewModel
         {
             get
             {
-                Vector3D vector = new Vector3D(1, 0, 0);
+                var vector = new Vector3D(1, 0, 0);
 
-                Transform3DGroup transformGroup = new Transform3DGroup()
+                var transformGroup = new Transform3DGroup
                 {
-                    Children = new Transform3DCollection()
+                    Children = new Transform3DCollection
                     {
-                        new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0,1,0), CameraRotationY)),
-                        new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0,0,1), CameraRotationZ)),
+                        new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 1, 0), CameraRotationY)),
+                        new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 0, 1), CameraRotationZ))
                     }
                 };
 
@@ -118,7 +114,7 @@ namespace POC3D.ViewModel
         {
             CameraRotationZ = CameraRotationZ - RotationDelta;
         }
-        
+
         public void CameraRotationYUp()
         {
             CameraRotationY = CameraRotationY + RotationDelta;

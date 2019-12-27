@@ -3,7 +3,7 @@
 namespace POC3D.Controls.Elements
 {
     /// <summary>
-    /// Interaction logic for NodeManagerControl.xaml
+    ///     Interaction logic for NodeManagerControl.xaml
     /// </summary>
     public partial class ElementListingControl : UserControl
     {

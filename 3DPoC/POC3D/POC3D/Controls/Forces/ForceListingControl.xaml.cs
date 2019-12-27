@@ -3,7 +3,7 @@
 namespace POC3D.Controls.Forces
 {
     /// <summary>
-    /// Interaction logic for ForceListingControl.xaml
+    ///     Interaction logic for ForceListingControl.xaml
     /// </summary>
     public partial class ForceListingControl : UserControl
     {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 
@@ -6,13 +7,13 @@ namespace POC3D.ViewModel
 {
     public class InterfaceControlViewModel : Observable
     {
-        private readonly ProblemViewModel _problemViewModel;
         private readonly CameraViewModel _cameraViewModel;
+        private readonly ProblemViewModel _problemViewModel;
         private Point _lastMousePosition;
-
-        private Visibility nodesControlVisibility = Visibility.Hidden;
         private Visibility elementsControlVisibility = Visibility.Hidden;
         private Visibility forcesControlVisibility = Visibility.Hidden;
+
+        private Visibility nodesControlVisibility = Visibility.Hidden;
 
         public InterfaceControlViewModel(ProblemViewModel problemViewModel, CameraViewModel cameraViewModel)
         {
@@ -51,8 +52,14 @@ namespace POC3D.ViewModel
                 OnPropertyChanged(nameof(ForcesControlVisibility));
             }
         }
-        
-        private void ProblemViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+
+        public ICommand ShowNodesControlCommand => new ButtonCommand(ShowNodeControls);
+
+        public ICommand ShowElementsControlCommand => new ButtonCommand(ShowElementControls);
+
+        public ICommand ShowForcesControlConmmand => new ButtonCommand(ShowForcesControls);
+
+        private void ProblemViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(_problemViewModel.SelectedNode) &&
                 _problemViewModel.SelectedNode != null)
@@ -79,12 +86,6 @@ namespace POC3D.ViewModel
             }
         }
 
-        public ICommand ShowNodesControlCommand => new ButtonCommand(ShowNodeControls);
-
-        public ICommand ShowElementsControlCommand => new ButtonCommand(ShowElementControls);
-
-        public ICommand ShowForcesControlConmmand => new ButtonCommand(ShowForcesControls);
-
         public void ShowNodeControls()
         {
             NodesControlVisibility = Visibility.Visible;
@@ -108,19 +109,13 @@ namespace POC3D.ViewModel
 
         public void ReactToMouseWheelMovement(int delta)
         {
-            int movements = Math.Abs(delta / 10);
+            var movements = Math.Abs(delta / 10);
 
-            for (int i = 0; i < movements; i++)
+            for (var i = 0; i < movements; i++)
             {
-                if (delta > 0)
-                {
-                    _cameraViewModel.MoveForward();
-                }
+                if (delta > 0) _cameraViewModel.MoveForward();
 
-                if (delta < 0)
-                {
-                    _cameraViewModel.MoveBackwards();
-                }
+                if (delta < 0) _cameraViewModel.MoveBackwards();
             }
         }
 
@@ -129,15 +124,9 @@ namespace POC3D.ViewModel
             MouseButtonState rightButton,
             Point currentCursorPosition)
         {
-            if (middleButton == MouseButtonState.Pressed)
-            {
-                ReactToCameraPanMouse(currentCursorPosition);
-            }
+            if (middleButton == MouseButtonState.Pressed) ReactToCameraPanMouse(currentCursorPosition);
 
-            if (rightButton == MouseButtonState.Pressed)
-            {
-                ReactToCameraRotateMouse(currentCursorPosition);
-            }
+            if (rightButton == MouseButtonState.Pressed) ReactToCameraRotateMouse(currentCursorPosition);
 
             _lastMousePosition = currentCursorPosition;
         }
@@ -145,59 +134,31 @@ namespace POC3D.ViewModel
         public void ReactToKeyBoardKeyDown(bool isLeftShiftPressed, Key pressedKey)
         {
             if (isLeftShiftPressed)
-            {
                 ReactToCameraRotationKeyDown(pressedKey);
-            }
             else
-            {
                 ReactToMovementKeyDown(pressedKey);
-            }
         }
 
         private void ReactToCameraRotateMouse(Point currentCursorPosition)
         {
-            if (currentCursorPosition.X < _lastMousePosition.X)
-            {
-                _cameraViewModel.CameraRotationZUp();
-            }
+            if (currentCursorPosition.X < _lastMousePosition.X) _cameraViewModel.CameraRotationZUp();
 
-            if (currentCursorPosition.X > _lastMousePosition.X)
-            {
-                _cameraViewModel.CameraRotationZDown();
-            }
+            if (currentCursorPosition.X > _lastMousePosition.X) _cameraViewModel.CameraRotationZDown();
 
-            if (currentCursorPosition.Y < _lastMousePosition.Y)
-            {
-                _cameraViewModel.CameraRotationYDown();
-            }
+            if (currentCursorPosition.Y < _lastMousePosition.Y) _cameraViewModel.CameraRotationYDown();
 
-            if (currentCursorPosition.Y > _lastMousePosition.Y)
-            {
-                _cameraViewModel.CameraRotationYUp();
-            }
+            if (currentCursorPosition.Y > _lastMousePosition.Y) _cameraViewModel.CameraRotationYUp();
         }
 
         private void ReactToCameraPanMouse(Point currentCursorPosition)
         {
-            if (currentCursorPosition.X < _lastMousePosition.X)
-            {
-                _cameraViewModel.MoveLeft();
-            }
+            if (currentCursorPosition.X < _lastMousePosition.X) _cameraViewModel.MoveLeft();
 
-            if (currentCursorPosition.X > _lastMousePosition.X)
-            {
-                _cameraViewModel.MoveRight();
-            }
+            if (currentCursorPosition.X > _lastMousePosition.X) _cameraViewModel.MoveRight();
 
-            if (currentCursorPosition.Y < _lastMousePosition.Y)
-            {
-                _cameraViewModel.MoveUp();
-            }
+            if (currentCursorPosition.Y < _lastMousePosition.Y) _cameraViewModel.MoveUp();
 
-            if (currentCursorPosition.Y > _lastMousePosition.Y)
-            {
-                _cameraViewModel.MoveDown();
-            }
+            if (currentCursorPosition.Y > _lastMousePosition.Y) _cameraViewModel.MoveDown();
         }
 
         private void ReactToCameraRotationKeyDown(Key pressedKey)

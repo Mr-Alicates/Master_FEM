@@ -3,7 +3,7 @@
 namespace POC3D.Controls.Elements
 {
     /// <summary>
-    /// Interaction logic for ElementAddingControl.xaml
+    ///     Interaction logic for ElementAddingControl.xaml
     /// </summary>
     public partial class ElementAddingControl : UserControl
     {

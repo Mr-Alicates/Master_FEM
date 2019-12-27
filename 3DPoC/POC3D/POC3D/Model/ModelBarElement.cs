@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace POC3D.Model
+﻿namespace POC3D.Model
 {
     public class ModelBarElement : IModelElement
     {
@@ -25,13 +19,13 @@ namespace POC3D.Model
         public ModelNode OriginNode { get; set; }
 
         public ModelNode DestinationNode { get; set; }
-        
+
         public ModelMaterial Material { get; set; } = ModelMaterial.None;
 
         public double CrossSectionArea { get; set; }
 
         public double Length => new ModelVector(DestinationNode.Coordinates, OriginNode.Coordinates).Modulus;
 
-        public double K => (Material.YoungsModulus * CrossSectionArea) / Length;
+        public double K => Material.YoungsModulus * CrossSectionArea / Length;
     }
 }

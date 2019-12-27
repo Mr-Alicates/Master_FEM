@@ -9,11 +9,11 @@
 
     <Grid Background="Gray">
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-    
-        <StackPanel Orientation="Horizontal"  Grid.Row="0">
+
+        <StackPanel Orientation="Horizontal" Grid.Row="0">
 
             <Button Content="Nodes" Command="{Binding InterfaceControlViewModel.ShowNodesControlCommand}" />
             <Button Content="Elements" Command="{Binding InterfaceControlViewModel.ShowElementsControlCommand}" />
@@ -22,35 +22,36 @@
         </StackPanel>
 
 
-    <Grid Grid.Row="1">
-        <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="300"/>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="300" />
             </Grid.ColumnDefinitions>
-        
-        <controls:VisualAreaControl Grid.Column="0" MainViewModel="{Binding Path=.}" x:Name="Viewport" Focusable="True"/>
 
-            <nodes:NodeManagerControl 
-                Grid.Column="1" 
+            <controls:VisualAreaControl Grid.Column="0" MainViewModel="{Binding Path=.}" x:Name="Viewport"
+                                        Focusable="True" />
+
+            <nodes:NodeManagerControl
+                Grid.Column="1"
                 Visibility="{Binding Path=InterfaceControlViewModel.NodesControlVisibility}"
-                DataContext="{Binding Path=.}"/>
+                DataContext="{Binding Path=.}" />
 
             <StackPanel
-                Grid.Column="1" 
+                Grid.Column="1"
                 Visibility="{Binding Path=InterfaceControlViewModel.ElementsControlVisibility}"
                 Orientation="Vertical">
 
-                <elements:SelectedElementDetailsControl DataContext="{Binding Path=.}"/>
-                <elements:ElementListingControl DataContext="{Binding Path=.}"/>
-                <elements:ElementAddingControl DataContext="{Binding Path=.}"/>
+                <elements:SelectedElementDetailsControl DataContext="{Binding Path=.}" />
+                <elements:ElementListingControl DataContext="{Binding Path=.}" />
+                <elements:ElementAddingControl DataContext="{Binding Path=.}" />
             </StackPanel>
 
             <StackPanel
-            Grid.Column="1" 
-            Visibility="{Binding Path=InterfaceControlViewModel.ForcesControlVisibility}"
-            Orientation="Vertical">
+                Grid.Column="1"
+                Visibility="{Binding Path=InterfaceControlViewModel.ForcesControlVisibility}"
+                Orientation="Vertical">
 
-                <forces:ForceListingControl DataContext="{Binding Path=.}"/>
+                <forces:ForceListingControl DataContext="{Binding Path=.}" />
             </StackPanel>
 
         </Grid>

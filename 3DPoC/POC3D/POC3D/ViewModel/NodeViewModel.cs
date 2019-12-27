@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using POC3D.Helpers;
 using POC3D.Model;
@@ -11,10 +10,10 @@ namespace POC3D.ViewModel
         private static readonly Brush FreeNodeBrush = Brushes.LightGreen;
         private static readonly Brush FixedNodeBrush = Brushes.DarkGreen;
         private static readonly Brush SelectedNodeBrush = Brushes.Red;
-        private MeshGeometry3D _meshGeometry3D;
-        private DiffuseMaterial _material;
 
         private bool _isSelected;
+        private DiffuseMaterial _material;
+        private MeshGeometry3D _meshGeometry3D;
 
         public NodeViewModel(ModelNode modelNode)
         {
@@ -42,6 +41,7 @@ namespace POC3D.ViewModel
                 OnPropertyChanged(nameof(X));
             }
         }
+
         public double Y
         {
             get => Node.Coordinates.Y;
@@ -52,6 +52,7 @@ namespace POC3D.ViewModel
                 OnPropertyChanged(nameof(Y));
             }
         }
+
         public double Z
         {
             get => Node.Coordinates.Z;
@@ -74,15 +75,19 @@ namespace POC3D.ViewModel
             }
         }
 
-        public bool IsSelected 
-        { 
+        public bool IsSelected
+        {
             get => _isSelected;
-            set 
+            set
             {
                 _isSelected = value;
                 UpdateGeometry();
-            } 
+            }
         }
+
+        public GeometryModel3D Geometry { get; }
+
+        public string Name => $"{Id} ({Coordinates.ToString()})";
 
         public NodeViewModel SetAsFixed()
         {
@@ -96,13 +101,9 @@ namespace POC3D.ViewModel
             return this;
         }
 
-        public GeometryModel3D Geometry { get; }
-        
-        public string Name => $"{Id} ({Coordinates.ToString()})";
-
         private GeometryModel3D BuildGeometry()
         {
-            _meshGeometry3D = new MeshGeometry3D()
+            _meshGeometry3D = new MeshGeometry3D
             {
                 Positions = new Point3DCollection(),
                 TriangleIndices = new Int32Collection()
@@ -110,7 +111,7 @@ namespace POC3D.ViewModel
 
             _material = new DiffuseMaterial(FreeNodeBrush);
 
-            return new GeometryModel3D()
+            return new GeometryModel3D
             {
                 Material = _material,
                 Geometry = _meshGeometry3D
@@ -120,16 +121,12 @@ namespace POC3D.ViewModel
         private void UpdateGeometry()
         {
             if (IsFixed)
-            {
                 GraphicsHelper.BuildPyramidMesh(_meshGeometry3D, 2);
-            }
             else
-            {
                 GraphicsHelper.BuildCubeMesh(_meshGeometry3D, 1);
-            }
 
             Geometry.Transform = new TranslateTransform3D(X, Y, Z);
-            _material.Brush = IsSelected ? SelectedNodeBrush : (IsFixed ? FixedNodeBrush : FreeNodeBrush);
+            _material.Brush = IsSelected ? SelectedNodeBrush : IsFixed ? FixedNodeBrush : FreeNodeBrush;
 
             OnPropertyChanged(nameof(Geometry));
         }

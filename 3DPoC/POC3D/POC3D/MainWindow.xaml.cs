@@ -1,36 +1,16 @@
-﻿using POC3D.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
+﻿using System.Windows;
 using System.Windows.Media.Media3D;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using POC3D.ViewModel;
 
 namespace POC3D
 {
     /// <summary>
-    /// Lógica de interacción para MainWindow.xaml
+    ///     Lógica de interacción para MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
         public static readonly DependencyProperty MainViewModelProperty = DependencyProperty.Register(
             nameof(MainViewModel), typeof(MainViewModel), typeof(MainWindow));
-
-        public MainViewModel MainViewModel
-        {
-            get { return (MainViewModel)this.GetValue(MainViewModelProperty); }
-            set { this.SetValue(MainViewModelProperty, value); }
-        }
 
         public MainWindow()
         {
@@ -39,6 +19,12 @@ namespace POC3D
             DataContext = MainViewModel;
 
             Init();
+        }
+
+        public MainViewModel MainViewModel
+        {
+            get => (MainViewModel) GetValue(MainViewModelProperty);
+            set => SetValue(MainViewModelProperty, value);
         }
 
         public void Init()

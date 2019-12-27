@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace POC3D.Model
 {
@@ -15,7 +11,6 @@ namespace POC3D.Model
         public ModelVector(ModelPoint end, ModelPoint beggining)
             : this(end.X - beggining.X, end.Y - beggining.Y, end.Z - beggining.Z)
         {
-
         }
 
         public ModelVector(double x, double y, double z)

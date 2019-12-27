@@ -15,12 +15,14 @@ namespace POC3D.ViewModel
         private DiffuseMaterial _material;
         private MeshGeometry3D _meshGeometry3D;
         private NodeViewModel _origin;
+        private MaterialViewModel _materialViewModel;
 
         public ElementViewModel(IModelElement modelElement, NodeViewModel origin, NodeViewModel destination)
         {
             Element = modelElement;
             _origin = origin;
             _destination = destination;
+            _materialViewModel = new MaterialViewModel(Element.Material);
 
             Geometry = BuildGeometry();
             UpdateGeometry();
@@ -69,6 +71,34 @@ namespace POC3D.ViewModel
 
         public string Description => Element.Description;
 
+        public MaterialViewModel Material
+        {
+            get => _materialViewModel;
+            set
+            {
+                _materialViewModel = value;
+
+                Element.Material = _materialViewModel.ModelMaterial;
+                OnPropertyChanged(nameof(Material));
+                OnPropertyChanged(nameof(K));
+            }
+        }
+
+        public double CrossSectionArea
+        {
+            get => Element.CrossSectionArea;
+            set
+            {
+                Element.CrossSectionArea = value;
+                OnPropertyChanged(nameof(CrossSectionArea));
+                OnPropertyChanged(nameof(K));
+            }
+        }
+        public double Length => Element.Length;
+
+
+        public double K => Element.K;
+
         public GeometryModel3D Geometry { get; }
 
         private void NodesChanged(object sender, PropertyChangedEventArgs e)
@@ -115,6 +145,8 @@ namespace POC3D.ViewModel
             };
 
             OnPropertyChanged(nameof(Geometry));
+            OnPropertyChanged(nameof(Length));
+            OnPropertyChanged(nameof(K));
         }
     }
 }

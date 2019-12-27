@@ -74,9 +74,11 @@
       <DependentUpon>VisualAreaControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\GraphicsHelper.cs" />
+    <Compile Include="Helpers\MaterialsHelper.cs" />
     <Compile Include="Model\ModelBarElement.cs" />
     <Compile Include="Model\IModelElement.cs" />
     <Compile Include="Model\ModelForce.cs" />
+    <Compile Include="Model\ModelMaterial.cs" />
     <Compile Include="Model\ModelNode.cs" />
     <Compile Include="Model\ModelPoint.cs" />
     <Compile Include="Model\ModelProblem.cs" />
@@ -86,6 +88,7 @@
     <Compile Include="ViewModel\CameraViewModel.cs" />
     <Compile Include="ViewModel\ElementViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\MaterialViewModel.cs" />
     <Compile Include="ViewModel\NewElementViewModel.cs" />
     <Compile Include="ViewModel\NodeViewModel.cs" />
     <Compile Include="ViewModel\Observable.cs" />

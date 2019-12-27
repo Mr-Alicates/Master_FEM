@@ -25,15 +25,13 @@ namespace POC3D.Model
         public ModelNode OriginNode { get; set; }
 
         public ModelNode DestinationNode { get; set; }
-
-        public double YoungsModulus { get; set; }
-
-        public double PoissonRatio { get; set; }
+        
+        public ModelMaterial Material { get; set; } = ModelMaterial.None;
 
         public double CrossSectionArea { get; set; }
 
         public double Length => new ModelVector(DestinationNode.Coordinates, OriginNode.Coordinates).Modulus;
 
-        public double K => (YoungsModulus * CrossSectionArea) / Length;
+        public double K => (Material.YoungsModulus * CrossSectionArea) / Length;
     }
 }

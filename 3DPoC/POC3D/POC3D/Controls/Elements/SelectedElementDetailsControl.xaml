@@ -19,6 +19,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -34,7 +35,6 @@
 
         <TextBox IsReadOnly="True" Grid.Row="2" Grid.Column="0" Text="{Binding ProblemViewModel.SelectedElement.Description, Mode=OneWay}" />
         <TextBlock Grid.Row="2" Grid.Column="1" Text="Description" />
-
 
         <ComboBox Grid.Row="3"
                   Grid.Column="0"
@@ -65,6 +65,37 @@
         </ComboBox>
         <TextBlock Grid.Row="4" Grid.Column="1" Text="Destination node" />
 
+
+        <ComboBox Grid.Row="5"
+                  Grid.Column="0"
+                  SelectedItem="{Binding ProblemViewModel.SelectedElement.Material,Mode=TwoWay}"
+                  ItemsSource="{Binding ProblemViewModel.Materials}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate DataType="viewModel:NodeViewModel">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Name, Mode=OneWay}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <TextBlock Grid.Row="5" Grid.Column="1" Text="Material" />
+
+
+        <TextBox IsReadOnly="True" Grid.Row="6" Grid.Column="0" Text="{Binding ProblemViewModel.SelectedElement.Material.YoungsModulus, Mode=OneWay}" />
+        <TextBlock Grid.Row="6" Grid.Column="1" Text="YoungsModulus" />
+
+        <TextBox IsReadOnly="True" Grid.Row="7" Grid.Column="0" Text="{Binding ProblemViewModel.SelectedElement.Material.PoissonRatio, Mode=OneWay}" />
+        <TextBlock Grid.Row="7" Grid.Column="1" Text="PoissonRatio" />
+
+
+        <TextBox Grid.Row="8" Grid.Column="0" Text="{Binding ProblemViewModel.SelectedElement.CrossSectionArea, Mode=TwoWay}" />
+        <TextBlock Grid.Row="8" Grid.Column="1" Text="Cross section area (m^2)" />
+
+        <TextBox IsReadOnly="True" Grid.Row="9" Grid.Column="0" Text="{Binding ProblemViewModel.SelectedElement.Length, Mode=OneWay}" />
+        <TextBlock Grid.Row="9" Grid.Column="1" Text="Length" />
+
+        <TextBox IsReadOnly="True" Grid.Row="10" Grid.Column="0" Text="{Binding ProblemViewModel.SelectedElement.K, Mode=OneWay}" />
+        <TextBlock Grid.Row="10" Grid.Column="1" Text="K constant" />
 
 
     </Grid>

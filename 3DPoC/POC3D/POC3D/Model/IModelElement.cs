@@ -16,9 +16,7 @@ namespace POC3D.Model
 
         ModelNode DestinationNode { get; set; }
 
-        double YoungsModulus { get; set; }
-
-        double PoissonRatio { get; set; }
+        ModelMaterial Material { get; set; }
 
         double CrossSectionArea { get; set; }
 

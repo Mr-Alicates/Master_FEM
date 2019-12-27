@@ -1,24 +1,19 @@
-﻿using POC3D.Model;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Media3D;
+using POC3D.Helpers;
+using POC3D.Model;
 
 namespace POC3D.ViewModel
 {
     public class ProblemViewModel : Observable
     {
-        private NodeViewModel _selectedNode;
+        private readonly ModelProblem _modelProblem;
         private ElementViewModel _selectedElement;
         private ForceViewModel _selectedForce;
-        private readonly ModelProblem _modelProblem;
+        private NodeViewModel _selectedNode;
 
         public ProblemViewModel()
         {
@@ -27,6 +22,8 @@ namespace POC3D.ViewModel
             Nodes = new ObservableCollection<NodeViewModel>();
             Elements = new ObservableCollection<ElementViewModel>();
             Forces = new ObservableCollection<ForceViewModel>();
+            Materials = new ObservableCollection<MaterialViewModel>();
+            InitializeMaterials();
 
             NewElementViewModel = new NewElementViewModel(this);
         }
@@ -38,10 +35,7 @@ namespace POC3D.ViewModel
             {
                 if (_selectedNode == value) return;
 
-                if (_selectedNode != null)
-                {
-                    _selectedNode.IsSelected = false;
-                }
+                if (_selectedNode != null) _selectedNode.IsSelected = false;
 
                 _selectedNode = value;
 
@@ -63,10 +57,7 @@ namespace POC3D.ViewModel
             {
                 if (_selectedElement == value) return;
 
-                if (_selectedElement != null)
-                {
-                    _selectedElement.IsSelected = false;
-                }
+                if (_selectedElement != null) _selectedElement.IsSelected = false;
 
                 _selectedElement = value;
 
@@ -88,10 +79,7 @@ namespace POC3D.ViewModel
             {
                 if (_selectedForce == value) return;
 
-                if (_selectedForce != null)
-                {
-                    _selectedForce.IsSelected = false;
-                }
+                if (_selectedForce != null) _selectedForce.IsSelected = false;
 
                 _selectedForce = value;
 
@@ -107,12 +95,28 @@ namespace POC3D.ViewModel
         }
 
         public NewElementViewModel NewElementViewModel { get; }
-                
+
         public ObservableCollection<NodeViewModel> Nodes { get; }
 
         public ObservableCollection<ElementViewModel> Elements { get; }
 
         public ObservableCollection<ForceViewModel> Forces { get; }
+
+        public ObservableCollection<MaterialViewModel> Materials { get; }
+
+        public ICommand AddNodeCommand => new AddNodeCommand(this);
+
+        public ICommand DeleteNodeCommand => new DeleteNodeCommand(this);
+
+        public ICommand DeleteElementCommand => new DeleteElementCommand(this);
+
+        public ICommand DeleteForceCommand => new DeleteForceCommand(this);
+
+        private void InitializeMaterials()
+        {
+            foreach (var modelMaterial in MaterialsHelper.GetAvailableMaterials())
+                Materials.Add(new MaterialViewModel(modelMaterial));
+        }
 
         public NodeViewModel AddNode(Point3D point)
         {
@@ -186,20 +190,11 @@ namespace POC3D.ViewModel
             Forces.Remove(selectedForce);
             SelectedForce = null;
         }
-
-        public ICommand AddNodeCommand => new AddNodeCommand(this);
-
-        public ICommand DeleteNodeCommand => new DeleteNodeCommand(this);
-
-        public ICommand DeleteElementCommand => new DeleteElementCommand(this);
-
-        public ICommand DeleteForceCommand => new DeleteForceCommand(this);
     }
 
     public class DeleteForceCommand : ICommand
     {
         private readonly ProblemViewModel _problemViewModel;
-        public event EventHandler CanExecuteChanged;
         private bool _canExecute;
 
         public DeleteForceCommand(ProblemViewModel problemViewModel)
@@ -209,11 +204,7 @@ namespace POC3D.ViewModel
             problemViewModel.PropertyChanged += PropertiesChanged;
         }
 
-        private void PropertiesChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            _canExecute = _problemViewModel.SelectedForce != null;
-            CanExecuteChanged?.Invoke(this, new EventArgs());
-        }
+        public event EventHandler CanExecuteChanged;
 
         public bool CanExecute(object parameter)
         {
@@ -224,12 +215,17 @@ namespace POC3D.ViewModel
         {
             _problemViewModel.DeleteSelectedForce();
         }
+
+        private void PropertiesChanged(object sender, PropertyChangedEventArgs e)
+        {
+            _canExecute = _problemViewModel.SelectedForce != null;
+            CanExecuteChanged?.Invoke(this, new EventArgs());
+        }
     }
 
     public class DeleteElementCommand : ICommand
     {
         private readonly ProblemViewModel _problemViewModel;
-        public event EventHandler CanExecuteChanged;
         private bool _canExecute;
 
         public DeleteElementCommand(ProblemViewModel problemViewModel)
@@ -239,11 +235,7 @@ namespace POC3D.ViewModel
             problemViewModel.PropertyChanged += PropertiesChanged;
         }
 
-        private void PropertiesChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            _canExecute = _problemViewModel.SelectedElement != null;
-            CanExecuteChanged?.Invoke(this, new EventArgs());
-        }
+        public event EventHandler CanExecuteChanged;
 
         public bool CanExecute(object parameter)
         {
@@ -254,12 +246,17 @@ namespace POC3D.ViewModel
         {
             _problemViewModel.DeleteSelectedElement();
         }
+
+        private void PropertiesChanged(object sender, PropertyChangedEventArgs e)
+        {
+            _canExecute = _problemViewModel.SelectedElement != null;
+            CanExecuteChanged?.Invoke(this, new EventArgs());
+        }
     }
 
     public class DeleteNodeCommand : ICommand
     {
         private readonly ProblemViewModel _problemViewModel;
-        public event EventHandler CanExecuteChanged;
         private bool _canExecute;
 
         public DeleteNodeCommand(ProblemViewModel problemViewModel)
@@ -269,11 +266,7 @@ namespace POC3D.ViewModel
             problemViewModel.PropertyChanged += PropertiesChanged;
         }
 
-        private void PropertiesChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            _canExecute = _problemViewModel.SelectedNode != null;
-            CanExecuteChanged?.Invoke(this, new EventArgs());
-        }
+        public event EventHandler CanExecuteChanged;
 
         public bool CanExecute(object parameter)
         {
@@ -284,17 +277,24 @@ namespace POC3D.ViewModel
         {
             _problemViewModel.DeleteSelectedNode();
         }
+
+        private void PropertiesChanged(object sender, PropertyChangedEventArgs e)
+        {
+            _canExecute = _problemViewModel.SelectedNode != null;
+            CanExecuteChanged?.Invoke(this, new EventArgs());
+        }
     }
 
     public class AddNodeCommand : ICommand
     {
         private readonly ProblemViewModel _problemViewModel;
-        public event EventHandler CanExecuteChanged;
 
         public AddNodeCommand(ProblemViewModel problemViewModel)
         {
             _problemViewModel = problemViewModel;
         }
+
+        public event EventHandler CanExecuteChanged;
 
         public bool CanExecute(object parameter)
         {

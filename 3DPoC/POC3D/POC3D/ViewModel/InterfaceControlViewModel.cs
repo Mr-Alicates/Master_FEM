@@ -31,59 +31,139 @@ namespace POC3D.ViewModel
             problemViewModel.PropertyChanged += ProblemViewModel_PropertyChanged;
         }
 
-        public ICommand ShowNodesControlCommand => new ButtonCommand(ShowNodeControls);
+        public ICommand HideAllCommand => new ButtonCommand(HideAllControls);
 
-        public ICommand ShowElementsControlCommand => new ButtonCommand(ShowElementControls);
-
-        public ICommand ShowForcesControlConmmand => new ButtonCommand(ShowForcesControls);
-
-        private void ProblemViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void HideAllControls()
         {
-            if (e.PropertyName == nameof(_problemViewModel.SelectedNode) &&
-                _problemViewModel.SelectedNode != null)
-            {
-                NodeDetailsControlVisibility = Visibility.Visible;
-                ElementDetailsControlVisibility = Visibility.Collapsed;
-                ForceDetailsControlVisibility = Visibility.Collapsed;
-            }
+            ElementAddingControlVisibility = Visibility.Collapsed;
+            ElementDetailsControlVisibility = Visibility.Collapsed;
+            ElementListingControlVisibility = Visibility.Collapsed;
 
-            if (e.PropertyName == nameof(_problemViewModel.SelectedElement) &&
-                _problemViewModel.SelectedElement != null)
-            {
-                NodeDetailsControlVisibility = Visibility.Collapsed;
-                ElementDetailsControlVisibility = Visibility.Visible;
-                ForceDetailsControlVisibility = Visibility.Collapsed;
-            }
+            NodeDetailsControlVisibility = Visibility.Collapsed;
+            NodeListingControlVisibility = Visibility.Collapsed;
 
-            if (e.PropertyName == nameof(_problemViewModel.SelectedForce) &&
-                _problemViewModel.SelectedForce != null)
-            {
-                NodeDetailsControlVisibility = Visibility.Collapsed;
-                ElementDetailsControlVisibility = Visibility.Collapsed;
-                ForceDetailsControlVisibility = Visibility.Visible;
-            }
+            ForceAddingControlVisibility = Visibility.Collapsed;
+            ForceDetailsControlVisibility = Visibility.Collapsed;
+            ForceListingControlVisibility = Visibility.Collapsed;
         }
 
-        public void ShowNodeControls()
+        #region Nodes
+
+        public ICommand ShowSelectedNodeDetailsCommand => new ButtonCommand(ShowSelectedNodeDetails);
+
+        public ICommand AddNodeCommand => _problemViewModel.AddNodeCommand;
+
+        public ICommand DeleteNodeCommand => new ButtonCommand(DeleteNode);
+
+        public ICommand ShowNodeListingCommand => new ButtonCommand(ShowNodeListing);
+
+        private void ShowSelectedNodeDetails()
         {
+            HideAllControls();
+
             NodeDetailsControlVisibility = Visibility.Visible;
-            ElementDetailsControlVisibility = Visibility.Collapsed;
-            ForceDetailsControlVisibility = Visibility.Collapsed;
         }
 
-        public void ShowElementControls()
+        private void DeleteNode()
         {
-            NodeDetailsControlVisibility = Visibility.Collapsed;
+            HideAllControls();
+
+            _problemViewModel.DeleteNodeCommand.Execute(null);
+        }
+
+        private void ShowNodeListing()
+        {
+            HideAllControls();
+
+            NodeDetailsControlVisibility = Visibility.Visible;
+            NodeListingControlVisibility = Visibility.Visible;
+        }
+
+        #endregion
+
+        #region Elements
+
+        public ICommand ShowSelectedElementDetailsCommand => new ButtonCommand(ShowSelectedElementDetails);
+
+        public ICommand AddElementCommand => new ButtonCommand(AddElement);
+
+        public ICommand DeleteElementCommand => new ButtonCommand(DeleteElement);
+
+        public ICommand ShowElementListingCommand => new ButtonCommand(ShowElementListing);
+
+        private void ShowSelectedElementDetails()
+        {
+            HideAllControls();
+
             ElementDetailsControlVisibility = Visibility.Visible;
-            ForceDetailsControlVisibility = Visibility.Collapsed;
         }
 
-        public void ShowForcesControls()
+        private void AddElement()
         {
-            NodeDetailsControlVisibility = Visibility.Collapsed;
-            ElementDetailsControlVisibility = Visibility.Collapsed;
+            HideAllControls();
+
+            ElementAddingControlVisibility = Visibility.Visible;
+        }
+
+        private void DeleteElement()
+        {
+            HideAllControls();
+
+            _problemViewModel.DeleteElementCommand.Execute(null);
+        }
+
+        private void ShowElementListing()
+        {
+            HideAllControls();
+
+            ElementDetailsControlVisibility = Visibility.Visible;
+            ElementListingControlVisibility = Visibility.Visible;
+        }
+
+        #endregion
+
+        #region Forces
+
+        public ICommand ShowSelectedForceDetailsCommand => new ButtonCommand(ShowSelectedForceDetails);
+
+        public ICommand AddForceCommand => new ButtonCommand(AddForce);
+
+        public ICommand DeleteForceCommand => new ButtonCommand(DeleteForce);
+
+        public ICommand ShowForceListingCommand => new ButtonCommand(ShowForceListing);
+
+        private void ShowSelectedForceDetails()
+        {
+            HideAllControls();
+
             ForceDetailsControlVisibility = Visibility.Visible;
         }
+
+        private void AddForce()
+        {
+            HideAllControls();
+
+            ForceAddingControlVisibility = Visibility.Visible;
+        }
+
+        private void DeleteForce()
+        {
+            HideAllControls();
+
+            _problemViewModel.DeleteForceCommand.Execute(null);
+        }
+
+        private void ShowForceListing()
+        {
+            HideAllControls();
+
+            ForceDetailsControlVisibility = Visibility.Visible;
+            ForceListingControlVisibility = Visibility.Visible;
+        }
+
+        #endregion
+
+        #region Viewport
 
         public void ReactToMouseWheelMovement(int delta)
         {
@@ -183,7 +263,24 @@ namespace POC3D.ViewModel
             }
         }
 
+        #endregion
+
         #region ControlsVisibility
+
+        private void ProblemViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(_problemViewModel.SelectedNode) &&
+                _problemViewModel.SelectedNode != null)
+                ShowSelectedNodeDetailsCommand.Execute(null);
+
+            if (e.PropertyName == nameof(_problemViewModel.SelectedElement) &&
+                _problemViewModel.SelectedElement != null)
+                ShowSelectedElementDetailsCommand.Execute(null);
+
+            if (e.PropertyName == nameof(_problemViewModel.SelectedForce) &&
+                _problemViewModel.SelectedForce != null)
+                ShowSelectedForceDetailsCommand.Execute(null);
+        }
 
         public Visibility NodeDetailsControlVisibility
         {

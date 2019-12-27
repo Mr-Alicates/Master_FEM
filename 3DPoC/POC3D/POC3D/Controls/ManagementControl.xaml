@@ -29,7 +29,7 @@
                                     Visibility="{Binding Path=InterfaceControlViewModel.ForceListingControlVisibility}" />
 
         <elements:ElementAddingControl DataContext="{Binding Path=.}"
-                                       Visibility="{Binding Path=InterfaceControlViewModel.ForceAddingControlVisibility}" />
+                                       Visibility="{Binding Path=InterfaceControlViewModel.ElementAddingControlVisibility}" />
 
         <forces:ForceAddingControl DataContext="{Binding Path=.}"
                                    Visibility="{Binding Path=InterfaceControlViewModel.ForceAddingControlVisibility}" />

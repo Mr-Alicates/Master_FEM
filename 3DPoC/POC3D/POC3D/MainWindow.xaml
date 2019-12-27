@@ -6,23 +6,80 @@
 
     <Grid Background="Gray">
         <Grid.RowDefinitions>
-            <RowDefinition Height="30" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="0">
+        <Menu Grid.Row="0">
+
+            <MenuItem Header="Hide all" Command="{Binding InterfaceControlViewModel.HideAllCommand}" />
+
+            <MenuItem Header="Nodes">
+
+                <MenuItem Header="Show selected Node details"
+                          Command="{Binding InterfaceControlViewModel.ShowNodesControlCommand}" />
+
+                <MenuItem Header="Add new Node"
+                          Command="{Binding InterfaceControlViewModel.AddNodeCommand}" />
+
+                <MenuItem Header="Delete selected Node"
+                          Command="{Binding InterfaceControlViewModel.DeleteNodeCommand}" />
+
+                <MenuItem Header="Show list of Nodes"
+                          Command="{Binding InterfaceControlViewModel.ShowNodeListingCommand}" />
+
+            </MenuItem>
+
+            <MenuItem Header="Elements">
+
+                <MenuItem Header="Show selected Element details"
+                          Command="{Binding InterfaceControlViewModel.ShowElementsControlCommand}" />
+
+                <MenuItem Header="Add new Element"
+                          Command="{Binding InterfaceControlViewModel.AddElementCommand}" />
+
+                <MenuItem Header="Delete selected Element"
+                          Command="{Binding InterfaceControlViewModel.DeleteElementCommand}" />
+
+                <MenuItem Header="Show list of Elements"
+                          Command="{Binding InterfaceControlViewModel.ShowElementListingCommand}" />
+
+            </MenuItem>
+
+            <MenuItem Header="Forces">
+
+                <MenuItem Header="Show selected Force details"
+                          Command="{Binding InterfaceControlViewModel.ShowForcesControlCommand}" />
+
+                <MenuItem Header="Add new Force"
+                          Command="{Binding InterfaceControlViewModel.AddForceCommand}" />
+
+                <MenuItem Header="Delete selected Force"
+                          Command="{Binding InterfaceControlViewModel.DeleteForceCommand}" />
+
+                <MenuItem Header="Show list of Forces"
+                          Command="{Binding InterfaceControlViewModel.ShowForceListingCommand}" />
+
+            </MenuItem>
+
+
+        </Menu>
+
+        <!--<StackPanel Orientation="Horizontal" Grid.Row="0">
+
+            <Button Content="Hide menu bar" Command="{Binding InterfaceControlViewModel.HideAllCommand}" />
+
 
             <Button Content="Nodes" Command="{Binding InterfaceControlViewModel.ShowNodesControlCommand}" />
             <Button Content="Elements" Command="{Binding InterfaceControlViewModel.ShowElementsControlCommand}" />
             <Button Content="Forces" Command="{Binding InterfaceControlViewModel.ShowForcesControlConmmand}" />
 
-        </StackPanel>
-
+        </StackPanel>-->
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="300" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
             <controls:VisualAreaControl Grid.Column="0" MainViewModel="{Binding Path=.}" x:Name="Viewport"

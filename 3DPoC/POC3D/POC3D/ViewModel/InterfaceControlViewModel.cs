@@ -9,10 +9,19 @@ namespace POC3D.ViewModel
     {
         private readonly CameraViewModel _cameraViewModel;
         private readonly ProblemViewModel _problemViewModel;
-        private Visibility _elementsControlVisibility = Visibility.Collapsed;
-        private Visibility _forcesControlVisibility = Visibility.Collapsed;
+
+        private Visibility _elementAddingControlVisibility = Visibility.Collapsed;
+        private Visibility _elementDetailsControlVisibility = Visibility.Collapsed;
+        private Visibility _elementListingControlVisibility = Visibility.Collapsed;
+
+        private Visibility _forceAddingControlVisibility = Visibility.Collapsed;
+        private Visibility _forceDetailsControlVisibility = Visibility.Collapsed;
+        private Visibility _forceListingControlVisibility = Visibility.Collapsed;
+
         private Point _lastMousePosition;
-        private Visibility _nodesControlVisibility = Visibility.Collapsed;
+
+        private Visibility _nodeDetailsControlVisibility = Visibility.Collapsed;
+        private Visibility _nodeListingControlVisibility = Visibility.Collapsed;
 
         public InterfaceControlViewModel(ProblemViewModel problemViewModel, CameraViewModel cameraViewModel)
         {
@@ -20,36 +29,6 @@ namespace POC3D.ViewModel
             _cameraViewModel = cameraViewModel;
 
             problemViewModel.PropertyChanged += ProblemViewModel_PropertyChanged;
-        }
-
-        public Visibility NodesControlVisibility
-        {
-            get => _nodesControlVisibility;
-            private set
-            {
-                _nodesControlVisibility = value;
-                OnPropertyChanged(nameof(NodesControlVisibility));
-            }
-        }
-
-        public Visibility ElementsControlVisibility
-        {
-            get => _elementsControlVisibility;
-            private set
-            {
-                _elementsControlVisibility = value;
-                OnPropertyChanged(nameof(ElementsControlVisibility));
-            }
-        }
-
-        public Visibility ForcesControlVisibility
-        {
-            get => _forcesControlVisibility;
-            private set
-            {
-                _forcesControlVisibility = value;
-                OnPropertyChanged(nameof(ForcesControlVisibility));
-            }
         }
 
         public ICommand ShowNodesControlCommand => new ButtonCommand(ShowNodeControls);
@@ -63,47 +42,47 @@ namespace POC3D.ViewModel
             if (e.PropertyName == nameof(_problemViewModel.SelectedNode) &&
                 _problemViewModel.SelectedNode != null)
             {
-                NodesControlVisibility = Visibility.Visible;
-                ElementsControlVisibility = Visibility.Collapsed;
-                ForcesControlVisibility = Visibility.Collapsed;
+                NodeDetailsControlVisibility = Visibility.Visible;
+                ElementDetailsControlVisibility = Visibility.Collapsed;
+                ForceDetailsControlVisibility = Visibility.Collapsed;
             }
 
             if (e.PropertyName == nameof(_problemViewModel.SelectedElement) &&
                 _problemViewModel.SelectedElement != null)
             {
-                NodesControlVisibility = Visibility.Collapsed;
-                ElementsControlVisibility = Visibility.Visible;
-                ForcesControlVisibility = Visibility.Collapsed;
+                NodeDetailsControlVisibility = Visibility.Collapsed;
+                ElementDetailsControlVisibility = Visibility.Visible;
+                ForceDetailsControlVisibility = Visibility.Collapsed;
             }
 
             if (e.PropertyName == nameof(_problemViewModel.SelectedForce) &&
                 _problemViewModel.SelectedForce != null)
             {
-                NodesControlVisibility = Visibility.Collapsed;
-                ElementsControlVisibility = Visibility.Collapsed;
-                ForcesControlVisibility = Visibility.Visible;
+                NodeDetailsControlVisibility = Visibility.Collapsed;
+                ElementDetailsControlVisibility = Visibility.Collapsed;
+                ForceDetailsControlVisibility = Visibility.Visible;
             }
         }
 
         public void ShowNodeControls()
         {
-            NodesControlVisibility = Visibility.Visible;
-            ElementsControlVisibility = Visibility.Collapsed;
-            ForcesControlVisibility = Visibility.Collapsed;
+            NodeDetailsControlVisibility = Visibility.Visible;
+            ElementDetailsControlVisibility = Visibility.Collapsed;
+            ForceDetailsControlVisibility = Visibility.Collapsed;
         }
 
         public void ShowElementControls()
         {
-            NodesControlVisibility = Visibility.Collapsed;
-            ElementsControlVisibility = Visibility.Visible;
-            ForcesControlVisibility = Visibility.Collapsed;
+            NodeDetailsControlVisibility = Visibility.Collapsed;
+            ElementDetailsControlVisibility = Visibility.Visible;
+            ForceDetailsControlVisibility = Visibility.Collapsed;
         }
 
         public void ShowForcesControls()
         {
-            NodesControlVisibility = Visibility.Collapsed;
-            ElementsControlVisibility = Visibility.Collapsed;
-            ForcesControlVisibility = Visibility.Visible;
+            NodeDetailsControlVisibility = Visibility.Collapsed;
+            ElementDetailsControlVisibility = Visibility.Collapsed;
+            ForceDetailsControlVisibility = Visibility.Visible;
         }
 
         public void ReactToMouseWheelMovement(int delta)
@@ -203,6 +182,90 @@ namespace POC3D.ViewModel
                     break;
             }
         }
+
+        #region ControlsVisibility
+
+        public Visibility NodeDetailsControlVisibility
+        {
+            get => _nodeDetailsControlVisibility;
+            private set
+            {
+                _nodeDetailsControlVisibility = value;
+                OnPropertyChanged(nameof(NodeDetailsControlVisibility));
+            }
+        }
+
+        public Visibility ElementDetailsControlVisibility
+        {
+            get => _elementDetailsControlVisibility;
+            private set
+            {
+                _elementDetailsControlVisibility = value;
+                OnPropertyChanged(nameof(ElementDetailsControlVisibility));
+            }
+        }
+
+        public Visibility ForceDetailsControlVisibility
+        {
+            get => _forceDetailsControlVisibility;
+            private set
+            {
+                _forceDetailsControlVisibility = value;
+                OnPropertyChanged(nameof(ForceDetailsControlVisibility));
+            }
+        }
+
+        public Visibility NodeListingControlVisibility
+        {
+            get => _nodeListingControlVisibility;
+            private set
+            {
+                _nodeListingControlVisibility = value;
+                OnPropertyChanged(nameof(NodeListingControlVisibility));
+            }
+        }
+
+        public Visibility ElementListingControlVisibility
+        {
+            get => _elementListingControlVisibility;
+            private set
+            {
+                _elementListingControlVisibility = value;
+                OnPropertyChanged(nameof(ElementListingControlVisibility));
+            }
+        }
+
+        public Visibility ForceListingControlVisibility
+        {
+            get => _forceListingControlVisibility;
+            private set
+            {
+                _forceListingControlVisibility = value;
+                OnPropertyChanged(nameof(ForceListingControlVisibility));
+            }
+        }
+
+        public Visibility ElementAddingControlVisibility
+        {
+            get => _elementAddingControlVisibility;
+            private set
+            {
+                _elementAddingControlVisibility = value;
+                OnPropertyChanged(nameof(ElementAddingControlVisibility));
+            }
+        }
+
+        public Visibility ForceAddingControlVisibility
+        {
+            get => _forceAddingControlVisibility;
+            private set
+            {
+                _forceAddingControlVisibility = value;
+                OnPropertyChanged(nameof(ForceAddingControlVisibility));
+            }
+        }
+
+        #endregion
     }
 
     public class ButtonCommand : ICommand

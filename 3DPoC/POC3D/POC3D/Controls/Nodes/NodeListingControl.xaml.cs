@@ -3,11 +3,11 @@
 namespace POC3D.Controls.Nodes
 {
     /// <summary>
-    ///     Interaction logic for NodeManagerControl.xaml
+    ///     Interaction logic for NodeListingControl.xaml
     /// </summary>
-    public partial class NodeManagerControl : UserControl
+    public partial class NodeListingControl : UserControl
     {
-        public NodeManagerControl()
+        public NodeListingControl()
         {
             InitializeComponent();
         }

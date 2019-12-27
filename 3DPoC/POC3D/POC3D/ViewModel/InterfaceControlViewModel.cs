@@ -10,10 +10,9 @@ namespace POC3D.ViewModel
         private readonly CameraViewModel _cameraViewModel;
         private readonly ProblemViewModel _problemViewModel;
         private Point _lastMousePosition;
-        private Visibility elementsControlVisibility = Visibility.Hidden;
-        private Visibility forcesControlVisibility = Visibility.Hidden;
-
-        private Visibility nodesControlVisibility = Visibility.Hidden;
+        private Visibility _elementsControlVisibility = Visibility.Collapsed;
+        private Visibility _forcesControlVisibility = Visibility.Collapsed;
+        private Visibility _nodesControlVisibility = Visibility.Collapsed;
 
         public InterfaceControlViewModel(ProblemViewModel problemViewModel, CameraViewModel cameraViewModel)
         {
@@ -25,30 +24,30 @@ namespace POC3D.ViewModel
 
         public Visibility NodesControlVisibility
         {
-            get => nodesControlVisibility;
+            get => _nodesControlVisibility;
             private set
             {
-                nodesControlVisibility = value;
+                _nodesControlVisibility = value;
                 OnPropertyChanged(nameof(NodesControlVisibility));
             }
         }
 
         public Visibility ElementsControlVisibility
         {
-            get => elementsControlVisibility;
+            get => _elementsControlVisibility;
             private set
             {
-                elementsControlVisibility = value;
+                _elementsControlVisibility = value;
                 OnPropertyChanged(nameof(ElementsControlVisibility));
             }
         }
 
         public Visibility ForcesControlVisibility
         {
-            get => forcesControlVisibility;
+            get => _forcesControlVisibility;
             private set
             {
-                forcesControlVisibility = value;
+                _forcesControlVisibility = value;
                 OnPropertyChanged(nameof(ForcesControlVisibility));
             }
         }
@@ -65,23 +64,23 @@ namespace POC3D.ViewModel
                 _problemViewModel.SelectedNode != null)
             {
                 NodesControlVisibility = Visibility.Visible;
-                ElementsControlVisibility = Visibility.Hidden;
-                ForcesControlVisibility = Visibility.Hidden;
+                ElementsControlVisibility = Visibility.Collapsed;
+                ForcesControlVisibility = Visibility.Collapsed;
             }
 
             if (e.PropertyName == nameof(_problemViewModel.SelectedElement) &&
                 _problemViewModel.SelectedElement != null)
             {
-                NodesControlVisibility = Visibility.Hidden;
+                NodesControlVisibility = Visibility.Collapsed;
                 ElementsControlVisibility = Visibility.Visible;
-                ForcesControlVisibility = Visibility.Hidden;
+                ForcesControlVisibility = Visibility.Collapsed;
             }
 
             if (e.PropertyName == nameof(_problemViewModel.SelectedForce) &&
                 _problemViewModel.SelectedForce != null)
             {
-                NodesControlVisibility = Visibility.Hidden;
-                ElementsControlVisibility = Visibility.Hidden;
+                NodesControlVisibility = Visibility.Collapsed;
+                ElementsControlVisibility = Visibility.Collapsed;
                 ForcesControlVisibility = Visibility.Visible;
             }
         }
@@ -89,21 +88,21 @@ namespace POC3D.ViewModel
         public void ShowNodeControls()
         {
             NodesControlVisibility = Visibility.Visible;
-            ElementsControlVisibility = Visibility.Hidden;
-            ForcesControlVisibility = Visibility.Hidden;
+            ElementsControlVisibility = Visibility.Collapsed;
+            ForcesControlVisibility = Visibility.Collapsed;
         }
 
         public void ShowElementControls()
         {
-            NodesControlVisibility = Visibility.Hidden;
+            NodesControlVisibility = Visibility.Collapsed;
             ElementsControlVisibility = Visibility.Visible;
-            ForcesControlVisibility = Visibility.Hidden;
+            ForcesControlVisibility = Visibility.Collapsed;
         }
 
         public void ShowForcesControls()
         {
-            NodesControlVisibility = Visibility.Hidden;
-            ElementsControlVisibility = Visibility.Hidden;
+            NodesControlVisibility = Visibility.Collapsed;
+            ElementsControlVisibility = Visibility.Collapsed;
             ForcesControlVisibility = Visibility.Visible;
         }
 

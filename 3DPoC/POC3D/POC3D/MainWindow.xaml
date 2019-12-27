@@ -31,10 +31,15 @@
             <controls:VisualAreaControl Grid.Column="0" MainViewModel="{Binding Path=.}" x:Name="Viewport"
                                         Focusable="True" />
 
-            <nodes:NodeManagerControl
+            <StackPanel
                 Grid.Column="1"
                 Visibility="{Binding Path=InterfaceControlViewModel.NodesControlVisibility}"
-                DataContext="{Binding Path=.}" />
+                Orientation="Vertical">
+
+                <nodes:SelectedNodeDetailsControl DataContext="{Binding Path=.}" />
+                <nodes:NodeManagerControl DataContext="{Binding Path=.}" />
+            </StackPanel>
+
 
             <StackPanel
                 Grid.Column="1"
@@ -51,6 +56,7 @@
                 Visibility="{Binding Path=InterfaceControlViewModel.ForcesControlVisibility}"
                 Orientation="Vertical">
 
+                <forces:SelectedForceDetailsControl DataContext="{Binding Path=.}" />
                 <forces:ForceListingControl DataContext="{Binding Path=.}" />
             </StackPanel>
 

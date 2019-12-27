@@ -64,8 +64,14 @@
     <Compile Include="Controls\Elements\ElementListingControl.xaml.cs">
       <DependentUpon>ElementListingControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Forces\SelectedForceDetailsControl.xaml.cs">
+      <DependentUpon>SelectedForceDetailsControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Forces\ForceListingControl.xaml.cs">
       <DependentUpon>ForceListingControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Nodes\SelectedNodeDetailsControl.xaml.cs">
+      <DependentUpon>SelectedNodeDetailsControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Nodes\NodeManagerControl.xaml.cs">
       <DependentUpon>NodeManagerControl.xaml</DependentUpon>
@@ -105,9 +111,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\Forces\SelectedForceDetailsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\Forces\ForceListingControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Nodes\SelectedNodeDetailsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\Nodes\NodeManagerControl.xaml">
       <SubType>Designer</SubType>

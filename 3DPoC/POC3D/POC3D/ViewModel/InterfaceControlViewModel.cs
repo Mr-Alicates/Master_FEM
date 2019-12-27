@@ -89,7 +89,14 @@ namespace POC3D.ViewModel
 
         private void ShowSelectedElementDetails()
         {
-            HideAllControls();
+            ElementAddingControlVisibility = Visibility.Collapsed;
+
+            NodeDetailsControlVisibility = Visibility.Collapsed;
+            NodeListingControlVisibility = Visibility.Collapsed;
+
+            ForceAddingControlVisibility = Visibility.Collapsed;
+            ForceDetailsControlVisibility = Visibility.Collapsed;
+            ForceListingControlVisibility = Visibility.Collapsed;
 
             ElementDetailsControlVisibility = Visibility.Visible;
         }
@@ -121,7 +128,14 @@ namespace POC3D.ViewModel
 
         private void ShowSelectedForceDetails()
         {
-            HideAllControls();
+            ElementAddingControlVisibility = Visibility.Collapsed;
+            ElementDetailsControlVisibility = Visibility.Collapsed;
+            ElementListingControlVisibility = Visibility.Collapsed;
+
+            NodeDetailsControlVisibility = Visibility.Collapsed;
+            NodeListingControlVisibility = Visibility.Collapsed;
+
+            ForceAddingControlVisibility = Visibility.Collapsed;
 
             ForceDetailsControlVisibility = Visibility.Visible;
         }

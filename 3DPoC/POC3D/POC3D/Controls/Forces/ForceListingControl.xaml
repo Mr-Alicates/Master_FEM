@@ -6,28 +6,37 @@
              xmlns:viewModel="clr-namespace:POC3D.ViewModel"
              mc:Ignorable="d"
              MinWidth="300">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="30" />
-        </Grid.RowDefinitions>
+    <StackPanel>
 
-        <ListView Grid.Row="0"
-                  ItemsSource="{Binding ProblemViewModel.Forces,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
-                  SelectedItem="{Binding ProblemViewModel.SelectedForce,Mode=TwoWay}">
+        <TextBlock Text="List of forces" HorizontalAlignment="Center" FontWeight="Bold" />
+        <Separator />
 
-            <ListView.ItemTemplate>
-                <DataTemplate DataType="viewModel:ForceViewModel">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Name, Mode=OneWay}" />
-                    </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="30" />
+            </Grid.RowDefinitions>
 
-        </ListView>
+            <ListView Grid.Row="0"
+                      ItemsSource="{Binding ProblemViewModel.Forces,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
+                      SelectedItem="{Binding ProblemViewModel.SelectedForce,Mode=TwoWay}">
 
-        <Button Grid.Row="1"
-                Content="Delete selected Force"
-                Command="{Binding ProblemViewModel.DeleteForceCommand}" />
-    </Grid>
+                <ListView.ItemTemplate>
+                    <DataTemplate DataType="viewModel:ForceViewModel">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Name, Mode=OneWay}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+            </ListView>
+
+            <Button Grid.Row="1"
+                    Content="Delete selected Force"
+                    Command="{Binding ProblemViewModel.DeleteForceCommand}" />
+        </Grid>
+
+        <Separator />
+
+    </StackPanel>
 </UserControl>

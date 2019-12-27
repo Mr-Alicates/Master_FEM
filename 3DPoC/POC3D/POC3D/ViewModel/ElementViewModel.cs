@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using POC3D.Helpers;
@@ -14,11 +10,11 @@ namespace POC3D.ViewModel
     {
         private static readonly Brush BarBrush = Brushes.Blue;
         private static readonly Brush SelectedBarBrush = Brushes.Red;
-        private MeshGeometry3D _meshGeometry3D;
-        private DiffuseMaterial _material;
-        private bool _isSelected;
-        private NodeViewModel _origin;
         private NodeViewModel _destination;
+        private bool _isSelected;
+        private DiffuseMaterial _material;
+        private MeshGeometry3D _meshGeometry3D;
+        private NodeViewModel _origin;
 
         public ElementViewModel(IModelElement modelElement, NodeViewModel origin, NodeViewModel destination)
         {
@@ -33,18 +29,10 @@ namespace POC3D.ViewModel
             Destination.PropertyChanged += NodesChanged;
         }
 
-        private void NodesChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        public bool IsSelected
         {
-            if(e.PropertyName == nameof(Origin.Geometry))
-            {
-                UpdateGeometry();
-            }
-        }
-
-        public bool IsSelected 
-        { 
             get => _isSelected;
-            set 
+            set
             {
                 _isSelected = value;
                 UpdateGeometry();
@@ -77,13 +65,20 @@ namespace POC3D.ViewModel
             }
         }
 
-        public string Name => $"({Origin.Id}) ---> ({Destination.Id})";
+        public int Id => Element.Id;
+
+        public string Description => Element.Description;
 
         public GeometryModel3D Geometry { get; }
 
+        private void NodesChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(Origin.Geometry)) UpdateGeometry();
+        }
+
         private GeometryModel3D BuildGeometry()
         {
-            _meshGeometry3D = new MeshGeometry3D()
+            _meshGeometry3D = new MeshGeometry3D
             {
                 Positions = new Point3DCollection(),
                 TriangleIndices = new Int32Collection()
@@ -91,18 +86,18 @@ namespace POC3D.ViewModel
 
             _material = new DiffuseMaterial(BarBrush);
 
-            return new GeometryModel3D()
+            return new GeometryModel3D
             {
                 Material = _material,
                 Geometry = _meshGeometry3D
             };
         }
-        
+
         private void UpdateGeometry()
         {
             _material.Brush = IsSelected ? SelectedBarBrush : BarBrush;
 
-            var vector = (Destination.Coordinates - Origin.Coordinates);
+            var vector = Destination.Coordinates - Origin.Coordinates;
 
             GraphicsHelper.BuildBarMesh(_meshGeometry3D, vector.Length, 0.5);
 
@@ -110,9 +105,9 @@ namespace POC3D.ViewModel
             var rotationAngle = Vector3D.AngleBetween(verticalVector, vector);
             var rotationVector = Vector3D.CrossProduct(verticalVector, vector);
 
-            Geometry.Transform = new Transform3DGroup()
+            Geometry.Transform = new Transform3DGroup
             {
-                Children = new Transform3DCollection()
+                Children = new Transform3DCollection
                 {
                     new RotateTransform3D(new AxisAngleRotation3D(rotationVector, rotationAngle)),
                     new TranslateTransform3D(Origin.X, Origin.Y, Origin.Z)

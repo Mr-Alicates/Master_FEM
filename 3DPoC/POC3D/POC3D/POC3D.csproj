@@ -58,6 +58,9 @@
     <Compile Include="Controls\Elements\ElementAddingControl.xaml.cs">
       <DependentUpon>ElementAddingControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Elements\SelectedElementDetailsControl.xaml.cs">
+      <DependentUpon>SelectedElementDetailsControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Elements\ElementListingControl.xaml.cs">
       <DependentUpon>ElementListingControl.xaml</DependentUpon>
     </Compile>
@@ -90,6 +93,10 @@
     <Page Include="Controls\Elements\ElementAddingControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Elements\SelectedElementDetailsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\Elements\ElementListingControl.xaml">
       <Generator>MSBuild:Compile</Generator>

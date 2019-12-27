@@ -8,9 +8,9 @@ namespace POC3D.Model
 {
     public interface IModelElement
     {
-        string Type { get; }
+        int Id { get; }
 
-        int NumberOfNodes { get; }
+        string Description { get; }
 
         ModelNode OriginNode { get; set; }
 

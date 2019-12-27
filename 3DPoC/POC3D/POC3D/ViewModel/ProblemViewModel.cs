@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Windows.Media.Media3D;
 using POC3D.Helpers;
 using POC3D.Model;
+using POC3D.ViewModel.Commands;
 
 namespace POC3D.ViewModel
 {
@@ -192,121 +191,6 @@ namespace POC3D.ViewModel
 
             Forces.Remove(selectedForce);
             SelectedForce = null;
-        }
-    }
-
-    public class DeleteForceCommand : ICommand
-    {
-        private readonly ProblemViewModel _problemViewModel;
-        private bool _canExecute;
-
-        public DeleteForceCommand(ProblemViewModel problemViewModel)
-        {
-            _problemViewModel = problemViewModel;
-
-            problemViewModel.PropertyChanged += PropertiesChanged;
-        }
-
-        public event EventHandler CanExecuteChanged;
-
-        public bool CanExecute(object parameter)
-        {
-            return _canExecute;
-        }
-
-        public void Execute(object parameter)
-        {
-            _problemViewModel.DeleteSelectedForce();
-        }
-
-        private void PropertiesChanged(object sender, PropertyChangedEventArgs e)
-        {
-            _canExecute = _problemViewModel.SelectedForce != null;
-            CanExecuteChanged?.Invoke(this, new EventArgs());
-        }
-    }
-
-    public class DeleteElementCommand : ICommand
-    {
-        private readonly ProblemViewModel _problemViewModel;
-        private bool _canExecute;
-
-        public DeleteElementCommand(ProblemViewModel problemViewModel)
-        {
-            _problemViewModel = problemViewModel;
-
-            problemViewModel.PropertyChanged += PropertiesChanged;
-        }
-
-        public event EventHandler CanExecuteChanged;
-
-        public bool CanExecute(object parameter)
-        {
-            return _canExecute;
-        }
-
-        public void Execute(object parameter)
-        {
-            _problemViewModel.DeleteSelectedElement();
-        }
-
-        private void PropertiesChanged(object sender, PropertyChangedEventArgs e)
-        {
-            _canExecute = _problemViewModel.SelectedElement != null;
-            CanExecuteChanged?.Invoke(this, new EventArgs());
-        }
-    }
-
-    public class DeleteNodeCommand : ICommand
-    {
-        private readonly ProblemViewModel _problemViewModel;
-        private bool _canExecute;
-
-        public DeleteNodeCommand(ProblemViewModel problemViewModel)
-        {
-            _problemViewModel = problemViewModel;
-
-            problemViewModel.PropertyChanged += PropertiesChanged;
-        }
-
-        public event EventHandler CanExecuteChanged;
-
-        public bool CanExecute(object parameter)
-        {
-            return _canExecute;
-        }
-
-        public void Execute(object parameter)
-        {
-            _problemViewModel.DeleteSelectedNode();
-        }
-
-        private void PropertiesChanged(object sender, PropertyChangedEventArgs e)
-        {
-            _canExecute = _problemViewModel.SelectedNode != null;
-            CanExecuteChanged?.Invoke(this, new EventArgs());
-        }
-    }
-
-    public class AddNodeCommand : ICommand
-    {
-        private readonly ProblemViewModel _problemViewModel;
-
-        public AddNodeCommand(ProblemViewModel problemViewModel)
-        {
-            _problemViewModel = problemViewModel;
-        }
-
-        public event EventHandler CanExecuteChanged;
-
-        public bool CanExecute(object parameter)
-        {
-            return true;
-        }
-
-        public void Execute(object parameter)
-        {
-            _problemViewModel.AddNode();
         }
     }
 }

@@ -22,9 +22,6 @@
                 <MenuItem Header="Add new Node"
                           Command="{Binding InterfaceControlViewModel.AddNodeCommand}" />
 
-                <MenuItem Header="Delete selected Node"
-                          Command="{Binding InterfaceControlViewModel.DeleteNodeCommand}" />
-
                 <MenuItem Header="Show list of Nodes"
                           Command="{Binding InterfaceControlViewModel.ShowNodeListingCommand}" />
 
@@ -37,9 +34,6 @@
 
                 <MenuItem Header="Add new Element"
                           Command="{Binding InterfaceControlViewModel.AddElementCommand}" />
-
-                <MenuItem Header="Delete selected Element"
-                          Command="{Binding InterfaceControlViewModel.DeleteElementCommand}" />
 
                 <MenuItem Header="Show list of Elements"
                           Command="{Binding InterfaceControlViewModel.ShowElementListingCommand}" />
@@ -54,9 +48,6 @@
                 <MenuItem Header="Add new Force"
                           Command="{Binding InterfaceControlViewModel.AddForceCommand}" />
 
-                <MenuItem Header="Delete selected Force"
-                          Command="{Binding InterfaceControlViewModel.DeleteForceCommand}" />
-
                 <MenuItem Header="Show list of Forces"
                           Command="{Binding InterfaceControlViewModel.ShowForceListingCommand}" />
 
@@ -64,17 +55,6 @@
 
 
         </Menu>
-
-        <!--<StackPanel Orientation="Horizontal" Grid.Row="0">
-
-            <Button Content="Hide menu bar" Command="{Binding InterfaceControlViewModel.HideAllCommand}" />
-
-
-            <Button Content="Nodes" Command="{Binding InterfaceControlViewModel.ShowNodesControlCommand}" />
-            <Button Content="Elements" Command="{Binding InterfaceControlViewModel.ShowElementsControlCommand}" />
-            <Button Content="Forces" Command="{Binding InterfaceControlViewModel.ShowForcesControlConmmand}" />
-
-        </StackPanel>-->
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>

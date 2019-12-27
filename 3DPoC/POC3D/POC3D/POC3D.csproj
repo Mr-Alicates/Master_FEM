@@ -95,6 +95,13 @@
     <Compile Include="Model\ModelPoint.cs" />
     <Compile Include="Model\ModelProblem.cs" />
     <Compile Include="Model\ModelVector.cs" />
+    <Compile Include="ViewModel\Commands\AddElementCommand.cs" />
+    <Compile Include="ViewModel\Commands\AddForceCommand.cs" />
+    <Compile Include="ViewModel\Commands\AddNodeCommand.cs" />
+    <Compile Include="ViewModel\Commands\ButtonCommand.cs" />
+    <Compile Include="ViewModel\Commands\DeleteElementCommand.cs" />
+    <Compile Include="ViewModel\Commands\DeleteForceCommand.cs" />
+    <Compile Include="ViewModel\Commands\DeleteNodeCommand.cs" />
     <Compile Include="ViewModel\ForceViewModel.cs" />
     <Compile Include="ViewModel\InterfaceControlViewModel.cs" />
     <Compile Include="ViewModel\CameraViewModel.cs" />

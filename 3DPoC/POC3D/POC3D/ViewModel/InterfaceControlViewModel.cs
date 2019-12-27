@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
+using POC3D.ViewModel.Commands;
 
 namespace POC3D.ViewModel
 {
@@ -53,8 +54,6 @@ namespace POC3D.ViewModel
 
         public ICommand AddNodeCommand => _problemViewModel.AddNodeCommand;
 
-        public ICommand DeleteNodeCommand => new ButtonCommand(DeleteNode);
-
         public ICommand ShowNodeListingCommand => new ButtonCommand(ShowNodeListing);
 
         private void ShowSelectedNodeDetails()
@@ -62,13 +61,6 @@ namespace POC3D.ViewModel
             HideAllControls();
 
             NodeDetailsControlVisibility = Visibility.Visible;
-        }
-
-        private void DeleteNode()
-        {
-            HideAllControls();
-
-            _problemViewModel.DeleteNodeCommand.Execute(null);
         }
 
         private void ShowNodeListing()
@@ -87,8 +79,6 @@ namespace POC3D.ViewModel
 
         public ICommand AddElementCommand => new ButtonCommand(AddElement);
 
-        public ICommand DeleteElementCommand => new ButtonCommand(DeleteElement);
-
         public ICommand ShowElementListingCommand => new ButtonCommand(ShowElementListing);
 
         private void ShowSelectedElementDetails()
@@ -103,13 +93,6 @@ namespace POC3D.ViewModel
             HideAllControls();
 
             ElementAddingControlVisibility = Visibility.Visible;
-        }
-
-        private void DeleteElement()
-        {
-            HideAllControls();
-
-            _problemViewModel.DeleteElementCommand.Execute(null);
         }
 
         private void ShowElementListing()
@@ -128,8 +111,6 @@ namespace POC3D.ViewModel
 
         public ICommand AddForceCommand => new ButtonCommand(AddForce);
 
-        public ICommand DeleteForceCommand => new ButtonCommand(DeleteForce);
-
         public ICommand ShowForceListingCommand => new ButtonCommand(ShowForceListing);
 
         private void ShowSelectedForceDetails()
@@ -144,13 +125,6 @@ namespace POC3D.ViewModel
             HideAllControls();
 
             ForceAddingControlVisibility = Visibility.Visible;
-        }
-
-        private void DeleteForce()
-        {
-            HideAllControls();
-
-            _problemViewModel.DeleteForceCommand.Execute(null);
         }
 
         private void ShowForceListing()
@@ -363,27 +337,5 @@ namespace POC3D.ViewModel
         }
 
         #endregion
-    }
-
-    public class ButtonCommand : ICommand
-    {
-        private readonly Action _buttonAction;
-
-        public ButtonCommand(Action buttonAction)
-        {
-            _buttonAction = buttonAction;
-        }
-
-        public bool CanExecute(object parameter)
-        {
-            return true;
-        }
-
-        public void Execute(object parameter)
-        {
-            _buttonAction();
-        }
-
-        public event EventHandler CanExecuteChanged;
     }
 }

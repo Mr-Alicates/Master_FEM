@@ -66,6 +66,8 @@ namespace POC3D
             MainViewModel.ProblemViewModel.SelectedElement = null;
             MainViewModel.ProblemViewModel.SelectedNode = null;
             MainViewModel.ProblemViewModel.SelectedForce = null;
+
+            MainViewModel.InterfaceControlViewModel.HideAllCommand.Execute(null);
         }
     }
 }

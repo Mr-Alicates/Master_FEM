@@ -118,6 +118,9 @@
     <Compile Include="Controls\Matrix\Controls\LocalElementMatrixControl.xaml.cs">
       <DependentUpon>LocalElementMatrixControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Matrix\Controls\TransformationMatrixControl.xaml.cs">
+      <DependentUpon>TransformationMatrixControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Matrix\Controls\TransformToGlobalCoordinateSystemControl.xaml.cs">
       <DependentUpon>TransformToGlobalCoordinateSystemControl.xaml</DependentUpon>
     </Compile>
@@ -240,6 +243,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Matrix\Controls\LocalElementMatrixControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Matrix\Controls\TransformationMatrixControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

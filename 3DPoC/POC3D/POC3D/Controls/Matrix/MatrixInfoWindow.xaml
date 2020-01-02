@@ -20,6 +20,10 @@
                 <controls:TransformToGlobalCoordinateSystemControl DataContext="{Binding Path=.}"/>
             </TabItem>
 
+            <TabItem Header="Transformation matrix">
+                <controls:TransformationMatrixControl DataContext="{Binding Path=.}"/>
+            </TabItem>
+
         </TabControl>
     </Grid>
 </Window>

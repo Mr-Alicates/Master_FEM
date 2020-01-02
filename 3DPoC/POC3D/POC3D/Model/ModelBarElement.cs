@@ -35,5 +35,7 @@ namespace POC3D.Model
 
         public RotationAngles LocalCoordinateSystemRotationAngles =>
             MatrixHelper.CalculateRotationAnglesForElement(this);
+
+        public Matrix6 TransformationMatrix => MatrixHelper.BuildTransformationMatrix(this);
     }
 }

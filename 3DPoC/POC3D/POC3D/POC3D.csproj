@@ -139,6 +139,7 @@
     <Compile Include="Helpers\MatrixHelper.cs" />
     <Compile Include="Helpers\GraphicsHelper.cs" />
     <Compile Include="Helpers\MaterialsHelper.cs" />
+    <Compile Include="Model\Calculations\Matrix6.cs" />
     <Compile Include="Model\Calculations\RotationAngles.cs" />
     <Compile Include="Model\ModelBarElement.cs" />
     <Compile Include="Model\IModelElement.cs" />

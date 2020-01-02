@@ -78,7 +78,7 @@ namespace POC3D
                 DataContext = DataContext
             };
 
-            matrixInfoWindow.ShowDialog();
+            matrixInfoWindow.Show();
         }
     }
 }

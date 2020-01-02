@@ -23,5 +23,7 @@ namespace POC3D.Model
         double K { get; }
 
         RotationAngles LocalCoordinateSystemRotationAngles { get; }
+
+        Matrix6 TransformationMatrix { get; }
     }
 }

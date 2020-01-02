@@ -1,4 +1,5 @@
-﻿using System.Windows.Media.Media3D;
+﻿using System;
+using System.Windows.Media.Media3D;
 using POC3D.Model;
 using POC3D.Model.Calculations;
 
@@ -33,6 +34,25 @@ namespace POC3D.Helpers
             //var rotationAroundY = new RotateTransform3D(new AxisAngleRotation3D(absoluteY, angleBetweenXVectors));
 
             return new RotationAngles(-angleBetweenYVectors, angleBetweenXVectors);
+        }
+
+        public static Matrix6 BuildTransformationMatrix(IModelElement element)
+        {
+            var alpha = element.LocalCoordinateSystemRotationAngles.Alpha;
+            var beta = element.LocalCoordinateSystemRotationAngles.Beta;
+
+            var rawMatrix = new[]
+            {
+                new[] {Math.Cos(beta), Math.Sin(-alpha) * Math.Sin(beta), Math.Cos(-alpha) * Math.Sin(beta), 0, 0, 0},
+                new[] {0, Math.Cos(-alpha), -Math.Sin(-alpha), 0, 0, 0},
+                new[] {-Math.Sin(beta), Math.Cos(beta) * Math.Sin(-alpha), Math.Cos(-alpha) * Math.Cos(beta), 0, 0, 0},
+
+                new[] {0, 0, 0, Math.Cos(beta), Math.Sin(-alpha) * Math.Sin(beta), Math.Cos(-alpha) * Math.Sin(beta)},
+                new[] {0, 0, 0, 0, Math.Cos(-alpha), -Math.Sin(-alpha)},
+                new[] {0, 0, 0, -Math.Sin(beta), Math.Cos(beta) * Math.Sin(-alpha), Math.Cos(-alpha) * Math.Cos(beta)}
+            };
+
+            return new Matrix6(rawMatrix);
         }
     }
 }

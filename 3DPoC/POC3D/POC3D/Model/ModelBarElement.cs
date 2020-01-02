@@ -37,5 +37,9 @@ namespace POC3D.Model
             MatrixHelper.CalculateRotationAnglesForElement(this);
 
         public Matrix6 TransformationMatrix => MatrixHelper.BuildTransformationMatrix(this);
+
+        public Matrix6 LocalStiffnessMatrix => MatrixHelper.BuildElementLocalStiffnessMatrix(this);
+
+        public Matrix6 GlobalStiffnessMatrix => MatrixHelper.BuildElementGlobalStiffnessMatrix(this);
     }
 }

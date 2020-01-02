@@ -36,6 +36,23 @@ namespace POC3D.Helpers
             return new RotationAngles(-angleBetweenYVectors, angleBetweenXVectors);
         }
 
+        public static Matrix6 BuildElementLocalStiffnessMatrix(IModelElement element)
+        {
+            var k = element.K;
+
+            var rawMatrix = new double[][]
+            {
+                new double[] { k, 0, 0, -k, 0, 0},
+                new double[] { 0, 0, 0, 0, 0, 0},
+                new double[] { 0, 0, 0, 0, 0, 0},
+                new double[] { -k, 0, 0, k, 0, 0},
+                new double[] { 0, 0, 0, 0, 0, 0},
+                new double[] { 0, 0, 0, 0, 0, 0} 
+            };
+
+            return new Matrix6(rawMatrix);
+        }
+
         public static Matrix6 BuildTransformationMatrix(IModelElement element)
         {
             var alpha = element.LocalCoordinateSystemRotationAngles.Alpha;
@@ -53,6 +70,17 @@ namespace POC3D.Helpers
             };
 
             return new Matrix6(rawMatrix);
+        }
+
+        public static Matrix6 BuildElementGlobalStiffnessMatrix(IModelElement element)
+        {
+            var transformationMatrix = element.TransformationMatrix;
+
+            var transformationMatrixTransposed = transformationMatrix.Transpose();
+
+            var localStiffnessMatrix = element.LocalStiffnessMatrix;
+
+            return transformationMatrixTransposed * localStiffnessMatrix * transformationMatrixTransposed;
         }
     }
 }

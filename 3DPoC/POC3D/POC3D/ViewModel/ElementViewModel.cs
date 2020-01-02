@@ -113,6 +113,10 @@ namespace POC3D.ViewModel
 
         public Matrix6 TransformationMatrixTransposed => Element.TransformationMatrix.Transpose();
 
+        public Matrix6 LocalStiffnessMatrix => Element.LocalStiffnessMatrix;
+
+        public Matrix6 GlobalStiffnessMatrix => Element.GlobalStiffnessMatrix;
+
         private void NodesChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(Origin.Geometry)) UpdateGeometry();

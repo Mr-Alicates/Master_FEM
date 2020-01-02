@@ -25,5 +25,9 @@ namespace POC3D.Model
         RotationAngles LocalCoordinateSystemRotationAngles { get; }
 
         Matrix6 TransformationMatrix { get; }
+
+        Matrix6 LocalStiffnessMatrix { get; }
+
+        Matrix6 GlobalStiffnessMatrix { get; }
     }
 }

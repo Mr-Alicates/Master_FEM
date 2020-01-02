@@ -172,6 +172,37 @@
 
         </StackPanel>
 
+        <Separator />
+
+        <StackPanel
+            HorizontalAlignment="Center"
+            Orientation="Horizontal"
+            Margin="5">
+
+            <helpers:Vector6Control
+                V1="Global f1x(1)"
+                V2="Global f1y(1)"
+                V3="Global f1z(1)"
+                V4="Global f2x(1)"
+                V5="Global f2y(1)"
+                V6="Global f2z(1)" />
+
+            <helpers:ScalarControl
+                Scalar="=" />
+
+            <helpers:Matrix6Control
+                Matrix="{Binding ProblemViewModel.SelectedElement.GlobalStiffnessMatrix}" />
+
+            <helpers:Vector6Control
+                V1="Global d1x(1)"
+                V2="Global d1y(1)"
+                V3="Global d1z(1)"
+                V4="Global d2x(1)"
+                V5="Global d2y(1)"
+                V6="Global d2z(1)" />
+
+        </StackPanel>
+
 
     </StackPanel>
 </UserControl>

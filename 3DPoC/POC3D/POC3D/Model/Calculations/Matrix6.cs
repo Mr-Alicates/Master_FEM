@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace POC3D.Model.Calculations
 {
@@ -29,6 +30,29 @@ namespace POC3D.Model.Calculations
 
                 return _rawMatrix[row - 1][column - 1];
             }
+        }
+
+        public static Matrix6 operator *(Matrix6 m1, Matrix6 m2)
+        {
+            double[][] newRawMatrix =
+            {
+                new double[6],
+                new double[6],
+                new double[6],
+                new double[6],
+                new double[6],
+                new double[6]
+            };
+
+            foreach (var row in Indexes)
+            {
+                foreach (var column in Indexes)
+                {
+                    newRawMatrix[row - 1][column - 1] = Indexes.Sum(index => m1[row, index] * m2[index, column]);
+                }
+            }
+
+            return new Matrix6(newRawMatrix);
         }
 
         public Matrix6 Transpose()

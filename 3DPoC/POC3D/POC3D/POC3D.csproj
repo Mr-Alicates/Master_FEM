@@ -79,6 +79,9 @@
     <Compile Include="Controls\Forces\ForceListingControl.xaml.cs">
       <DependentUpon>ForceListingControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Matrix\Controls\GlobalElementStiffnessMatrixControl.xaml.cs">
+      <DependentUpon>GlobalElementStiffnessMatrixControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Matrix\Controls\Helpers\CloseBracketsControl.xaml.cs">
       <DependentUpon>CloseBracketsControl.xaml</DependentUpon>
     </Compile>
@@ -192,6 +195,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\Forces\ForceListingControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Matrix\Controls\GlobalElementStiffnessMatrixControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

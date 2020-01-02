@@ -99,7 +99,7 @@ namespace POC3D.ViewModel
         public double Length => Element.Length;
 
 
-        public double K => Element.K;
+        public string K => Element.K.ToString("E2");
 
         public GeometryModel3D Geometry { get; }
 
@@ -110,6 +110,8 @@ namespace POC3D.ViewModel
         public double LocalCoordinateSystemRotationAngleB => Element.LocalCoordinateSystemRotationAngles.Beta;
 
         public Matrix6 TransformationMatrix => Element.TransformationMatrix;
+
+        public Matrix6 TransformationMatrixTransposed => Element.TransformationMatrix.Transpose();
 
         private void NodesChanged(object sender, PropertyChangedEventArgs e)
         {

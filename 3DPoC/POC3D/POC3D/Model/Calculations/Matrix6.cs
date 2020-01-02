@@ -4,6 +4,8 @@ namespace POC3D.Model.Calculations
 {
     public class Matrix6
     {
+        private static readonly int[] Indexes = {1, 2, 3, 4, 5, 6};
+
         private readonly double[][] _rawMatrix;
 
         public Matrix6(double[][] rawMatrix)
@@ -27,6 +29,25 @@ namespace POC3D.Model.Calculations
 
                 return _rawMatrix[row - 1][column - 1];
             }
+        }
+
+        public Matrix6 Transpose()
+        {
+            double[][] newRawMatrix =
+            {
+                new double[6],
+                new double[6],
+                new double[6],
+                new double[6],
+                new double[6],
+                new double[6]
+            };
+
+            foreach (var row in Indexes)
+            foreach (var column in Indexes)
+                newRawMatrix[row - 1][column - 1] = this[column, row];
+
+            return new Matrix6(newRawMatrix);
         }
     }
 }

@@ -1,23 +1,27 @@
 ﻿<UserControl x:Class="POC3D.Controls.Matrix.Controls.TransformationMatrixControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:helpers="clr-namespace:POC3D.Controls.Matrix.Controls.Helpers"
-             mc:Ignorable="d" >
+             mc:Ignorable="d">
     <StackPanel Orientation="Vertical">
 
         <TextBlock Text="Transformation matrix calculations" />
         <Separator />
-        <TextBlock Text="To transform the element local matrix into the global matrix of an element, we need to follow this steps:" />
+        <TextBlock
+            Text="To transform the element local matrix into the global matrix of an element, we need to follow this steps:" />
 
-        <TextBlock Text="* Find out the local Y axis: We know the local Y axis is perpendicular to the local X axis and the global X axis, so we use the cross product between the direction vector of the local X axis and the global X axis" />
+        <TextBlock
+            Text="* Find out the local Y axis: We know the local Y axis is perpendicular to the local X axis and the global X axis, so we use the cross product between the direction vector of the local X axis and the global X axis" />
         <TextBlock Text="* Find out angle A: the angle A is the angle between the local X axis and the global X axis" />
         <TextBlock Text="* Find out angle B: the angle B is the angle between the local Y axis and the global Y axis" />
         <Separator />
 
-        <TextBlock Text="We will first rotate around the global X axis -A degrees. This will make both the local and global Y axis equal." />
-        <TextBlock Text="Then we will rotate around the global Y axis B degrees. This will make both the local and global X axis equal." />
+        <TextBlock
+            Text="We will first rotate around the global X axis -A degrees. This will make both the local and global Y axis equal." />
+        <TextBlock
+            Text="Then we will rotate around the global Y axis B degrees. This will make both the local and global X axis equal." />
         <TextBlock Text="Since X and Y axes are equal after the rotation, Z axis is equal too." />
 
         <Separator />
@@ -32,27 +36,25 @@
                 M11="cos(B)"
                 M12="sin(A)sin(B)"
                 M13="cos(A)sin(B)"
-                
+
                 M22="cos(A)"
                 M23="-sin(B)"
-                
+
                 M31="-sin(B)"
                 M32="cos(B)sin(A)"
                 M33="cos(A)cos(B)"
 
-                
+
                 M44="cos(B)"
                 M45="sin(A)sin(B)"
                 M46="cos(A)sin(B)"
-                
+
                 M55="cos(A)"
                 M56="-sin(B)"
-                
+
                 M64="-sin(B)"
                 M65="cos(B)sin(A)"
-                M66="cos(A)cos(B)"
-                
-                />
+                M66="cos(A)cos(B)" />
 
         </StackPanel>
 

@@ -9,7 +9,8 @@
 
         <TextBlock Text="Bar element local expanded matrix" />
         <Separator />
-        <TextBlock Text="The local matrix is expanded to consider the three degrees of freedom we have in our system (movement along X, Y and Z). However displacements and forces in Y and Z directions are zero. " />
+        <TextBlock
+            Text="The local matrix is expanded to consider the three degrees of freedom we have in our system (movement along X, Y and Z). However displacements and forces in Y and Z directions are zero. " />
 
         <StackPanel
             HorizontalAlignment="Center"

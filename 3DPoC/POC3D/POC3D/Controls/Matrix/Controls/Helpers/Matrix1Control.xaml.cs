@@ -27,10 +27,7 @@ namespace POC3D.Controls.Matrix.Controls.Helpers
         {
             var control = d as Matrix1Control;
 
-            if (control == null)
-            {
-                return;
-            }
+            if (control == null) return;
 
             var value = e.NewValue as string;
             control.Position11.Text = value;

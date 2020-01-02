@@ -9,19 +9,19 @@
     <Grid>
         <TabControl>
             <TabItem Header="Local Matrix">
-                <controls:LocalElementMatrixControl DataContext="{Binding Path=.}"/>
+                <controls:LocalElementMatrixControl DataContext="{Binding Path=.}" />
             </TabItem>
 
             <TabItem Header="Expanded Local Matrix">
-                <controls:LocalElementExpandedMatrixControl DataContext="{Binding Path=.}"/>
+                <controls:LocalElementExpandedMatrixControl DataContext="{Binding Path=.}" />
             </TabItem>
 
             <TabItem Header="Transform to global coordinate system">
-                <controls:TransformToGlobalCoordinateSystemControl DataContext="{Binding Path=.}"/>
+                <controls:TransformToGlobalCoordinateSystemControl DataContext="{Binding Path=.}" />
             </TabItem>
 
             <TabItem Header="Transformation matrix">
-                <controls:TransformationMatrixControl DataContext="{Binding Path=.}"/>
+                <controls:TransformationMatrixControl DataContext="{Binding Path=.}" />
             </TabItem>
 
         </TabControl>

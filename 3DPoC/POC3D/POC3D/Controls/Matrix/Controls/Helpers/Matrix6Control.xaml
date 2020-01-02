@@ -35,50 +35,86 @@
                 <ColumnDefinition Width="80" />
             </Grid.ColumnDefinitions>
 
-            <TextBlock x:Name="Position11" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" />
-            <TextBlock x:Name="Position12" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" />
-            <TextBlock x:Name="Position13" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" />
-            <TextBlock x:Name="Position14" Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" />
-            <TextBlock x:Name="Position15" Grid.Row="0" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center" />
-            <TextBlock x:Name="Position16" Grid.Row="0" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            <TextBlock x:Name="Position11" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
+            <TextBlock x:Name="Position12" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
+            <TextBlock x:Name="Position13" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
+            <TextBlock x:Name="Position14" Grid.Row="0" Grid.Column="3" VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
+            <TextBlock x:Name="Position15" Grid.Row="0" Grid.Column="4" VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
+            <TextBlock x:Name="Position16" Grid.Row="0" Grid.Column="5" VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
 
-            <TextBlock x:Name="Position21" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" />
-            <TextBlock x:Name="Position22" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" />
-            <TextBlock x:Name="Position23" Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" />
-            <TextBlock x:Name="Position24" Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" />
-            <TextBlock x:Name="Position25" Grid.Row="1" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center" />
-            <TextBlock x:Name="Position26" Grid.Row="1" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            <TextBlock x:Name="Position21" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
+            <TextBlock x:Name="Position22" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
+            <TextBlock x:Name="Position23" Grid.Row="1" Grid.Column="2" VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
+            <TextBlock x:Name="Position24" Grid.Row="1" Grid.Column="3" VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
+            <TextBlock x:Name="Position25" Grid.Row="1" Grid.Column="4" VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
+            <TextBlock x:Name="Position26" Grid.Row="1" Grid.Column="5" VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
 
-            <TextBlock x:Name="Position31" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" />
-            <TextBlock x:Name="Position32" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" />
-            <TextBlock x:Name="Position33" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" />
-            <TextBlock x:Name="Position34" Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" />
-            <TextBlock x:Name="Position35" Grid.Row="2" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center" />
-            <TextBlock x:Name="Position36" Grid.Row="2" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            <TextBlock x:Name="Position31" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
+            <TextBlock x:Name="Position32" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
+            <TextBlock x:Name="Position33" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
+            <TextBlock x:Name="Position34" Grid.Row="2" Grid.Column="3" VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
+            <TextBlock x:Name="Position35" Grid.Row="2" Grid.Column="4" VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
+            <TextBlock x:Name="Position36" Grid.Row="2" Grid.Column="5" VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
 
-            <TextBlock x:Name="Position41" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" />
-            <TextBlock x:Name="Position42" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" />
-            <TextBlock x:Name="Position43" Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" />
-            <TextBlock x:Name="Position44" Grid.Row="3" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" />
-            <TextBlock x:Name="Position45" Grid.Row="3" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center" />
-            <TextBlock x:Name="Position46" Grid.Row="3" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            <TextBlock x:Name="Position41" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
+            <TextBlock x:Name="Position42" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
+            <TextBlock x:Name="Position43" Grid.Row="3" Grid.Column="2" VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
+            <TextBlock x:Name="Position44" Grid.Row="3" Grid.Column="3" VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
+            <TextBlock x:Name="Position45" Grid.Row="3" Grid.Column="4" VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
+            <TextBlock x:Name="Position46" Grid.Row="3" Grid.Column="5" VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
 
-            <TextBlock x:Name="Position51" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" />
-            <TextBlock x:Name="Position52" Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" />
-            <TextBlock x:Name="Position53" Grid.Row="4" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" />
-            <TextBlock x:Name="Position54" Grid.Row="4" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" />
-            <TextBlock x:Name="Position55" Grid.Row="4" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center" />
-            <TextBlock x:Name="Position56" Grid.Row="4" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            <TextBlock x:Name="Position51" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
+            <TextBlock x:Name="Position52" Grid.Row="4" Grid.Column="1" VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
+            <TextBlock x:Name="Position53" Grid.Row="4" Grid.Column="2" VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
+            <TextBlock x:Name="Position54" Grid.Row="4" Grid.Column="3" VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
+            <TextBlock x:Name="Position55" Grid.Row="4" Grid.Column="4" VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
+            <TextBlock x:Name="Position56" Grid.Row="4" Grid.Column="5" VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
 
-            <TextBlock x:Name="Position61" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" />
-            <TextBlock x:Name="Position62" Grid.Row="5" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" />
-            <TextBlock x:Name="Position63" Grid.Row="5" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" />
-            <TextBlock x:Name="Position64" Grid.Row="5" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" />
-            <TextBlock x:Name="Position65" Grid.Row="5" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center" />
-            <TextBlock x:Name="Position66" Grid.Row="5" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            <TextBlock x:Name="Position61" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
+            <TextBlock x:Name="Position62" Grid.Row="5" Grid.Column="1" VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
+            <TextBlock x:Name="Position63" Grid.Row="5" Grid.Column="2" VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
+            <TextBlock x:Name="Position64" Grid.Row="5" Grid.Column="3" VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
+            <TextBlock x:Name="Position65" Grid.Row="5" Grid.Column="4" VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
+            <TextBlock x:Name="Position66" Grid.Row="5" Grid.Column="5" VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
 
         </Grid>
 
-        <helpers:CloseBracketsControl Grid.Column="2"/>
+        <helpers:CloseBracketsControl Grid.Column="2" />
     </Grid>
 </UserControl>

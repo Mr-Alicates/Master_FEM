@@ -38,17 +38,18 @@ namespace POC3D.Controls.Matrix.Controls.Helpers
         {
             var control = d as Vector2Control;
 
-            if (control == null)
-            {
-                return;
-            }
+            if (control == null) return;
 
             var value = e.NewValue as string;
 
             switch (e.Property.Name)
             {
-                case nameof(V1): control.Position1.Text = value; break;
-                case nameof(V2): control.Position2.Text = value; break;
+                case nameof(V1):
+                    control.Position1.Text = value;
+                    break;
+                case nameof(V2):
+                    control.Position2.Text = value;
+                    break;
             }
         }
     }

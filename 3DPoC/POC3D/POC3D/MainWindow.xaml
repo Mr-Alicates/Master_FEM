@@ -39,7 +39,7 @@
                           Command="{Binding InterfaceControlViewModel.ShowElementListingCommand}" />
 
                 <MenuItem Header="Show matrices from element"
-                          Click="ShowMatrixInfoWindow"/>
+                          Click="ShowMatrixInfoWindow" />
 
             </MenuItem>
 

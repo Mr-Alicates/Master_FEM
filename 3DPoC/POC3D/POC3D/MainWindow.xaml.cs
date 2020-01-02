@@ -73,9 +73,9 @@ namespace POC3D
 
         private void ShowMatrixInfoWindow(object sender, RoutedEventArgs e)
         {
-            MatrixInfoWindow matrixInfoWindow = new MatrixInfoWindow()
+            var matrixInfoWindow = new MatrixInfoWindow
             {
-                DataContext =  DataContext
+                DataContext = DataContext
             };
 
             matrixInfoWindow.ShowDialog();

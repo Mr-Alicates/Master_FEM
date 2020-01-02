@@ -52,25 +52,30 @@ namespace POC3D.Controls.Matrix.Controls.Helpers
             get => Position22.Text;
             set => SetValue(M22Property, value);
         }
-        
+
         private static void PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var control = d as Matrix2Control;
 
-            if (control == null)
-            {
-                return;
-            }
+            if (control == null) return;
 
             var value = e.NewValue as string;
 
             switch (e.Property.Name)
             {
-                case nameof(M11): control.Position11.Text = value; break;
-                case nameof(M12): control.Position12.Text = value; break;
+                case nameof(M11):
+                    control.Position11.Text = value;
+                    break;
+                case nameof(M12):
+                    control.Position12.Text = value;
+                    break;
 
-                case nameof(M21): control.Position21.Text = value; break;
-                case nameof(M22): control.Position22.Text = value; break;
+                case nameof(M21):
+                    control.Position21.Text = value;
+                    break;
+                case nameof(M22):
+                    control.Position22.Text = value;
+                    break;
             }
         }
     }

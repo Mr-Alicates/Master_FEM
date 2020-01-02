@@ -78,21 +78,30 @@ namespace POC3D.Controls.Matrix.Controls.Helpers
         {
             var control = d as Vector6Control;
 
-            if (control == null)
-            {
-                return;
-            }
+            if (control == null) return;
 
             var value = e.NewValue as string;
 
             switch (e.Property.Name)
             {
-                case nameof(V1): control.Position1.Text = value; break;
-                case nameof(V2): control.Position2.Text = value; break;
-                case nameof(V3): control.Position3.Text = value; break;
-                case nameof(V4): control.Position4.Text = value; break;
-                case nameof(V5): control.Position5.Text = value; break;
-                case nameof(V6): control.Position6.Text = value; break;
+                case nameof(V1):
+                    control.Position1.Text = value;
+                    break;
+                case nameof(V2):
+                    control.Position2.Text = value;
+                    break;
+                case nameof(V3):
+                    control.Position3.Text = value;
+                    break;
+                case nameof(V4):
+                    control.Position4.Text = value;
+                    break;
+                case nameof(V5):
+                    control.Position5.Text = value;
+                    break;
+                case nameof(V6):
+                    control.Position6.Text = value;
+                    break;
             }
         }
     }

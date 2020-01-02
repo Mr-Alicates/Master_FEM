@@ -6,7 +6,7 @@
              mc:Ignorable="d">
     <TextBlock
         Text="["
-        VerticalAlignment="Center" 
-        HorizontalAlignment="Center"  
+        VerticalAlignment="Center"
+        HorizontalAlignment="Center"
         Margin="5 0 5 0" />
 </UserControl>

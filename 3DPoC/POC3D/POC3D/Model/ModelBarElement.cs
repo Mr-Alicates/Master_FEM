@@ -20,11 +20,13 @@
 
         public ModelNode DestinationNode { get; set; }
 
+        public ModelVector Direction => new ModelVector(DestinationNode.Coordinates, OriginNode.Coordinates);
+
         public ModelMaterial Material { get; set; } = ModelMaterial.None;
 
         public double CrossSectionArea { get; set; }
 
-        public double Length => new ModelVector(DestinationNode.Coordinates, OriginNode.Coordinates).Modulus;
+        public double Length => Direction.Modulus;
 
         public double K => Material.YoungsModulus * CrossSectionArea / Length;
     }

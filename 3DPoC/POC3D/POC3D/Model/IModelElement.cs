@@ -10,6 +10,8 @@
 
         ModelNode DestinationNode { get; set; }
 
+        ModelVector Direction { get; }
+
         ModelMaterial Material { get; set; }
 
         double CrossSectionArea { get; set; }

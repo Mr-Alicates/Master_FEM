@@ -102,6 +102,8 @@ namespace POC3D.ViewModel
 
         public GeometryModel3D Geometry { get; }
 
+        public Vector3D Direction => new Vector3D(Element.Direction.X, Element.Direction.Y, Element.Direction.Z);
+
         private void NodesChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(Origin.Geometry)) UpdateGeometry();

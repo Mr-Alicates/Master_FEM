@@ -88,8 +88,10 @@
     <Compile Include="Controls\VisualAreaControl.xaml.cs">
       <DependentUpon>VisualAreaControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\MatrixHelper.cs" />
     <Compile Include="Helpers\GraphicsHelper.cs" />
     <Compile Include="Helpers\MaterialsHelper.cs" />
+    <Compile Include="Model\Calculations\RotationAngles.cs" />
     <Compile Include="Model\ModelBarElement.cs" />
     <Compile Include="Model\IModelElement.cs" />
     <Compile Include="Model\ModelForce.cs" />
@@ -198,5 +200,6 @@
   <ItemGroup>
     <Resource Include="Icon.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

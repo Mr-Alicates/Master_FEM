@@ -79,6 +79,42 @@
     <Compile Include="Controls\Forces\ForceListingControl.xaml.cs">
       <DependentUpon>ForceListingControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Matrix\Controls\Helpers\CloseBracketsControl.xaml.cs">
+      <DependentUpon>CloseBracketsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Matrix\Controls\Helpers\CloseCurlyBracketsControl.xaml.cs">
+      <DependentUpon>CloseCurlyBracketsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Matrix\Controls\Helpers\Matrix6Control.xaml.cs">
+      <DependentUpon>Matrix6Control.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Matrix\Controls\Helpers\ScalarControl.xaml.cs">
+      <DependentUpon>ScalarControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Matrix\Controls\Helpers\Matrix2Control.xaml.cs">
+      <DependentUpon>Matrix2Control.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Matrix\Controls\Helpers\OpenBracketsControl.xaml.cs">
+      <DependentUpon>OpenBracketsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Matrix\Controls\Helpers\OpenCurlyBracketsControl.xaml.cs">
+      <DependentUpon>OpenCurlyBracketsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Matrix\Controls\Helpers\Vector6Control.xaml.cs">
+      <DependentUpon>Vector6Control.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Matrix\Controls\Helpers\Vector2Control.xaml.cs">
+      <DependentUpon>Vector2Control.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Matrix\Controls\LocalElementExpandedMatrixControl.xaml.cs">
+      <DependentUpon>LocalElementExpandedMatrixControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Matrix\Controls\LocalElementMatrixControl.xaml.cs">
+      <DependentUpon>LocalElementMatrixControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Matrix\MatrixInfoWindow.xaml.cs">
+      <DependentUpon>MatrixInfoWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Nodes\SelectedNodeDetailsControl.xaml.cs">
       <DependentUpon>SelectedNodeDetailsControl.xaml</DependentUpon>
     </Compile>
@@ -143,6 +179,54 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\Forces\ForceListingControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Matrix\Controls\Helpers\CloseBracketsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Matrix\Controls\Helpers\CloseCurlyBracketsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Matrix\Controls\Helpers\Matrix6Control.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Matrix\Controls\Helpers\ScalarControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Matrix\Controls\Helpers\Matrix2Control.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Matrix\Controls\Helpers\OpenBracketsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Matrix\Controls\Helpers\OpenCurlyBracketsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Matrix\Controls\Helpers\Vector6Control.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Matrix\Controls\Helpers\Vector2Control.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Matrix\Controls\LocalElementExpandedMatrixControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Matrix\Controls\LocalElementMatrixControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Matrix\MatrixInfoWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

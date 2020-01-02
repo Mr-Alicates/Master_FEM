@@ -38,6 +38,9 @@
                 <MenuItem Header="Show list of Elements"
                           Command="{Binding InterfaceControlViewModel.ShowElementListingCommand}" />
 
+                <MenuItem Header="Show matrices from element"
+                          Click="ShowMatrixInfoWindow"/>
+
             </MenuItem>
 
             <MenuItem Header="Forces">

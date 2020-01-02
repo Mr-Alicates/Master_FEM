@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Media.Media3D;
+using POC3D.Controls.Matrix;
 using POC3D.ViewModel;
 
 namespace POC3D
@@ -68,6 +69,16 @@ namespace POC3D
             MainViewModel.ProblemViewModel.SelectedForce = null;
 
             MainViewModel.InterfaceControlViewModel.HideAllCommand.Execute(null);
+        }
+
+        private void ShowMatrixInfoWindow(object sender, RoutedEventArgs e)
+        {
+            MatrixInfoWindow matrixInfoWindow = new MatrixInfoWindow()
+            {
+                DataContext =  DataContext
+            };
+
+            matrixInfoWindow.ShowDialog();
         }
     }
 }

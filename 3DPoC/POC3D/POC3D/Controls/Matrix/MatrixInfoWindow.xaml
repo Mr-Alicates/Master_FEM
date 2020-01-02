@@ -1,0 +1,21 @@
+﻿<Window x:Class="POC3D.Controls.Matrix.MatrixInfoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:POC3D.Controls.Matrix.Controls"
+        mc:Ignorable="d"
+        Title="MatrixInfoWindow">
+    <Grid>
+        <TabControl>
+            <TabItem Header="Local Matrix">
+                <controls:LocalElementMatrixControl DataContext="{Binding Path=.}"/>
+            </TabItem>
+
+            <TabItem Header="Expanded Local Matrix">
+                <controls:LocalElementExpandedMatrixControl DataContext="{Binding Path=.}"/>
+            </TabItem>
+
+        </TabControl>
+    </Grid>
+</Window>

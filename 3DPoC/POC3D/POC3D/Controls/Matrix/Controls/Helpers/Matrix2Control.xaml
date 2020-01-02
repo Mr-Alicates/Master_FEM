@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="POC3D.Controls.Matrix.Controls.Helpers.Matrix2Control"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:helpers="clr-namespace:POC3D.Controls.Matrix.Controls.Helpers"
+             mc:Ignorable="d">
+    <Grid Margin="5 0 5 0">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="30" />
+            <ColumnDefinition Width="30" />
+            <ColumnDefinition Width="30" />
+            <ColumnDefinition Width="30" />
+        </Grid.ColumnDefinitions>
+
+        <helpers:OpenBracketsControl Grid.Column="0" />
+
+        <Grid Grid.Column="1">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <TextBlock x:Name="Position11"
+                       Grid.Row="0"
+                       VerticalAlignment="Center" />
+
+            <TextBlock x:Name="Position21"
+                       Grid.Row="1"
+                       VerticalAlignment="Center" />
+
+        </Grid>
+
+        <Grid Grid.Column="2">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <TextBlock x:Name="Position12"
+                       Grid.Row="0"
+                       VerticalAlignment="Center" />
+
+            <TextBlock x:Name="Position22"
+                       Grid.Row="1"
+                       VerticalAlignment="Center" />
+
+        </Grid>
+
+        <helpers:CloseBracketsControl Grid.Column="3" />
+    </Grid>
+</UserControl>

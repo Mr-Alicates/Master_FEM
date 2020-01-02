@@ -104,6 +104,9 @@ namespace POC3D.ViewModel
 
         public Vector3D Direction => new Vector3D(Element.Direction.X, Element.Direction.Y, Element.Direction.Z);
 
+        public double LocalCoordinateSystemRotationAngleA => Element.LocalCoordinateSystemRotationAngles.Alpha;
+        public double LocalCoordinateSystemRotationAngleB => Element.LocalCoordinateSystemRotationAngles.Beta;
+
         private void NodesChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(Origin.Geometry)) UpdateGeometry();
@@ -150,6 +153,8 @@ namespace POC3D.ViewModel
             OnPropertyChanged(nameof(Geometry));
             OnPropertyChanged(nameof(Length));
             OnPropertyChanged(nameof(K));
+            OnPropertyChanged(nameof(LocalCoordinateSystemRotationAngleA));
+            OnPropertyChanged(nameof(LocalCoordinateSystemRotationAngleB));
         }
     }
 }

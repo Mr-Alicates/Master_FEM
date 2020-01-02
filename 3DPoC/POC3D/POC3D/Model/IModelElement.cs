@@ -1,4 +1,6 @@
-﻿namespace POC3D.Model
+﻿using POC3D.Model.Calculations;
+
+namespace POC3D.Model
 {
     public interface IModelElement
     {
@@ -19,5 +21,7 @@
         double Length { get; }
 
         double K { get; }
+
+        RotationAngles LocalCoordinateSystemRotationAngles { get; }
     }
 }

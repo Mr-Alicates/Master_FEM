@@ -1,4 +1,7 @@
-﻿namespace POC3D.Model
+﻿using POC3D.Helpers;
+using POC3D.Model.Calculations;
+
+namespace POC3D.Model
 {
     public class ModelBarElement : IModelElement
     {
@@ -29,5 +32,8 @@
         public double Length => Direction.Modulus;
 
         public double K => Material.YoungsModulus * CrossSectionArea / Length;
+
+        public RotationAngles LocalCoordinateSystemRotationAngles =>
+            MatrixHelper.CalculateRotationAnglesForElement(this);
     }
 }

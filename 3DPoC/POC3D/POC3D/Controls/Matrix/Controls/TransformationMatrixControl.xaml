@@ -18,6 +18,47 @@
         <TextBlock Text="* Find out angle B: the angle B is the angle between the local Y axis and the global Y axis" />
         <Separator />
 
+        <TextBlock Text="The A angle of the selected element is:" />
+
+        <StackPanel
+            HorizontalAlignment="Center"
+            Orientation="Horizontal"
+            Height="60"
+            Width="Auto">
+
+            <helpers:ScalarControl
+                Scalar="A" />
+
+            <helpers:ScalarControl
+                Scalar="=" />
+
+            <helpers:ScalarControl
+                Scalar="{Binding ProblemViewModel.SelectedElement.LocalCoordinateSystemRotationAngleA}" />
+
+        </StackPanel>
+
+        <TextBlock Text="The B angle of the selected element is:" />
+
+        <StackPanel
+            HorizontalAlignment="Center"
+            Orientation="Horizontal"
+            Height="60"
+            Width="Auto">
+
+            <helpers:ScalarControl
+                Scalar="B" />
+
+            <helpers:ScalarControl
+                Scalar="=" />
+
+            <helpers:ScalarControl
+                Scalar="{Binding ProblemViewModel.SelectedElement.LocalCoordinateSystemRotationAngleB}" />
+
+        </StackPanel>
+
+
+        <Separator />
+
         <TextBlock
             Text="We will first rotate around the global X axis -A degrees. This will make both the local and global Y axis equal." />
         <TextBlock

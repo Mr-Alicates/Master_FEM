@@ -15,14 +15,19 @@ namespace POC3D.Helpers
 
             var localY = Vector3D.CrossProduct(localX, absoluteX);
 
-            var localZ = Vector3D.CrossProduct(localX, localY);
+            if (localY.Length == 0)
+                //both vectors are aligned so angles are zero;
+                return new RotationAngles(0, 0);
 
             localX.Normalize();
             localY.Normalize();
-            localZ.Normalize();
 
-            var angleBetweenXVectors = Vector3D.AngleBetween(localX, absoluteX);
-            var angleBetweenYVectors = Vector3D.AngleBetween(localY, absoluteY);
+            var angleBetweenXVectors = Vector3D.AngleBetween(localX, absoluteX) % 180;
+            var angleBetweenYVectors = Vector3D.AngleBetween(localY, absoluteY) % 180;
+
+            if (double.IsNaN(angleBetweenXVectors)) angleBetweenXVectors = 0;
+
+            if (double.IsNaN(angleBetweenYVectors)) angleBetweenYVectors = 0;
 
             //var rotationAroundX = new RotateTransform3D(new AxisAngleRotation3D(absoluteX, -angleBetweenYVectors));
             //var rotationAroundY = new RotateTransform3D(new AxisAngleRotation3D(absoluteY, angleBetweenXVectors));

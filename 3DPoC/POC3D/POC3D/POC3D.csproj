@@ -85,6 +85,9 @@
     <Compile Include="Controls\Matrix\Controls\Helpers\CloseCurlyBracketsControl.xaml.cs">
       <DependentUpon>CloseCurlyBracketsControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Matrix\Controls\Helpers\Matrix1Control.xaml.cs">
+      <DependentUpon>Matrix1Control.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Matrix\Controls\Helpers\Matrix6Control.xaml.cs">
       <DependentUpon>Matrix6Control.xaml</DependentUpon>
     </Compile>
@@ -100,6 +103,9 @@
     <Compile Include="Controls\Matrix\Controls\Helpers\OpenCurlyBracketsControl.xaml.cs">
       <DependentUpon>OpenCurlyBracketsControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Matrix\Controls\Helpers\Vector1Control.xaml.cs">
+      <DependentUpon>Vector1Control.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Matrix\Controls\Helpers\Vector6Control.xaml.cs">
       <DependentUpon>Vector6Control.xaml</DependentUpon>
     </Compile>
@@ -111,6 +117,9 @@
     </Compile>
     <Compile Include="Controls\Matrix\Controls\LocalElementMatrixControl.xaml.cs">
       <DependentUpon>LocalElementMatrixControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Matrix\Controls\TransformToGlobalCoordinateSystemControl.xaml.cs">
+      <DependentUpon>TransformToGlobalCoordinateSystemControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Matrix\MatrixInfoWindow.xaml.cs">
       <DependentUpon>MatrixInfoWindow.xaml</DependentUpon>
@@ -190,6 +199,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\Matrix\Controls\Helpers\Matrix1Control.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\Matrix\Controls\Helpers\Matrix6Control.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -210,6 +223,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\Matrix\Controls\Helpers\Vector1Control.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\Matrix\Controls\Helpers\Vector6Control.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -223,6 +240,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Matrix\Controls\LocalElementMatrixControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Matrix\Controls\TransformToGlobalCoordinateSystemControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

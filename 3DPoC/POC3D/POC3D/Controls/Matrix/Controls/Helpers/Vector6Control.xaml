@@ -28,27 +28,33 @@
 
             <TextBlock x:Name="Position1"
                        Grid.Row="0"
-                       VerticalAlignment="Center" />
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
 
             <TextBlock x:Name="Position2"
                        Grid.Row="1"
-                       VerticalAlignment="Center" />
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
 
             <TextBlock x:Name="Position3"
                        Grid.Row="2"
-                       VerticalAlignment="Center" />
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
 
             <TextBlock x:Name="Position4"
                        Grid.Row="3"
-                       VerticalAlignment="Center" />
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
 
             <TextBlock x:Name="Position5"
                        Grid.Row="4"
-                       VerticalAlignment="Center" />
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
 
             <TextBlock x:Name="Position6"
                        Grid.Row="5"
-                       VerticalAlignment="Center" />
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
 
         </Grid>
 

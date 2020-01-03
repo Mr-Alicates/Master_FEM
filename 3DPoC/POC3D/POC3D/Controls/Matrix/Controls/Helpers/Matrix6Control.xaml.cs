@@ -118,7 +118,7 @@ namespace POC3D.Controls.Matrix.Controls.Helpers
             typeof(Matrix6Control), new PropertyMetadata(string.Empty, PropertyChangedCallback));
 
         public static readonly DependencyProperty MatrixProperty = DependencyProperty.Register(nameof(Matrix),
-            typeof(Matrix6), typeof(Matrix6Control), new PropertyMetadata(null, MatrixChangedCallback));
+            typeof(Model.Calculations.Matrix), typeof(Matrix6Control), new PropertyMetadata(null, MatrixChangedCallback));
 
         public Matrix6Control()
         {
@@ -126,7 +126,7 @@ namespace POC3D.Controls.Matrix.Controls.Helpers
             InitializeAllToZero();
         }
 
-        public Matrix6 Matrix { get; set; }
+        public Model.Calculations.Matrix Matrix { get; set; }
 
         public string M11
         {
@@ -350,49 +350,49 @@ namespace POC3D.Controls.Matrix.Controls.Helpers
 
             if (control == null) return;
 
-            var value = e.NewValue as Matrix6;
+            var value = e.NewValue as Model.Calculations.Matrix;
 
-            control.M11 = value[1, 1].ToString("E2");
-            control.M12 = value[1, 2].ToString("E2");
-            control.M13 = value[1, 3].ToString("E2");
-            control.M14 = value[1, 4].ToString("E2");
-            control.M15 = value[1, 5].ToString("E2");
-            control.M16 = value[1, 6].ToString("E2");
+            control.M11 = value[0, 0].ToString("E2");
+            control.M12 = value[0, 1].ToString("E2");
+            control.M13 = value[0, 2].ToString("E2");
+            control.M14 = value[0, 3].ToString("E2");
+            control.M15 = value[0, 4].ToString("E2");
+            control.M16 = value[0, 5].ToString("E2");
 
-            control.M21 = value[2, 1].ToString("E2");
-            control.M22 = value[2, 2].ToString("E2");
-            control.M23 = value[2, 3].ToString("E2");
-            control.M24 = value[2, 4].ToString("E2");
-            control.M25 = value[2, 5].ToString("E2");
-            control.M26 = value[2, 6].ToString("E2");
+            control.M21 = value[1, 0].ToString("E2");
+            control.M22 = value[1, 1].ToString("E2");
+            control.M23 = value[1, 2].ToString("E2");
+            control.M24 = value[1, 3].ToString("E2");
+            control.M25 = value[1, 4].ToString("E2");
+            control.M26 = value[1, 5].ToString("E2");
 
-            control.M31 = value[3, 1].ToString("E2");
-            control.M32 = value[3, 2].ToString("E2");
-            control.M33 = value[3, 3].ToString("E2");
-            control.M34 = value[3, 4].ToString("E2");
-            control.M35 = value[3, 5].ToString("E2");
-            control.M36 = value[3, 6].ToString("E2");
+            control.M31 = value[2, 0].ToString("E2");
+            control.M32 = value[2, 1].ToString("E2");
+            control.M33 = value[2, 2].ToString("E2");
+            control.M34 = value[2, 3].ToString("E2");
+            control.M35 = value[2, 4].ToString("E2");
+            control.M36 = value[2, 5].ToString("E2");
 
-            control.M41 = value[4, 1].ToString("E2");
-            control.M42 = value[4, 2].ToString("E2");
-            control.M43 = value[4, 3].ToString("E2");
-            control.M44 = value[4, 4].ToString("E2");
-            control.M45 = value[4, 5].ToString("E2");
-            control.M46 = value[4, 6].ToString("E2");
+            control.M41 = value[3, 0].ToString("E2");
+            control.M42 = value[3, 1].ToString("E2");
+            control.M43 = value[3, 2].ToString("E2");
+            control.M44 = value[3, 3].ToString("E2");
+            control.M45 = value[3, 4].ToString("E2");
+            control.M46 = value[3, 5].ToString("E2");
 
-            control.M51 = value[5, 1].ToString("E2");
-            control.M52 = value[5, 2].ToString("E2");
-            control.M53 = value[5, 3].ToString("E2");
-            control.M54 = value[5, 4].ToString("E2");
-            control.M55 = value[5, 5].ToString("E2");
-            control.M56 = value[5, 6].ToString("E2");
+            control.M51 = value[4, 0].ToString("E2");
+            control.M52 = value[4, 1].ToString("E2");
+            control.M53 = value[4, 2].ToString("E2");
+            control.M54 = value[4, 3].ToString("E2");
+            control.M55 = value[4, 4].ToString("E2");
+            control.M56 = value[4, 5].ToString("E2");
 
-            control.M61 = value[6, 1].ToString("E2");
-            control.M62 = value[6, 2].ToString("E2");
-            control.M63 = value[6, 3].ToString("E2");
-            control.M64 = value[6, 4].ToString("E2");
-            control.M65 = value[6, 5].ToString("E2");
-            control.M66 = value[6, 6].ToString("E2");
+            control.M61 = value[5, 0].ToString("E2");
+            control.M62 = value[5, 1].ToString("E2");
+            control.M63 = value[5, 2].ToString("E2");
+            control.M64 = value[5, 3].ToString("E2");
+            control.M65 = value[5, 4].ToString("E2");
+            control.M66 = value[5, 5].ToString("E2");
         }
 
         private void InitializeAllToZero()

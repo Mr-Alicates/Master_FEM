@@ -4,6 +4,7 @@ using System.Windows.Media.Media3D;
 using POC3D.Helpers;
 using POC3D.Model;
 using POC3D.Model.Calculations;
+using Matrix = POC3D.Model.Calculations.Matrix;
 
 namespace POC3D.ViewModel
 {
@@ -109,13 +110,13 @@ namespace POC3D.ViewModel
 
         public double LocalCoordinateSystemRotationAngleB => Element.LocalCoordinateSystemRotationAngles.Beta;
 
-        public Matrix6 TransformationMatrix => Element.TransformationMatrix;
+        public Matrix TransformationMatrix => Element.TransformationMatrix;
 
-        public Matrix6 TransformationMatrixTransposed => Element.TransformationMatrix.Transpose();
+        public Matrix TransformationMatrixTransposed => Element.TransformationMatrix.Transpose();
 
-        public Matrix6 LocalStiffnessMatrix => Element.LocalStiffnessMatrix;
+        public Matrix LocalStiffnessMatrix => Element.LocalStiffnessMatrix;
 
-        public Matrix6 GlobalStiffnessMatrix => Element.GlobalStiffnessMatrix;
+        public Matrix GlobalStiffnessMatrix => Element.GlobalStiffnessMatrix;
 
         private void NodesChanged(object sender, PropertyChangedEventArgs e)
         {

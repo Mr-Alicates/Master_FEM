@@ -3,7 +3,6 @@ using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using POC3D.Helpers;
 using POC3D.Model;
-using POC3D.Model.Calculations;
 using Matrix = POC3D.Model.Calculations.Matrix;
 
 namespace POC3D.ViewModel

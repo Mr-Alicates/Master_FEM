@@ -40,10 +40,10 @@ namespace POC3D.Helpers
         {
             return new Matrix(6, 6)
             {
-                [0,0] = element.K,
-                [0,3]= -element.K,
+                [0, 0] = element.K,
+                [0, 3] = -element.K,
                 [3, 0] = -element.K,
-                [3,3] = element.K
+                [3, 3] = element.K
             };
         }
 
@@ -51,7 +51,7 @@ namespace POC3D.Helpers
         {
             var alpha = element.LocalCoordinateSystemRotationAngles.Alpha;
             var beta = element.LocalCoordinateSystemRotationAngles.Beta;
-            
+
             var result = new Matrix(6, 6)
             {
                 [0, 0] = Math.Cos(beta),
@@ -74,7 +74,7 @@ namespace POC3D.Helpers
 
                 [5, 3] = -Math.Sin(beta),
                 [5, 4] = Math.Cos(beta) * Math.Sin(-alpha),
-                [5, 5] = Math.Cos(-alpha) * Math.Cos(beta),
+                [5, 5] = Math.Cos(-alpha) * Math.Cos(beta)
             };
 
             return result;
@@ -89,6 +89,15 @@ namespace POC3D.Helpers
             var localStiffnessMatrix = element.LocalStiffnessMatrix;
 
             return transformationMatrixTransposed * localStiffnessMatrix * transformationMatrixTransposed;
+        }
+
+        public static CorrespondenceMatrix BuildCorrespondenceMatrix(ModelProblem problem)
+        {
+            var result = new CorrespondenceMatrix();
+
+            foreach (var element in problem.Elements) result.AddElement(element);
+
+            return result;
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Windows.Input;
 using System.Windows.Media.Media3D;
 using POC3D.Helpers;
 using POC3D.Model;
+using POC3D.Model.Calculations;
 using POC3D.ViewModel.Commands;
 
 namespace POC3D.ViewModel
@@ -113,6 +114,8 @@ namespace POC3D.ViewModel
         public ICommand DeleteElementCommand => new DeleteElementCommand(this);
 
         public ICommand DeleteForceCommand => new DeleteForceCommand(this);
+
+        public CorrespondenceMatrix CorrespondenceMatrix => _modelProblem.CorrespondenceMatrix;
 
         private void InitializeMaterials()
         {

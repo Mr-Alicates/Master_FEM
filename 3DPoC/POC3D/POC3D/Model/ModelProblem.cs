@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using POC3D.Helpers;
+using POC3D.Model.Calculations;
 
 namespace POC3D.Model
 {
@@ -19,6 +21,8 @@ namespace POC3D.Model
         public List<ModelNode> Nodes { get; } = new List<ModelNode>();
 
         public List<ModelForce> Forces { get; } = new List<ModelForce>();
+
+        public CorrespondenceMatrix CorrespondenceMatrix => MatrixHelper.BuildCorrespondenceMatrix(this);
 
         public ModelNode AddNode()
         {

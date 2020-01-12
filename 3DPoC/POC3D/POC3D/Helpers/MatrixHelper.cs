@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Media.Media3D;
 using POC3D.Model;
 using POC3D.Model.Calculations;
@@ -96,6 +97,46 @@ namespace POC3D.Helpers
             var result = new CorrespondenceMatrix();
 
             foreach (var element in problem.Elements) result.AddElement(element);
+
+            return result;
+        }
+
+        public static Matrix BuildGlobalStiffnessMatrix(ModelProblem problem)
+        {
+            var correspondenceMatrix = problem.CorrespondenceMatrix;
+
+            var nodeCount = correspondenceMatrix.NodeIndexes.Count;
+
+            var unAssembledStiffnessMatrix = Enumerable.Range(0, nodeCount)
+                .Select(x => new Matrix[nodeCount])
+                .ToArray();
+
+            foreach (var element in problem.Elements)
+            {
+                var localStiffnessMatrix = element.LocalStiffnessMatrix;
+
+                var originNodeIndex = correspondenceMatrix.NodeIndexes[element.OriginNode];
+                var destinationNodeIndex = correspondenceMatrix.NodeIndexes[element.DestinationNode];
+
+                unAssembledStiffnessMatrix[originNodeIndex][originNodeIndex] =
+                    localStiffnessMatrix.GetSubMatrix(0, 0, 3);
+                unAssembledStiffnessMatrix[originNodeIndex][destinationNodeIndex] =
+                    localStiffnessMatrix.GetSubMatrix(0, 3, 3);
+                unAssembledStiffnessMatrix[destinationNodeIndex][originNodeIndex] =
+                    localStiffnessMatrix.GetSubMatrix(3, 0, 3);
+                unAssembledStiffnessMatrix[destinationNodeIndex][destinationNodeIndex] =
+                    localStiffnessMatrix.GetSubMatrix(3, 3, 3);
+            }
+
+            var result = new Matrix(nodeCount * 3, nodeCount * 3);
+
+            for (var row = 0; row < nodeCount; row++)
+            for (var column = 0; column < nodeCount; column++)
+            {
+                var sourceMatrix = unAssembledStiffnessMatrix[row][column];
+
+                if (sourceMatrix != null) result.SetSubMatrix(row * 3, column * 3, sourceMatrix);
+            }
 
             return result;
         }

@@ -82,6 +82,9 @@
     <Compile Include="Controls\Matrix\Controls\GlobalElementStiffnessMatrixControl.xaml.cs">
       <DependentUpon>GlobalElementStiffnessMatrixControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Matrix\Controls\GlobalStiffnessMatrixControl.xaml.cs">
+      <DependentUpon>GlobalStiffnessMatrixControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Matrix\Controls\Helpers\CloseBracketsControl.xaml.cs">
       <DependentUpon>CloseBracketsControl.xaml</DependentUpon>
     </Compile>
@@ -126,6 +129,9 @@
     </Compile>
     <Compile Include="Controls\Matrix\Controls\TransformToGlobalCoordinateSystemControl.xaml.cs">
       <DependentUpon>TransformToGlobalCoordinateSystemControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Matrix\GlobalMatrixInfoWindow.xaml.cs">
+      <DependentUpon>GlobalMatrixInfoWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Matrix\MatrixInfoWindow.xaml.cs">
       <DependentUpon>MatrixInfoWindow.xaml</DependentUpon>
@@ -205,6 +211,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\Matrix\Controls\GlobalStiffnessMatrixControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\Matrix\Controls\Helpers\CloseBracketsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -262,6 +272,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Matrix\Controls\TransformToGlobalCoordinateSystemControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Matrix\GlobalMatrixInfoWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

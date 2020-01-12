@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 using System.Windows.Media.Media3D;
 using POC3D.Helpers;
@@ -117,6 +118,8 @@ namespace POC3D.ViewModel
 
         public CorrespondenceMatrix CorrespondenceMatrix => _modelProblem.CorrespondenceMatrix;
 
+        public Matrix GlobalStiffnessMatrix => _modelProblem.GlobalStiffnessMatrix;
+
         private void InitializeMaterials()
         {
             foreach (var modelMaterial in MaterialsHelper.GetAvailableMaterials())
@@ -158,6 +161,10 @@ namespace POC3D.ViewModel
             var element = _modelProblem.AddBarElement(node1.Node, node2.Node);
 
             var result = new ElementViewModel(element, node1, node2);
+
+            //Test: to be removed
+            result.CrossSectionArea = 10;
+            result.Material = Materials.First();
 
             Elements.Add(result);
             SelectedElement = result;

@@ -80,5 +80,15 @@ namespace POC3D
 
             matrixInfoWindow.Show();
         }
+
+        private void ShowGlobalMatrixInfoWindow(object sender, RoutedEventArgs e)
+        {
+            var globalMatrixInfoWindow = new GlobalMatrixInfoWindow
+            {
+                DataContext = DataContext
+            };
+
+            globalMatrixInfoWindow.Show();
+        }
     }
 }

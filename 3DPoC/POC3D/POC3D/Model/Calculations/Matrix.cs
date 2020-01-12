@@ -36,5 +36,23 @@ namespace POC3D.Model.Calculations
 
             return result;
         }
+
+        public Matrix GetSubMatrix(int originRow, int originColumn, int size)
+        {
+            var result = new Matrix(size, size);
+
+            for (var row = 0; row < size; row++)
+            for (var column = 0; column < size; column++)
+                result[row, column] = this[row + originRow, column + originColumn];
+
+            return result;
+        }
+
+        public void SetSubMatrix(int originRow, int originColumn, Matrix source)
+        {
+            for (var row = 0; row < source.Rows; row++)
+            for (var column = 0; column < source.Columns; column++)
+                this[row + originRow, column + originColumn] = source[row, column];
+        }
     }
 }

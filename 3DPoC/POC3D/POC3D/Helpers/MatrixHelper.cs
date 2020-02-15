@@ -98,7 +98,7 @@ namespace POC3D.Helpers
 
             var localStiffnessMatrix = element.LocalStiffnessMatrix;
 
-            return transformationMatrixTransposed * localStiffnessMatrix * transformationMatrixTransposed;
+            return transformationMatrixTransposed * localStiffnessMatrix * transformationMatrix;
         }
 
         public static CorrespondenceMatrix BuildCorrespondenceMatrix(ModelProblem problem)
@@ -122,19 +122,19 @@ namespace POC3D.Helpers
 
             foreach (var element in problem.Elements)
             {
-                var localStiffnessMatrix = element.LocalStiffnessMatrix;
+                var elementGlobalStiffnessMatrix = element.GlobalStiffnessMatrix;
 
                 var originNodeIndex = correspondenceMatrix.NodeIndexes[element.OriginNode];
                 var destinationNodeIndex = correspondenceMatrix.NodeIndexes[element.DestinationNode];
 
                 unAssembledStiffnessMatrix[originNodeIndex][originNodeIndex] =
-                    localStiffnessMatrix.GetSubMatrix(0, 0, 3);
+                    elementGlobalStiffnessMatrix.GetSubMatrix(0, 0, 3);
                 unAssembledStiffnessMatrix[originNodeIndex][destinationNodeIndex] =
-                    localStiffnessMatrix.GetSubMatrix(0, 3, 3);
+                    elementGlobalStiffnessMatrix.GetSubMatrix(0, 3, 3);
                 unAssembledStiffnessMatrix[destinationNodeIndex][originNodeIndex] =
-                    localStiffnessMatrix.GetSubMatrix(3, 0, 3);
+                    elementGlobalStiffnessMatrix.GetSubMatrix(3, 0, 3);
                 unAssembledStiffnessMatrix[destinationNodeIndex][destinationNodeIndex] =
-                    localStiffnessMatrix.GetSubMatrix(3, 3, 3);
+                    elementGlobalStiffnessMatrix.GetSubMatrix(3, 3, 3);
             }
 
             var result = new NumericMatrix(nodeCount * 3, nodeCount * 3);

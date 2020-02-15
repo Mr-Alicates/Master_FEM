@@ -36,10 +36,10 @@ namespace POC3D.Model
         public RotationAngles LocalCoordinateSystemRotationAngles =>
             MatrixHelper.CalculateRotationAnglesForElement(this);
 
-        public Matrix TransformationMatrix => MatrixHelper.BuildTransformationMatrix(this);
+        public NumericMatrix TransformationMatrix => MatrixHelper.BuildTransformationMatrix(this);
 
-        public Matrix LocalStiffnessMatrix => MatrixHelper.BuildElementLocalStiffnessMatrix(this);
+        public NumericMatrix LocalStiffnessMatrix => MatrixHelper.BuildElementLocalStiffnessMatrix(this);
 
-        public Matrix GlobalStiffnessMatrix => MatrixHelper.BuildElementGlobalStiffnessMatrix(this);
+        public NumericMatrix GlobalStiffnessMatrix => MatrixHelper.BuildElementGlobalStiffnessMatrix(this);
     }
 }

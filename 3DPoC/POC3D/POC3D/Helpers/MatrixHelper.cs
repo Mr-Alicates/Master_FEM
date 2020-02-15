@@ -37,9 +37,18 @@ namespace POC3D.Helpers
             return new RotationAngles(-angleBetweenYVectors, angleBetweenXVectors);
         }
 
-        public static Matrix BuildElementLocalStiffnessMatrix(IModelElement element)
+        internal static bool CanProblemBeSolved(ModelProblem modelProblem)
         {
-            return new Matrix(6, 6)
+            var globalStiffnessMatrix = BuildGlobalStiffnessMatrix(modelProblem);
+
+            //A linear equation system with a singular matrix is not solvable because it has infinite solutions
+            //A linear equation system matrix is singular when its determinant is zero
+            return globalStiffnessMatrix.CalculateDeterminant() != 0;
+        }
+
+        public static NumericMatrix BuildElementLocalStiffnessMatrix(IModelElement element)
+        {
+            return new NumericMatrix(6, 6)
             {
                 [0, 0] = element.K,
                 [0, 3] = -element.K,
@@ -48,12 +57,12 @@ namespace POC3D.Helpers
             };
         }
 
-        public static Matrix BuildTransformationMatrix(IModelElement element)
+        public static NumericMatrix BuildTransformationMatrix(IModelElement element)
         {
             var alpha = element.LocalCoordinateSystemRotationAngles.Alpha;
             var beta = element.LocalCoordinateSystemRotationAngles.Beta;
 
-            var result = new Matrix(6, 6)
+            var result = new NumericMatrix(6, 6)
             {
                 [0, 0] = Math.Cos(beta),
                 [0, 1] = Math.Sin(-alpha) * Math.Sin(beta),
@@ -81,7 +90,7 @@ namespace POC3D.Helpers
             return result;
         }
 
-        public static Matrix BuildElementGlobalStiffnessMatrix(IModelElement element)
+        public static NumericMatrix BuildElementGlobalStiffnessMatrix(IModelElement element)
         {
             var transformationMatrix = element.TransformationMatrix;
 
@@ -101,14 +110,14 @@ namespace POC3D.Helpers
             return result;
         }
 
-        public static Matrix BuildGlobalStiffnessMatrix(ModelProblem problem)
+        public static NumericMatrix BuildGlobalStiffnessMatrix(ModelProblem problem)
         {
             var correspondenceMatrix = problem.CorrespondenceMatrix;
 
             var nodeCount = correspondenceMatrix.NodeIndexes.Count;
 
             var unAssembledStiffnessMatrix = Enumerable.Range(0, nodeCount)
-                .Select(x => new Matrix[nodeCount])
+                .Select(x => new NumericMatrix[nodeCount])
                 .ToArray();
 
             foreach (var element in problem.Elements)
@@ -128,7 +137,7 @@ namespace POC3D.Helpers
                     localStiffnessMatrix.GetSubMatrix(3, 3, 3);
             }
 
-            var result = new Matrix(nodeCount * 3, nodeCount * 3);
+            var result = new NumericMatrix(nodeCount * 3, nodeCount * 3);
 
             for (var row = 0; row < nodeCount; row++)
             for (var column = 0; column < nodeCount; column++)

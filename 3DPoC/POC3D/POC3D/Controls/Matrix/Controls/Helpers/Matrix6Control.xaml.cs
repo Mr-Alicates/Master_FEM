@@ -117,7 +117,7 @@ namespace POC3D.Controls.Matrix.Controls.Helpers
             typeof(Matrix6Control), new PropertyMetadata(string.Empty, PropertyChangedCallback));
 
         public static readonly DependencyProperty MatrixProperty = DependencyProperty.Register(nameof(Matrix),
-            typeof(Model.Calculations.Matrix), typeof(Matrix6Control),
+            typeof(Model.Calculations.NumericMatrix), typeof(Matrix6Control),
             new PropertyMetadata(null, MatrixChangedCallback));
 
         public Matrix6Control()
@@ -126,7 +126,7 @@ namespace POC3D.Controls.Matrix.Controls.Helpers
             InitializeAllToZero();
         }
 
-        public Model.Calculations.Matrix Matrix { get; set; }
+        public Model.Calculations.NumericMatrix Matrix { get; set; }
 
         public string M11
         {
@@ -350,7 +350,7 @@ namespace POC3D.Controls.Matrix.Controls.Helpers
 
             if (control == null) return;
 
-            var value = e.NewValue as Model.Calculations.Matrix;
+            var value = e.NewValue as Model.Calculations.NumericMatrix;
 
             control.M11 = value[0, 0].ToString("E2");
             control.M12 = value[0, 1].ToString("E2");

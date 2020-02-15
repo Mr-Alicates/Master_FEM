@@ -118,9 +118,9 @@ namespace POC3D.ViewModel
 
         public CorrespondenceMatrix CorrespondenceMatrix => _modelProblem.CorrespondenceMatrix;
 
-        public Matrix GlobalStiffnessMatrix => _modelProblem.GlobalStiffnessMatrix;
+        public NumericMatrix GlobalStiffnessMatrix => _modelProblem.GlobalStiffnessMatrix;
 
-        public bool CanBeSolved => true;
+        public bool CanBeSolved => _modelProblem.CanBeSolved;
 
         public int NumberOfNodes => Nodes.Count;
 

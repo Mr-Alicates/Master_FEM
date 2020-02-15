@@ -24,7 +24,9 @@ namespace POC3D.Model
 
         public CorrespondenceMatrix CorrespondenceMatrix => MatrixHelper.BuildCorrespondenceMatrix(this);
 
-        public Matrix GlobalStiffnessMatrix => MatrixHelper.BuildGlobalStiffnessMatrix(this);
+        public NumericMatrix GlobalStiffnessMatrix => MatrixHelper.BuildGlobalStiffnessMatrix(this);
+
+        public bool CanBeSolved => MatrixHelper.CanProblemBeSolved(this);
 
         public ModelNode AddNode()
         {

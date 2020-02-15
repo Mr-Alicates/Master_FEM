@@ -10,7 +10,7 @@ namespace POC3D.Controls.Matrix.Controls
     public partial class GlobalStiffnessMatrixControl : UserControl
     {
         public static readonly DependencyProperty MatrixProperty = DependencyProperty.Register(nameof(Matrix),
-            typeof(Model.Calculations.Matrix), typeof(GlobalStiffnessMatrixControl),
+            typeof(Model.Calculations.NumericMatrix), typeof(GlobalStiffnessMatrixControl),
             new PropertyMetadata(null, MatrixChangedCallback));
 
         public GlobalStiffnessMatrixControl()
@@ -18,7 +18,7 @@ namespace POC3D.Controls.Matrix.Controls
             InitializeComponent();
         }
 
-        public Model.Calculations.Matrix Matrix { get; set; }
+        public Model.Calculations.NumericMatrix Matrix { get; set; }
 
         private static void MatrixChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -26,7 +26,7 @@ namespace POC3D.Controls.Matrix.Controls
 
             if (control == null) return;
 
-            var value = e.NewValue as Model.Calculations.Matrix;
+            var value = e.NewValue as Model.Calculations.NumericMatrix;
 
             if (value == null) return;
 

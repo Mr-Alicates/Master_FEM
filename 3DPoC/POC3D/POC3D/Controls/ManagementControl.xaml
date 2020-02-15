@@ -34,5 +34,8 @@
         <forces:ForceAddingControl DataContext="{Binding Path=.}"
                                    Visibility="{Binding Path=InterfaceControlViewModel.ForceAddingControlVisibility}" />
 
+        <forces:ProblemDetailsControl DataContext="{Binding Path=.}"
+                                   Visibility="{Binding Path=InterfaceControlViewModel.ProblemDetailsControlVisibility}" />
+
     </StackPanel>
 </UserControl>

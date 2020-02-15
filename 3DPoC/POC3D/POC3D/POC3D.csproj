@@ -142,6 +142,9 @@
     <Compile Include="Controls\Nodes\NodeListingControl.xaml.cs">
       <DependentUpon>NodeListingControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Problem\ProblemDetailsControl.xaml.cs">
+      <DependentUpon>ProblemDetailsControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\VisualAreaControl.xaml.cs">
       <DependentUpon>VisualAreaControl.xaml</DependentUpon>
     </Compile>
@@ -290,6 +293,10 @@
     <Page Include="Controls\Nodes\NodeListingControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Problem\ProblemDetailsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\VisualAreaControl.xaml">
       <SubType>Designer</SubType>

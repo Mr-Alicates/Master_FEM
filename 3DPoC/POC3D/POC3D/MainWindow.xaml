@@ -56,8 +56,18 @@
 
             </MenuItem>
 
-            <MenuItem Header="Show show problem matrix"
+            <MenuItem Header="Problem">
+
+                <MenuItem Header="Show Problem details"
+                          Command="{Binding InterfaceControlViewModel.ShowProblemDetailsCommand}" />
+
+                <MenuItem Header="Show global stiffness matrix"
                       Click="ShowGlobalMatrixInfoWindow" />
+
+            </MenuItem>
+            
+            
+
 
         </Menu>
 

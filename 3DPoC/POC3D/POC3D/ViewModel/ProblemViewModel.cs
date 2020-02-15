@@ -120,6 +120,14 @@ namespace POC3D.ViewModel
 
         public Matrix GlobalStiffnessMatrix => _modelProblem.GlobalStiffnessMatrix;
 
+        public bool CanBeSolved => true;
+
+        public int NumberOfNodes => Nodes.Count;
+
+        public int NumberOfElements => Elements.Count;
+
+        public int NumberOfDirichletBoundaryConditions => Nodes.Count(x => x.IsFixed);
+
         private void InitializeMaterials()
         {
             foreach (var modelMaterial in MaterialsHelper.GetAvailableMaterials())

@@ -19,7 +19,7 @@ namespace POC3D
             MainViewModel = new MainViewModel();
             DataContext = MainViewModel;
 
-            Init();
+            InitCube();
         }
 
         public MainViewModel MainViewModel
@@ -28,7 +28,35 @@ namespace POC3D
             set => SetValue(MainViewModelProperty, value);
         }
 
-        public void Init()
+        public void InitSimple()
+        {
+            MainViewModel.CameraViewModel.Position = new Point3D(-100, 0, 0);
+
+            var node1 = MainViewModel.ProblemViewModel.AddNode(new Point3D(-10, -10, -10)).SetAsFixed();
+            var node2 = MainViewModel.ProblemViewModel.AddNode(new Point3D(10, -10, -10)).SetAsFixed();
+            var node3 = MainViewModel.ProblemViewModel.AddNode(new Point3D(10, 10, -10)).SetAsFixed();
+
+            var node5 = MainViewModel.ProblemViewModel.AddNode(new Point3D(0, 0, 10)).SetAsFree();
+
+            MainViewModel.ProblemViewModel.SelectedNode = null;
+
+            MainViewModel.ProblemViewModel.AddBarElement(node1, node5);
+            MainViewModel.ProblemViewModel.AddBarElement(node2, node5);
+            MainViewModel.ProblemViewModel.AddBarElement(node3, node5);
+
+            var force = MainViewModel.ProblemViewModel.AddForce(node5);
+            force.ApplicationVectorX = -10;
+            force.ApplicationVectorY = -10;
+            force.ApplicationVectorZ = -10;
+
+            MainViewModel.ProblemViewModel.SelectedElement = null;
+            MainViewModel.ProblemViewModel.SelectedNode = null;
+            MainViewModel.ProblemViewModel.SelectedForce = null;
+
+            MainViewModel.InterfaceControlViewModel.HideAllCommand.Execute(null);
+        }
+
+        public void InitCube()
         {
             MainViewModel.CameraViewModel.Position = new Point3D(-100, 0, 0);
 

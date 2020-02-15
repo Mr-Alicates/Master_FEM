@@ -39,11 +39,39 @@ namespace POC3D.Helpers
 
         internal static bool CanProblemBeSolved(ModelProblem modelProblem)
         {
-            var globalStiffnessMatrix = BuildGlobalStiffnessMatrix(modelProblem);
+            //To solve the problem, the 3 displacements must be constrained
+            //In this kind of problem it means 3 non-collinear fixed nodes
 
-            //A linear equation system with a singular matrix is not solvable because it has infinite solutions
-            //A linear equation system matrix is singular when its determinant is zero
-            return globalStiffnessMatrix.CalculateDeterminant() != 0;
+            var fixedNodes = modelProblem.Nodes
+                .Where(x => x.IsFixed)
+                .Select(x=>x.Coordinates)
+                .ToList();
+
+            if(fixedNodes.Count < 3)
+            {
+                return false;
+            }
+
+            var firstNode = fixedNodes.First();
+
+            var restOfNodes = fixedNodes.Skip(1);
+
+            var vectors = restOfNodes
+                .Select(x => new ModelVector(firstNode, x))
+                .Select(vector => new Vector3D(vector.X, vector.Y, vector.Z))
+                .ToList();
+
+            var firstVector = vectors.First();
+
+            var restOfVectors = vectors.Skip(1);
+
+            var angles = restOfVectors
+                .Select(vector => Vector3D.AngleBetween(firstVector, vector))
+                .Where(angle => angle != 0)
+                .ToList();
+
+            return angles.Any();
+            
         }
 
         public static NumericMatrix BuildElementLocalStiffnessMatrix(IModelElement element)

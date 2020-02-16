@@ -20,7 +20,7 @@ namespace POC3D
             MainViewModel = new MainViewModel();
             DataContext = MainViewModel;
 
-            InitSolvedProblem();
+            InitCube();
         }
 
         public MainViewModel MainViewModel
@@ -28,6 +28,7 @@ namespace POC3D
             get => (MainViewModel) GetValue(MainViewModelProperty);
             set => SetValue(MainViewModelProperty, value);
         }
+
         public void InitSolvedProblem()
         {
             //http://ocw.ump.edu.my/pluginfile.php/9827/mod_resource/content/2/10_Space_Truss_Example.pdf
@@ -132,6 +133,12 @@ namespace POC3D
             MainViewModel.ProblemViewModel.AddBarElement(node6, node7);
             MainViewModel.ProblemViewModel.AddBarElement(node7, node8);
             MainViewModel.ProblemViewModel.AddBarElement(node8, node5);
+
+            MainViewModel.ProblemViewModel.AddBarElement(node1, node6);
+            MainViewModel.ProblemViewModel.AddBarElement(node2, node7);
+            MainViewModel.ProblemViewModel.AddBarElement(node3, node8);
+            MainViewModel.ProblemViewModel.AddBarElement(node4, node5);
+
 
             var force = MainViewModel.ProblemViewModel.AddForce(node8);
             force.ApplicationVectorX = -10;

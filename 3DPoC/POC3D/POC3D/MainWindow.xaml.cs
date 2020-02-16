@@ -34,10 +34,10 @@ namespace POC3D
 
             MainViewModel.CameraViewModel.Position = new Point3D(-100, 0, 0);
 
-            var node1 = MainViewModel.ProblemViewModel.AddNode(new Point3D(0.32, 1.5, 0.1848)).SetAsFree();
             var node2 = MainViewModel.ProblemViewModel.AddNode(new Point3D(0, 0, 0)).SetAsFixed();
+            var node1 = MainViewModel.ProblemViewModel.AddNode(new Point3D(0.32, 1.5, 0.1848)).SetAsFree();
             var node3 = MainViewModel.ProblemViewModel.AddNode(new Point3D(0.64, 0, 0)).SetAsFixed();
-            var node4 = MainViewModel.ProblemViewModel.AddNode(new Point3D(0.32, 0, 0.55)).SetAsFixed();
+            var node4 = MainViewModel.ProblemViewModel.AddNode(new Point3D(0.32, 0, 0.5543)).SetAsFixed();
 
 
             MainViewModel.ProblemViewModel.SelectedNode = null;
@@ -46,11 +46,11 @@ namespace POC3D
             element1.CrossSectionArea = 1.2566E-3;
             element1.Material = new MaterialViewModel(new Model.ModelMaterial("test", 1E7, 0));
 
-            var element2 = MainViewModel.ProblemViewModel.AddBarElement(node3, node1);
+            var element2 = MainViewModel.ProblemViewModel.AddBarElement(node1, node3);
             element2.CrossSectionArea = element1.CrossSectionArea;
             element2.Material = element1.Material;
 
-            var element3 = MainViewModel.ProblemViewModel.AddBarElement(node4, node1);
+            var element3 = MainViewModel.ProblemViewModel.AddBarElement(node1, node4);
             element3.CrossSectionArea = element1.CrossSectionArea;
             element3.Material = element1.Material;
 

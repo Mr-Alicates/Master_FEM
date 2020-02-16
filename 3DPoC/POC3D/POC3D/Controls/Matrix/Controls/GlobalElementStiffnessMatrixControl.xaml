@@ -129,7 +129,7 @@
 
         <Separator />
 
-        <StackPanel
+        <!--<StackPanel
             HorizontalAlignment="Center"
             Orientation="Horizontal"
             Margin="5">
@@ -170,7 +170,7 @@
                 V5="Global d2y(1)"
                 V6="Global d2z(1)" />
 
-        </StackPanel>
+        </StackPanel>-->
 
         <Separator />
 

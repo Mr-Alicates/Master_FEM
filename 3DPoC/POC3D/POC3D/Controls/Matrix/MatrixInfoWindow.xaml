@@ -16,15 +16,15 @@
                 <controls:LocalElementExpandedMatrixControl DataContext="{Binding Path=.}" />
             </TabItem>
 
-            <TabItem Header="Transform to global coordinate system">
+            <!--<TabItem Header="Transform to global coordinate system">
                 <controls:TransformToGlobalCoordinateSystemControl DataContext="{Binding Path=.}" />
             </TabItem>
 
             <TabItem Header="Transformation matrix">
                 <controls:TransformationMatrixControl DataContext="{Binding Path=.}" />
-            </TabItem>
+            </TabItem>-->
 
-            <TabItem Header="Globla element matrix">
+            <TabItem Header="Global element matrix">
                 <controls:GlobalElementStiffnessMatrixControl DataContext="{Binding Path=.}" />
             </TabItem>
 

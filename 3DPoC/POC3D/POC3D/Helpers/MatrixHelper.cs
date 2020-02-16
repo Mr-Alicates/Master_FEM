@@ -76,43 +76,30 @@ namespace POC3D.Helpers
 
         public static NumericMatrix BuildElementLocalStiffnessMatrix(IModelElement element)
         {
-            return new NumericMatrix(6, 6)
+            return new NumericMatrix(2, 2)
             {
                 [0, 0] = element.K,
-                [0, 3] = -element.K,
-                [3, 0] = -element.K,
-                [3, 3] = element.K
+                [0, 1] = -element.K,
+                [1, 0] = -element.K,
+                [1, 1] = element.K
             };
         }
 
         public static NumericMatrix BuildTransformationMatrix(IModelElement element)
         {
-            var alpha = element.LocalCoordinateSystemRotationAngles.Alpha;
-            var beta = element.LocalCoordinateSystemRotationAngles.Beta;
+            var cosineX = (element.DestinationNode.Coordinates.X - element.OriginNode.Coordinates.X) / element.Length;
+            var cosineY = (element.DestinationNode.Coordinates.Y - element.OriginNode.Coordinates.Y) / element.Length;
+            var cosineZ = (element.DestinationNode.Coordinates.Z - element.OriginNode.Coordinates.Z) / element.Length;
 
-            var result = new NumericMatrix(6, 6)
+            var result = new NumericMatrix(2, 6)
             {
-                [0, 0] = Math.Cos(beta),
-                [0, 1] = Math.Sin(-alpha) * Math.Sin(beta),
-                [0, 2] = Math.Cos(-alpha) * Math.Sin(beta),
+                [0, 0] = cosineX,
+                [0, 1] = cosineY,
+                [0, 2] = cosineZ,
 
-                [1, 1] = Math.Cos(-alpha),
-                [1, 2] = -Math.Sin(-alpha),
-
-                [2, 0] = -Math.Sin(beta),
-                [2, 1] = Math.Cos(beta) * Math.Sin(-alpha),
-                [2, 2] = Math.Cos(-alpha) * Math.Cos(beta),
-
-                [3, 3] = Math.Cos(beta),
-                [3, 4] = Math.Sin(-alpha) * Math.Sin(beta),
-                [3, 5] = Math.Cos(-alpha) * Math.Sin(beta),
-
-                [4, 4] = Math.Cos(-alpha),
-                [4, 5] = -Math.Sin(-alpha),
-
-                [5, 3] = -Math.Sin(beta),
-                [5, 4] = Math.Cos(beta) * Math.Sin(-alpha),
-                [5, 5] = Math.Cos(-alpha) * Math.Cos(beta)
+                [1, 3] = cosineX,
+                [1, 4] = cosineY,
+                [1, 5] = cosineZ,
             };
 
             return result;

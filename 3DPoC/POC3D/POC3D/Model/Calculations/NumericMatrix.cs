@@ -44,10 +44,6 @@ namespace POC3D.Model.Calculations
 
         public static NumericMatrix operator *(NumericMatrix m1, NumericMatrix m2)
         {
-            if (m1.Rows != m2.Columns ||
-                m1.Columns != m2.Rows)
-                throw new InvalidOperationException("Invalid operation: Rows and Columns mismatch");
-
             return m1._rawMatrix * m2._rawMatrix;
         }
 

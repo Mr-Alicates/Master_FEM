@@ -13,6 +13,11 @@
                     DataContext="{Binding Path=.}"
                     ProblemViewModel="{Binding ProblemViewModel}" />
             </TabItem>
+            <TabItem Header="Compacted global Stiffness Matrix">
+                <controls:CompactedGlobalStiffnessMatrixControl
+                    DataContext="{Binding Path=.}"
+                    ProblemViewModel="{Binding ProblemViewModel}" />
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>

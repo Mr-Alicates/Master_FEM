@@ -6,7 +6,7 @@ namespace POC3D.Model.Calculations
 {
     public class NumericMatrix
     {
-        private readonly Matrix<double> _rawMatrix;
+        private Matrix<double> _rawMatrix;
 
         public NumericMatrix(int rows, int columns)
             : this(Matrix<double>.Build.Dense(rows, columns))
@@ -53,12 +53,12 @@ namespace POC3D.Model.Calculations
 
         public void RemoveColumn(int index)
         {
-            _rawMatrix.RemoveColumn(index);
+            _rawMatrix = _rawMatrix.RemoveColumn(index);
         }
 
         public void RemoveRow(int index)
         {
-            _rawMatrix.RemoveRow(index);
+            _rawMatrix = _rawMatrix.RemoveRow(index);
         }
 
         public NumericMatrix Transpose()

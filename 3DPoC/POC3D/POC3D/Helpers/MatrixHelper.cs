@@ -174,9 +174,9 @@ namespace POC3D.Helpers
                 {
                     var appliedForce = problem.Forces.FirstOrDefault(force => force.Node == node);
 
-                    result[index, 1] = appliedForce?.ApplicationVector.X ?? 0;
-                    result[index + 1, 1] = appliedForce?.ApplicationVector.Y ?? 0;
-                    result[index + 2, 1] = appliedForce?.ApplicationVector.Z ?? 0;
+                    result[index, 0] = appliedForce?.ApplicationVector.X ?? 0;
+                    result[index + 1, 0] = appliedForce?.ApplicationVector.Y ?? 0;
+                    result[index + 2, 0] = appliedForce?.ApplicationVector.Z ?? 0;
 
                     index = index + 3;
                 }

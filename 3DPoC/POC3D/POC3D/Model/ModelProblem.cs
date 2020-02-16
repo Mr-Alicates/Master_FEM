@@ -26,6 +26,10 @@ namespace POC3D.Model
 
         public NumericMatrix GlobalStiffnessMatrix => MatrixHelper.BuildGlobalStiffnessMatrix(this);
 
+        public NumericMatrix CompactedMatrix => MatrixHelper.BuildCompactedMatrix(this);
+
+        public NumericMatrix CompactedForcesVector => MatrixHelper.BuildCompactedForcesVector(this);
+
         public bool CanBeSolved => MatrixHelper.CanProblemBeSolved(this);
 
         public ModelNode AddNode()

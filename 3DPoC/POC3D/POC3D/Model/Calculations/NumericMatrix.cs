@@ -51,6 +51,16 @@ namespace POC3D.Model.Calculations
             return m1._rawMatrix * m2._rawMatrix;
         }
 
+        public void RemoveColumn(int index)
+        {
+            _rawMatrix.RemoveColumn(index);
+        }
+
+        public void RemoveRow(int index)
+        {
+            _rawMatrix.RemoveRow(index);
+        }
+
         public NumericMatrix Transpose()
         {
             return _rawMatrix.Transpose();

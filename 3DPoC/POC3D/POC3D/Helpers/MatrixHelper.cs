@@ -129,6 +129,62 @@ namespace POC3D.Helpers
             return transformationMatrixTransposed * localStiffnessMatrix * transformationMatrix;
         }
 
+        public static NumericMatrix BuildCompactedMatrix(ModelProblem problem)
+        {
+            var rawMatrix = BuildGlobalStiffnessMatrix(problem);
+            
+            int index = 0;
+
+            foreach(var node in problem.Nodes)
+            {
+                if (node.IsFixed)
+                {
+                    rawMatrix.RemoveColumn(index);
+                    rawMatrix.RemoveColumn(index);
+                    rawMatrix.RemoveColumn(index);
+
+                    rawMatrix.RemoveRow(index);
+                    rawMatrix.RemoveRow(index);
+                    rawMatrix.RemoveRow(index);
+                }
+                else
+                {
+                    index = index + 3;
+                }
+            }
+
+            return rawMatrix;
+        }
+
+        public static NumericMatrix BuildCompactedForcesVector(ModelProblem problem)
+        {
+            var result = new NumericMatrix(problem.Nodes.Count * 3, 1);
+
+            int index = 0;
+
+            foreach (var node in problem.Nodes)
+            {
+                if (node.IsFixed)
+                {
+                    result.RemoveRow(index);
+                    result.RemoveRow(index);
+                    result.RemoveRow(index);
+                }
+                else
+                {
+                    var appliedForce = problem.Forces.FirstOrDefault(force => force.Node == node);
+
+                    result[index, 1] = appliedForce?.ApplicationVector.X ?? 0;
+                    result[index + 1, 1] = appliedForce?.ApplicationVector.Y ?? 0;
+                    result[index + 2, 1] = appliedForce?.ApplicationVector.Z ?? 0;
+
+                    index = index + 3;
+                }
+            }
+
+            return result;
+        }
+
         public static CorrespondenceMatrix BuildCorrespondenceMatrix(ModelProblem problem)
         {
             var result = new CorrespondenceMatrix();

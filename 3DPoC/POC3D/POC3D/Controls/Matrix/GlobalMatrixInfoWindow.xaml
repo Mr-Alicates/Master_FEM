@@ -11,7 +11,7 @@
             <TabItem Header="Global Stiffness Matrix">
                 <controls:GlobalStiffnessMatrixControl
                     DataContext="{Binding Path=.}"
-                    Matrix="{Binding ProblemViewModel.GlobalStiffnessMatrix}" />
+                    ProblemViewModel="{Binding ProblemViewModel}" />
             </TabItem>
         </TabControl>
     </Grid>

@@ -61,7 +61,7 @@
                 <MenuItem Header="Show Problem details"
                           Command="{Binding InterfaceControlViewModel.ShowProblemDetailsCommand}" />
 
-                <MenuItem Header="Show global stiffness matrix"
+                <MenuItem Header="Show matrices from problem"
                       Click="ShowGlobalMatrixInfoWindow" />
 
             </MenuItem>

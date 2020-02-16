@@ -3,8 +3,25 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:helpers="clr-namespace:POC3D.Controls.Matrix.Controls.Helpers"
              mc:Ignorable="d">
     <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible">
-    <Grid x:Name="Container" />
+        <StackPanel Orientation="Horizontal">
+            
+            <helpers:OpenBracketsControl/>
+            <Grid x:Name="GlobalStiffnessMatrixContainer" />
+            <helpers:CloseBracketsControl/>
+
+            <helpers:OpenCurlyBracketsControl/>
+            <Grid x:Name="DisplacementsContainer" />
+            <helpers:CloseCurlyBracketsControl/>
+
+            <helpers:ScalarControl Scalar="=" />
+
+            <helpers:OpenCurlyBracketsControl/>
+            <Grid x:Name="ForcesContainer" />
+            <helpers:CloseCurlyBracketsControl/>           
+            
+        </StackPanel>
     </ScrollViewer>
 </UserControl>

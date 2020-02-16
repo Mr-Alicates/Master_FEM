@@ -8,35 +8,6 @@ namespace POC3D.Helpers
 {
     public static class MatrixHelper
     {
-        public static RotationAngles CalculateRotationAnglesForElement(IModelElement element)
-        {
-            var absoluteX = new Vector3D(1, 0, 0);
-            var absoluteY = new Vector3D(0, 1, 0);
-
-            var localX = new Vector3D(element.Direction.X, element.Direction.Y, element.Direction.Z);
-
-            var localY = Vector3D.CrossProduct(localX, absoluteX);
-
-            if (localY.Length == 0)
-                //both vectors are aligned so angles are zero;
-                return new RotationAngles(0, 0);
-
-            localX.Normalize();
-            localY.Normalize();
-
-            var angleBetweenXVectors = Vector3D.AngleBetween(localX, absoluteX) % 180;
-            var angleBetweenYVectors = Vector3D.AngleBetween(localY, absoluteY) % 180;
-
-            if (double.IsNaN(angleBetweenXVectors)) angleBetweenXVectors = 0;
-
-            if (double.IsNaN(angleBetweenYVectors)) angleBetweenYVectors = 0;
-
-            //var rotationAroundX = new RotateTransform3D(new AxisAngleRotation3D(absoluteX, -angleBetweenYVectors));
-            //var rotationAroundY = new RotateTransform3D(new AxisAngleRotation3D(absoluteY, angleBetweenXVectors));
-
-            return new RotationAngles(-angleBetweenYVectors, angleBetweenXVectors);
-        }
-
         internal static bool CanProblemBeSolved(ModelProblem modelProblem)
         {
             //To solve the problem, the 3 displacements must be constrained
@@ -87,19 +58,15 @@ namespace POC3D.Helpers
 
         public static NumericMatrix BuildTransformationMatrix(IModelElement element)
         {
-            var cosineX = (element.DestinationNode.Coordinates.X - element.OriginNode.Coordinates.X) / element.Length;
-            var cosineY = (element.DestinationNode.Coordinates.Y - element.OriginNode.Coordinates.Y) / element.Length;
-            var cosineZ = (element.DestinationNode.Coordinates.Z - element.OriginNode.Coordinates.Z) / element.Length;
-
             var result = new NumericMatrix(2, 6)
             {
-                [0, 0] = cosineX,
-                [0, 1] = cosineY,
-                [0, 2] = cosineZ,
+                [0, 0] = element.Cx,
+                [0, 1] = element.Cy,
+                [0, 2] = element.Cz,
 
-                [1, 3] = cosineX,
-                [1, 4] = cosineY,
-                [1, 5] = cosineZ,
+                [1, 3] = element.Cx,
+                [1, 4] = element.Cy,
+                [1, 5] = element.Cz,
             };
 
             return result;

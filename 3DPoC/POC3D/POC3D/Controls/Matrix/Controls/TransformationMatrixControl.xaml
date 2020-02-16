@@ -12,17 +12,19 @@
         <TextBlock
             Text="To transform the element local matrix into the global matrix of an element, we need to follow this steps:" />
 
-        <TextBlock
-            Text="* Find out the local Y axis: We know the local Y axis is perpendicular to the local X axis and the global X axis, so we use the cross product between the direction vector of the local X axis and the global X axis" />
-        <TextBlock Text="* Find out angle A: the angle A is the angle between the local X axis and the global X axis" />
-        <TextBlock Text="* Find out angle B: the angle B is the angle between the local Y axis and the global Y axis" />
+        <TextBlock Text="* Find out Cx: The cosine of the angle between the local X axis and the global X axis" />
+        <TextBlock Text="* Find out Cy: The cosine of the angle between the local Y axis and the global Y axis" />
+        <TextBlock Text="* Find out Cz: The cosine of the angle between the local Z axis and the global Z axis" />
+        <TextBlock Text="* Use values Cx, Cy and Cz to assemble the transformation matrix" />
         <Separator />
 
-        <TextBlock
-            Text="We will first rotate around the global X axis -A degrees. This will make both the local and global Y axis equal." />
-        <TextBlock
-            Text="Then we will rotate around the global Y axis B degrees. This will make both the local and global X axis equal." />
-        <TextBlock Text="Since X and Y axes are equal after the rotation, Z axis is equal too." />
+        <TextBlock Text="* Cx = (X2 - X1) / L" />
+        <TextBlock Text="* Cy = (Y2 - Y1) / L" />
+        <TextBlock Text="* Cz = (Z2 - Z1) / L" />
+
+        <TextBlock Text="* L is the length of the element" />
+        <TextBlock Text="* (X1, Y1, Z1) are the coordinates of the first node of the element" />
+        <TextBlock Text="* (X2, Y2, Z2) are the coordinates of the second node of the element" />
 
         <Separator />
 
@@ -32,33 +34,17 @@
             Height="180"
             Width="Auto">
 
-            <helpers:Matrix6Control
-                M11="cos(B)"
-                M12="sin(A)sin(B)"
-                M13="cos(A)sin(B)"
-
-                M22="cos(A)"
-                M23="-sin(B)"
-
-                M31="-sin(B)"
-                M32="cos(B)sin(A)"
-                M33="cos(A)cos(B)"
-
-
-                M44="cos(B)"
-                M45="sin(A)sin(B)"
-                M46="cos(A)sin(B)"
-
-                M55="cos(A)"
-                M56="-sin(B)"
-
-                M64="-sin(B)"
-                M65="cos(B)sin(A)"
-                M66="cos(A)cos(B)" />
+            <helpers:Matrix26Control
+                M11="Cx"
+                M12="Cy"
+                M13="Cz"
+                
+                M24="Cx"
+                M25="Cy"
+                M26="Cz"
+                />
 
         </StackPanel>
-
-        <TextBlock Text="The A angle of the selected element is:" />
 
         <StackPanel
             HorizontalAlignment="Center"
@@ -67,17 +53,15 @@
             Width="Auto">
 
             <helpers:ScalarControl
-                Scalar="A" />
+                Scalar="Cx" />
 
             <helpers:ScalarControl
                 Scalar="=" />
 
             <helpers:ScalarControl
-                Scalar="{Binding ProblemViewModel.SelectedElement.LocalCoordinateSystemRotationAngleA}" />
+                Scalar="{Binding ProblemViewModel.SelectedElement.Cx}" />
 
         </StackPanel>
-
-        <TextBlock Text="The B angle of the selected element is:" />
 
         <StackPanel
             HorizontalAlignment="Center"
@@ -86,15 +70,33 @@
             Width="Auto">
 
             <helpers:ScalarControl
-                Scalar="B" />
+                Scalar="Cy" />
 
             <helpers:ScalarControl
                 Scalar="=" />
 
             <helpers:ScalarControl
-                Scalar="{Binding ProblemViewModel.SelectedElement.LocalCoordinateSystemRotationAngleB}" />
+                Scalar="{Binding ProblemViewModel.SelectedElement.Cy}" />
 
         </StackPanel>
+
+        <StackPanel
+            HorizontalAlignment="Center"
+            Orientation="Horizontal"
+            Height="60"
+            Width="Auto">
+
+            <helpers:ScalarControl
+                Scalar="Cz" />
+
+            <helpers:ScalarControl
+                Scalar="=" />
+
+            <helpers:ScalarControl
+                Scalar="{Binding ProblemViewModel.SelectedElement.Cz}" />
+
+        </StackPanel>
+        
 
         <TextBlock Text="The transformation matrix of the selected element is:" />
 
@@ -104,7 +106,7 @@
             Height="180"
             Width="Auto">
 
-            <helpers:Matrix6Control
+            <helpers:Matrix26Control
                 Matrix="{Binding ProblemViewModel.SelectedElement.TransformationMatrix}" />
 
         </StackPanel>

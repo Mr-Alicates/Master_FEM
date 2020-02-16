@@ -60,29 +60,14 @@
             <helpers:ScalarControl
                 Scalar="=" />
 
-            <helpers:Matrix6Control
-                M11="cos(B)"
-                M21="sin(A)sin(B)"
-                M31="cos(A)sin(B)"
+            <helpers:Matrix26Control
+                M11="Cx"
+                M12="Cy"
+                M13="Cz"
 
-                M22="cos(A)"
-                M32="-sin(B)"
-
-                M13="-sin(B)"
-                M23="cos(B)sin(A)"
-                M33="cos(A)cos(B)"
-
-
-                M44="cos(B)"
-                M54="sin(A)sin(B)"
-                M64="cos(A)sin(B)"
-
-                M55="cos(A)"
-                M65="-sin(B)"
-
-                M46="-sin(B)"
-                M56="cos(B)sin(A)"
-                M66="cos(A)cos(B)" />
+                M24="Cx"
+                M25="Cy"
+                M26="Cz" />
 
             <helpers:ScalarControl
                 Scalar="k" />
@@ -93,29 +78,14 @@
                 M41="-1"
                 M44="1" />
 
-            <helpers:Matrix6Control
-                M11="cos(B)"
-                M12="sin(A)sin(B)"
-                M13="cos(A)sin(B)"
+            <helpers:Matrix62Control
+                M11="Cx"
+                M21="Cy"
+                M31="Cz"
 
-                M22="cos(A)"
-                M23="-sin(B)"
-
-                M31="-sin(B)"
-                M32="cos(B)sin(A)"
-                M33="cos(A)cos(B)"
-
-
-                M44="cos(B)"
-                M45="sin(A)sin(B)"
-                M46="cos(A)sin(B)"
-
-                M55="cos(A)"
-                M56="-sin(B)"
-
-                M64="-sin(B)"
-                M65="cos(B)sin(A)"
-                M66="cos(A)cos(B)" />
+                M42="Cx"
+                M52="Cy"
+                M62="Cz" />
 
             <helpers:Vector6Control
                 V1="Global d1x(1)"
@@ -129,7 +99,7 @@
 
         <Separator />
 
-        <!--<StackPanel
+        <StackPanel
             HorizontalAlignment="Center"
             Orientation="Horizontal"
             Margin="5">
@@ -146,20 +116,20 @@
                 Scalar="=" />
 
 
-            <helpers:Matrix6Control
+            <helpers:Matrix62Control
                 Matrix="{Binding ProblemViewModel.SelectedElement.TransformationMatrixTransposed}" />
 
 
             <helpers:ScalarControl
                 Scalar="{Binding ProblemViewModel.SelectedElement.K}" />
 
-            <helpers:Matrix6Control
+            <helpers:Matrix2Control
                 M11="1"
-                M14="-1"
-                M41="-1"
-                M44="1" />
+                M12="-1"
+                M21="-1"
+                M22="1" />
 
-            <helpers:Matrix6Control
+            <helpers:Matrix26Control
                 Matrix="{Binding ProblemViewModel.SelectedElement.TransformationMatrix}" />
 
             <helpers:Vector6Control
@@ -170,7 +140,7 @@
                 V5="Global d2y(1)"
                 V6="Global d2z(1)" />
 
-        </StackPanel>-->
+        </StackPanel>
 
         <Separator />
 

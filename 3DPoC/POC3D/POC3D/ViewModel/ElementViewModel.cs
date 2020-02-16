@@ -104,11 +104,7 @@ namespace POC3D.ViewModel
         public GeometryModel3D Geometry { get; }
 
         public Vector3D Direction => new Vector3D(Element.Direction.X, Element.Direction.Y, Element.Direction.Z);
-
-        public double LocalCoordinateSystemRotationAngleA => Element.LocalCoordinateSystemRotationAngles.Alpha;
-
-        public double LocalCoordinateSystemRotationAngleB => Element.LocalCoordinateSystemRotationAngles.Beta;
-
+        
         public NumericMatrix TransformationMatrix => Element.TransformationMatrix;
 
         public NumericMatrix TransformationMatrixTransposed => Element.TransformationMatrix.Transpose();
@@ -116,6 +112,12 @@ namespace POC3D.ViewModel
         public NumericMatrix LocalStiffnessMatrix => Element.LocalStiffnessMatrix;
 
         public NumericMatrix GlobalStiffnessMatrix => Element.GlobalStiffnessMatrix;
+
+        public double Cx => Element.Cx;
+
+        public double Cy => Element.Cy;
+
+        public double Cz => Element.Cz;
 
         private void NodesChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -163,8 +165,9 @@ namespace POC3D.ViewModel
             OnPropertyChanged(nameof(Geometry));
             OnPropertyChanged(nameof(Length));
             OnPropertyChanged(nameof(K));
-            OnPropertyChanged(nameof(LocalCoordinateSystemRotationAngleA));
-            OnPropertyChanged(nameof(LocalCoordinateSystemRotationAngleB));
+            OnPropertyChanged(nameof(Cx));
+            OnPropertyChanged(nameof(Cy));
+            OnPropertyChanged(nameof(Cz));
             OnPropertyChanged(nameof(TransformationMatrix));
         }
     }

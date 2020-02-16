@@ -84,6 +84,12 @@
     <Compile Include="Controls\Forces\ForceListingControl.xaml.cs">
       <DependentUpon>ForceListingControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Matrix\Controls\Helpers\Matrix26Control.xaml.cs">
+      <DependentUpon>Matrix26Control.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Matrix\Controls\Helpers\Matrix62Control.xaml.cs">
+      <DependentUpon>Matrix62Control.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Matrix\Controls\SolvedDisplacementsControl.xaml.cs">
       <DependentUpon>SolvedDisplacementsControl.xaml</DependentUpon>
     </Compile>
@@ -165,7 +171,6 @@
     <Compile Include="Model\Calculations\ConstantMatrix.cs" />
     <Compile Include="Model\Calculations\CorrespondenceMatrix.cs" />
     <Compile Include="Model\Calculations\NumericMatrix.cs" />
-    <Compile Include="Model\Calculations\RotationAngles.cs" />
     <Compile Include="Model\ModelBarElement.cs" />
     <Compile Include="Model\IModelElement.cs" />
     <Compile Include="Model\ModelForce.cs" />
@@ -219,6 +224,14 @@
     <Page Include="Controls\Forces\ForceListingControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Matrix\Controls\Helpers\Matrix26Control.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Matrix\Controls\Helpers\Matrix62Control.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\Matrix\Controls\SolvedDisplacementsControl.xaml">
       <Generator>MSBuild:Compile</Generator>

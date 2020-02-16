@@ -21,13 +21,17 @@ namespace POC3D.Model
         double Length { get; }
 
         double K { get; }
-
-        RotationAngles LocalCoordinateSystemRotationAngles { get; }
-
+        
         NumericMatrix TransformationMatrix { get; }
 
         NumericMatrix LocalStiffnessMatrix { get; }
 
         NumericMatrix GlobalStiffnessMatrix { get; }
+        
+        double Cx { get; }
+
+        double Cy { get; }
+
+        double Cz { get; }
     }
 }

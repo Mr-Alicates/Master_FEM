@@ -30,6 +30,8 @@ namespace POC3D.Model
 
         public NumericMatrix CompactedForcesVector => MatrixHelper.BuildCompactedForcesVector(this);
 
+        public NumericMatrix SolvedDisplacementsVector => MatrixHelper.SolveForDisplacements(this);
+
         public bool CanBeSolved => MatrixHelper.CanProblemBeSolved(this);
 
         public ModelNode AddNode()

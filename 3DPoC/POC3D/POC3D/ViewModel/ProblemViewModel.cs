@@ -124,6 +124,8 @@ namespace POC3D.ViewModel
 
         public NumericMatrix CompactedForcesVector => _modelProblem.CompactedForcesVector;
 
+        public NumericMatrix SolvedDisplacementsVector => _modelProblem.SolvedDisplacementsVector;
+
         public bool CanBeSolved => _modelProblem.CanBeSolved;
 
         public int NumberOfNodes => Nodes.Count;

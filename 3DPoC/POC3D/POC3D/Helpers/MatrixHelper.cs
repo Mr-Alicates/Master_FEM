@@ -131,6 +131,10 @@ namespace POC3D.Helpers
 
         public static NumericMatrix BuildCompactedMatrix(ModelProblem problem)
         {
+            //The building of the compacted matrix is wrong
+            //The indexes used to number the nodes are NOT the same as when building 
+            //the correspondence matrix and the global stiffness matrix
+
             var rawMatrix = BuildGlobalStiffnessMatrix(problem);
             
             int index = 0;
@@ -158,6 +162,10 @@ namespace POC3D.Helpers
 
         public static NumericMatrix BuildCompactedForcesVector(ModelProblem problem)
         {
+            //The building of the compacted matrix is wrong
+            //The indexes used to number the nodes are NOT the same as when building 
+            //the correspondence matrix and the global stiffness matrix
+
             var result = new NumericMatrix(problem.Nodes.Count * 3, 1);
 
             int index = 0;
@@ -183,6 +191,17 @@ namespace POC3D.Helpers
             }
 
             return result;
+        }
+
+        public static NumericMatrix SolveForDisplacements(ModelProblem problem)
+        {
+            var compactedStiffnessMatrix = problem.CompactedMatrix;
+
+            var compactedForcesVector = problem.CompactedForcesVector;
+
+            var solution = compactedStiffnessMatrix.Solve(compactedForcesVector);
+
+            return solution;
         }
 
         public static CorrespondenceMatrix BuildCorrespondenceMatrix(ModelProblem problem)
@@ -211,14 +230,10 @@ namespace POC3D.Helpers
                 var originNodeIndex = correspondenceMatrix.NodeIndexes[element.OriginNode];
                 var destinationNodeIndex = correspondenceMatrix.NodeIndexes[element.DestinationNode];
 
-                unAssembledStiffnessMatrix[originNodeIndex][originNodeIndex] =
-                    elementGlobalStiffnessMatrix.GetSubMatrix(0, 0, 3);
-                unAssembledStiffnessMatrix[originNodeIndex][destinationNodeIndex] =
-                    elementGlobalStiffnessMatrix.GetSubMatrix(0, 3, 3);
-                unAssembledStiffnessMatrix[destinationNodeIndex][originNodeIndex] =
-                    elementGlobalStiffnessMatrix.GetSubMatrix(3, 0, 3);
-                unAssembledStiffnessMatrix[destinationNodeIndex][destinationNodeIndex] =
-                    elementGlobalStiffnessMatrix.GetSubMatrix(3, 3, 3);
+                unAssembledStiffnessMatrix[originNodeIndex][originNodeIndex] += elementGlobalStiffnessMatrix.GetSubMatrix(0, 0, 3);
+                unAssembledStiffnessMatrix[originNodeIndex][destinationNodeIndex] += elementGlobalStiffnessMatrix.GetSubMatrix(0, 3, 3);
+                unAssembledStiffnessMatrix[destinationNodeIndex][originNodeIndex] += elementGlobalStiffnessMatrix.GetSubMatrix(3, 0, 3);
+                unAssembledStiffnessMatrix[destinationNodeIndex][destinationNodeIndex] += elementGlobalStiffnessMatrix.GetSubMatrix(3, 3, 3);
             }
 
             var result = new NumericMatrix(nodeCount * 3, nodeCount * 3);

@@ -51,6 +51,25 @@ namespace POC3D.Model.Calculations
             return m1._rawMatrix * m2._rawMatrix;
         }
 
+        public static NumericMatrix operator +(NumericMatrix m1, NumericMatrix m2)
+        {
+            if (m2 == null)
+            {
+                return m1;
+            }
+
+            if (m1 == null)
+            {
+                return m2;
+            }
+
+            if (m1.Rows != m2.Rows ||
+                m1.Columns != m2.Columns)
+                throw new InvalidOperationException("Invalid operation: Rows and Columns mismatch");
+
+            return m1._rawMatrix + m2._rawMatrix;
+        }
+
         public void RemoveColumn(int index)
         {
             _rawMatrix = _rawMatrix.RemoveColumn(index);
@@ -81,8 +100,42 @@ namespace POC3D.Model.Calculations
             return _rawMatrix.Determinant();
         }
 
+        public NumericMatrix Solve(NumericMatrix otherMatrix)
+        {
+            var determinant = _rawMatrix.Determinant();
+
+            var vector = ToVector(otherMatrix);
+
+            var result = _rawMatrix.Solve(vector);
+
+            return result;
+        }
+
+        private static Vector<double> ToVector(NumericMatrix matrix)
+        {
+            Matrix<double> rawMatrix = matrix._rawMatrix;
+
+            if(matrix.Columns > 1)
+            {
+                throw new InvalidOperationException("Not a vector!");
+            }
+
+            Vector<double> result = Vector<double>.Build
+                .Dense(rawMatrix.EnumerateRows().Count(), rowIndex => rawMatrix[rowIndex, 0]);
+
+            return result;
+        }
+
         public static implicit operator NumericMatrix(Matrix<double> rawMatrix)
         {
+            return new NumericMatrix(rawMatrix);
+        }
+
+        public static implicit operator NumericMatrix(Vector<double> rawVector)
+        {
+            Matrix<double> rawMatrix = Matrix<double>.Build
+                .Dense(rawVector.Count, 1, (rowIndex, columnIndex) => rawVector[rowIndex]);
+
             return new NumericMatrix(rawMatrix);
         }
     }

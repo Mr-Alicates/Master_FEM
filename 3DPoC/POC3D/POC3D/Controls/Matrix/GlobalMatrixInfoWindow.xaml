@@ -18,6 +18,11 @@
                     DataContext="{Binding Path=.}"
                     ProblemViewModel="{Binding ProblemViewModel}" />
             </TabItem>
+            <TabItem Header="Solved displacements">
+                <controls:SolvedDisplacementsControl
+                    DataContext="{Binding Path=.}"
+                    ProblemViewModel="{Binding ProblemViewModel}" />
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>

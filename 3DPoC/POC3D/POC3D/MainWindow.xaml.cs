@@ -33,10 +33,10 @@ namespace POC3D
             MainViewModel.CameraViewModel.Position = new Point3D(-100, 0, 0);
 
             var node1 = MainViewModel.ProblemViewModel.AddNode(new Point3D(-10, -10, -10)).SetAsFixed();
+            var node5 = MainViewModel.ProblemViewModel.AddNode(new Point3D(0, 0, 10)).SetAsFree();
             var node2 = MainViewModel.ProblemViewModel.AddNode(new Point3D(10, -10, -10)).SetAsFixed();
             var node3 = MainViewModel.ProblemViewModel.AddNode(new Point3D(10, 10, -10)).SetAsFixed();
 
-            var node5 = MainViewModel.ProblemViewModel.AddNode(new Point3D(0, 0, 10)).SetAsFree();
 
             MainViewModel.ProblemViewModel.SelectedNode = null;
 

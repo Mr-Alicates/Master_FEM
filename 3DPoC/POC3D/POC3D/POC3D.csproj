@@ -84,6 +84,9 @@
     <Compile Include="Controls\Forces\ForceListingControl.xaml.cs">
       <DependentUpon>ForceListingControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Matrix\Controls\SolvedDisplacementsControl.xaml.cs">
+      <DependentUpon>SolvedDisplacementsControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Matrix\Controls\GlobalElementStiffnessMatrixControl.xaml.cs">
       <DependentUpon>GlobalElementStiffnessMatrixControl.xaml</DependentUpon>
     </Compile>
@@ -216,6 +219,10 @@
     <Page Include="Controls\Forces\ForceListingControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Matrix\Controls\SolvedDisplacementsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\Matrix\Controls\GlobalElementStiffnessMatrixControl.xaml">
       <SubType>Designer</SubType>

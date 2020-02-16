@@ -14,7 +14,7 @@ namespace POC3D.Model.Calculations
             Matrix = new Dictionary<(int, int), List<IModelElement>>();
         }
 
-        private void AddNode(ModelNode node)
+        public void AddNode(ModelNode node)
         {
             if (NodeIndexes.ContainsKey(node)) return;
 
@@ -33,9 +33,6 @@ namespace POC3D.Model.Calculations
 
         public void AddElement(IModelElement element)
         {
-            AddNode(element.OriginNode);
-            AddNode(element.DestinationNode);
-
             var originNodeIndex = NodeIndexes[element.OriginNode];
             var destinationNodeIndex = NodeIndexes[element.DestinationNode];
 

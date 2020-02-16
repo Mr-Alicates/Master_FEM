@@ -85,10 +85,6 @@ namespace POC3D.Helpers
 
         public static NumericMatrix BuildCompactedMatrix(ModelProblem problem)
         {
-            //The building of the compacted matrix is wrong
-            //The indexes used to number the nodes are NOT the same as when building 
-            //the correspondence matrix and the global stiffness matrix
-
             var rawMatrix = BuildGlobalStiffnessMatrix(problem);
             
             int index = 0;
@@ -116,10 +112,6 @@ namespace POC3D.Helpers
 
         public static NumericMatrix BuildCompactedForcesVector(ModelProblem problem)
         {
-            //The building of the compacted matrix is wrong
-            //The indexes used to number the nodes are NOT the same as when building 
-            //the correspondence matrix and the global stiffness matrix
-
             var result = new NumericMatrix(problem.Nodes.Count * 3, 1);
 
             int index = 0;
@@ -162,6 +154,7 @@ namespace POC3D.Helpers
         {
             var result = new CorrespondenceMatrix();
 
+            foreach (var node in problem.Nodes) result.AddNode(node);
             foreach (var element in problem.Elements) result.AddElement(element);
 
             return result;

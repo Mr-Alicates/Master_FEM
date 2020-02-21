@@ -5,21 +5,17 @@ using POC3D.Model;
 
 namespace POC3D.ViewModel
 {
-    public class NodeViewModel : Observable
+    public class NodeViewModel : GeometryViewModel
     {
         private static readonly Brush FreeNodeBrush = Brushes.LightGreen;
         private static readonly Brush FixedNodeBrush = Brushes.DarkGreen;
         private static readonly Brush SelectedNodeBrush = Brushes.Red;
 
         private bool _isSelected;
-        private DiffuseMaterial _material;
-        private MeshGeometry3D _meshGeometry3D;
-        private TranslateTransform3D _translateTransform3D;
 
         public NodeViewModel(ModelNode modelNode)
         {
             Node = modelNode;
-            BuildGeometry();
         }
 
         public int Id => Node.Id;
@@ -37,8 +33,8 @@ namespace POC3D.ViewModel
             set
             {
                 Node.Coordinates.X = value;
-                _translateTransform3D.OffsetX = value;
-                OnPropertyChanged(nameof(X));
+                OffsetX = value;
+                OnPropertyChanged(nameof(Coordinates));
             }
         }
 
@@ -48,8 +44,8 @@ namespace POC3D.ViewModel
             set
             {
                 Node.Coordinates.Y = value;
-                _translateTransform3D.OffsetY = value;
-                OnPropertyChanged(nameof(Y));
+                OffsetY = value;
+                OnPropertyChanged(nameof(Coordinates));
             }
         }
 
@@ -59,8 +55,8 @@ namespace POC3D.ViewModel
             set
             {
                 Node.Coordinates.Z = value;
-                _translateTransform3D.OffsetZ = value;
-                OnPropertyChanged(nameof(Z));
+                OffsetZ = value;
+                OnPropertyChanged(nameof(Coordinates));
             }
         }
 
@@ -70,16 +66,7 @@ namespace POC3D.ViewModel
             set
             {
                 Node.IsFixed = value;
-
-                if (IsFixed)
-                {
-                    GraphicsHelper.BuildPyramidMesh(_meshGeometry3D, 2);
-                }
-                else
-                {
-                    GraphicsHelper.BuildCubeMesh(_meshGeometry3D, 1);
-                }
-
+                UpdateGeometryMesh();
                 OnPropertyChanged(nameof(IsFixed));
             }
         }
@@ -90,11 +77,9 @@ namespace POC3D.ViewModel
             set
             {
                 _isSelected = value;
-                _material.Brush = IsSelected ? SelectedNodeBrush : IsFixed ? FixedNodeBrush : FreeNodeBrush;
+                MaterialBrush = IsSelected ? SelectedNodeBrush : IsFixed ? FixedNodeBrush : FreeNodeBrush;
             }
         }
-
-        public GeometryModel3D Geometry { get; private set; }
 
         public string Name => $"{Id} ({Coordinates.ToString()})";
 
@@ -110,24 +95,16 @@ namespace POC3D.ViewModel
             return this;
         }
 
-        private void BuildGeometry()
+        protected override void UpdateGeometryMesh()
         {
-            _meshGeometry3D = new MeshGeometry3D
+            if (IsFixed)
             {
-                Positions = new Point3DCollection(),
-                TriangleIndices = new Int32Collection()
-            };
-
-            _material = new DiffuseMaterial(FreeNodeBrush);
-
-            _translateTransform3D = new TranslateTransform3D(X, Y, Z);
-
-            Geometry = new GeometryModel3D
+                GraphicsHelper.BuildPyramidMesh(MeshGeometry3D, 2);
+            }
+            else
             {
-                Material = _material,
-                Geometry = _meshGeometry3D,
-                Transform = _translateTransform3D
-            };
+                GraphicsHelper.BuildCubeMesh(MeshGeometry3D, 1);
+            }
         }
     }
 }

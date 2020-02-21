@@ -179,6 +179,7 @@
     <Compile Include="Model\ModelPoint.cs" />
     <Compile Include="Model\ModelProblem.cs" />
     <Compile Include="Model\ModelVector.cs" />
+    <Compile Include="ViewModel\Base\GeometryViewModel.cs" />
     <Compile Include="ViewModel\Commands\AddElementCommand.cs" />
     <Compile Include="ViewModel\Commands\AddForceCommand.cs" />
     <Compile Include="ViewModel\Commands\AddNodeCommand.cs" />
@@ -195,7 +196,7 @@
     <Compile Include="ViewModel\NewForceViewModel.cs" />
     <Compile Include="ViewModel\NewElementViewModel.cs" />
     <Compile Include="ViewModel\NodeViewModel.cs" />
-    <Compile Include="ViewModel\Observable.cs" />
+    <Compile Include="ViewModel\Base\Observable.cs" />
     <Compile Include="ViewModel\ProblemViewModel.cs" />
     <Page Include="Controls\ManagementControl.xaml">
       <Generator>MSBuild:Compile</Generator>

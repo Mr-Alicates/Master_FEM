@@ -12,6 +12,6 @@
 
         public ModelVector ApplicationVector { get; }
 
-        public double Magnitude { get; set; }
+        public double Magnitude => ApplicationVector.Modulus;
     }
 }

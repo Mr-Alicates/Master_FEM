@@ -8,7 +8,8 @@ namespace POC3D.ViewModel
     {
         private DiffuseMaterial _material;
         private TranslateTransform3D _translateTransform3D;
-        
+        private AxisAngleRotation3D _axisAngleRotation3D;
+
         protected GeometryViewModel()
         {
             BuildGeometry();
@@ -38,6 +39,18 @@ namespace POC3D.ViewModel
             set => _material.Brush = value;
         }
 
+        protected double RotationAngle
+        {
+            get => _axisAngleRotation3D.Angle;
+            set => _axisAngleRotation3D.Angle = value;
+        }
+
+        protected Vector3D RotationAxis
+        {
+            get => _axisAngleRotation3D.Axis;
+            set => _axisAngleRotation3D.Axis = value;
+        }
+
         protected MeshGeometry3D MeshGeometry3D { get; private set; }
 
         public GeometryModel3D Geometry { get; private set; }
@@ -53,12 +66,20 @@ namespace POC3D.ViewModel
             _material = new DiffuseMaterial();
 
             _translateTransform3D = new TranslateTransform3D();
+            _axisAngleRotation3D = new AxisAngleRotation3D();
 
             Geometry = new GeometryModel3D
             {
                 Material = _material,
                 Geometry = MeshGeometry3D,
-                Transform = _translateTransform3D
+                Transform = new Transform3DGroup
+                {
+                    Children = new Transform3DCollection
+                {
+                    new RotateTransform3D(_axisAngleRotation3D),
+                    _translateTransform3D
+                }
+                }
             };
         }
 

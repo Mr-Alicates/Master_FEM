@@ -6,26 +6,20 @@ using POC3D.Model;
 
 namespace POC3D.ViewModel
 {
-    public class ForceViewModel : Observable
+    public class ForceViewModel : GeometryViewModel
     {
+        private static readonly Vector3D VerticalVector = new Vector3D(0, 0, 1);
         private static readonly Brush ForceBrush = Brushes.Yellow;
         private static readonly Brush SelectedForceBrush = Brushes.Red;
+
         private bool _isSelected;
-        private DiffuseMaterial _material;
-        private MeshGeometry3D _meshGeometry3D;
         private NodeViewModel _nodeViewModel;
 
         public ForceViewModel(ModelForce force, NodeViewModel node)
         {
             Force = force;
-
-            _nodeViewModel = node;
-
-            Geometry = BuildGeometry();
-            UpdateGeometry();
-
-
-            Node.PropertyChanged += NodesChanged;
+            Node = node;
+            UpdateGeometryMesh();
         }
 
         public ModelForce Force { get; }
@@ -35,10 +29,18 @@ namespace POC3D.ViewModel
             get => _nodeViewModel;
             set
             {
+                if(_nodeViewModel != null)
+                {
+                    _nodeViewModel.PropertyChanged -= NodeChanged;
+                }
+
+                value.PropertyChanged += NodeChanged;
                 _nodeViewModel = value;
 
                 Force.Node = _nodeViewModel.Node;
-                UpdateGeometry();
+                NodeChanged();
+
+                OnPropertyChanged(nameof(Node));
             }
         }
 
@@ -48,8 +50,7 @@ namespace POC3D.ViewModel
             set
             {
                 _isSelected = value;
-                UpdateGeometry();
-                OnPropertyChanged(nameof(IsSelected));
+                MaterialBrush = IsSelected ? SelectedForceBrush : ForceBrush;
             }
         }
 
@@ -59,8 +60,9 @@ namespace POC3D.ViewModel
             set
             {
                 Force.ApplicationVector.X = value;
-                UpdateGeometry();
-                OnPropertyChanged(nameof(ApplicationVectorX));
+                VectorChanged();
+                OnPropertyChanged(nameof(ApplicationVector));
+                OnPropertyChanged(nameof(Magnitude));
             }
         }
 
@@ -70,8 +72,9 @@ namespace POC3D.ViewModel
             set
             {
                 Force.ApplicationVector.Y = value;
-                UpdateGeometry();
-                OnPropertyChanged(nameof(ApplicationVectorY));
+                VectorChanged();
+                OnPropertyChanged(nameof(ApplicationVector));
+                OnPropertyChanged(nameof(Magnitude));
             }
         }
 
@@ -81,12 +84,13 @@ namespace POC3D.ViewModel
             set
             {
                 Force.ApplicationVector.Z = value;
-                UpdateGeometry();
-                OnPropertyChanged(nameof(ApplicationVectorZ));
+                VectorChanged();
+                OnPropertyChanged(nameof(ApplicationVector));
+                OnPropertyChanged(nameof(Magnitude));
             }
         }
 
-        public Vector3D ApplicationVector => new Vector3D(ApplicationVectorX, ApplicationVectorY, ApplicationVectorZ);
+        public Vector3D ApplicationVector => new Vector3D(Force.ApplicationVector.X, Force.ApplicationVector.Y, Force.ApplicationVector.Z);
 
         public double Magnitude
         {
@@ -94,53 +98,33 @@ namespace POC3D.ViewModel
             set => Force.Magnitude = value;
         }
 
-        public GeometryModel3D Geometry { get; }
-
         public string Name =>
             $"({Node.Id}) ---> ({ApplicationVectorX:N}/{ApplicationVectorY:N}/{ApplicationVectorZ:N}) ({Magnitude:N})";
 
-        private void NodesChanged(object sender, PropertyChangedEventArgs e)
+        private void NodeChanged(object sender, PropertyChangedEventArgs e)
         {
-            UpdateGeometry();
+            if(e.PropertyName == nameof(_nodeViewModel.Coordinates))
+            {
+                NodeChanged();
+            }
         }
 
-        private GeometryModel3D BuildGeometry()
+        private void NodeChanged()
         {
-            _meshGeometry3D = new MeshGeometry3D
-            {
-                Positions = new Point3DCollection(),
-                TriangleIndices = new Int32Collection()
-            };
-
-            _material = new DiffuseMaterial(ForceBrush);
-
-            return new GeometryModel3D
-            {
-                Material = _material,
-                Geometry = _meshGeometry3D
-            };
+            OffsetX = _nodeViewModel.X;
+            OffsetY = _nodeViewModel.Y;
+            OffsetZ = _nodeViewModel.Z;
         }
 
-        private void UpdateGeometry()
+        private void VectorChanged()
         {
-            _material.Brush = IsSelected ? SelectedForceBrush : ForceBrush;
+            RotationAngle = Vector3D.AngleBetween(VerticalVector, -ApplicationVector);
+            RotationAxis = Vector3D.CrossProduct(VerticalVector, -ApplicationVector);
+        }
 
-            GraphicsHelper.BuildForceArrow(_meshGeometry3D, 10, 2);
-
-            var verticalVector = new Vector3D(0, 0, 1);
-            var rotationAngle = Vector3D.AngleBetween(verticalVector, -ApplicationVector);
-            var rotationVector = Vector3D.CrossProduct(verticalVector, -ApplicationVector);
-
-            Geometry.Transform = new Transform3DGroup
-            {
-                Children = new Transform3DCollection
-                {
-                    new RotateTransform3D(new AxisAngleRotation3D(rotationVector, rotationAngle)),
-                    new TranslateTransform3D(Node.X, Node.Y, Node.Z)
-                }
-            };
-
-            OnPropertyChanged(nameof(Geometry));
+        protected override void UpdateGeometryMesh()
+        {
+            GraphicsHelper.BuildForceArrow(MeshGeometry3D, 10, 2);
         }
     }
 }

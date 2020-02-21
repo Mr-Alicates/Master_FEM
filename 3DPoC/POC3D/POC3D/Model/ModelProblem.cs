@@ -22,18 +22,6 @@ namespace POC3D.Model
 
         public List<ModelForce> Forces { get; } = new List<ModelForce>();
 
-        public CorrespondenceMatrix CorrespondenceMatrix => MatrixHelper.BuildCorrespondenceMatrix(this);
-
-        public NumericMatrix GlobalStiffnessMatrix => MatrixHelper.BuildGlobalStiffnessMatrix(this);
-
-        public NumericMatrix CompactedMatrix => MatrixHelper.BuildCompactedMatrix(this);
-
-        public NumericMatrix CompactedForcesVector => MatrixHelper.BuildCompactedForcesVector(this);
-
-        public NumericMatrix SolvedDisplacementsVector => MatrixHelper.SolveForDisplacements(this);
-
-        public bool CanBeSolved => MatrixHelper.CanProblemBeSolved(this);
-
         public ModelNode AddNode()
         {
             var result = ModelNode.CreateNewNode();

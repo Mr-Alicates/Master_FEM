@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
 using System.Windows.Media.Media3D;
@@ -15,6 +17,13 @@ namespace POC3D.ViewModel
         private ElementViewModel _selectedElement;
         private ForceViewModel _selectedForce;
         private NodeViewModel _selectedNode;
+
+        private CorrespondenceMatrix _correspondenceMatrix;
+        private NumericMatrix _globalStiffnessMatrix;
+        private NumericMatrix _compactedMatrix;
+        private NumericMatrix _compactedForcesVector;
+        private NumericMatrix _solvedDisplacementsVector;
+        private bool? _canBeSolved;
 
         public ProblemViewModel()
         {
@@ -116,17 +125,17 @@ namespace POC3D.ViewModel
 
         public ICommand DeleteForceCommand => new DeleteForceCommand(this);
 
-        public CorrespondenceMatrix CorrespondenceMatrix => _modelProblem.CorrespondenceMatrix;
+        public CorrespondenceMatrix CorrespondenceMatrix => _correspondenceMatrix ??= MatrixHelper.BuildCorrespondenceMatrix(this);
 
-        public NumericMatrix GlobalStiffnessMatrix => _modelProblem.GlobalStiffnessMatrix;
+        public NumericMatrix GlobalStiffnessMatrix => _globalStiffnessMatrix ??= MatrixHelper.BuildGlobalStiffnessMatrix(this);
 
-        public NumericMatrix CompactedMatrix => _modelProblem.CompactedMatrix;
+        public NumericMatrix CompactedMatrix => _compactedMatrix ??= MatrixHelper.BuildCompactedMatrix(this);
 
-        public NumericMatrix CompactedForcesVector => _modelProblem.CompactedForcesVector;
+        public NumericMatrix CompactedForcesVector => _compactedForcesVector ??= MatrixHelper.BuildCompactedForcesVector(this);
 
-        public NumericMatrix SolvedDisplacementsVector => _modelProblem.SolvedDisplacementsVector;
+        public NumericMatrix SolvedDisplacementsVector => _solvedDisplacementsVector ??= MatrixHelper.SolveForDisplacements(this);
 
-        public bool CanBeSolved => _modelProblem.CanBeSolved;
+        public bool CanBeSolved => _canBeSolved ??= MatrixHelper.CanProblemBeSolved(this);
 
         public int NumberOfNodes => Nodes.Count;
 
@@ -158,6 +167,8 @@ namespace POC3D.ViewModel
             Nodes.Add(nodeViewModel);
             SelectedNode = nodeViewModel;
 
+            ProblemChanged();
+
             return nodeViewModel;
         }
 
@@ -168,6 +179,8 @@ namespace POC3D.ViewModel
             _modelProblem.DeleteNode(selectedNode.Node);
             Nodes.Remove(selectedNode);
             SelectedNode = null;
+
+            ProblemChanged();
         }
 
         public ElementViewModel AddBarElement(NodeViewModel node1, NodeViewModel node2)
@@ -183,6 +196,9 @@ namespace POC3D.ViewModel
             Elements.Add(result);
             SelectedElement = result;
 
+            result.PropertyChanged += ElementPropertyChanged;
+            ProblemChanged();
+
             return result;
         }
 
@@ -192,7 +208,11 @@ namespace POC3D.ViewModel
 
             _modelProblem.DeleteElement(selectedElement.Element);
             Elements.Remove(selectedElement);
+
+            SelectedElement.PropertyChanged -= ElementPropertyChanged;
             SelectedElement = null;
+
+            ProblemChanged();
         }
 
         public ForceViewModel AddForce(NodeViewModel node)
@@ -204,6 +224,9 @@ namespace POC3D.ViewModel
             Forces.Add(result);
             SelectedForce = result;
 
+            result.PropertyChanged += ForcePropertyChanged;
+            ProblemChanged();
+
             return result;
         }
 
@@ -213,8 +236,48 @@ namespace POC3D.ViewModel
 
             _modelProblem.DeleteForce(selectedForce.Force);
 
+            selectedForce.PropertyChanged -= ForcePropertyChanged;
             Forces.Remove(selectedForce);
             SelectedForce = null;
+
+            ProblemChanged();
+        }
+
+        private void ElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(ElementViewModel.GlobalStiffnessMatrix))
+            {
+                ProblemChanged();
+            }
+        }
+
+        private void ForcePropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(ForceViewModel.Magnitude) ||
+                e.PropertyName == nameof(ForceViewModel.Node))
+            {
+                ProblemChanged();
+            }
+        }
+
+        private void ProblemChanged()
+        {
+            _correspondenceMatrix = null;
+            _globalStiffnessMatrix = null;
+            _compactedMatrix = null;
+            _compactedForcesVector = null;
+            _solvedDisplacementsVector = null;
+            _canBeSolved = null;
+
+            OnPropertyChanged(nameof(CorrespondenceMatrix));
+            OnPropertyChanged(nameof(GlobalStiffnessMatrix));
+            OnPropertyChanged(nameof(CompactedMatrix));
+            OnPropertyChanged(nameof(CompactedForcesVector));
+            OnPropertyChanged(nameof(SolvedDisplacementsVector));
+            OnPropertyChanged(nameof(CanBeSolved));
+            OnPropertyChanged(nameof(NumberOfNodes));
+            OnPropertyChanged(nameof(NumberOfElements));
+            OnPropertyChanged(nameof(NumberOfDirichletBoundaryConditions));
         }
     }
 }

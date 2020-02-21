@@ -118,19 +118,19 @@ namespace POC3D.ViewModel
         
         public string K => Element.K.ToString("E2");
 
-        public NumericMatrix TransformationMatrix => _transformationMatrix ??= Element.TransformationMatrix;
+        public NumericMatrix TransformationMatrix => _transformationMatrix ??= MatrixHelper.BuildTransformationMatrix(this);
 
         public NumericMatrix TransformationMatrixTransposed => _transformationMatrixTransposed ??= TransformationMatrix.Transpose();
 
-        public NumericMatrix LocalStiffnessMatrix => _localStiffnessMatrix ??= Element.LocalStiffnessMatrix;
+        public NumericMatrix LocalStiffnessMatrix => _localStiffnessMatrix ??= MatrixHelper.BuildElementLocalStiffnessMatrix(this);
 
-        public NumericMatrix GlobalStiffnessMatrix => _globalStiffnessMatrix ??= Element.GlobalStiffnessMatrix;
+        public NumericMatrix GlobalStiffnessMatrix => _globalStiffnessMatrix ??= MatrixHelper.BuildElementGlobalStiffnessMatrix(this);
 
-        public double Cx => _cx ??= Element.Cx;
+        public double Cx => _cx ??= (Destination.Coordinates.X - Origin.Coordinates.X) / Length;
 
-        public double Cy => _cy ??= Element.Cy;
+        public double Cy => _cy ??= (Destination.Coordinates.Y - Origin.Coordinates.Y) / Length;
 
-        public double Cz => _cz ??= Element.Cz;
+        public double Cz => _cz ??= (Destination.Coordinates.Z - Origin.Coordinates.Z) / Length;
 
         private void NodesChanged(object sender, PropertyChangedEventArgs e)
         {

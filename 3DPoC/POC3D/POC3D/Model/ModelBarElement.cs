@@ -32,17 +32,5 @@ namespace POC3D.Model
         public double Length => Direction.Modulus;
 
         public double K => Material.YoungsModulus * CrossSectionArea / Length;
-
-        public NumericMatrix TransformationMatrix => MatrixHelper.BuildTransformationMatrix(this);
-
-        public NumericMatrix LocalStiffnessMatrix => MatrixHelper.BuildElementLocalStiffnessMatrix(this);
-
-        public NumericMatrix GlobalStiffnessMatrix => MatrixHelper.BuildElementGlobalStiffnessMatrix(this);
-
-        public double Cx => (DestinationNode.Coordinates.X - OriginNode.Coordinates.X) / Length;
-
-        public double Cy => (DestinationNode.Coordinates.Y - OriginNode.Coordinates.Y) / Length;
-
-        public double Cz => (DestinationNode.Coordinates.Z - OriginNode.Coordinates.Z) / Length;
     }
 }

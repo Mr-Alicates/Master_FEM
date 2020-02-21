@@ -3,19 +3,20 @@ using System.Linq;
 using System.Windows.Media.Media3D;
 using POC3D.Model;
 using POC3D.Model.Calculations;
+using POC3D.ViewModel;
 
 namespace POC3D.Helpers
 {
     public static class MatrixHelper
     {
-        internal static bool CanProblemBeSolved(ModelProblem modelProblem)
+        internal static bool CanProblemBeSolved(ProblemViewModel problemViewModel)
         {
             //To solve the problem, the 3 displacements must be constrained
             //In this kind of problem it means 3 non-collinear fixed nodes
 
-            var fixedNodes = modelProblem.Nodes
+            var fixedNodes = problemViewModel.Nodes
                 .Where(x => x.IsFixed)
-                .Select(x=>x.Coordinates)
+                .Select(x=>x.Node.Coordinates)
                 .ToList();
 
             if(fixedNodes.Count < 3)
@@ -45,8 +46,10 @@ namespace POC3D.Helpers
             
         }
 
-        public static NumericMatrix BuildElementLocalStiffnessMatrix(IModelElement element)
+        public static NumericMatrix BuildElementLocalStiffnessMatrix(ElementViewModel elementViewModel)
         {
+            var element = elementViewModel.Element;
+
             return new NumericMatrix(2, 2)
             {
                 [0, 0] = element.K,
@@ -56,7 +59,7 @@ namespace POC3D.Helpers
             };
         }
 
-        public static NumericMatrix BuildTransformationMatrix(IModelElement element)
+        public static NumericMatrix BuildTransformationMatrix(ElementViewModel element)
         {
             var result = new NumericMatrix(2, 6)
             {
@@ -72,7 +75,7 @@ namespace POC3D.Helpers
             return result;
         }
 
-        public static NumericMatrix BuildElementGlobalStiffnessMatrix(IModelElement element)
+        public static NumericMatrix BuildElementGlobalStiffnessMatrix(ElementViewModel element)
         {
             var transformationMatrix = element.TransformationMatrix;
 
@@ -83,7 +86,7 @@ namespace POC3D.Helpers
             return transformationMatrixTransposed * localStiffnessMatrix * transformationMatrix;
         }
 
-        public static NumericMatrix BuildCompactedMatrix(ModelProblem problem)
+        public static NumericMatrix BuildCompactedMatrix(ProblemViewModel problem)
         {
             var rawMatrix = BuildGlobalStiffnessMatrix(problem);
             
@@ -110,7 +113,7 @@ namespace POC3D.Helpers
             return rawMatrix;
         }
 
-        public static NumericMatrix BuildCompactedForcesVector(ModelProblem problem)
+        public static NumericMatrix BuildCompactedForcesVector(ProblemViewModel problem)
         {
             var result = new NumericMatrix(problem.Nodes.Count * 3, 1);
 
@@ -139,7 +142,7 @@ namespace POC3D.Helpers
             return result;
         }
 
-        public static NumericMatrix SolveForDisplacements(ModelProblem problem)
+        public static NumericMatrix SolveForDisplacements(ProblemViewModel problem)
         {
             var compactedStiffnessMatrix = problem.CompactedMatrix;
 
@@ -150,7 +153,7 @@ namespace POC3D.Helpers
             return solution;
         }
 
-        public static CorrespondenceMatrix BuildCorrespondenceMatrix(ModelProblem problem)
+        public static CorrespondenceMatrix BuildCorrespondenceMatrix(ProblemViewModel problem)
         {
             var result = new CorrespondenceMatrix();
 
@@ -160,7 +163,7 @@ namespace POC3D.Helpers
             return result;
         }
 
-        public static NumericMatrix BuildGlobalStiffnessMatrix(ModelProblem problem)
+        public static NumericMatrix BuildGlobalStiffnessMatrix(ProblemViewModel problem)
         {
             var correspondenceMatrix = problem.CorrespondenceMatrix;
 
@@ -174,8 +177,8 @@ namespace POC3D.Helpers
             {
                 var elementGlobalStiffnessMatrix = element.GlobalStiffnessMatrix;
 
-                var originNodeIndex = correspondenceMatrix.NodeIndexes[element.OriginNode];
-                var destinationNodeIndex = correspondenceMatrix.NodeIndexes[element.DestinationNode];
+                var originNodeIndex = correspondenceMatrix.NodeIndexes[element.Origin];
+                var destinationNodeIndex = correspondenceMatrix.NodeIndexes[element.Destination];
 
                 unAssembledStiffnessMatrix[originNodeIndex][originNodeIndex] += elementGlobalStiffnessMatrix.GetSubMatrix(0, 0, 3);
                 unAssembledStiffnessMatrix[originNodeIndex][destinationNodeIndex] += elementGlobalStiffnessMatrix.GetSubMatrix(0, 3, 3);

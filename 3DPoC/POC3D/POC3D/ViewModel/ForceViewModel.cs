@@ -61,6 +61,7 @@ namespace POC3D.ViewModel
             {
                 Force.ApplicationVector.X = value;
                 VectorChanged();
+                OnPropertyChanged(nameof(ApplicationVectorX));
                 OnPropertyChanged(nameof(ApplicationVector));
                 OnPropertyChanged(nameof(Magnitude));
             }
@@ -73,6 +74,7 @@ namespace POC3D.ViewModel
             {
                 Force.ApplicationVector.Y = value;
                 VectorChanged();
+                OnPropertyChanged(nameof(ApplicationVectorY));
                 OnPropertyChanged(nameof(ApplicationVector));
                 OnPropertyChanged(nameof(Magnitude));
             }
@@ -85,6 +87,7 @@ namespace POC3D.ViewModel
             {
                 Force.ApplicationVector.Z = value;
                 VectorChanged();
+                OnPropertyChanged(nameof(ApplicationVectorZ));
                 OnPropertyChanged(nameof(ApplicationVector));
                 OnPropertyChanged(nameof(Magnitude));
             }
@@ -95,7 +98,6 @@ namespace POC3D.ViewModel
         public double Magnitude
         {
             get => Force.Magnitude;
-            set => Force.Magnitude = value;
         }
 
         public string Name =>

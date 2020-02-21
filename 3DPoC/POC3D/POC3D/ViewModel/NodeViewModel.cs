@@ -34,6 +34,7 @@ namespace POC3D.ViewModel
             {
                 Node.Coordinates.X = value;
                 OffsetX = value;
+                OnPropertyChanged(nameof(X));
                 OnPropertyChanged(nameof(Coordinates));
             }
         }
@@ -45,6 +46,7 @@ namespace POC3D.ViewModel
             {
                 Node.Coordinates.Y = value;
                 OffsetY = value;
+                OnPropertyChanged(nameof(Y));
                 OnPropertyChanged(nameof(Coordinates));
             }
         }
@@ -56,6 +58,7 @@ namespace POC3D.ViewModel
             {
                 Node.Coordinates.Z = value;
                 OffsetZ = value;
+                OnPropertyChanged(nameof(Z));
                 OnPropertyChanged(nameof(Coordinates));
             }
         }

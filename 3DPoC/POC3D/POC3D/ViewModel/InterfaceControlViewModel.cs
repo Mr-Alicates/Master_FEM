@@ -23,8 +23,6 @@ namespace POC3D.ViewModel
 
         private Visibility _nodeDetailsControlVisibility = Visibility.Collapsed;
         private Visibility _nodeListingControlVisibility = Visibility.Collapsed;
-
-        private Visibility _problemDetailsControlVisibility = Visibility.Collapsed;
         
         public InterfaceControlViewModel(ProblemViewModel problemViewModel, CameraViewModel cameraViewModel)
         {
@@ -48,8 +46,6 @@ namespace POC3D.ViewModel
             ForceAddingControlVisibility = Visibility.Collapsed;
             ForceDetailsControlVisibility = Visibility.Collapsed;
             ForceListingControlVisibility = Visibility.Collapsed;
-
-            ProblemDetailsControlVisibility = Visibility.Collapsed;
         }
 
         #region Nodes
@@ -71,8 +67,6 @@ namespace POC3D.ViewModel
             ForceListingControlVisibility = Visibility.Collapsed;
 
             NodeDetailsControlVisibility = Visibility.Visible;
-
-            ProblemDetailsControlVisibility = Visibility.Collapsed;
         }
 
         private void ShowNodeListing()
@@ -105,8 +99,6 @@ namespace POC3D.ViewModel
             ForceListingControlVisibility = Visibility.Collapsed;
 
             ElementDetailsControlVisibility = Visibility.Visible;
-
-            ProblemDetailsControlVisibility = Visibility.Collapsed;
         }
 
         private void AddElement()
@@ -146,8 +138,6 @@ namespace POC3D.ViewModel
             ForceAddingControlVisibility = Visibility.Collapsed;
 
             ForceDetailsControlVisibility = Visibility.Visible;
-
-            ProblemDetailsControlVisibility = Visibility.Collapsed;
         }
 
         private void AddForce()
@@ -166,19 +156,6 @@ namespace POC3D.ViewModel
         }
 
         #endregion
-
-        #region Problem
-
-        public ICommand ShowProblemDetailsCommand => new ButtonCommand(ShowProblemDetails);
-
-        private void ShowProblemDetails()
-        {
-            HideAllControls();
-
-            ProblemDetailsControlVisibility = Visibility.Visible;
-        }
-
-        #endregion Problem
 
         #region Viewport
 
@@ -376,16 +353,6 @@ namespace POC3D.ViewModel
             {
                 _forceAddingControlVisibility = value;
                 OnPropertyChanged(nameof(ForceAddingControlVisibility));
-            }
-        }
-
-        public Visibility ProblemDetailsControlVisibility
-        {
-            get => _problemDetailsControlVisibility;
-            private set
-            {
-                _problemDetailsControlVisibility = value;
-                OnPropertyChanged(nameof(ProblemDetailsControlVisibility));
             }
         }
 

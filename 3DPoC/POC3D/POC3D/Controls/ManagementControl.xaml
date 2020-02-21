@@ -7,35 +7,42 @@
              xmlns:elements="clr-namespace:POC3D.Controls.Elements"
              xmlns:nodes="clr-namespace:POC3D.Controls.Nodes"
              mc:Ignorable="d">
+    <Grid Background="LightGray">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        
+        <StackPanel Grid.Row="0" Orientation="Vertical">
 
-    <StackPanel Orientation="Vertical" Background="LightGray">
+            <nodes:SelectedNodeDetailsControl DataContext="{Binding Path=.}"
+                                              Visibility="{Binding Path=InterfaceControlViewModel.NodeDetailsControlVisibility}" />
 
-        <nodes:SelectedNodeDetailsControl DataContext="{Binding Path=.}"
-                                          Visibility="{Binding Path=InterfaceControlViewModel.NodeDetailsControlVisibility}" />
+            <elements:SelectedElementDetailsControl DataContext="{Binding Path=.}"
+                                                    Visibility="{Binding Path=InterfaceControlViewModel.ElementDetailsControlVisibility}" />
 
-        <elements:SelectedElementDetailsControl DataContext="{Binding Path=.}"
-                                                Visibility="{Binding Path=InterfaceControlViewModel.ElementDetailsControlVisibility}" />
+            <forces:SelectedForceDetailsControl DataContext="{Binding Path=.}"
+                                                Visibility="{Binding Path=InterfaceControlViewModel.ForceDetailsControlVisibility}" />
 
-        <forces:SelectedForceDetailsControl DataContext="{Binding Path=.}"
-                                            Visibility="{Binding Path=InterfaceControlViewModel.ForceDetailsControlVisibility}" />
+            <nodes:NodeListingControl DataContext="{Binding Path=.}"
+                                      Visibility="{Binding Path=InterfaceControlViewModel.NodeListingControlVisibility}" />
 
-        <nodes:NodeListingControl DataContext="{Binding Path=.}"
-                                  Visibility="{Binding Path=InterfaceControlViewModel.NodeListingControlVisibility}" />
+            <elements:ElementListingControl DataContext="{Binding Path=.}"
+                                            Visibility="{Binding Path=InterfaceControlViewModel.ElementListingControlVisibility}" />
 
-        <elements:ElementListingControl DataContext="{Binding Path=.}"
-                                        Visibility="{Binding Path=InterfaceControlViewModel.ElementListingControlVisibility}" />
+            <forces:ForceListingControl DataContext="{Binding Path=.}"
+                                        Visibility="{Binding Path=InterfaceControlViewModel.ForceListingControlVisibility}" />
 
-        <forces:ForceListingControl DataContext="{Binding Path=.}"
-                                    Visibility="{Binding Path=InterfaceControlViewModel.ForceListingControlVisibility}" />
+            <elements:ElementAddingControl DataContext="{Binding Path=.}"
+                                           Visibility="{Binding Path=InterfaceControlViewModel.ElementAddingControlVisibility}" />
 
-        <elements:ElementAddingControl DataContext="{Binding Path=.}"
-                                       Visibility="{Binding Path=InterfaceControlViewModel.ElementAddingControlVisibility}" />
+            <forces:ForceAddingControl DataContext="{Binding Path=.}"
+                                       Visibility="{Binding Path=InterfaceControlViewModel.ForceAddingControlVisibility}" />
 
-        <forces:ForceAddingControl DataContext="{Binding Path=.}"
-                                   Visibility="{Binding Path=InterfaceControlViewModel.ForceAddingControlVisibility}" />
+        </StackPanel>
 
-        <forces:ProblemDetailsControl DataContext="{Binding Path=.}"
-                                   Visibility="{Binding Path=InterfaceControlViewModel.ProblemDetailsControlVisibility}" />
-
-    </StackPanel>
+        <Separator Grid.Row="1" Background="White"/>
+        <forces:ProblemDetailsControl Grid.Row="2" VerticalAlignment="Bottom" DataContext="{Binding Path=.}" />
+    </Grid>
 </UserControl>

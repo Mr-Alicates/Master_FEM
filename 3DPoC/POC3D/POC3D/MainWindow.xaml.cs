@@ -20,7 +20,7 @@ namespace POC3D
             MainViewModel = new MainViewModel();
             DataContext = MainViewModel;
 
-            InitCube();
+            InitSimple();
         }
 
         public MainViewModel MainViewModel

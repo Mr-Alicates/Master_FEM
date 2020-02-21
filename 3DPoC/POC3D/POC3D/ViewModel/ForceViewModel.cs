@@ -19,7 +19,6 @@ namespace POC3D.ViewModel
         {
             Force = force;
             Node = node;
-            UpdateGeometryMesh();
         }
 
         public ModelForce Force { get; }
@@ -38,7 +37,7 @@ namespace POC3D.ViewModel
                 _nodeViewModel = value;
 
                 Force.Node = _nodeViewModel.Node;
-                NodeChanged();
+                UpdateGeometryMesh();
 
                 OnPropertyChanged(nameof(Node));
             }
@@ -107,15 +106,8 @@ namespace POC3D.ViewModel
         {
             if(e.PropertyName == nameof(_nodeViewModel.Coordinates))
             {
-                NodeChanged();
+                UpdateGeometryMesh();
             }
-        }
-
-        private void NodeChanged()
-        {
-            OffsetX = _nodeViewModel.X;
-            OffsetY = _nodeViewModel.Y;
-            OffsetZ = _nodeViewModel.Z;
         }
 
         private void VectorChanged()
@@ -127,6 +119,10 @@ namespace POC3D.ViewModel
         protected override void UpdateGeometryMesh()
         {
             GraphicsHelper.BuildForceArrow(MeshGeometry3D, 10, 2);
+
+            OffsetX = _nodeViewModel.X;
+            OffsetY = _nodeViewModel.Y;
+            OffsetZ = _nodeViewModel.Z;
         }
     }
 }

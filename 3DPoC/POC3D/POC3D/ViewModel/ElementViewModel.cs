@@ -7,29 +7,23 @@ using NumericMatrix = POC3D.Model.Calculations.NumericMatrix;
 
 namespace POC3D.ViewModel
 {
-    public class ElementViewModel : Observable
+    public class ElementViewModel : GeometryViewModel
     {
+        private static readonly Vector3D VerticalVector = new Vector3D(0, 0, 1);
         private static readonly Brush BarBrush = Brushes.Blue;
         private static readonly Brush SelectedBarBrush = Brushes.Red;
-        private NodeViewModel _destination;
+
         private bool _isSelected;
-        private DiffuseMaterial _material;
-        private MaterialViewModel _materialViewModel;
-        private MeshGeometry3D _meshGeometry3D;
         private NodeViewModel _origin;
+        private NodeViewModel _destination;
+        private MaterialViewModel _materialViewModel;
 
         public ElementViewModel(IModelElement modelElement, NodeViewModel origin, NodeViewModel destination)
         {
             Element = modelElement;
-            _origin = origin;
-            _destination = destination;
+            Origin = origin;
+            Destination = destination;
             _materialViewModel = new MaterialViewModel(Element.Material);
-
-            Geometry = BuildGeometry();
-            UpdateGeometry();
-
-            Origin.PropertyChanged += NodesChanged;
-            Destination.PropertyChanged += NodesChanged;
         }
 
         public bool IsSelected
@@ -38,7 +32,7 @@ namespace POC3D.ViewModel
             set
             {
                 _isSelected = value;
-                UpdateGeometry();
+                MaterialBrush = IsSelected ? SelectedBarBrush : BarBrush;
             }
         }
 
@@ -49,12 +43,16 @@ namespace POC3D.ViewModel
             get => _origin;
             set
             {
+                if (_origin != null)
+                {
+                    _origin.PropertyChanged -= NodesChanged;
+                }
+
                 value.PropertyChanged += NodesChanged;
-                _origin.PropertyChanged -= NodesChanged;
                 _origin = value;
 
                 Element.OriginNode = _origin.Node;
-                UpdateGeometry();
+                UpdateGeometryMesh();
             }
         }
 
@@ -63,12 +61,16 @@ namespace POC3D.ViewModel
             get => _destination;
             set
             {
+                if (_destination != null)
+                {
+                    _destination.PropertyChanged -= NodesChanged;
+                }
+
                 value.PropertyChanged += NodesChanged;
-                _destination.PropertyChanged -= NodesChanged;
                 _destination = value;
 
                 Element.DestinationNode = _destination.Node;
-                UpdateGeometry();
+                UpdateGeometryMesh();
             }
         }
 
@@ -86,6 +88,8 @@ namespace POC3D.ViewModel
                 Element.Material = _materialViewModel.ModelMaterial;
                 OnPropertyChanged(nameof(Material));
                 OnPropertyChanged(nameof(K));
+                OnPropertyChanged(nameof(LocalStiffnessMatrix));
+                OnPropertyChanged(nameof(GlobalStiffnessMatrix));
             }
         }
 
@@ -97,17 +101,14 @@ namespace POC3D.ViewModel
                 Element.CrossSectionArea = value;
                 OnPropertyChanged(nameof(CrossSectionArea));
                 OnPropertyChanged(nameof(K));
+                OnPropertyChanged(nameof(LocalStiffnessMatrix));
+                OnPropertyChanged(nameof(GlobalStiffnessMatrix));
             }
         }
 
         public double Length => Element.Length;
-
-
+        
         public string K => Element.K.ToString("E2");
-
-        public GeometryModel3D Geometry { get; }
-
-        public Vector3D Direction => new Vector3D(Element.Direction.X, Element.Direction.Y, Element.Direction.Z);
         
         public NumericMatrix TransformationMatrix => Element.TransformationMatrix;
 
@@ -125,54 +126,41 @@ namespace POC3D.ViewModel
 
         private void NodesChanged(object sender, PropertyChangedEventArgs e)
         {
-            UpdateGeometry();
-        }
-
-        private GeometryModel3D BuildGeometry()
-        {
-            _meshGeometry3D = new MeshGeometry3D
+            if (e.PropertyName == nameof(_origin.Coordinates))
             {
-                Positions = new Point3DCollection(),
-                TriangleIndices = new Int32Collection()
-            };
-
-            _material = new DiffuseMaterial(BarBrush);
-
-            return new GeometryModel3D
-            {
-                Material = _material,
-                Geometry = _meshGeometry3D
-            };
+                UpdateGeometryMesh();
+            }
         }
-
-        private void UpdateGeometry()
+        
+        protected override void UpdateGeometryMesh()
         {
-            _material.Brush = IsSelected ? SelectedBarBrush : BarBrush;
+            if(Destination == null || Origin == null)
+            {
+                return;
+            }
 
             var vector = Destination.Coordinates - Origin.Coordinates;
 
-            GraphicsHelper.BuildBarMesh(_meshGeometry3D, vector.Length, 0.5);
+            GraphicsHelper.BuildBarMesh(MeshGeometry3D, vector.Length, 0.5);
 
-            var verticalVector = new Vector3D(0, 0, 1);
-            var rotationAngle = Vector3D.AngleBetween(verticalVector, vector);
-            var rotationVector = Vector3D.CrossProduct(verticalVector, vector);
+            RotationAngle = Vector3D.AngleBetween(VerticalVector, vector);
+            RotationAxis = Vector3D.CrossProduct(VerticalVector, vector);
 
-            Geometry.Transform = new Transform3DGroup
-            {
-                Children = new Transform3DCollection
-                {
-                    new RotateTransform3D(new AxisAngleRotation3D(rotationVector, rotationAngle)),
-                    new TranslateTransform3D(Origin.X, Origin.Y, Origin.Z)
-                }
-            };
+            OffsetX = Origin.X;
+            OffsetY = Origin.Y;
+            OffsetZ = Origin.Z;
 
-            OnPropertyChanged(nameof(Geometry));
+            OnPropertyChanged(nameof(Origin));
+            OnPropertyChanged(nameof(Destination));
             OnPropertyChanged(nameof(Length));
             OnPropertyChanged(nameof(K));
             OnPropertyChanged(nameof(Cx));
             OnPropertyChanged(nameof(Cy));
             OnPropertyChanged(nameof(Cz));
             OnPropertyChanged(nameof(TransformationMatrix));
+            OnPropertyChanged(nameof(TransformationMatrixTransposed));
+            OnPropertyChanged(nameof(LocalStiffnessMatrix));
+            OnPropertyChanged(nameof(GlobalStiffnessMatrix));
         }
     }
 }

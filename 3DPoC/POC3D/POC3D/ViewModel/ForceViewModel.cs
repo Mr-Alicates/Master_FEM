@@ -101,7 +101,7 @@ namespace POC3D.ViewModel
 
         private void NodesChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(Node.Geometry)) UpdateGeometry();
+            UpdateGeometry();
         }
 
         private GeometryModel3D BuildGeometry()

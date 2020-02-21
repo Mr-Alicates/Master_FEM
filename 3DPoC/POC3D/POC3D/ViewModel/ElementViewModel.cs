@@ -49,6 +49,8 @@ namespace POC3D.ViewModel
             get => _origin;
             set
             {
+                value.PropertyChanged += NodesChanged;
+                _origin.PropertyChanged -= NodesChanged;
                 _origin = value;
 
                 Element.OriginNode = _origin.Node;
@@ -61,6 +63,8 @@ namespace POC3D.ViewModel
             get => _destination;
             set
             {
+                value.PropertyChanged += NodesChanged;
+                _destination.PropertyChanged -= NodesChanged;
                 _destination = value;
 
                 Element.DestinationNode = _destination.Node;
@@ -121,7 +125,7 @@ namespace POC3D.ViewModel
 
         private void NodesChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(Origin.Geometry)) UpdateGeometry();
+            UpdateGeometry();
         }
 
         private GeometryModel3D BuildGeometry()

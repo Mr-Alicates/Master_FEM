@@ -18,6 +18,14 @@ namespace POC3D.ViewModel
         private NodeViewModel _destination;
         private MaterialViewModel _materialViewModel;
 
+        private NumericMatrix _transformationMatrix;
+        private NumericMatrix _transformationMatrixTransposed;
+        private NumericMatrix _localStiffnessMatrix;
+        private NumericMatrix _globalStiffnessMatrix;
+        private double? _cx;
+        private double? _cy;
+        private double? _cz;
+
         public ElementViewModel(IModelElement modelElement, NodeViewModel origin, NodeViewModel destination)
         {
             Element = modelElement;
@@ -109,20 +117,20 @@ namespace POC3D.ViewModel
         public double Length => Element.Length;
         
         public string K => Element.K.ToString("E2");
-        
-        public NumericMatrix TransformationMatrix => Element.TransformationMatrix;
 
-        public NumericMatrix TransformationMatrixTransposed => Element.TransformationMatrix.Transpose();
+        public NumericMatrix TransformationMatrix => _transformationMatrix ??= Element.TransformationMatrix;
 
-        public NumericMatrix LocalStiffnessMatrix => Element.LocalStiffnessMatrix;
+        public NumericMatrix TransformationMatrixTransposed => _transformationMatrixTransposed ??= TransformationMatrix.Transpose();
 
-        public NumericMatrix GlobalStiffnessMatrix => Element.GlobalStiffnessMatrix;
+        public NumericMatrix LocalStiffnessMatrix => _localStiffnessMatrix ??= Element.LocalStiffnessMatrix;
 
-        public double Cx => Element.Cx;
+        public NumericMatrix GlobalStiffnessMatrix => _globalStiffnessMatrix ??= Element.GlobalStiffnessMatrix;
 
-        public double Cy => Element.Cy;
+        public double Cx => _cx ??= Element.Cx;
 
-        public double Cz => Element.Cz;
+        public double Cy => _cy ??= Element.Cy;
+
+        public double Cz => _cz ??= Element.Cz;
 
         private void NodesChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -149,6 +157,15 @@ namespace POC3D.ViewModel
             OffsetX = Origin.X;
             OffsetY = Origin.Y;
             OffsetZ = Origin.Z;
+
+            _cx = null;
+            _cy = null;
+            _cz = null;
+
+            _transformationMatrix = null;
+            _transformationMatrixTransposed = null;
+            _localStiffnessMatrix = null;
+            _globalStiffnessMatrix = null;
 
             OnPropertyChanged(nameof(Origin));
             OnPropertyChanged(nameof(Destination));

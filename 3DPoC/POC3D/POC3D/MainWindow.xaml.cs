@@ -14,6 +14,9 @@ namespace POC3D
         public static readonly DependencyProperty MainViewModelProperty = DependencyProperty.Register(
             nameof(MainViewModel), typeof(MainViewModel), typeof(MainWindow));
 
+        private MatrixInfoWindow _matrixInfoWindow;
+        private GlobalMatrixInfoWindow _globalMatrixInfoWindow;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -21,6 +24,16 @@ namespace POC3D
             DataContext = MainViewModel;
 
             InitSimple();
+
+            _matrixInfoWindow = new MatrixInfoWindow
+            {
+                DataContext = DataContext
+            };
+
+            _globalMatrixInfoWindow = new GlobalMatrixInfoWindow
+            {
+                DataContext = DataContext
+            };
         }
 
         public MainViewModel MainViewModel
@@ -154,22 +167,18 @@ namespace POC3D
 
         private void ShowMatrixInfoWindow(object sender, RoutedEventArgs e)
         {
-            var matrixInfoWindow = new MatrixInfoWindow
+            if (!_matrixInfoWindow.IsVisible)
             {
-                DataContext = DataContext
-            };
-
-            matrixInfoWindow.Show();
+                _matrixInfoWindow.Show();
+            }
         }
 
         private void ShowGlobalMatrixInfoWindow(object sender, RoutedEventArgs e)
         {
-            var globalMatrixInfoWindow = new GlobalMatrixInfoWindow
+            if (!_globalMatrixInfoWindow.IsVisible)
             {
-                DataContext = DataContext
-            };
-
-            globalMatrixInfoWindow.Show();
+                _globalMatrixInfoWindow.Show();
+            }
         }
     }
 }

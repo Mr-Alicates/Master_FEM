@@ -352,6 +352,12 @@ namespace POC3D.Controls.Matrix.Controls.Helpers
 
             var value = e.NewValue as Model.Calculations.NumericMatrix;
 
+            if (value == null)
+            {
+                control.InitializeAllToZero();
+                return;
+            }
+
             control.M11 = value[0, 0].ToString("E2");
             control.M12 = value[0, 1].ToString("E2");
             control.M13 = value[0, 2].ToString("E2");

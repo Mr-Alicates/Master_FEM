@@ -44,7 +44,8 @@
 
             <TextBox Grid.Row="1"
                      Grid.Column="0"
-                     Text="{Binding ProblemViewModel.SelectedForce.Magnitude,Mode=TwoWay}" />
+                     IsReadOnly="True"
+                     Text="{Binding ProblemViewModel.SelectedForce.Magnitude,Mode=OneWay}" />
             <TextBlock Grid.Row="1" Grid.Column="1" Text="Magnitude (N)" />
 
             <TextBox Grid.Row="2"

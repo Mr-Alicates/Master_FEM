@@ -21,7 +21,11 @@ namespace POC3D.Controls.Matrix.Controls
             InitializeComponent();
         }
 
-        public ProblemViewModel ProblemViewModel { get; set; }
+        public ProblemViewModel ProblemViewModel
+        {
+            get => GetValue(ProblemViewModelProperty) as ProblemViewModel;
+            set => SetValue(ProblemViewModelProperty, value);
+        }
 
         private void FillGlobalStiffnessMatrix(ProblemViewModel problemViewModel)
         {
@@ -58,6 +62,7 @@ namespace POC3D.Controls.Matrix.Controls
 
         private void FillDisplacements(ProblemViewModel problemViewModel)
         {
+            DisplacementsContainer.Children.Clear();
             DisplacementsContainer.ColumnDefinitions.Clear();
             DisplacementsContainer.RowDefinitions.Clear();
 
@@ -91,6 +96,7 @@ namespace POC3D.Controls.Matrix.Controls
 
         private void FillForces(ProblemViewModel problemViewModel)
         {
+            ForcesContainer.Children.Clear();
             ForcesContainer.ColumnDefinitions.Clear();
             ForcesContainer.RowDefinitions.Clear();
 
@@ -109,7 +115,6 @@ namespace POC3D.Controls.Matrix.Controls
             }
         }
 
-
         private static void ProblemViewModelChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var control = d as CompactedGlobalStiffnessMatrixControl;
@@ -120,9 +125,23 @@ namespace POC3D.Controls.Matrix.Controls
 
             if (problemViewModel == null) return;
 
-            control.FillGlobalStiffnessMatrix(problemViewModel);
-            control.FillDisplacements(problemViewModel);
-            control.FillForces(problemViewModel);
+            control.ProblemViewModelChangedCallback(problemViewModel);
+        }
+
+        private void ProblemViewModelChangedCallback(ProblemViewModel problemViewModel)
+        {
+            problemViewModel.PropertyChanged += ProblemViewModel_PropertyChanged;
+
+            FillGlobalStiffnessMatrix(ProblemViewModel);
+            FillDisplacements(ProblemViewModel);
+            FillForces(ProblemViewModel);
+        }
+
+        private void ProblemViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            FillGlobalStiffnessMatrix(ProblemViewModel);
+            FillDisplacements(ProblemViewModel);
+            FillForces(ProblemViewModel);
         }
 
         private static void BuildTextBlock(Grid container, string text, int rowIndex, int columnIndex, Brush color)

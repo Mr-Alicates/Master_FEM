@@ -21,10 +21,15 @@ namespace POC3D.Controls.Matrix.Controls
             InitializeComponent();
         }
 
-        public ProblemViewModel ProblemViewModel { get; set; }
+        public ProblemViewModel ProblemViewModel 
+        {
+            get => GetValue(ProblemViewModelProperty) as ProblemViewModel;
+            set => SetValue(ProblemViewModelProperty, value);
+        }
 
         private void FillDisplacements(ProblemViewModel problemViewModel)
         {
+            DisplacementsContainer.Children.Clear();
             DisplacementsContainer.RowDefinitions.Clear();
 
             int indexes = 1;
@@ -57,6 +62,7 @@ namespace POC3D.Controls.Matrix.Controls
         
         private void FillResults(ProblemViewModel problemViewModel)
         {
+            ResultsContainer.Children.Clear();
             ResultsContainer.RowDefinitions.Clear();
 
             var resultsMatrix = problemViewModel.SolvedDisplacementsVector;
@@ -84,8 +90,21 @@ namespace POC3D.Controls.Matrix.Controls
 
             if (problemViewModel == null) return;
 
-            control.FillDisplacements(problemViewModel);
-            control.FillResults(problemViewModel);
+            control.ProblemViewModelChangedCallback(problemViewModel);
+        }
+
+        private void ProblemViewModelChangedCallback(ProblemViewModel problemViewModel)
+        {
+            problemViewModel.PropertyChanged += ProblemViewModel_PropertyChanged;
+
+            FillDisplacements(problemViewModel);
+            FillResults(problemViewModel);
+        }
+
+        private void ProblemViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            FillDisplacements(ProblemViewModel);
+            FillResults(ProblemViewModel);
         }
 
         private static void BuildTextBlock(Grid container, string text, int rowIndex, int columnIndex, Brush color)

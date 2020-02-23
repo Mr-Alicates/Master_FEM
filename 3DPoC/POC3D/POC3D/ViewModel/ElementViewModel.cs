@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using POC3D.Helpers;
@@ -107,10 +108,8 @@ namespace POC3D.ViewModel
             set
             {
                 Element.CrossSectionArea = value;
+                UpdateGeometryMesh();
                 OnPropertyChanged(nameof(CrossSectionArea));
-                OnPropertyChanged(nameof(K));
-                OnPropertyChanged(nameof(LocalStiffnessMatrix));
-                OnPropertyChanged(nameof(GlobalStiffnessMatrix));
             }
         }
 

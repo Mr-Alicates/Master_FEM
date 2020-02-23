@@ -35,6 +35,8 @@ namespace POC3D.ViewModel
             Materials = new ObservableCollection<MaterialViewModel>();
             InitializeMaterials();
 
+            ResultNodes = new ObservableCollection<ResultNodeViewModel>();
+
             NewElementViewModel = new NewElementViewModel(this);
             NewForceViewModel = new NewForceViewModel(this);
         }
@@ -117,6 +119,8 @@ namespace POC3D.ViewModel
 
         public ObservableCollection<MaterialViewModel> Materials { get; }
 
+        public ObservableCollection<ResultNodeViewModel> ResultNodes { get; }
+
         public ICommand AddNodeCommand => new AddNodeCommand(this);
 
         public ICommand DeleteNodeCommand => new DeleteNodeCommand(this);
@@ -163,8 +167,10 @@ namespace POC3D.ViewModel
         {
             var modelNode = _modelProblem.AddNode();
             var nodeViewModel = new NodeViewModel(modelNode);
+            var resultNodeViewModel = new ResultNodeViewModel(modelNode);
 
             Nodes.Add(nodeViewModel);
+            ResultNodes.Add(resultNodeViewModel);
             SelectedNode = nodeViewModel;
 
             ProblemChanged();
@@ -178,6 +184,9 @@ namespace POC3D.ViewModel
 
             _modelProblem.DeleteNode(selectedNode.Node);
             Nodes.Remove(selectedNode);
+            var resultNode = ResultNodes.First(x => x.Node == selectedNode.Node);
+            ResultNodes.Remove(resultNode);
+
             SelectedNode = null;
 
             ProblemChanged();

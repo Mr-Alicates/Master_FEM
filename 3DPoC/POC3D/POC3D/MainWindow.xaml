@@ -77,7 +77,9 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <controls:VisualAreaControl Grid.Column="0" MainViewModel="{Binding Path=.}" x:Name="Viewport"
+            <controls:VisualAreaControl Grid.Column="0" 
+                                        MainViewModel="{Binding Path=.}"
+                                        x:Name="Viewport"
                                         Focusable="True" />
 
             <controls:ManagementControl Grid.Column="1" DataContext="{Binding Path=.}" />

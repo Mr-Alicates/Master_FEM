@@ -18,6 +18,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
@@ -47,7 +48,18 @@
                      Grid.Column="0"
                      IsReadOnly="True"
                      Text="{Binding ProblemViewModel.NumberOfDirichletBoundaryConditions,Mode=OneWay}" />
-            <TextBlock Grid.Row="3" Grid.Column="1" Text="Dirichlet boundary conditions" /> <!-- Number of fixed nodes -->            
+            <TextBlock Grid.Row="3" Grid.Column="1" Text="Dirichlet boundary conditions" />
+            <!-- Number of fixed nodes -->
+
+            <CheckBox Grid.Row="4"
+                     Grid.Column="0"
+                     IsChecked=  "{Binding ProblemViewModel.ShowProblem, Mode=TwoWay}"/>
+            <TextBlock Grid.Row="4" Grid.Column="1" Text="Show problem" />
+
+            <TextBox Grid.Row="5"
+                     Grid.Column="0"
+                     Text=  "{Binding ProblemViewModel.DisplacementsMultiplier, Mode=TwoWay}"/>
+            <TextBlock Grid.Row="5" Grid.Column="1" Text="Displacements multiplier" />
             
         </Grid>
 

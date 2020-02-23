@@ -8,7 +8,6 @@ namespace POC3D.ViewModel
     {
         private DiffuseMaterial _material;
         private TranslateTransform3D _translateTransform3D;
-        private TranslateTransform3D _displacementTranslateTransform3D;
         private AxisAngleRotation3D _axisAngleRotation3D;
 
         protected GeometryViewModel()
@@ -32,24 +31,6 @@ namespace POC3D.ViewModel
         {
             get => _translateTransform3D.OffsetZ;
             set => _translateTransform3D.OffsetZ = value;
-        }
-
-        protected double DisplacementOffsetX
-        {
-            get => _displacementTranslateTransform3D.OffsetX;
-            set => _displacementTranslateTransform3D.OffsetX = value;
-        }
-
-        protected double DisplacementOffsetY
-        {
-            get => _displacementTranslateTransform3D.OffsetY;
-            set => _displacementTranslateTransform3D.OffsetY = value;
-        }
-
-        protected double DisplacementOffsetZ
-        {
-            get => _displacementTranslateTransform3D.OffsetZ;
-            set => _displacementTranslateTransform3D.OffsetZ = value;
         }
 
         protected Brush MaterialBrush
@@ -85,7 +66,6 @@ namespace POC3D.ViewModel
             _material = new DiffuseMaterial();
 
             _translateTransform3D = new TranslateTransform3D();
-            _displacementTranslateTransform3D = new TranslateTransform3D();
             _axisAngleRotation3D = new AxisAngleRotation3D();
 
             Geometry = new GeometryModel3D
@@ -95,11 +75,10 @@ namespace POC3D.ViewModel
                 Transform = new Transform3DGroup
                 {
                     Children = new Transform3DCollection
-                {
-                    new RotateTransform3D(_axisAngleRotation3D),
-                    _displacementTranslateTransform3D,
-                    _translateTransform3D
-                }
+                    {
+                        new RotateTransform3D(_axisAngleRotation3D),
+                        _translateTransform3D
+                    }
                 }
             };
         }

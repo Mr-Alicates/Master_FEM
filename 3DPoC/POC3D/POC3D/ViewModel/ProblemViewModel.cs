@@ -18,6 +18,9 @@ namespace POC3D.ViewModel
         private ForceViewModel _selectedForce;
         private NodeViewModel _selectedNode;
 
+        private bool _showProblem = true;
+        private int _displacementsMultiplier = 1;
+
         private CorrespondenceMatrix _correspondenceMatrix;
         private NumericMatrix _globalStiffnessMatrix;
         private NumericMatrix _compactedMatrix;
@@ -147,6 +150,28 @@ namespace POC3D.ViewModel
 
         public int NumberOfDirichletBoundaryConditions => Nodes.Count(x => x.IsFixed);
 
+        public bool ShowProblem
+        {
+            get => _showProblem;
+            set
+            {
+                _showProblem = value;
+                UpdateDisplacementsInResultNodes();
+                OnPropertyChanged(nameof(ShowProblem));
+            }
+        }
+
+        public int DisplacementsMultiplier
+        {
+            get => _displacementsMultiplier;
+            set
+            {
+                _displacementsMultiplier = value;
+                UpdateDisplacementsInResultNodes();
+                OnPropertyChanged(nameof(DisplacementsMultiplier));
+            }
+        }
+
         private void InitializeMaterials()
         {
             foreach (var modelMaterial in MaterialsHelper.GetAvailableMaterials())
@@ -167,7 +192,7 @@ namespace POC3D.ViewModel
         {
             var modelNode = _modelProblem.AddNode();
             var nodeViewModel = new NodeViewModel(modelNode);
-            var resultNodeViewModel = new ResultNodeViewModel(modelNode);
+            var resultNodeViewModel = new ResultNodeViewModel(nodeViewModel);
 
             Nodes.Add(nodeViewModel);
             ResultNodes.Add(resultNodeViewModel);
@@ -184,7 +209,7 @@ namespace POC3D.ViewModel
 
             _modelProblem.DeleteNode(selectedNode.Node);
             Nodes.Remove(selectedNode);
-            var resultNode = ResultNodes.First(x => x.Node == selectedNode.Node);
+            var resultNode = ResultNodes.First(x => x.NodeViewModel == selectedNode);
             ResultNodes.Remove(resultNode);
 
             SelectedNode = null;
@@ -287,6 +312,24 @@ namespace POC3D.ViewModel
             OnPropertyChanged(nameof(NumberOfNodes));
             OnPropertyChanged(nameof(NumberOfElements));
             OnPropertyChanged(nameof(NumberOfDirichletBoundaryConditions));
+        }
+
+
+        private void UpdateDisplacementsInResultNodes()
+        {
+            int index = 0;
+            foreach(var resultNode in ResultNodes)
+            {
+                if (resultNode.NodeViewModel.IsFixed)
+                {
+                    continue;
+                }
+
+                resultNode.DisplacementX = SolvedDisplacementsVector[index + 0, 0] * DisplacementsMultiplier;
+                resultNode.DisplacementY = SolvedDisplacementsVector[index + 1, 0] * DisplacementsMultiplier;
+                resultNode.DisplacementZ = SolvedDisplacementsVector[index + 2, 0] * DisplacementsMultiplier;
+                index = index + 3;
+            }
         }
     }
 }

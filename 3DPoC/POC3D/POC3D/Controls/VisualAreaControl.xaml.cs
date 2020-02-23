@@ -1,4 +1,6 @@
-﻿using System.Collections.Specialized;
+﻿using System;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -25,7 +27,7 @@ namespace POC3D.Controls
 
         public MainViewModel MainViewModel
         {
-            get => (MainViewModel) GetValue(MainViewModelProperty);
+            get => (MainViewModel)GetValue(MainViewModelProperty);
             set => SetValue(MainViewModelProperty, value);
         }
 
@@ -47,8 +49,27 @@ namespace POC3D.Controls
             MainViewModel.ProblemViewModel.Elements.CollectionChanged += ProblemElementsChanged;
             MainViewModel.ProblemViewModel.Forces.CollectionChanged += ProblemForcesChanged;
 
+            MainViewModel.ProblemViewModel.PropertyChanged += ShowProblemChangedCallback;
+
             UpdateCamera();
-            UpdateProblem();
+            DisplayProblem();
+        }
+
+        private void ShowProblemChangedCallback(object sender, PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName != nameof(ProblemViewModel.ShowProblem))
+            {
+                return;
+            }
+
+            if (MainViewModel.ProblemViewModel.ShowProblem)
+            {
+                DisplayProblem();
+            }
+            else
+            {
+                DisplayResults();
+            }
         }
 
         private void Viewport_PreviewMouseDown(object sender, MouseButtonEventArgs e)
@@ -113,7 +134,7 @@ namespace POC3D.Controls
             MainViewModel.InterfaceControlViewModel.ReactToMouseWheelMovement(e.Delta);
         }
 
-        public void UpdateProblem()
+        private void InitialSetup()
         {
             //Remove all the elements
             Model3DGroup.Children.Clear();
@@ -127,6 +148,11 @@ namespace POC3D.Controls
 
             Model3DGroup.Children.Add(ambientLight);
             Model3DGroup.Children.Add(directionalLight);
+        }
+
+        public void DisplayProblem()
+        {
+            InitialSetup();
 
             foreach (var node in MainViewModel.ProblemViewModel.Nodes) Model3DGroup.Children.Add(node.Geometry);
 
@@ -134,6 +160,13 @@ namespace POC3D.Controls
                 Model3DGroup.Children.Add(element.Geometry);
 
             foreach (var force in MainViewModel.ProblemViewModel.Forces) Model3DGroup.Children.Add(force.Geometry);
+        }
+
+        public void DisplayResults()
+        {
+            InitialSetup();
+
+            foreach (var node in MainViewModel.ProblemViewModel.ResultNodes) Model3DGroup.Children.Add(node.Geometry);
         }
 
         public void UpdateCamera()
@@ -145,6 +178,11 @@ namespace POC3D.Controls
 
         private void ProblemNodesChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
+            if (!MainViewModel.ProblemViewModel.ShowProblem)
+            {
+                return;
+            }
+
             if (e.NewItems != null)
                 foreach (NodeViewModel node in e.NewItems)
                     Model3DGroup.Children.Add(node.Geometry);
@@ -156,6 +194,11 @@ namespace POC3D.Controls
 
         private void ProblemElementsChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
+            if (!MainViewModel.ProblemViewModel.ShowProblem)
+            {
+                return;
+            }
+
             if (e.NewItems != null)
                 foreach (ElementViewModel element in e.NewItems)
                     Model3DGroup.Children.Add(element.Geometry);
@@ -167,6 +210,11 @@ namespace POC3D.Controls
 
         private void ProblemForcesChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
+            if (!MainViewModel.ProblemViewModel.ShowProblem)
+            {
+                return;
+            }
+
             if (e.NewItems != null)
                 foreach (ForceViewModel force in e.NewItems)
                     Model3DGroup.Children.Add(force.Geometry);

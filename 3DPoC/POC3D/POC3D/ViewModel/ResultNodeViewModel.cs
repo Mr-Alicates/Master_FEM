@@ -4,33 +4,59 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Media3D;
 
 namespace POC3D.ViewModel
 {
-    public class ResultNodeViewModel : NodeViewModel
+    public class ResultNodeViewModel
     {
-        public ResultNodeViewModel(ModelNode modelNode)
-            : base(modelNode)
-        {
+        private TranslateTransform3D _translateTransform3D;
 
+        public ResultNodeViewModel(NodeViewModel nodeViewModel)
+        {
+            NodeViewModel = nodeViewModel;
+            BuildGeometry();
         }
+
+        public NodeViewModel NodeViewModel { get; }
 
         public double DisplacementX
         {
-            get => DisplacementOffsetX;
-            set => DisplacementOffsetX = value;
+            get => _translateTransform3D.OffsetX;
+            set => _translateTransform3D.OffsetX = value;
         }
 
         public double DisplacementY
         {
-            get => DisplacementOffsetY;
-            set => DisplacementOffsetY = value;
+            get => _translateTransform3D.OffsetY;
+            set => _translateTransform3D.OffsetY = value;
         }
 
         public double DisplacementZ
         {
-            get => DisplacementOffsetZ;
-            set => DisplacementOffsetZ = value;
+            get => _translateTransform3D.OffsetZ;
+            set => _translateTransform3D.OffsetZ = value;
+        }
+
+        public GeometryModel3D Geometry { get; private set; }
+
+        private void BuildGeometry()
+        {
+            _translateTransform3D = new TranslateTransform3D();
+
+            Geometry = new GeometryModel3D
+            {
+                Material = NodeViewModel.Geometry.Material,
+                Geometry = NodeViewModel.Geometry.Geometry,
+                Transform = new Transform3DGroup
+                {
+                    Children = new Transform3DCollection
+                    {
+                        NodeViewModel.Geometry.Transform,
+                        _translateTransform3D
+                    }
+                }
+            };
         }
     }
 }

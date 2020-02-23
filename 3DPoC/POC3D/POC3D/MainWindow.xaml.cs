@@ -24,16 +24,6 @@ namespace POC3D
             DataContext = MainViewModel;
 
             InitSimple();
-
-            _matrixInfoWindow = new MatrixInfoWindow
-            {
-                DataContext = DataContext
-            };
-
-            _globalMatrixInfoWindow = new GlobalMatrixInfoWindow
-            {
-                DataContext = DataContext
-            };
         }
 
         public MainViewModel MainViewModel
@@ -93,21 +83,19 @@ namespace POC3D
             MainViewModel.ProblemViewModel.SelectedNode = null;
 
             var element1 = MainViewModel.ProblemViewModel.AddBarElement(node1, node5);
-            element1.Material= MainViewModel.ProblemViewModel.Materials.Last();
+            element1.Material = MainViewModel.ProblemViewModel.Materials.Skip(1).First();
             element1.CrossSectionArea = 1E-3;
 
             var element2 = MainViewModel.ProblemViewModel.AddBarElement(node2, node5);
-            element2.Material = MainViewModel.ProblemViewModel.Materials.Last();
+            element2.Material = MainViewModel.ProblemViewModel.Materials.Skip(1).First();
             element2.CrossSectionArea = 1E-3;
 
             var element3 = MainViewModel.ProblemViewModel.AddBarElement(node3, node5);
-            element3.Material = MainViewModel.ProblemViewModel.Materials.Last();
+            element3.Material = MainViewModel.ProblemViewModel.Materials.Skip(1).First();
             element3.CrossSectionArea = 1E-3;
 
             var force = MainViewModel.ProblemViewModel.AddForce(node5);
-            force.ApplicationVectorX = -10;
-            force.ApplicationVectorY = -10;
-            force.ApplicationVectorZ = -10;
+            force.ApplicationVectorZ = -1000;
 
             MainViewModel.ProblemViewModel.SelectedElement = null;
             MainViewModel.ProblemViewModel.SelectedNode = null;
@@ -167,16 +155,28 @@ namespace POC3D
 
         private void ShowMatrixInfoWindow(object sender, RoutedEventArgs e)
         {
-            if (!_matrixInfoWindow.IsVisible)
+            if (_matrixInfoWindow == null || 
+                !_matrixInfoWindow.IsVisible)
             {
+                _matrixInfoWindow = new MatrixInfoWindow
+                {
+                    DataContext = DataContext
+                };
+
                 _matrixInfoWindow.Show();
             }
         }
 
         private void ShowGlobalMatrixInfoWindow(object sender, RoutedEventArgs e)
         {
-            if (!_globalMatrixInfoWindow.IsVisible)
+            if (_globalMatrixInfoWindow == null ||
+                !_globalMatrixInfoWindow.IsVisible)
             {
+                _globalMatrixInfoWindow = new GlobalMatrixInfoWindow
+                {
+                    DataContext = DataContext
+                };
+
                 _globalMatrixInfoWindow.Show();
             }
         }

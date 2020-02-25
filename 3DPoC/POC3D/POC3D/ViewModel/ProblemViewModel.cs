@@ -2,8 +2,11 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Media3D;
+using System.Windows.Threading;
 using POC3D.Helpers;
 using POC3D.Model;
 using POC3D.Model.Calculations;
@@ -19,7 +22,8 @@ namespace POC3D.ViewModel
         private NodeViewModel _selectedNode;
 
         private bool _showProblem = true;
-        private int _displacementsMultiplier = 1;
+        private double _displacementsMultiplier = 1;
+        private bool _displacementAnimation = false;
 
         private CorrespondenceMatrix _correspondenceMatrix;
         private NumericMatrix _globalStiffnessMatrix;
@@ -165,7 +169,7 @@ namespace POC3D.ViewModel
             }
         }
 
-        public int DisplacementsMultiplier
+        public double DisplacementsMultiplier
         {
             get => _displacementsMultiplier;
             set
@@ -175,6 +179,46 @@ namespace POC3D.ViewModel
                     UpdateDisplacementsInResultNodes();
                 OnPropertyChanged(nameof(DisplacementsMultiplier));
             }
+        }
+
+        public bool DisplacementAnimation
+        {
+            get => _displacementAnimation;
+            set
+            {
+                _displacementAnimation = value;
+
+                if (_displacementAnimation)
+                {
+                    Application.Current.Dispatcher.InvokeAsync(RunAnimation);
+                }
+
+            }
+        }
+
+        private async Task RunAnimation()
+        {
+            const int delay = 100;
+            var savedMultiplier = DisplacementsMultiplier;
+
+            var delta = savedMultiplier / 10.0;
+
+            while (DisplacementAnimation)
+            {
+                for(int i = 0; i < 10; i++)
+                {
+                    DisplacementsMultiplier -= delta;
+                    await Task.Delay(delay);
+                }
+                
+                for (int i = 0; i < 10; i++)
+                {
+                    DisplacementsMultiplier += delta;
+                    await Task.Delay(delay);
+                }
+            }
+
+            DisplacementsMultiplier = savedMultiplier;
         }
 
         private void InitializeMaterials()

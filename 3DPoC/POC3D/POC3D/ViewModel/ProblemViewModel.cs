@@ -39,6 +39,7 @@ namespace POC3D.ViewModel
             InitializeMaterials();
 
             ResultNodes = new ObservableCollection<ResultNodeViewModel>();
+            ResultElements = new ObservableCollection<ResultElementViewModel>();
 
             NewElementViewModel = new NewElementViewModel(this);
             NewForceViewModel = new NewForceViewModel(this);
@@ -124,6 +125,8 @@ namespace POC3D.ViewModel
 
         public ObservableCollection<ResultNodeViewModel> ResultNodes { get; }
 
+        public ObservableCollection<ResultElementViewModel> ResultElements { get; }
+
         public ICommand AddNodeCommand => new AddNodeCommand(this);
 
         public ICommand DeleteNodeCommand => new DeleteNodeCommand(this);
@@ -156,7 +159,8 @@ namespace POC3D.ViewModel
             set
             {
                 _showProblem = value;
-                UpdateDisplacementsInResultNodes();
+                if(!_showProblem)
+                    UpdateDisplacementsInResultNodes();
                 OnPropertyChanged(nameof(ShowProblem));
             }
         }
@@ -167,7 +171,8 @@ namespace POC3D.ViewModel
             set
             {
                 _displacementsMultiplier = value;
-                UpdateDisplacementsInResultNodes();
+                if (!_showProblem)
+                    UpdateDisplacementsInResultNodes();
                 OnPropertyChanged(nameof(DisplacementsMultiplier));
             }
         }
@@ -329,6 +334,16 @@ namespace POC3D.ViewModel
                 resultNode.DisplacementY = SolvedDisplacementsVector[index + 1, 0] * DisplacementsMultiplier;
                 resultNode.DisplacementZ = SolvedDisplacementsVector[index + 2, 0] * DisplacementsMultiplier;
                 index = index + 3;
+            }
+
+            ResultElements.Clear();
+
+            foreach(var element in Elements)
+            {
+                var originResultNode = ResultNodes.First(x => x.NodeViewModel == element.Origin);
+                var destinationResultNode = ResultNodes.First(x => x.NodeViewModel == element.Destination);
+
+                ResultElements.Add(new ResultElementViewModel(originResultNode, destinationResultNode));
             }
         }
     }

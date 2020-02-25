@@ -20,6 +20,11 @@ namespace POC3D.ViewModel
 
         public NodeViewModel NodeViewModel { get; }
 
+         public Vector3D Displacement => new Vector3D(
+            DisplacementX,
+            DisplacementY,
+            DisplacementZ);
+
         public double DisplacementX
         {
             get => _translateTransform3D.OffsetX;

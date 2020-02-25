@@ -57,7 +57,8 @@ namespace POC3D.Controls
 
         private void ShowProblemChangedCallback(object sender, PropertyChangedEventArgs e)
         {
-            if(e.PropertyName != nameof(ProblemViewModel.ShowProblem))
+            if(e.PropertyName != nameof(ProblemViewModel.ShowProblem) && 
+                e.PropertyName != nameof(ProblemViewModel.DisplacementsMultiplier))
             {
                 return;
             }
@@ -167,6 +168,9 @@ namespace POC3D.Controls
             InitialSetup();
 
             foreach (var node in MainViewModel.ProblemViewModel.ResultNodes) Model3DGroup.Children.Add(node.Geometry);
+
+            foreach (var element in MainViewModel.ProblemViewModel.ResultElements)
+                Model3DGroup.Children.Add(element.Geometry);
         }
 
         public void UpdateCamera()

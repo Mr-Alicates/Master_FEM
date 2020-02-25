@@ -199,6 +199,7 @@
     <Compile Include="ViewModel\NodeViewModel.cs" />
     <Compile Include="ViewModel\Base\Observable.cs" />
     <Compile Include="ViewModel\ProblemViewModel.cs" />
+    <Compile Include="ViewModel\ResultElementViewModel.cs" />
     <Compile Include="ViewModel\ResultNodeViewModel.cs" />
     <Page Include="Controls\ManagementControl.xaml">
       <Generator>MSBuild:Compile</Generator>

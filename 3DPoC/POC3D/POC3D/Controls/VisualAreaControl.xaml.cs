@@ -171,6 +171,8 @@ namespace POC3D.Controls
 
             foreach (var element in MainViewModel.ProblemViewModel.ResultElements)
                 Model3DGroup.Children.Add(element.Geometry);
+
+            foreach (var force in MainViewModel.ProblemViewModel.ResultForces) Model3DGroup.Children.Add(force.Geometry);
         }
 
         public void UpdateCamera()

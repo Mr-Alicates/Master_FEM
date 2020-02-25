@@ -44,6 +44,7 @@ namespace POC3D.ViewModel
 
             ResultNodes = new ObservableCollection<ResultNodeViewModel>();
             ResultElements = new ObservableCollection<ResultElementViewModel>();
+            ResultForces = new ObservableCollection<ResultForceViewModel>();
 
             NewElementViewModel = new NewElementViewModel(this);
             NewForceViewModel = new NewForceViewModel(this);
@@ -130,6 +131,8 @@ namespace POC3D.ViewModel
         public ObservableCollection<ResultNodeViewModel> ResultNodes { get; }
 
         public ObservableCollection<ResultElementViewModel> ResultElements { get; }
+
+        public ObservableCollection<ResultForceViewModel> ResultForces { get; }
 
         public ICommand AddNodeCommand => new AddNodeCommand(this);
 
@@ -388,6 +391,13 @@ namespace POC3D.ViewModel
                 var destinationResultNode = ResultNodes.First(x => x.NodeViewModel == element.Destination);
 
                 ResultElements.Add(new ResultElementViewModel(originResultNode, destinationResultNode));
+            }
+
+            foreach(var force in Forces)
+            {
+                var node = ResultNodes.First(x => x.NodeViewModel == force.Node);
+
+                ResultForces.Add(new ResultForceViewModel(force, node));
             }
         }
     }

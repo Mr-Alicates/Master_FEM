@@ -10,7 +10,6 @@ namespace POC3D.ViewModel
 {
     public class ResultNodeViewModel
     {
-        private TranslateTransform3D _translateTransform3D;
 
         public ResultNodeViewModel(NodeViewModel nodeViewModel)
         {
@@ -20,34 +19,36 @@ namespace POC3D.ViewModel
 
         public NodeViewModel NodeViewModel { get; }
 
-         public Vector3D Displacement => new Vector3D(
+        public TranslateTransform3D TranslateTransform3D { get; private set; }
+
+        public Vector3D Displacement => new Vector3D(
             DisplacementX,
             DisplacementY,
             DisplacementZ);
 
         public double DisplacementX
         {
-            get => _translateTransform3D.OffsetX;
-            set => _translateTransform3D.OffsetX = value;
+            get => TranslateTransform3D.OffsetX;
+            set => TranslateTransform3D.OffsetX = value;
         }
 
         public double DisplacementY
         {
-            get => _translateTransform3D.OffsetY;
-            set => _translateTransform3D.OffsetY = value;
+            get => TranslateTransform3D.OffsetY;
+            set => TranslateTransform3D.OffsetY = value;
         }
 
         public double DisplacementZ
         {
-            get => _translateTransform3D.OffsetZ;
-            set => _translateTransform3D.OffsetZ = value;
+            get => TranslateTransform3D.OffsetZ;
+            set => TranslateTransform3D.OffsetZ = value;
         }
 
         public GeometryModel3D Geometry { get; private set; }
 
         private void BuildGeometry()
         {
-            _translateTransform3D = new TranslateTransform3D();
+            TranslateTransform3D = new TranslateTransform3D();
 
             Geometry = new GeometryModel3D
             {
@@ -58,7 +59,7 @@ namespace POC3D.ViewModel
                     Children = new Transform3DCollection
                     {
                         NodeViewModel.Geometry.Transform,
-                        _translateTransform3D
+                        TranslateTransform3D
                     }
                 }
             };

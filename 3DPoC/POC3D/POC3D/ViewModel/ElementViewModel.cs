@@ -1,10 +1,9 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using POC3D.Helpers;
 using POC3D.Model;
-using NumericMatrix = POC3D.Model.Calculations.NumericMatrix;
+using POC3D.Model.Calculations;
 
 namespace POC3D.ViewModel
 {
@@ -13,19 +12,19 @@ namespace POC3D.ViewModel
         private static readonly Vector3D VerticalVector = new Vector3D(0, 0, 1);
         private static readonly Brush BarBrush = Brushes.Blue;
         private static readonly Brush SelectedBarBrush = Brushes.Red;
-
-        private bool _isSelected;
-        private NodeViewModel _origin;
-        private NodeViewModel _destination;
-        private MaterialViewModel _materialViewModel;
-
-        private NumericMatrix _transformationMatrix;
-        private NumericMatrix _transformationMatrixTransposed;
-        private NumericMatrix _localStiffnessMatrix;
-        private NumericMatrix _globalStiffnessMatrix;
         private double? _cx;
         private double? _cy;
         private double? _cz;
+        private NodeViewModel _destination;
+        private NumericMatrix _globalStiffnessMatrix;
+
+        private bool _isSelected;
+        private NumericMatrix _localStiffnessMatrix;
+        private MaterialViewModel _materialViewModel;
+        private NodeViewModel _origin;
+
+        private NumericMatrix _transformationMatrix;
+        private NumericMatrix _transformationMatrixTransposed;
 
         public ElementViewModel(IModelElement modelElement, NodeViewModel origin, NodeViewModel destination)
         {
@@ -52,10 +51,7 @@ namespace POC3D.ViewModel
             get => _origin;
             set
             {
-                if (_origin != null)
-                {
-                    _origin.PropertyChanged -= NodesChanged;
-                }
+                if (_origin != null) _origin.PropertyChanged -= NodesChanged;
 
                 value.PropertyChanged += NodesChanged;
                 _origin = value;
@@ -70,10 +66,7 @@ namespace POC3D.ViewModel
             get => _destination;
             set
             {
-                if (_destination != null)
-                {
-                    _destination.PropertyChanged -= NodesChanged;
-                }
+                if (_destination != null) _destination.PropertyChanged -= NodesChanged;
 
                 value.PropertyChanged += NodesChanged;
                 _destination = value;
@@ -114,16 +107,20 @@ namespace POC3D.ViewModel
         }
 
         public double Length => Element.Length;
-        
+
         public string K => Element.K.ToString("E2");
 
-        public NumericMatrix TransformationMatrix => _transformationMatrix ??= MatrixHelper.BuildTransformationMatrix(this);
+        public NumericMatrix TransformationMatrix =>
+            _transformationMatrix ??= MatrixHelper.BuildTransformationMatrix(this);
 
-        public NumericMatrix TransformationMatrixTransposed => _transformationMatrixTransposed ??= TransformationMatrix.Transpose();
+        public NumericMatrix TransformationMatrixTransposed =>
+            _transformationMatrixTransposed ??= TransformationMatrix.Transpose();
 
-        public NumericMatrix LocalStiffnessMatrix => _localStiffnessMatrix ??= MatrixHelper.BuildElementLocalStiffnessMatrix(this);
+        public NumericMatrix LocalStiffnessMatrix =>
+            _localStiffnessMatrix ??= MatrixHelper.BuildElementLocalStiffnessMatrix(this);
 
-        public NumericMatrix GlobalStiffnessMatrix => _globalStiffnessMatrix ??= MatrixHelper.BuildElementGlobalStiffnessMatrix(this);
+        public NumericMatrix GlobalStiffnessMatrix =>
+            _globalStiffnessMatrix ??= MatrixHelper.BuildElementGlobalStiffnessMatrix(this);
 
         public double Cx => _cx ??= (Destination.Coordinates.X - Origin.Coordinates.X) / Length;
 
@@ -133,18 +130,12 @@ namespace POC3D.ViewModel
 
         private void NodesChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(_origin.Coordinates))
-            {
-                UpdateGeometryMesh();
-            }
+            if (e.PropertyName == nameof(_origin.Coordinates)) UpdateGeometryMesh();
         }
-        
+
         protected override void UpdateGeometryMesh()
         {
-            if(Destination == null || Origin == null)
-            {
-                return;
-            }
+            if (Destination == null || Origin == null) return;
 
             var vector = Destination.Coordinates - Origin.Coordinates;
 

@@ -101,13 +101,9 @@ namespace POC3D.ViewModel
         protected override void UpdateGeometryMesh()
         {
             if (IsFixed)
-            {
                 GraphicsHelper.BuildPyramidMesh(MeshGeometry3D, 2);
-            }
             else
-            {
                 GraphicsHelper.BuildCubeMesh(MeshGeometry3D, 1);
-            }
         }
     }
 }

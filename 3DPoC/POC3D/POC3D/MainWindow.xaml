@@ -4,86 +4,84 @@
         xmlns:controls="clr-namespace:POC3D.Controls"
         Title="POC3D">
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
 
-        <Menu Grid.Row="0">
+    <Menu Grid.Row="0">
 
-            <MenuItem Header="Hide all" Command="{Binding InterfaceControlViewModel.HideAllCommand}" />
+      <MenuItem Header="Hide all" Command="{Binding InterfaceControlViewModel.HideAllCommand}" />
 
-            <MenuItem Header="Nodes">
+      <MenuItem Header="Nodes">
 
-                <MenuItem Header="Show selected Node details"
-                          Command="{Binding InterfaceControlViewModel.ShowNodesControlCommand}" />
+        <MenuItem Header="Show selected Node details"
+                  Command="{Binding InterfaceControlViewModel.ShowNodesControlCommand}" />
 
-                <MenuItem Header="Add new Node"
-                          Command="{Binding InterfaceControlViewModel.AddNodeCommand}" />
+        <MenuItem Header="Add new Node"
+                  Command="{Binding InterfaceControlViewModel.AddNodeCommand}" />
 
-                <MenuItem Header="Show list of Nodes"
-                          Command="{Binding InterfaceControlViewModel.ShowNodeListingCommand}" />
+        <MenuItem Header="Show list of Nodes"
+                  Command="{Binding InterfaceControlViewModel.ShowNodeListingCommand}" />
 
-            </MenuItem>
+      </MenuItem>
 
-            <MenuItem Header="Elements">
+      <MenuItem Header="Elements">
 
-                <MenuItem Header="Show selected Element details"
-                          Command="{Binding InterfaceControlViewModel.ShowElementsControlCommand}" />
+        <MenuItem Header="Show selected Element details"
+                  Command="{Binding InterfaceControlViewModel.ShowElementsControlCommand}" />
 
-                <MenuItem Header="Add new Element"
-                          Command="{Binding InterfaceControlViewModel.AddElementCommand}" />
+        <MenuItem Header="Add new Element"
+                  Command="{Binding InterfaceControlViewModel.AddElementCommand}" />
 
-                <MenuItem Header="Show list of Elements"
-                          Command="{Binding InterfaceControlViewModel.ShowElementListingCommand}" />
+        <MenuItem Header="Show list of Elements"
+                  Command="{Binding InterfaceControlViewModel.ShowElementListingCommand}" />
 
-                <MenuItem Header="Show matrices from element"
-                          Click="ShowMatrixInfoWindow" />
+        <MenuItem Header="Show matrices from element"
+                  Click="ShowMatrixInfoWindow" />
 
-            </MenuItem>
+      </MenuItem>
 
-            <MenuItem Header="Forces">
+      <MenuItem Header="Forces">
 
-                <MenuItem Header="Show selected Force details"
-                          Command="{Binding InterfaceControlViewModel.ShowForcesControlCommand}" />
+        <MenuItem Header="Show selected Force details"
+                  Command="{Binding InterfaceControlViewModel.ShowForcesControlCommand}" />
 
-                <MenuItem Header="Add new Force"
-                          Command="{Binding InterfaceControlViewModel.AddForceCommand}" />
+        <MenuItem Header="Add new Force"
+                  Command="{Binding InterfaceControlViewModel.AddForceCommand}" />
 
-                <MenuItem Header="Show list of Forces"
-                          Command="{Binding InterfaceControlViewModel.ShowForceListingCommand}" />
+        <MenuItem Header="Show list of Forces"
+                  Command="{Binding InterfaceControlViewModel.ShowForceListingCommand}" />
 
-            </MenuItem>
+      </MenuItem>
 
-            <MenuItem Header="Problem">
+      <MenuItem Header="Problem">
 
-                <MenuItem Header="Show Problem details"
-                          Command="{Binding InterfaceControlViewModel.ShowProblemDetailsCommand}" />
+        <MenuItem Header="Show Problem details"
+                  Command="{Binding InterfaceControlViewModel.ShowProblemDetailsCommand}" />
 
-                <MenuItem Header="Show matrices from problem"
-                      Click="ShowGlobalMatrixInfoWindow" />
+        <MenuItem Header="Show matrices from problem"
+                  Click="ShowGlobalMatrixInfoWindow" />
 
-            </MenuItem>
-            
-            
+      </MenuItem>
 
 
-        </Menu>
+    </Menu>
 
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
+    <Grid Grid.Row="1">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="Auto" />
+      </Grid.ColumnDefinitions>
 
-            <controls:VisualAreaControl Grid.Column="0" 
-                                        MainViewModel="{Binding Path=.}"
-                                        x:Name="Viewport"
-                                        Focusable="True" />
+      <controls:VisualAreaControl Grid.Column="0"
+                                  MainViewModel="{Binding Path=.}"
+                                  x:Name="Viewport"
+                                  Focusable="True" />
 
-            <controls:ManagementControl Grid.Column="1" DataContext="{Binding Path=.}" />
+      <controls:ManagementControl Grid.Column="1" DataContext="{Binding Path=.}" />
 
-        </Grid>
     </Grid>
+  </Grid>
 </Window>

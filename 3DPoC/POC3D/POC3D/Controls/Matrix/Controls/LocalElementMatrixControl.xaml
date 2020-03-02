@@ -5,86 +5,86 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:helpers="clr-namespace:POC3D.Controls.Matrix.Controls.Helpers"
              mc:Ignorable="d">
-    <StackPanel Orientation="Vertical">
+  <StackPanel Orientation="Vertical">
 
-        <TextBlock Text="Bar element local unexpanded matrix" />
-        <Separator />
-        <TextBlock
-            Text="The local coordinate system of the bar is defined with X axis running along the bar, so we only consider deformation and forces along the x axis" />
+    <TextBlock Text="Bar element local unexpanded matrix" />
+    <Separator />
+    <TextBlock
+      Text="The local coordinate system of the bar is defined with X axis running along the bar, so we only consider deformation and forces along the x axis" />
 
-        <StackPanel
-            HorizontalAlignment="Center"
-            Orientation="Horizontal"
-            Height="60"
-            Width="Auto">
+    <StackPanel
+      HorizontalAlignment="Center"
+      Orientation="Horizontal"
+      Height="60"
+      Width="Auto">
 
-            <helpers:Vector2Control
-                V1="Local f1x(1)"
-                V2="Local f2x(1)" />
+      <helpers:Vector2Control
+        V1="Local f1x(1)"
+        V2="Local f2x(1)" />
 
-            <helpers:ScalarControl
-                Scalar="=" />
+      <helpers:ScalarControl
+        Scalar="=" />
 
-            <helpers:ScalarControl
-                Scalar="k" />
+      <helpers:ScalarControl
+        Scalar="k" />
 
-            <helpers:Matrix2Control
-                M11="1"
-                M12="-1"
-                M21="-1"
-                M22="1" />
+      <helpers:Matrix2Control
+        M11="1"
+        M12="-1"
+        M21="-1"
+        M22="1" />
 
-            <helpers:Vector2Control
-                V1="Local d1x(1)"
-                V2="Local d2x(1)" />
+      <helpers:Vector2Control
+        V1="Local d1x(1)"
+        V2="Local d2x(1)" />
 
-        </StackPanel>
-
-        <TextBlock Text="Deformation constant (k) of the selected element is:" />
-
-        <StackPanel
-            HorizontalAlignment="Center"
-            Orientation="Horizontal"
-            Height="60"
-            Width="Auto">
-
-            <helpers:ScalarControl
-                Scalar="k" />
-
-            <helpers:ScalarControl
-                Scalar="=" />
-
-            <helpers:ScalarControl
-                Scalar="{Binding ProblemViewModel.SelectedElement.K}" />
-
-        </StackPanel>
-
-        <StackPanel
-            HorizontalAlignment="Center"
-            Orientation="Horizontal"
-            Height="60"
-            Width="Auto">
-
-            <helpers:Vector2Control
-                V1="Local f1x(1)"
-                V2="Local f2x(1)" />
-
-            <helpers:ScalarControl
-                Scalar="=" />
-
-            <helpers:ScalarControl
-                Scalar="{Binding ProblemViewModel.SelectedElement.K}" />
-
-            <helpers:Matrix2Control
-                M11="1"
-                M12="-1"
-                M21="-1"
-                M22="1" />
-
-            <helpers:Vector2Control
-                V1="Local d1x(1)"
-                V2="Local d2x(1)" />
-
-        </StackPanel>
     </StackPanel>
+
+    <TextBlock Text="Deformation constant (k) of the selected element is:" />
+
+    <StackPanel
+      HorizontalAlignment="Center"
+      Orientation="Horizontal"
+      Height="60"
+      Width="Auto">
+
+      <helpers:ScalarControl
+        Scalar="k" />
+
+      <helpers:ScalarControl
+        Scalar="=" />
+
+      <helpers:ScalarControl
+        Scalar="{Binding ProblemViewModel.SelectedElement.K}" />
+
+    </StackPanel>
+
+    <StackPanel
+      HorizontalAlignment="Center"
+      Orientation="Horizontal"
+      Height="60"
+      Width="Auto">
+
+      <helpers:Vector2Control
+        V1="Local f1x(1)"
+        V2="Local f2x(1)" />
+
+      <helpers:ScalarControl
+        Scalar="=" />
+
+      <helpers:ScalarControl
+        Scalar="{Binding ProblemViewModel.SelectedElement.K}" />
+
+      <helpers:Matrix2Control
+        M11="1"
+        M12="-1"
+        M21="-1"
+        M22="1" />
+
+      <helpers:Vector2Control
+        V1="Local d1x(1)"
+        V2="Local d2x(1)" />
+
+    </StackPanel>
+  </StackPanel>
 </UserControl>

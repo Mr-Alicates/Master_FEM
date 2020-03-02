@@ -7,30 +7,30 @@
              d:DesignHeight="450" d:DesignWidth="800"
              x:Name="Viewport"
              Background="White">
-    <Grid>
+  <Grid>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Text="{Binding CameraViewModel.FriendlyPosition}" />
-        <TextBlock Grid.Row="1" Text="{Binding CameraViewModel.FriendlyLookDirection}" />
+    <TextBlock Grid.Row="0" Text="{Binding CameraViewModel.FriendlyPosition}" />
+    <TextBlock Grid.Row="1" Text="{Binding CameraViewModel.FriendlyLookDirection}" />
 
-        <Viewport3D Grid.Row="0"
-                    Grid.RowSpan="3">
+    <Viewport3D Grid.Row="0"
+                Grid.RowSpan="3">
 
-            <Viewport3D.Camera>
-                <PerspectiveCamera x:Name="Camera" />
-            </Viewport3D.Camera>
+      <Viewport3D.Camera>
+        <PerspectiveCamera x:Name="Camera" />
+      </Viewport3D.Camera>
 
-            <ModelVisual3D>
-                <ModelVisual3D.Content>
-                    <Model3DGroup x:Name="Model3DGroup" />
-                </ModelVisual3D.Content>
-            </ModelVisual3D>
+      <ModelVisual3D>
+        <ModelVisual3D.Content>
+          <Model3DGroup x:Name="Model3DGroup" />
+        </ModelVisual3D.Content>
+      </ModelVisual3D>
 
-        </Viewport3D>
-    </Grid>
+    </Viewport3D>
+  </Grid>
 </UserControl>

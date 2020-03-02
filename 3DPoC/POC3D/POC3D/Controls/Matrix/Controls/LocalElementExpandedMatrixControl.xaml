@@ -5,102 +5,102 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:helpers="clr-namespace:POC3D.Controls.Matrix.Controls.Helpers"
              mc:Ignorable="d">
-    <StackPanel Orientation="Vertical">
+  <StackPanel Orientation="Vertical">
 
-        <TextBlock Text="Bar element local expanded matrix" />
-        <Separator />
-        <TextBlock
-            Text="The local matrix is expanded to consider the three degrees of freedom we have in our system (movement along X, Y and Z). However displacements and forces in Y and Z directions are zero. " />
+    <TextBlock Text="Bar element local expanded matrix" />
+    <Separator />
+    <TextBlock
+      Text="The local matrix is expanded to consider the three degrees of freedom we have in our system (movement along X, Y and Z). However displacements and forces in Y and Z directions are zero. " />
 
-        <StackPanel
-            HorizontalAlignment="Center"
-            Orientation="Horizontal"
-            Height="180"
-            Width="Auto">
+    <StackPanel
+      HorizontalAlignment="Center"
+      Orientation="Horizontal"
+      Height="180"
+      Width="Auto">
 
-            <helpers:Vector6Control
-                V1="Local f1x(1)"
-                V2="Local f1y(1)"
-                V3="Local f1z(1)"
-                V4="Local f2x(1)"
-                V5="Local f2y(1)"
-                V6="Local f2z(1)" />
+      <helpers:Vector6Control
+        V1="Local f1x(1)"
+        V2="Local f1y(1)"
+        V3="Local f1z(1)"
+        V4="Local f2x(1)"
+        V5="Local f2y(1)"
+        V6="Local f2z(1)" />
 
-            <helpers:ScalarControl
-                Scalar="=" />
+      <helpers:ScalarControl
+        Scalar="=" />
 
-            <helpers:ScalarControl
-                Scalar="k" />
+      <helpers:ScalarControl
+        Scalar="k" />
 
-            <helpers:Matrix6Control
-                M11="1"
-                M14="-1"
-                M41="-1"
-                M44="1" />
+      <helpers:Matrix6Control
+        M11="1"
+        M14="-1"
+        M41="-1"
+        M44="1" />
 
-            <helpers:Vector6Control
-                V1="Local d1x(1)"
-                V2="Local d1y(1)"
-                V3="Local d1z(1)"
-                V4="Local d2x(1)"
-                V5="Local d2y(1)"
-                V6="Local d2z(1)" />
+      <helpers:Vector6Control
+        V1="Local d1x(1)"
+        V2="Local d1y(1)"
+        V3="Local d1z(1)"
+        V4="Local d2x(1)"
+        V5="Local d2y(1)"
+        V6="Local d2z(1)" />
 
-        </StackPanel>
-
-        <TextBlock Text="Deformation constant (k) of the selected element is:" />
-
-        <StackPanel
-            HorizontalAlignment="Center"
-            Orientation="Horizontal"
-            Height="60"
-            Width="Auto">
-
-            <helpers:ScalarControl
-                Scalar="k" />
-
-            <helpers:ScalarControl
-                Scalar="=" />
-
-            <helpers:ScalarControl
-                Scalar="{Binding ProblemViewModel.SelectedElement.K}" />
-
-        </StackPanel>
-
-        <StackPanel
-            HorizontalAlignment="Center"
-            Orientation="Horizontal"
-            Height="180"
-            Width="Auto">
-
-            <helpers:Vector6Control
-                V1="Local f1x(1)"
-                V2="Local f1y(1)"
-                V3="Local f1z(1)"
-                V4="Local f2x(1)"
-                V5="Local f2y(1)"
-                V6="Local f2z(1)" />
-
-            <helpers:ScalarControl
-                Scalar="=" />
-
-            <helpers:ScalarControl
-                Scalar="{Binding ProblemViewModel.SelectedElement.K}" />
-
-            <helpers:Matrix6Control
-                M11="1"
-                M14="-1"
-                M41="-1"
-                M44="1" />
-
-            <helpers:Vector6Control
-                V1="Local d1x(1)"
-                V2="Local d1y(1)"
-                V3="Local d1z(1)"
-                V4="Local d2x(1)"
-                V5="Local d2y(1)"
-                V6="Local d2z(1)" />
-
-        </StackPanel>
     </StackPanel>
+
+    <TextBlock Text="Deformation constant (k) of the selected element is:" />
+
+    <StackPanel
+      HorizontalAlignment="Center"
+      Orientation="Horizontal"
+      Height="60"
+      Width="Auto">
+
+      <helpers:ScalarControl
+        Scalar="k" />
+
+      <helpers:ScalarControl
+        Scalar="=" />
+
+      <helpers:ScalarControl
+        Scalar="{Binding ProblemViewModel.SelectedElement.K}" />
+
+    </StackPanel>
+
+    <StackPanel
+      HorizontalAlignment="Center"
+      Orientation="Horizontal"
+      Height="180"
+      Width="Auto">
+
+      <helpers:Vector6Control
+        V1="Local f1x(1)"
+        V2="Local f1y(1)"
+        V3="Local f1z(1)"
+        V4="Local f2x(1)"
+        V5="Local f2y(1)"
+        V6="Local f2z(1)" />
+
+      <helpers:ScalarControl
+        Scalar="=" />
+
+      <helpers:ScalarControl
+        Scalar="{Binding ProblemViewModel.SelectedElement.K}" />
+
+      <helpers:Matrix6Control
+        M11="1"
+        M14="-1"
+        M41="-1"
+        M44="1" />
+
+      <helpers:Vector6Control
+        V1="Local d1x(1)"
+        V2="Local d1y(1)"
+        V3="Local d1z(1)"
+        V4="Local d2x(1)"
+        V5="Local d2y(1)"
+        V6="Local d2z(1)" />
+
+    </StackPanel>
+  </StackPanel>
 </UserControl>

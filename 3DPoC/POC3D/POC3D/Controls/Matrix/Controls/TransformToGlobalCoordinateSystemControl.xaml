@@ -5,198 +5,198 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:helpers="clr-namespace:POC3D.Controls.Matrix.Controls.Helpers"
              mc:Ignorable="d">
-    <StackPanel Orientation="Vertical">
+  <StackPanel Orientation="Vertical">
 
-        <TextBlock Text="Transformation of the element matrix from the local to the global coordinate system" />
-        <Separator />
-        <TextBlock Text="The equations for the local element are arranged as this:" />
+    <TextBlock Text="Transformation of the element matrix from the local to the global coordinate system" />
+    <Separator />
+    <TextBlock Text="The equations for the local element are arranged as this:" />
 
-        <StackPanel
-            HorizontalAlignment="Center"
-            Orientation="Horizontal"
-            Height="30"
-            Width="Auto">
+    <StackPanel
+      HorizontalAlignment="Center"
+      Orientation="Horizontal"
+      Height="30"
+      Width="Auto">
 
-            <helpers:Vector1Control
-                V1="Local forces" />
+      <helpers:Vector1Control
+        V1="Local forces" />
 
-            <helpers:ScalarControl
-                Scalar="=" />
+      <helpers:ScalarControl
+        Scalar="=" />
 
-            <helpers:Matrix1Control
-                M11="local k" />
+      <helpers:Matrix1Control
+        M11="local k" />
 
-            <helpers:Vector1Control
-                V1="Local displacements" />
-
-        </StackPanel>
-
-        <TextBlock
-            Text="In order to solve the problem, we will need to assemble them into a global matrix. But to do so we need that all matrices are using the global coordinate system instead of their own reference systems. To do so, we will use a transformation matrix. This matrix is orthogonal, so its inverse is equal to its transposed matrix." />
-
-        <StackPanel
-            HorizontalAlignment="Center"
-            Orientation="Horizontal"
-            Height="30"
-            Width="Auto">
-
-            <helpers:Vector1Control
-                V1="Local forces" />
-
-            <helpers:ScalarControl
-                Scalar="=" />
-
-            <helpers:Matrix1Control
-                M11="Transformation Matrix T" />
-
-            <helpers:Vector1Control
-                V1="Global forces" />
-
-        </StackPanel>
-
-        <StackPanel
-            HorizontalAlignment="Center"
-            Orientation="Horizontal"
-            Height="30"
-            Width="Auto">
-
-            <helpers:Vector1Control
-                V1="Local displacements" />
-
-            <helpers:ScalarControl
-                Scalar="=" />
-
-            <helpers:Matrix1Control
-                M11="Transformation Matrix T" />
-
-            <helpers:Vector1Control
-                V1="Global displacements" />
-
-        </StackPanel>
-
-        <StackPanel
-            HorizontalAlignment="Center"
-            Orientation="Horizontal"
-            Height="30"
-            Width="Auto">
-
-            <helpers:ScalarControl
-                Scalar="Inverse (" />
-
-            <helpers:Matrix1Control
-                M11="Transformation Matrix T" />
-
-            <helpers:ScalarControl
-                Scalar=")" />
-
-            <helpers:ScalarControl
-                Scalar="=" />
-
-            <helpers:ScalarControl
-                Scalar="Transpose (" />
-
-            <helpers:Matrix1Control
-                M11="Transformation Matrix T" />
-
-            <helpers:ScalarControl
-                Scalar=")" />
-
-        </StackPanel>
-
-        <TextBlock Text="Substituting in the local equation system: " />
-
-        <StackPanel
-            HorizontalAlignment="Center"
-            Orientation="Horizontal"
-            Height="30"
-            Width="Auto">
-
-            <helpers:Matrix1Control
-                M11="Transformation Matrix T" />
-
-            <helpers:Vector1Control
-                V1="Global forces" />
-
-            <helpers:ScalarControl
-                Scalar="=" />
-
-            <helpers:Matrix1Control
-                M11="Local k" />
-
-            <helpers:Matrix1Control
-                M11="Transformation Matrix T" />
-
-            <helpers:Vector1Control
-                V1="Global displacements" />
-
-        </StackPanel>
-
-        <StackPanel
-            HorizontalAlignment="Center"
-            Orientation="Horizontal"
-            Height="30"
-            Width="Auto">
-
-            <helpers:Vector1Control
-                V1="Global forces" />
-
-            <helpers:ScalarControl
-                Scalar="=" />
-
-            <helpers:ScalarControl
-                Scalar="Inverse (" />
-
-            <helpers:Matrix1Control
-                M11="Transformation Matrix T" />
-
-            <helpers:ScalarControl
-                Scalar=")" />
-
-            <helpers:Matrix1Control
-                M11="Local k" />
-
-            <helpers:Matrix1Control
-                M11="Transformation Matrix T" />
-
-            <helpers:Vector1Control
-                V1="Global displacements" />
-
-        </StackPanel>
-
-
-        <TextBlock Text="Final result: " />
-
-        <StackPanel
-            HorizontalAlignment="Center"
-            Orientation="Horizontal"
-            Height="30"
-            Width="Auto">
-
-            <helpers:Vector1Control
-                V1="Global forces" />
-
-            <helpers:ScalarControl
-                Scalar="=" />
-
-            <helpers:ScalarControl
-                Scalar="Transpose (" />
-
-            <helpers:Matrix1Control
-                M11="Transformation Matrix T" />
-
-            <helpers:ScalarControl
-                Scalar=")" />
-
-            <helpers:Matrix1Control
-                M11="Local k" />
-
-            <helpers:Matrix1Control
-                M11="Transformation Matrix T" />
-
-            <helpers:Vector1Control
-                V1="Global displacements" />
-
-        </StackPanel>
+      <helpers:Vector1Control
+        V1="Local displacements" />
 
     </StackPanel>
+
+    <TextBlock
+      Text="In order to solve the problem, we will need to assemble them into a global matrix. But to do so we need that all matrices are using the global coordinate system instead of their own reference systems. To do so, we will use a transformation matrix. This matrix is orthogonal, so its inverse is equal to its transposed matrix." />
+
+    <StackPanel
+      HorizontalAlignment="Center"
+      Orientation="Horizontal"
+      Height="30"
+      Width="Auto">
+
+      <helpers:Vector1Control
+        V1="Local forces" />
+
+      <helpers:ScalarControl
+        Scalar="=" />
+
+      <helpers:Matrix1Control
+        M11="Transformation Matrix T" />
+
+      <helpers:Vector1Control
+        V1="Global forces" />
+
+    </StackPanel>
+
+    <StackPanel
+      HorizontalAlignment="Center"
+      Orientation="Horizontal"
+      Height="30"
+      Width="Auto">
+
+      <helpers:Vector1Control
+        V1="Local displacements" />
+
+      <helpers:ScalarControl
+        Scalar="=" />
+
+      <helpers:Matrix1Control
+        M11="Transformation Matrix T" />
+
+      <helpers:Vector1Control
+        V1="Global displacements" />
+
+    </StackPanel>
+
+    <StackPanel
+      HorizontalAlignment="Center"
+      Orientation="Horizontal"
+      Height="30"
+      Width="Auto">
+
+      <helpers:ScalarControl
+        Scalar="Inverse (" />
+
+      <helpers:Matrix1Control
+        M11="Transformation Matrix T" />
+
+      <helpers:ScalarControl
+        Scalar=")" />
+
+      <helpers:ScalarControl
+        Scalar="=" />
+
+      <helpers:ScalarControl
+        Scalar="Transpose (" />
+
+      <helpers:Matrix1Control
+        M11="Transformation Matrix T" />
+
+      <helpers:ScalarControl
+        Scalar=")" />
+
+    </StackPanel>
+
+    <TextBlock Text="Substituting in the local equation system: " />
+
+    <StackPanel
+      HorizontalAlignment="Center"
+      Orientation="Horizontal"
+      Height="30"
+      Width="Auto">
+
+      <helpers:Matrix1Control
+        M11="Transformation Matrix T" />
+
+      <helpers:Vector1Control
+        V1="Global forces" />
+
+      <helpers:ScalarControl
+        Scalar="=" />
+
+      <helpers:Matrix1Control
+        M11="Local k" />
+
+      <helpers:Matrix1Control
+        M11="Transformation Matrix T" />
+
+      <helpers:Vector1Control
+        V1="Global displacements" />
+
+    </StackPanel>
+
+    <StackPanel
+      HorizontalAlignment="Center"
+      Orientation="Horizontal"
+      Height="30"
+      Width="Auto">
+
+      <helpers:Vector1Control
+        V1="Global forces" />
+
+      <helpers:ScalarControl
+        Scalar="=" />
+
+      <helpers:ScalarControl
+        Scalar="Inverse (" />
+
+      <helpers:Matrix1Control
+        M11="Transformation Matrix T" />
+
+      <helpers:ScalarControl
+        Scalar=")" />
+
+      <helpers:Matrix1Control
+        M11="Local k" />
+
+      <helpers:Matrix1Control
+        M11="Transformation Matrix T" />
+
+      <helpers:Vector1Control
+        V1="Global displacements" />
+
+    </StackPanel>
+
+
+    <TextBlock Text="Final result: " />
+
+    <StackPanel
+      HorizontalAlignment="Center"
+      Orientation="Horizontal"
+      Height="30"
+      Width="Auto">
+
+      <helpers:Vector1Control
+        V1="Global forces" />
+
+      <helpers:ScalarControl
+        Scalar="=" />
+
+      <helpers:ScalarControl
+        Scalar="Transpose (" />
+
+      <helpers:Matrix1Control
+        M11="Transformation Matrix T" />
+
+      <helpers:ScalarControl
+        Scalar=")" />
+
+      <helpers:Matrix1Control
+        M11="Local k" />
+
+      <helpers:Matrix1Control
+        M11="Transformation Matrix T" />
+
+      <helpers:Vector1Control
+        V1="Global displacements" />
+
+    </StackPanel>
+
+  </StackPanel>
 </UserControl>

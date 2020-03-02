@@ -30,7 +30,7 @@ namespace POC3D.Model.Calculations
 
                 if (column < 0 || column >= Columns) throw new InvalidOperationException("Invalid column");
 
-                return _rawMatrix.At(row,column);
+                return _rawMatrix.At(row, column);
             }
             set
             {
@@ -49,15 +49,9 @@ namespace POC3D.Model.Calculations
 
         public static NumericMatrix operator +(NumericMatrix m1, NumericMatrix m2)
         {
-            if (m2 == null)
-            {
-                return m1;
-            }
+            if (m2 == null) return m1;
 
-            if (m1 == null)
-            {
-                return m2;
-            }
+            if (m1 == null) return m2;
 
             if (m1.Rows != m2.Rows ||
                 m1.Columns != m2.Columns)
@@ -109,14 +103,11 @@ namespace POC3D.Model.Calculations
 
         private static Vector<double> ToVector(NumericMatrix matrix)
         {
-            Matrix<double> rawMatrix = matrix._rawMatrix;
+            var rawMatrix = matrix._rawMatrix;
 
-            if(matrix.Columns > 1)
-            {
-                throw new InvalidOperationException("Not a vector!");
-            }
+            if (matrix.Columns > 1) throw new InvalidOperationException("Not a vector!");
 
-            Vector<double> result = Vector<double>.Build
+            var result = Vector<double>.Build
                 .Dense(rawMatrix.EnumerateRows().Count(), rowIndex => rawMatrix[rowIndex, 0]);
 
             return result;
@@ -129,7 +120,7 @@ namespace POC3D.Model.Calculations
 
         public static implicit operator NumericMatrix(Vector<double> rawVector)
         {
-            Matrix<double> rawMatrix = Matrix<double>.Build
+            var rawMatrix = Matrix<double>.Build
                 .Dense(rawVector.Count, 1, (rowIndex, columnIndex) => rawVector[rowIndex]);
 
             return new NumericMatrix(rawMatrix);

@@ -1,14 +1,13 @@
-﻿using System.ComponentModel;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 using System.Windows.Media.Media3D;
 
 namespace POC3D.ViewModel
 {
     public abstract class GeometryViewModel : Observable
     {
+        private AxisAngleRotation3D _axisAngleRotation3D;
         private DiffuseMaterial _material;
         private TranslateTransform3D _translateTransform3D;
-        private AxisAngleRotation3D _axisAngleRotation3D;
 
         protected GeometryViewModel()
         {

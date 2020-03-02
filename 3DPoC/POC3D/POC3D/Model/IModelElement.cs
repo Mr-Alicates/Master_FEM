@@ -1,6 +1,4 @@
-﻿using POC3D.Model.Calculations;
-
-namespace POC3D.Model
+﻿namespace POC3D.Model
 {
     public interface IModelElement
     {

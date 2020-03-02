@@ -1,9 +1,9 @@
-﻿using POC3D.ViewModel;
-using System.Collections.Generic;
+﻿using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using POC3D.ViewModel;
 
 namespace POC3D.Controls.Matrix.Controls
 {
@@ -12,7 +12,8 @@ namespace POC3D.Controls.Matrix.Controls
     /// </summary>
     public partial class CompactedGlobalStiffnessMatrixControl : UserControl
     {
-        public static readonly DependencyProperty ProblemViewModelProperty = DependencyProperty.Register(nameof(ProblemViewModel),
+        public static readonly DependencyProperty ProblemViewModelProperty = DependencyProperty.Register(
+            nameof(ProblemViewModel),
             typeof(ProblemViewModel), typeof(CompactedGlobalStiffnessMatrixControl),
             new PropertyMetadata(null, ProblemViewModelChangedCallback));
 
@@ -52,12 +53,9 @@ namespace POC3D.Controls.Matrix.Controls
 
 
             foreach (var rowIndex in Enumerable.Range(0, matrix.Rows))
-            {
-                foreach (var columnIndex in Enumerable.Range(0, matrix.Columns))
-                {
-                    BuildTextBlock(GlobalStiffnessMatrixContainer, $"{matrix[rowIndex, columnIndex]}", rowIndex, columnIndex, Brushes.Black);
-                }
-            }
+            foreach (var columnIndex in Enumerable.Range(0, matrix.Columns))
+                BuildTextBlock(GlobalStiffnessMatrixContainer, $"{matrix[rowIndex, columnIndex]}", rowIndex,
+                    columnIndex, Brushes.Black);
         }
 
         private void FillDisplacements(ProblemViewModel problemViewModel)
@@ -66,10 +64,10 @@ namespace POC3D.Controls.Matrix.Controls
             DisplacementsContainer.ColumnDefinitions.Clear();
             DisplacementsContainer.RowDefinitions.Clear();
 
-            int indexes = 1;
-            
+            var indexes = 1;
+
             var freeNodes = problemViewModel.Nodes
-                .ToDictionary(node => indexes++, node=> node)
+                .ToDictionary(node => indexes++, node => node)
                 .Where(x => !x.Value.IsFixed)
                 .ToList();
 
@@ -80,7 +78,7 @@ namespace POC3D.Controls.Matrix.Controls
                     Height = GridLength.Auto
                 });
 
-            int gridRowIndex = 0;
+            var gridRowIndex = 0;
             foreach (var nodeKeyPair in freeNodes)
             {
                 var elementIndex = nodeKeyPair.Key;
@@ -108,11 +106,9 @@ namespace POC3D.Controls.Matrix.Controls
                     Name = $"R{rowIndex}",
                     Height = GridLength.Auto
                 });
-                                   
+
             foreach (var rowIndex in Enumerable.Range(0, forces.Rows))
-            {
                 BuildTextBlock(ForcesContainer, $"{forces[rowIndex, 0]}", rowIndex, 0, Brushes.Black);
-            }
         }
 
         private static void ProblemViewModelChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -137,7 +133,7 @@ namespace POC3D.Controls.Matrix.Controls
             FillForces(ProblemViewModel);
         }
 
-        private void ProblemViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void ProblemViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             FillGlobalStiffnessMatrix(ProblemViewModel);
             FillDisplacements(ProblemViewModel);

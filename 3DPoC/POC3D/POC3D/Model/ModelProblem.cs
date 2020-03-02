@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using POC3D.Helpers;
-using POC3D.Model.Calculations;
 
 namespace POC3D.Model
 {

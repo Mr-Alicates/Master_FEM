@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using POC3D.Model.Calculations;
 
 namespace POC3D.Controls.Matrix.Controls.Helpers
 {
@@ -45,7 +46,7 @@ namespace POC3D.Controls.Matrix.Controls.Helpers
             typeof(Matrix62Control), new PropertyMetadata(string.Empty, PropertyChangedCallback));
 
         public static readonly DependencyProperty MatrixProperty = DependencyProperty.Register(nameof(Matrix),
-            typeof(Model.Calculations.NumericMatrix), typeof(Matrix62Control),
+            typeof(NumericMatrix), typeof(Matrix62Control),
             new PropertyMetadata(null, MatrixChangedCallback));
 
         public Matrix62Control()
@@ -54,7 +55,7 @@ namespace POC3D.Controls.Matrix.Controls.Helpers
             InitializeAllToZero();
         }
 
-        public Model.Calculations.NumericMatrix Matrix { get; set; }
+        public NumericMatrix Matrix { get; set; }
 
         public string M11
         {
@@ -127,14 +128,14 @@ namespace POC3D.Controls.Matrix.Controls.Helpers
             get => Position62.Text;
             set => SetValue(M62Property, value);
         }
-        
+
         private static void MatrixChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var control = d as Matrix62Control;
 
             if (control == null) return;
 
-            var value = e.NewValue as Model.Calculations.NumericMatrix;
+            var value = e.NewValue as NumericMatrix;
 
             if (value == null)
             {

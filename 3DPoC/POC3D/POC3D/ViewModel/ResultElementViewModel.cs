@@ -1,11 +1,6 @@
-﻿using POC3D.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 using System.Windows.Media.Media3D;
+using POC3D.Helpers;
 
 namespace POC3D.ViewModel
 {
@@ -21,16 +16,13 @@ namespace POC3D.ViewModel
             UpdateGeometryMesh();
         }
 
-        public ResultNodeViewModel Origin { get; private set; }
+        public ResultNodeViewModel Origin { get; }
 
-        public ResultNodeViewModel Destination { get; private set; }
+        public ResultNodeViewModel Destination { get; }
 
         protected override void UpdateGeometryMesh()
         {
-            if (Destination == null || Origin == null)
-            {
-                return;
-            }
+            if (Destination == null || Origin == null) return;
 
             var destinationCoordinates = Destination.NodeViewModel.Coordinates + Destination.Displacement;
             var originCoordinates = Origin.NodeViewModel.Coordinates + Origin.Displacement;
@@ -48,6 +40,5 @@ namespace POC3D.ViewModel
 
             MaterialBrush = BarBrush;
         }
-
     }
 }

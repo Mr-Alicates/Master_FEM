@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Media.Media3D;
 using POC3D.Controls.Matrix;
+using POC3D.Model;
 using POC3D.ViewModel;
 
 namespace POC3D
@@ -14,8 +15,9 @@ namespace POC3D
         public static readonly DependencyProperty MainViewModelProperty = DependencyProperty.Register(
             nameof(MainViewModel), typeof(MainViewModel), typeof(MainWindow));
 
-        private MatrixInfoWindow _matrixInfoWindow;
         private GlobalMatrixInfoWindow _globalMatrixInfoWindow;
+
+        private MatrixInfoWindow _matrixInfoWindow;
 
         public MainWindow()
         {
@@ -48,7 +50,7 @@ namespace POC3D
 
             var element1 = MainViewModel.ProblemViewModel.AddBarElement(node2, node1);
             element1.CrossSectionArea = 1.2566E-3;
-            element1.Material = new MaterialViewModel(new Model.ModelMaterial("test", 1E7, 0));
+            element1.Material = new MaterialViewModel(new ModelMaterial("test", 1E7, 0));
 
             var element2 = MainViewModel.ProblemViewModel.AddBarElement(node1, node3);
             element2.CrossSectionArea = element1.CrossSectionArea;
@@ -155,7 +157,7 @@ namespace POC3D
 
         private void ShowMatrixInfoWindow(object sender, RoutedEventArgs e)
         {
-            if (_matrixInfoWindow == null || 
+            if (_matrixInfoWindow == null ||
                 !_matrixInfoWindow.IsVisible)
             {
                 _matrixInfoWindow = new MatrixInfoWindow

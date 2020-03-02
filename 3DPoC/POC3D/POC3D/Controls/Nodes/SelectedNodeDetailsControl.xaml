@@ -5,48 +5,48 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              MinWidth="300">
-    <StackPanel>
+  <StackPanel>
 
-        <TextBlock Text="Node details" HorizontalAlignment="Center" FontWeight="Bold" />
-        <Separator />
+    <TextBlock Text="Node details" HorizontalAlignment="Center" FontWeight="Bold" />
+    <Separator />
 
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+      </Grid.RowDefinitions>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
 
-            <TextBox Grid.Row="0"
-                     Grid.Column="0"
-                     Text="{Binding ProblemViewModel.SelectedNode.X,Mode=TwoWay}" />
-            <TextBlock Grid.Row="0" Grid.Column="1" Text="X coordinate" />
+      <TextBox Grid.Row="0"
+               Grid.Column="0"
+               Text="{Binding ProblemViewModel.SelectedNode.X,Mode=TwoWay}" />
+      <TextBlock Grid.Row="0" Grid.Column="1" Text="X coordinate" />
 
-            <TextBox Grid.Row="1"
-                     Grid.Column="0"
-                     Text="{Binding ProblemViewModel.SelectedNode.Y,Mode=TwoWay}" />
-            <TextBlock Grid.Row="1" Grid.Column="1" Text="Y coordinate" />
+      <TextBox Grid.Row="1"
+               Grid.Column="0"
+               Text="{Binding ProblemViewModel.SelectedNode.Y,Mode=TwoWay}" />
+      <TextBlock Grid.Row="1" Grid.Column="1" Text="Y coordinate" />
 
-            <TextBox Grid.Row="2"
-                     Grid.Column="0"
-                     Text="{Binding ProblemViewModel.SelectedNode.Z,Mode=TwoWay}" />
-            <TextBlock Grid.Row="2" Grid.Column="1" Text="Z coordinate" />
+      <TextBox Grid.Row="2"
+               Grid.Column="0"
+               Text="{Binding ProblemViewModel.SelectedNode.Z,Mode=TwoWay}" />
+      <TextBlock Grid.Row="2" Grid.Column="1" Text="Z coordinate" />
 
-            <CheckBox Grid.Row="3"
-                      Grid.Column="0"
-                      HorizontalAlignment="Right"
-                      IsChecked="{Binding ProblemViewModel.SelectedNode.IsFixed, Mode=TwoWay}" />
-            <TextBlock Grid.Row="3" Grid.Column="1" Text="Is fixed node" />
+      <CheckBox Grid.Row="3"
+                Grid.Column="0"
+                HorizontalAlignment="Right"
+                IsChecked="{Binding ProblemViewModel.SelectedNode.IsFixed, Mode=TwoWay}" />
+      <TextBlock Grid.Row="3" Grid.Column="1" Text="Is fixed node" />
 
-        </Grid>
+    </Grid>
 
-        <Separator />
+    <Separator />
 
-    </StackPanel>
+  </StackPanel>
 </UserControl>

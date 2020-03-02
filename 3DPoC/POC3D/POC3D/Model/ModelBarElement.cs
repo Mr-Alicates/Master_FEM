@@ -1,7 +1,4 @@
-﻿using POC3D.Helpers;
-using POC3D.Model.Calculations;
-
-namespace POC3D.Model
+﻿namespace POC3D.Model
 {
     public class ModelBarElement : IModelElement
     {

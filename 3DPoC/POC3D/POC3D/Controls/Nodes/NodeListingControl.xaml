@@ -6,52 +6,52 @@
              xmlns:viewModel="clr-namespace:POC3D.ViewModel"
              mc:Ignorable="d"
              MinWidth="300">
-    <StackPanel>
+  <StackPanel>
 
-        <TextBlock Text="List of nodes" HorizontalAlignment="Center" FontWeight="Bold" />
-        <Separator />
+    <TextBlock Text="List of nodes" HorizontalAlignment="Center" FontWeight="Bold" />
+    <Separator />
 
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="30" />
-            </Grid.RowDefinitions>
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="*" />
+        <RowDefinition Height="30" />
+      </Grid.RowDefinitions>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
 
-            <ListView Grid.Row="0"
-                      Grid.ColumnSpan="2"
-                      ItemsSource="{Binding ProblemViewModel.Nodes,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
-                      SelectedItem="{Binding ProblemViewModel.SelectedNode,Mode=TwoWay}">
+      <ListView Grid.Row="0"
+                Grid.ColumnSpan="2"
+                ItemsSource="{Binding ProblemViewModel.Nodes,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
+                SelectedItem="{Binding ProblemViewModel.SelectedNode,Mode=TwoWay}">
 
-                <ListView.ItemTemplate>
-                    <DataTemplate DataType="viewModel:NodeViewModel">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Name, Mode=OneWay}" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
+        <ListView.ItemTemplate>
+          <DataTemplate DataType="viewModel:NodeViewModel">
+            <StackPanel Orientation="Horizontal">
+              <TextBlock Text="{Binding Name, Mode=OneWay}" />
+            </StackPanel>
+          </DataTemplate>
+        </ListView.ItemTemplate>
 
-            </ListView>
+      </ListView>
 
-            <Button Grid.Row="1"
-                    Grid.Column="0"
-                    x:Name="AddNodeButton"
-                    Content="Add new node"
-                    Command="{Binding ProblemViewModel.AddNodeCommand}" />
+      <Button Grid.Row="1"
+              Grid.Column="0"
+              x:Name="AddNodeButton"
+              Content="Add new node"
+              Command="{Binding ProblemViewModel.AddNodeCommand}" />
 
-            <Button Grid.Row="1"
-                    Grid.Column="1"
-                    x:Name="DeleteNodeButton"
-                    Content="Delete selected node"
-                    Command="{Binding ProblemViewModel.DeleteNodeCommand}" />
+      <Button Grid.Row="1"
+              Grid.Column="1"
+              x:Name="DeleteNodeButton"
+              Content="Delete selected node"
+              Command="{Binding ProblemViewModel.DeleteNodeCommand}" />
 
-        </Grid>
+    </Grid>
 
-        <Separator />
+    <Separator />
 
-    </StackPanel>
+  </StackPanel>
 </UserControl>

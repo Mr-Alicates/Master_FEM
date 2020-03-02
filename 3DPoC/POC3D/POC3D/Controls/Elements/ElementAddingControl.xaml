@@ -5,50 +5,50 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              MinWidth="300">
-    <StackPanel>
+  <StackPanel>
 
-        <TextBlock Text="Add new element" HorizontalAlignment="Center" FontWeight="Bold" />
-        <Separator />
+    <TextBlock Text="Add new element" HorizontalAlignment="Center" FontWeight="Bold" />
+    <Separator />
 
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="30" />
-            </Grid.RowDefinitions>
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="30" />
+      </Grid.RowDefinitions>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
 
-            <ComboBox Grid.Row="0"
-                      Grid.Column="0"
-                      ItemsSource="{Binding ProblemViewModel.Nodes,Mode=OneWay}"
-                      DisplayMemberPath="Name"
-                      SelectedItem="{Binding ProblemViewModel.NewElementViewModel.OriginNode}" />
-            <TextBlock Grid.Row="0"
-                       Grid.Column="1"
-                       Text="Origin node" />
+      <ComboBox Grid.Row="0"
+                Grid.Column="0"
+                ItemsSource="{Binding ProblemViewModel.Nodes,Mode=OneWay}"
+                DisplayMemberPath="Name"
+                SelectedItem="{Binding ProblemViewModel.NewElementViewModel.OriginNode}" />
+      <TextBlock Grid.Row="0"
+                 Grid.Column="1"
+                 Text="Origin node" />
 
-            <ComboBox Grid.Row="1"
-                      Grid.Column="0"
-                      ItemsSource="{Binding ProblemViewModel.Nodes,Mode=OneWay}"
-                      DisplayMemberPath="Name"
-                      SelectedItem="{Binding ProblemViewModel.NewElementViewModel.DestinationNode}" />
-            <TextBlock Grid.Row="1"
-                       Grid.Column="1"
-                       Text="Destination node" />
+      <ComboBox Grid.Row="1"
+                Grid.Column="0"
+                ItemsSource="{Binding ProblemViewModel.Nodes,Mode=OneWay}"
+                DisplayMemberPath="Name"
+                SelectedItem="{Binding ProblemViewModel.NewElementViewModel.DestinationNode}" />
+      <TextBlock Grid.Row="1"
+                 Grid.Column="1"
+                 Text="Destination node" />
 
-            <Button Grid.Row="2"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="2"
-                    Content="Add new element"
-                    Command="{Binding ProblemViewModel.NewElementViewModel.AddElementCommand}" />
+      <Button Grid.Row="2"
+              Grid.Column="0"
+              Grid.ColumnSpan="2"
+              Content="Add new element"
+              Command="{Binding ProblemViewModel.NewElementViewModel.AddElementCommand}" />
 
-        </Grid>
+    </Grid>
 
-        <Separator />
+    <Separator />
 
-    </StackPanel>
+  </StackPanel>
 </UserControl>

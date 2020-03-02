@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Media3D;
-using System.Windows.Threading;
 using POC3D.Helpers;
 using POC3D.Model;
 using POC3D.Model.Calculations;
@@ -17,20 +15,20 @@ namespace POC3D.ViewModel
     public class ProblemViewModel : Observable
     {
         private readonly ModelProblem _modelProblem;
+        private bool? _canBeSolved;
+        private NumericMatrix _compactedForcesVector;
+        private NumericMatrix _compactedMatrix;
+
+        private CorrespondenceMatrix _correspondenceMatrix;
+        private bool _displacementAnimation;
+        private double _displacementsMultiplier = 1;
+        private NumericMatrix _globalStiffnessMatrix;
         private ElementViewModel _selectedElement;
         private ForceViewModel _selectedForce;
         private NodeViewModel _selectedNode;
 
         private bool _showProblem = true;
-        private double _displacementsMultiplier = 1;
-        private bool _displacementAnimation = false;
-
-        private CorrespondenceMatrix _correspondenceMatrix;
-        private NumericMatrix _globalStiffnessMatrix;
-        private NumericMatrix _compactedMatrix;
-        private NumericMatrix _compactedForcesVector;
         private NumericMatrix _solvedDisplacementsVector;
-        private bool? _canBeSolved;
 
         public ProblemViewModel()
         {
@@ -142,15 +140,19 @@ namespace POC3D.ViewModel
 
         public ICommand DeleteForceCommand => new DeleteForceCommand(this);
 
-        public CorrespondenceMatrix CorrespondenceMatrix => _correspondenceMatrix ??= MatrixHelper.BuildCorrespondenceMatrix(this);
+        public CorrespondenceMatrix CorrespondenceMatrix =>
+            _correspondenceMatrix ??= MatrixHelper.BuildCorrespondenceMatrix(this);
 
-        public NumericMatrix GlobalStiffnessMatrix => _globalStiffnessMatrix ??= MatrixHelper.BuildGlobalStiffnessMatrix(this);
+        public NumericMatrix GlobalStiffnessMatrix =>
+            _globalStiffnessMatrix ??= MatrixHelper.BuildGlobalStiffnessMatrix(this);
 
         public NumericMatrix CompactedMatrix => _compactedMatrix ??= MatrixHelper.BuildCompactedMatrix(this);
 
-        public NumericMatrix CompactedForcesVector => _compactedForcesVector ??= MatrixHelper.BuildCompactedForcesVector(this);
+        public NumericMatrix CompactedForcesVector =>
+            _compactedForcesVector ??= MatrixHelper.BuildCompactedForcesVector(this);
 
-        public NumericMatrix SolvedDisplacementsVector => _solvedDisplacementsVector ??= MatrixHelper.SolveForDisplacements(this);
+        public NumericMatrix SolvedDisplacementsVector =>
+            _solvedDisplacementsVector ??= MatrixHelper.SolveForDisplacements(this);
 
         public bool CanBeSolved => _canBeSolved ??= MatrixHelper.CanProblemBeSolved(this);
 
@@ -166,7 +168,7 @@ namespace POC3D.ViewModel
             set
             {
                 _showProblem = value;
-                if(!_showProblem)
+                if (!_showProblem)
                     UpdateDisplacementsInResultNodes();
                 OnPropertyChanged(nameof(ShowProblem));
             }
@@ -191,11 +193,7 @@ namespace POC3D.ViewModel
             {
                 _displacementAnimation = value;
 
-                if (_displacementAnimation)
-                {
-                    Application.Current.Dispatcher.InvokeAsync(RunAnimation);
-                }
-
+                if (_displacementAnimation) Application.Current.Dispatcher.InvokeAsync(RunAnimation);
             }
         }
 
@@ -208,13 +206,13 @@ namespace POC3D.ViewModel
 
             while (DisplacementAnimation)
             {
-                for(int i = 0; i < 10; i++)
+                for (var i = 0; i < 10; i++)
                 {
                     DisplacementsMultiplier -= delta;
                     await Task.Delay(delay);
                 }
-                
-                for (int i = 0; i < 10; i++)
+
+                for (var i = 0; i < 10; i++)
                 {
                     DisplacementsMultiplier += delta;
                     await Task.Delay(delay);
@@ -331,19 +329,14 @@ namespace POC3D.ViewModel
 
         private void ElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(ElementViewModel.GlobalStiffnessMatrix))
-            {
-                ProblemChanged();
-            }
+            if (e.PropertyName == nameof(ElementViewModel.GlobalStiffnessMatrix)) ProblemChanged();
         }
 
         private void ForcePropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(ForceViewModel.Magnitude) ||
                 e.PropertyName == nameof(ForceViewModel.Node))
-            {
                 ProblemChanged();
-            }
         }
 
         private void ProblemChanged()
@@ -369,13 +362,10 @@ namespace POC3D.ViewModel
 
         private void UpdateDisplacementsInResultNodes()
         {
-            int index = 0;
-            foreach(var resultNode in ResultNodes)
+            var index = 0;
+            foreach (var resultNode in ResultNodes)
             {
-                if (resultNode.NodeViewModel.IsFixed)
-                {
-                    continue;
-                }
+                if (resultNode.NodeViewModel.IsFixed) continue;
 
                 resultNode.DisplacementX = SolvedDisplacementsVector[index + 0, 0] * DisplacementsMultiplier;
                 resultNode.DisplacementY = SolvedDisplacementsVector[index + 1, 0] * DisplacementsMultiplier;
@@ -385,7 +375,7 @@ namespace POC3D.ViewModel
 
             ResultElements.Clear();
 
-            foreach(var element in Elements)
+            foreach (var element in Elements)
             {
                 var originResultNode = ResultNodes.First(x => x.NodeViewModel == element.Origin);
                 var destinationResultNode = ResultNodes.First(x => x.NodeViewModel == element.Destination);
@@ -393,7 +383,7 @@ namespace POC3D.ViewModel
                 ResultElements.Add(new ResultElementViewModel(originResultNode, destinationResultNode));
             }
 
-            foreach(var force in Forces)
+            foreach (var force in Forces)
             {
                 var node = ResultNodes.First(x => x.NodeViewModel == force.Node);
 

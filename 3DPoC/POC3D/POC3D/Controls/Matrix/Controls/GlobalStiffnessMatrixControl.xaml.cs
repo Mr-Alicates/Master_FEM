@@ -1,9 +1,9 @@
-﻿using POC3D.ViewModel;
-using System.Collections.Generic;
+﻿using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using POC3D.ViewModel;
 
 namespace POC3D.Controls.Matrix.Controls
 {
@@ -12,7 +12,8 @@ namespace POC3D.Controls.Matrix.Controls
     /// </summary>
     public partial class GlobalStiffnessMatrixControl : UserControl
     {
-        public static readonly DependencyProperty ProblemViewModelProperty = DependencyProperty.Register(nameof(ProblemViewModel),
+        public static readonly DependencyProperty ProblemViewModelProperty = DependencyProperty.Register(
+            nameof(ProblemViewModel),
             typeof(ProblemViewModel), typeof(GlobalStiffnessMatrixControl),
             new PropertyMetadata(null, ProblemViewModelChangedCallback));
 
@@ -51,7 +52,7 @@ namespace POC3D.Controls.Matrix.Controls
                 });
 
             //Create header row and column
-            int elementIndex = 1;
+            var elementIndex = 1;
             foreach (var node in problemViewModel.Nodes)
             {
                 var color = node.IsFixed ? Brushes.Red : Brushes.Green;
@@ -68,10 +69,9 @@ namespace POC3D.Controls.Matrix.Controls
             }
 
             foreach (var rowIndex in Enumerable.Range(0, globalStiffnessMatrix.Rows))
-                foreach (var columnIndex in Enumerable.Range(0, globalStiffnessMatrix.Columns))
-                {
-                    BuildTextBlock(GlobalStiffnessMatrixContainer, $"{globalStiffnessMatrix[rowIndex, columnIndex]}", rowIndex + 1, columnIndex + 1, Brushes.Black);
-                }
+            foreach (var columnIndex in Enumerable.Range(0, globalStiffnessMatrix.Columns))
+                BuildTextBlock(GlobalStiffnessMatrixContainer, $"{globalStiffnessMatrix[rowIndex, columnIndex]}",
+                    rowIndex + 1, columnIndex + 1, Brushes.Black);
         }
 
         private void FillDisplacements(ProblemViewModel problemViewModel)
@@ -91,14 +91,14 @@ namespace POC3D.Controls.Matrix.Controls
             // This is filler to align the items from the global stiffness matrix to the displacement vector
             BuildTextBlock(DisplacementsContainer, "", 0, 0, Brushes.Black);
 
-            int elementIndex = 1;
+            var elementIndex = 1;
             foreach (var node in problemViewModel.Nodes)
             {
                 if (node.IsFixed)
                 {
-                    BuildTextBlock(DisplacementsContainer, $"0", elementIndex * 3 - 2, 0, Brushes.Red);
-                    BuildTextBlock(DisplacementsContainer, $"0", elementIndex * 3 - 1, 0, Brushes.Red);
-                    BuildTextBlock(DisplacementsContainer, $"0", elementIndex * 3, 0, Brushes.Red);
+                    BuildTextBlock(DisplacementsContainer, "0", elementIndex * 3 - 2, 0, Brushes.Red);
+                    BuildTextBlock(DisplacementsContainer, "0", elementIndex * 3 - 1, 0, Brushes.Red);
+                    BuildTextBlock(DisplacementsContainer, "0", elementIndex * 3, 0, Brushes.Red);
                 }
                 else
                 {
@@ -128,7 +128,7 @@ namespace POC3D.Controls.Matrix.Controls
             // This is filler to align the items from the global stiffness matrix to the displacement vector
             BuildTextBlock(ForcesContainer, "", 0, 0, Brushes.Black);
 
-            int elementIndex = 1;
+            var elementIndex = 1;
             foreach (var node in problemViewModel.Nodes)
             {
                 if (node.IsFixed)
@@ -140,16 +140,19 @@ namespace POC3D.Controls.Matrix.Controls
                 else
                 {
                     var appliedForce = problemViewModel.Forces.FirstOrDefault(force => force.Node == node);
-                    
-                    BuildTextBlock(ForcesContainer, appliedForce?.ApplicationVector.X.ToString() ?? "0", elementIndex * 3 - 2, 0, Brushes.Green);
-                    BuildTextBlock(ForcesContainer, appliedForce?.ApplicationVector.Y.ToString() ?? "0", elementIndex * 3 - 1, 0, Brushes.Green);
-                    BuildTextBlock(ForcesContainer, appliedForce?.ApplicationVector.Z.ToString() ?? "0", elementIndex * 3, 0, Brushes.Green);
+
+                    BuildTextBlock(ForcesContainer, appliedForce?.ApplicationVector.X.ToString() ?? "0",
+                        elementIndex * 3 - 2, 0, Brushes.Green);
+                    BuildTextBlock(ForcesContainer, appliedForce?.ApplicationVector.Y.ToString() ?? "0",
+                        elementIndex * 3 - 1, 0, Brushes.Green);
+                    BuildTextBlock(ForcesContainer, appliedForce?.ApplicationVector.Z.ToString() ?? "0",
+                        elementIndex * 3, 0, Brushes.Green);
                 }
 
                 elementIndex++;
             }
         }
-        
+
         private static void ProblemViewModelChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var control = d as GlobalStiffnessMatrixControl;
@@ -172,7 +175,7 @@ namespace POC3D.Controls.Matrix.Controls
             FillForces(ProblemViewModel);
         }
 
-        private void ProblemViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void ProblemViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             FillGlobalStiffnessMatrix(ProblemViewModel);
             FillDisplacements(ProblemViewModel);

@@ -6,23 +6,23 @@
         xmlns:controls="clr-namespace:POC3D.Controls.Matrix.Controls"
         mc:Ignorable="d"
         Title="Global matrix info">
-    <Grid>
-        <TabControl>
-            <TabItem Header="Global Stiffness Matrix">
-                <controls:GlobalStiffnessMatrixControl
-                    DataContext="{Binding Path=.}"
-                    ProblemViewModel="{Binding ProblemViewModel}" />
-            </TabItem>
-            <TabItem Header="Compacted global Stiffness Matrix">
-                <controls:CompactedGlobalStiffnessMatrixControl
-                    DataContext="{Binding Path=.}"
-                    ProblemViewModel="{Binding ProblemViewModel}" />
-            </TabItem>
-            <TabItem Header="Solved displacements">
-                <controls:SolvedDisplacementsControl
-                    DataContext="{Binding Path=.}"
-                    ProblemViewModel="{Binding ProblemViewModel}" />
-            </TabItem>
-        </TabControl>
-    </Grid>
+  <Grid>
+    <TabControl>
+      <TabItem Header="Global Stiffness Matrix">
+        <controls:GlobalStiffnessMatrixControl
+          DataContext="{Binding Path=.}"
+          ProblemViewModel="{Binding ProblemViewModel}" />
+      </TabItem>
+      <TabItem Header="Compacted global Stiffness Matrix">
+        <controls:CompactedGlobalStiffnessMatrixControl
+          DataContext="{Binding Path=.}"
+          ProblemViewModel="{Binding ProblemViewModel}" />
+      </TabItem>
+      <TabItem Header="Solved displacements">
+        <controls:SolvedDisplacementsControl
+          DataContext="{Binding Path=.}"
+          ProblemViewModel="{Binding ProblemViewModel}" />
+      </TabItem>
+    </TabControl>
+  </Grid>
 </Window>

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Windows.Media.Media3D;
 using POC3D.Model;
 using POC3D.Model.Calculations;
@@ -16,13 +15,10 @@ namespace POC3D.Helpers
 
             var fixedNodes = problemViewModel.Nodes
                 .Where(x => x.IsFixed)
-                .Select(x=>x.Node.Coordinates)
+                .Select(x => x.Node.Coordinates)
                 .ToList();
 
-            if(fixedNodes.Count < 3)
-            {
-                return false;
-            }
+            if (fixedNodes.Count < 3) return false;
 
             var firstNode = fixedNodes.First();
 
@@ -43,7 +39,6 @@ namespace POC3D.Helpers
                 .ToList();
 
             return angles.Any();
-            
         }
 
         public static NumericMatrix BuildElementLocalStiffnessMatrix(ElementViewModel elementViewModel)
@@ -69,7 +64,7 @@ namespace POC3D.Helpers
 
                 [1, 3] = element.Cx,
                 [1, 4] = element.Cy,
-                [1, 5] = element.Cz,
+                [1, 5] = element.Cz
             };
 
             return result;
@@ -89,11 +84,10 @@ namespace POC3D.Helpers
         public static NumericMatrix BuildCompactedMatrix(ProblemViewModel problem)
         {
             var rawMatrix = BuildGlobalStiffnessMatrix(problem);
-            
-            int index = 0;
 
-            foreach(var node in problem.Nodes)
-            {
+            var index = 0;
+
+            foreach (var node in problem.Nodes)
                 if (node.IsFixed)
                 {
                     rawMatrix.RemoveColumn(index);
@@ -108,7 +102,6 @@ namespace POC3D.Helpers
                 {
                     index = index + 3;
                 }
-            }
 
             return rawMatrix;
         }
@@ -117,10 +110,9 @@ namespace POC3D.Helpers
         {
             var result = new NumericMatrix(problem.Nodes.Count * 3, 1);
 
-            int index = 0;
+            var index = 0;
 
             foreach (var node in problem.Nodes)
-            {
                 if (node.IsFixed)
                 {
                     result.RemoveRow(index);
@@ -137,7 +129,6 @@ namespace POC3D.Helpers
 
                     index = index + 3;
                 }
-            }
 
             return result;
         }
@@ -180,10 +171,14 @@ namespace POC3D.Helpers
                 var originNodeIndex = correspondenceMatrix.NodeIndexes[element.Origin];
                 var destinationNodeIndex = correspondenceMatrix.NodeIndexes[element.Destination];
 
-                unAssembledStiffnessMatrix[originNodeIndex][originNodeIndex] += elementGlobalStiffnessMatrix.GetSubMatrix(0, 0, 3);
-                unAssembledStiffnessMatrix[originNodeIndex][destinationNodeIndex] += elementGlobalStiffnessMatrix.GetSubMatrix(0, 3, 3);
-                unAssembledStiffnessMatrix[destinationNodeIndex][originNodeIndex] += elementGlobalStiffnessMatrix.GetSubMatrix(3, 0, 3);
-                unAssembledStiffnessMatrix[destinationNodeIndex][destinationNodeIndex] += elementGlobalStiffnessMatrix.GetSubMatrix(3, 3, 3);
+                unAssembledStiffnessMatrix[originNodeIndex][originNodeIndex] +=
+                    elementGlobalStiffnessMatrix.GetSubMatrix(0, 0, 3);
+                unAssembledStiffnessMatrix[originNodeIndex][destinationNodeIndex] +=
+                    elementGlobalStiffnessMatrix.GetSubMatrix(0, 3, 3);
+                unAssembledStiffnessMatrix[destinationNodeIndex][originNodeIndex] +=
+                    elementGlobalStiffnessMatrix.GetSubMatrix(3, 0, 3);
+                unAssembledStiffnessMatrix[destinationNodeIndex][destinationNodeIndex] +=
+                    elementGlobalStiffnessMatrix.GetSubMatrix(3, 3, 3);
             }
 
             var result = new NumericMatrix(nodeCount * 3, nodeCount * 3);

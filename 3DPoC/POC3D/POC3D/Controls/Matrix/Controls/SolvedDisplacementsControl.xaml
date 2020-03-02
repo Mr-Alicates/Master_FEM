@@ -5,19 +5,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:helpers="clr-namespace:POC3D.Controls.Matrix.Controls.Helpers"
              mc:Ignorable="d">
-    <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible">
-        <StackPanel Orientation="Horizontal">
-            
-            <helpers:OpenCurlyBracketsControl/>
-            <Grid x:Name="DisplacementsContainer" />
-            <helpers:CloseCurlyBracketsControl/>
+  <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible">
+    <StackPanel Orientation="Horizontal">
 
-            <helpers:ScalarControl Scalar="=" />
+      <helpers:OpenCurlyBracketsControl />
+      <Grid x:Name="DisplacementsContainer" />
+      <helpers:CloseCurlyBracketsControl />
 
-            <helpers:OpenCurlyBracketsControl/>
-            <Grid x:Name="ResultsContainer" />
-            <helpers:CloseCurlyBracketsControl/>           
-            
-        </StackPanel>
-    </ScrollViewer>
+      <helpers:ScalarControl Scalar="=" />
+
+      <helpers:OpenCurlyBracketsControl />
+      <Grid x:Name="ResultsContainer" />
+      <helpers:CloseCurlyBracketsControl />
+
+    </StackPanel>
+  </ScrollViewer>
 </UserControl>

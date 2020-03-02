@@ -1,5 +1,5 @@
-﻿using POC3D.ViewModel;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using POC3D.ViewModel;
 
 namespace POC3D.Model.Calculations
 {

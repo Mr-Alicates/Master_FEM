@@ -28,10 +28,7 @@ namespace POC3D.ViewModel
             get => _nodeViewModel;
             set
             {
-                if(_nodeViewModel != null)
-                {
-                    _nodeViewModel.PropertyChanged -= NodeChanged;
-                }
+                if (_nodeViewModel != null) _nodeViewModel.PropertyChanged -= NodeChanged;
 
                 value.PropertyChanged += NodeChanged;
                 _nodeViewModel = value;
@@ -92,22 +89,17 @@ namespace POC3D.ViewModel
             }
         }
 
-        public Vector3D ApplicationVector => new Vector3D(Force.ApplicationVector.X, Force.ApplicationVector.Y, Force.ApplicationVector.Z);
+        public Vector3D ApplicationVector => new Vector3D(Force.ApplicationVector.X, Force.ApplicationVector.Y,
+            Force.ApplicationVector.Z);
 
-        public double Magnitude
-        {
-            get => Force.Magnitude;
-        }
+        public double Magnitude => Force.Magnitude;
 
         public string Name =>
             $"({Node.Id}) ---> ({ApplicationVectorX:N}/{ApplicationVectorY:N}/{ApplicationVectorZ:N}) ({Magnitude:N})";
 
         private void NodeChanged(object sender, PropertyChangedEventArgs e)
         {
-            if(e.PropertyName == nameof(_nodeViewModel.Coordinates))
-            {
-                UpdateGeometryMesh();
-            }
+            if (e.PropertyName == nameof(_nodeViewModel.Coordinates)) UpdateGeometryMesh();
         }
 
         private void VectorChanged()

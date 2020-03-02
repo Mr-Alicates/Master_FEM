@@ -6,38 +6,38 @@
              xmlns:viewModel="clr-namespace:POC3D.ViewModel"
              mc:Ignorable="d"
              MinWidth="300">
-    <StackPanel>
+  <StackPanel>
 
-        <TextBlock Text="List of elements" HorizontalAlignment="Center" FontWeight="Bold" />
-        <Separator />
+    <TextBlock Text="List of elements" HorizontalAlignment="Center" FontWeight="Bold" />
+    <Separator />
 
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="30" />
-            </Grid.RowDefinitions>
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="*" />
+        <RowDefinition Height="30" />
+      </Grid.RowDefinitions>
 
-            <ListView Grid.Row="0"
-                      ItemsSource="{Binding ProblemViewModel.Elements,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
-                      SelectedItem="{Binding ProblemViewModel.SelectedElement,Mode=TwoWay}">
+      <ListView Grid.Row="0"
+                ItemsSource="{Binding ProblemViewModel.Elements,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
+                SelectedItem="{Binding ProblemViewModel.SelectedElement,Mode=TwoWay}">
 
-                <ListView.ItemTemplate>
-                    <DataTemplate DataType="viewModel:ElementViewModel">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Description, Mode=OneWay}" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
+        <ListView.ItemTemplate>
+          <DataTemplate DataType="viewModel:ElementViewModel">
+            <StackPanel Orientation="Horizontal">
+              <TextBlock Text="{Binding Description, Mode=OneWay}" />
+            </StackPanel>
+          </DataTemplate>
+        </ListView.ItemTemplate>
 
-            </ListView>
+      </ListView>
 
-            <Button Grid.Row="1"
-                    Content="Delete selected element"
-                    Command="{Binding ProblemViewModel.DeleteElementCommand}" />
+      <Button Grid.Row="1"
+              Content="Delete selected element"
+              Command="{Binding ProblemViewModel.DeleteElementCommand}" />
 
-        </Grid>
+    </Grid>
 
-        <Separator />
+    <Separator />
 
-    </StackPanel>
+  </StackPanel>
 </UserControl>

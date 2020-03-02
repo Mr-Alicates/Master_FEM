@@ -5,41 +5,41 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              MinWidth="300">
-    <StackPanel>
+  <StackPanel>
 
-        <TextBlock Text="Add new force" HorizontalAlignment="Center" FontWeight="Bold" />
-        <Separator />
+    <TextBlock Text="Add new force" HorizontalAlignment="Center" FontWeight="Bold" />
+    <Separator />
 
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="30" />
-            </Grid.RowDefinitions>
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="30" />
+      </Grid.RowDefinitions>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
 
-            <ComboBox Grid.Row="0"
-                      Grid.Column="0"
-                      ItemsSource="{Binding ProblemViewModel.Nodes,Mode=OneWay}"
-                      DisplayMemberPath="Name"
-                      SelectedItem="{Binding ProblemViewModel.NewForceViewModel.Node}" />
-            <TextBlock Grid.Row="0"
-                       Grid.Column="1"
-                       Text="Application node" />
+      <ComboBox Grid.Row="0"
+                Grid.Column="0"
+                ItemsSource="{Binding ProblemViewModel.Nodes,Mode=OneWay}"
+                DisplayMemberPath="Name"
+                SelectedItem="{Binding ProblemViewModel.NewForceViewModel.Node}" />
+      <TextBlock Grid.Row="0"
+                 Grid.Column="1"
+                 Text="Application node" />
 
 
-            <Button Grid.Row="1"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="2"
-                    Content="Add new element"
-                    Command="{Binding ProblemViewModel.NewForceViewModel.AddForceCommand}" />
+      <Button Grid.Row="1"
+              Grid.Column="0"
+              Grid.ColumnSpan="2"
+              Content="Add new element"
+              Command="{Binding ProblemViewModel.NewForceViewModel.AddForceCommand}" />
 
-        </Grid>
+    </Grid>
 
-        <Separator />
+    <Separator />
 
-    </StackPanel>
+  </StackPanel>
 </UserControl>

@@ -23,7 +23,7 @@ namespace POC3D.ViewModel
 
         private Visibility _nodeDetailsControlVisibility = Visibility.Collapsed;
         private Visibility _nodeListingControlVisibility = Visibility.Collapsed;
-        
+
         public InterfaceControlViewModel(ProblemViewModel problemViewModel, CameraViewModel cameraViewModel)
         {
             _problemViewModel = problemViewModel;

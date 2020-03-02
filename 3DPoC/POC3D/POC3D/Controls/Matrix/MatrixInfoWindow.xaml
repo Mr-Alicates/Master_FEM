@@ -6,28 +6,28 @@
         xmlns:controls="clr-namespace:POC3D.Controls.Matrix.Controls"
         mc:Ignorable="d"
         Title="Local element matrix info">
-    <Grid>
-        <TabControl>
-            <TabItem Header="Local Matrix">
-                <controls:LocalElementMatrixControl DataContext="{Binding Path=.}" />
-            </TabItem>
+  <Grid>
+    <TabControl>
+      <TabItem Header="Local Matrix">
+        <controls:LocalElementMatrixControl DataContext="{Binding Path=.}" />
+      </TabItem>
 
-            <TabItem Header="Expanded Local Matrix">
-                <controls:LocalElementExpandedMatrixControl DataContext="{Binding Path=.}" />
-            </TabItem>
+      <TabItem Header="Expanded Local Matrix">
+        <controls:LocalElementExpandedMatrixControl DataContext="{Binding Path=.}" />
+      </TabItem>
 
-            <TabItem Header="Transform to global coordinate system">
-                <controls:TransformToGlobalCoordinateSystemControl DataContext="{Binding Path=.}" />
-            </TabItem>
+      <TabItem Header="Transform to global coordinate system">
+        <controls:TransformToGlobalCoordinateSystemControl DataContext="{Binding Path=.}" />
+      </TabItem>
 
-            <TabItem Header="Transformation matrix">
-                <controls:TransformationMatrixControl DataContext="{Binding Path=.}" />
-            </TabItem>
+      <TabItem Header="Transformation matrix">
+        <controls:TransformationMatrixControl DataContext="{Binding Path=.}" />
+      </TabItem>
 
-            <TabItem Header="Global element matrix">
-                <controls:GlobalElementStiffnessMatrixControl DataContext="{Binding Path=.}" />
-            </TabItem>
+      <TabItem Header="Global element matrix">
+        <controls:GlobalElementStiffnessMatrixControl DataContext="{Binding Path=.}" />
+      </TabItem>
 
-        </TabControl>
-    </Grid>
+    </TabControl>
+  </Grid>
 </Window>

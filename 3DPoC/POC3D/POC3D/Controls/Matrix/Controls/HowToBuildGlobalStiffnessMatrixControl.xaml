@@ -1,0 +1,667 @@
+﻿<UserControl x:Class="POC3D.Controls.Matrix.Controls.HowToBuildGlobalStiffnessMatrixControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:helpers="clr-namespace:POC3D.Controls.Matrix.Controls.Helpers"
+             mc:Ignorable="d">
+  <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible">
+
+        <StackPanel Orientation="Vertical">
+
+            <TextBlock Text="How to build the global stiffness matrix" />
+            <Separator />
+            <TextBlock Text="To build the global stiffness matrix we need the correspondence matrix and the elements' stiffness matrices" />
+            <Separator />
+            <TextBlock Text="Each cell of the correspondence matrix represents a 3x3 section of the global stiffness matrix" />
+            <TextBlock Text="The element stiffness matrix can be divided in 3x3 sections. Each section relates to a node in the rows and another node in the columns" />
+            <TextBlock Text="The stiffness matrix is built by placing the corresponding 3x3 sections of the elements' stiffness matrix in the corresponding section of the global stiffness matrix" />
+            <TextBlock Text="When there is more than one element per section, the values are added." />
+
+
+            <Separator />
+            <TextBlock Text="Example:" />
+
+            <StackPanel Orientation="Horizontal" 
+                        HorizontalAlignment="Center">
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Row="0"
+                        Grid.Column="1"
+                        BorderBrush="Black"
+                        BorderThickness="2">
+                        <TextBlock Text="Node 1"/>
+                    </Border>
+
+                    <Border Grid.Row="0"
+                        Grid.Column="2"
+                        BorderBrush="Black"
+                        BorderThickness="2">
+                        <TextBlock Text="Node 2"/>
+                    </Border>
+
+                    <Border Grid.Row="1"
+                        Grid.Column="0"
+                        BorderBrush="Black"
+                        BorderThickness="2">
+                        <TextBlock Text="Node 1"/>
+                    </Border>
+
+                    <Border Grid.Row="2"
+                        Grid.Column="0"
+                        BorderBrush="Black"
+                        BorderThickness="2">
+                        <TextBlock Text="Node 2"/>
+                    </Border>
+
+                    <Border Grid.Row="1"
+                        Grid.Column="1"
+                        BorderBrush="Black"
+                        BorderThickness="2">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="A" />
+                            <TextBlock Grid.Row="0" Grid.Column="1" Text="A" />
+                            <TextBlock Grid.Row="0" Grid.Column="2" Text="A" />
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="A" />
+                            <TextBlock Grid.Row="1" Grid.Column="1" Text="A" />
+                            <TextBlock Grid.Row="1" Grid.Column="2" Text="A" />
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="A" />
+                            <TextBlock Grid.Row="2" Grid.Column="1" Text="A" />
+                            <TextBlock Grid.Row="2" Grid.Column="2" Text="A" />
+
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Row="1"
+                        Grid.Column="2"
+                        BorderBrush="Black"
+                        BorderThickness="2">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="B" />
+                            <TextBlock Grid.Row="0" Grid.Column="1" Text="B" />
+                            <TextBlock Grid.Row="0" Grid.Column="2" Text="B" />
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="B" />
+                            <TextBlock Grid.Row="1" Grid.Column="1" Text="B" />
+                            <TextBlock Grid.Row="1" Grid.Column="2" Text="B" />
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="B" />
+                            <TextBlock Grid.Row="2" Grid.Column="1" Text="B" />
+                            <TextBlock Grid.Row="2" Grid.Column="2" Text="B" />
+
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Row="2"
+                        Grid.Column="1"
+                        BorderBrush="Black"
+                        BorderThickness="2">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="C" />
+                            <TextBlock Grid.Row="0" Grid.Column="1" Text="C" />
+                            <TextBlock Grid.Row="0" Grid.Column="2" Text="C" />
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="C" />
+                            <TextBlock Grid.Row="1" Grid.Column="1" Text="C" />
+                            <TextBlock Grid.Row="1" Grid.Column="2" Text="C" />
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="C" />
+                            <TextBlock Grid.Row="2" Grid.Column="1" Text="C" />
+                            <TextBlock Grid.Row="2" Grid.Column="2" Text="C" />
+
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Row="2"
+                        Grid.Column="2"
+                        BorderBrush="Black"
+                        BorderThickness="2">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="D" />
+                            <TextBlock Grid.Row="0" Grid.Column="1" Text="D" />
+                            <TextBlock Grid.Row="0" Grid.Column="2" Text="D" />
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="D" />
+                            <TextBlock Grid.Row="1" Grid.Column="1" Text="D" />
+                            <TextBlock Grid.Row="1" Grid.Column="2" Text="D" />
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="D" />
+                            <TextBlock Grid.Row="2" Grid.Column="1" Text="D" />
+                            <TextBlock Grid.Row="2" Grid.Column="2" Text="D" />
+
+                        </Grid>
+                    </Border>
+
+                </Grid>
+
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Row="0"
+                        Grid.Column="1"
+                        BorderBrush="Black"
+                        BorderThickness="2">
+                        <TextBlock Text="Node 2"/>
+                    </Border>
+
+                    <Border Grid.Row="0"
+                        Grid.Column="2"
+                        BorderBrush="Black"
+                        BorderThickness="2">
+                        <TextBlock Text="Node 3"/>
+                    </Border>
+
+                    <Border Grid.Row="1"
+                        Grid.Column="0"
+                        BorderBrush="Black"
+                        BorderThickness="2">
+                        <TextBlock Text="Node 2"/>
+                    </Border>
+
+                    <Border Grid.Row="2"
+                        Grid.Column="0"
+                        BorderBrush="Black"
+                        BorderThickness="2">
+                        <TextBlock Text="Node 3"/>
+                    </Border>
+
+                    <Border Grid.Row="1"
+                        Grid.Column="1"
+                        BorderBrush="Black"
+                        BorderThickness="2">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="E" />
+                            <TextBlock Grid.Row="0" Grid.Column="1" Text="E" />
+                            <TextBlock Grid.Row="0" Grid.Column="2" Text="E" />
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="E" />
+                            <TextBlock Grid.Row="1" Grid.Column="1" Text="E" />
+                            <TextBlock Grid.Row="1" Grid.Column="2" Text="E" />
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="E" />
+                            <TextBlock Grid.Row="2" Grid.Column="1" Text="E" />
+                            <TextBlock Grid.Row="2" Grid.Column="2" Text="E" />
+
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Row="1"
+                        Grid.Column="2"
+                        BorderBrush="Black"
+                        BorderThickness="2">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="F" />
+                            <TextBlock Grid.Row="0" Grid.Column="1" Text="F" />
+                            <TextBlock Grid.Row="0" Grid.Column="2" Text="F" />
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="F" />
+                            <TextBlock Grid.Row="1" Grid.Column="1" Text="F" />
+                            <TextBlock Grid.Row="1" Grid.Column="2" Text="F" />
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="F" />
+                            <TextBlock Grid.Row="2" Grid.Column="1" Text="F" />
+                            <TextBlock Grid.Row="2" Grid.Column="2" Text="F" />
+
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Row="2"
+                        Grid.Column="1"
+                        BorderBrush="Black"
+                        BorderThickness="2">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="G" />
+                            <TextBlock Grid.Row="0" Grid.Column="1" Text="G" />
+                            <TextBlock Grid.Row="0" Grid.Column="2" Text="G" />
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="G" />
+                            <TextBlock Grid.Row="1" Grid.Column="1" Text="G" />
+                            <TextBlock Grid.Row="1" Grid.Column="2" Text="G" />
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="G" />
+                            <TextBlock Grid.Row="2" Grid.Column="1" Text="G" />
+                            <TextBlock Grid.Row="2" Grid.Column="2" Text="G" />
+
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Row="2"
+                        Grid.Column="2"
+                        BorderBrush="Black"
+                        BorderThickness="2">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="H" />
+                            <TextBlock Grid.Row="0" Grid.Column="1" Text="H" />
+                            <TextBlock Grid.Row="0" Grid.Column="2" Text="H" />
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="H" />
+                            <TextBlock Grid.Row="1" Grid.Column="1" Text="H" />
+                            <TextBlock Grid.Row="1" Grid.Column="2" Text="H" />
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="H" />
+                            <TextBlock Grid.Row="2" Grid.Column="1" Text="H" />
+                            <TextBlock Grid.Row="2" Grid.Column="2" Text="H" />
+
+                        </Grid>
+                    </Border>
+
+                </Grid>
+            </StackPanel>
+
+
+            <Grid Margin="10"
+                  HorizontalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+
+                <Border Grid.Row="0"
+                        Grid.Column="1"
+                        BorderBrush="Black"
+                        BorderThickness="2">
+                    <TextBlock Text="Node 1"/>
+                </Border>
+
+                <Border Grid.Row="0"
+                        Grid.Column="2"
+                        BorderBrush="Black"
+                        BorderThickness="2">
+                    <TextBlock Text="Node 2"/>
+                </Border>
+
+                <Border Grid.Row="0"
+                        Grid.Column="3"
+                        BorderBrush="Black"
+                        BorderThickness="2">
+                    <TextBlock Text="Node 3"/>
+                </Border>
+
+                <Border Grid.Row="1"
+                        Grid.Column="0"
+                        BorderBrush="Black"
+                        BorderThickness="2">
+                    <TextBlock Text="Node 1"/>
+                </Border>
+
+                <Border Grid.Row="2"
+                        Grid.Column="0"
+                        BorderBrush="Black"
+                        BorderThickness="2">
+                    <TextBlock Text="Node 2"/>
+                </Border>
+
+                <Border Grid.Row="3"
+                        Grid.Column="0"
+                        BorderBrush="Black"
+                        BorderThickness="2">
+                    <TextBlock Text="Node 3"/>
+                </Border>
+
+                <Border Grid.Row="1"
+                        Grid.Column="1"
+                        BorderBrush="Black"
+                        BorderThickness="2">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Margin="2" Grid.Row="0" Grid.Column="0" Text="A" />
+                        <TextBlock Margin="2" Grid.Row="0" Grid.Column="1" Text="A" />
+                        <TextBlock Margin="2" Grid.Row="0" Grid.Column="2" Text="A" />
+                        <TextBlock Margin="2" Grid.Row="1" Grid.Column="0" Text="A" />
+                        <TextBlock Margin="2" Grid.Row="1" Grid.Column="1" Text="A" />
+                        <TextBlock Margin="2" Grid.Row="1" Grid.Column="2" Text="A" />
+                        <TextBlock Margin="2" Grid.Row="2" Grid.Column="0" Text="A" />
+                        <TextBlock Margin="2" Grid.Row="2" Grid.Column="1" Text="A" />
+                        <TextBlock Margin="2" Grid.Row="2" Grid.Column="2" Text="A" />
+
+                    </Grid>
+                </Border>
+
+                <Border Grid.Row="1"
+                        Grid.Column="2"
+                        BorderBrush="Black"
+                        BorderThickness="2">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Margin="2" Grid.Row="0" Grid.Column="0" Text="B" />
+                        <TextBlock Margin="2" Grid.Row="0" Grid.Column="1" Text="B" />
+                        <TextBlock Margin="2" Grid.Row="0" Grid.Column="2" Text="B" />
+                        <TextBlock Margin="2" Grid.Row="1" Grid.Column="0" Text="B" />
+                        <TextBlock Margin="2" Grid.Row="1" Grid.Column="1" Text="B" />
+                        <TextBlock Margin="2" Grid.Row="1" Grid.Column="2" Text="B" />
+                        <TextBlock Margin="2" Grid.Row="2" Grid.Column="0" Text="B" />
+                        <TextBlock Margin="2" Grid.Row="2" Grid.Column="1" Text="B" />
+                        <TextBlock Margin="2" Grid.Row="2" Grid.Column="2" Text="B" />
+
+                    </Grid>
+                </Border>
+
+                <Border Grid.Row="1"
+                        Grid.Column="3"
+                        BorderBrush="Black"
+                        BorderThickness="2">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Margin="2" Grid.Row="0" Grid.Column="0" Text="0" />
+                        <TextBlock Margin="2" Grid.Row="0" Grid.Column="1" Text="0" />
+                        <TextBlock Margin="2" Grid.Row="0" Grid.Column="2" Text="0" />
+                        <TextBlock Margin="2" Grid.Row="1" Grid.Column="0" Text="0" />
+                        <TextBlock Margin="2" Grid.Row="1" Grid.Column="1" Text="0" />
+                        <TextBlock Margin="2" Grid.Row="1" Grid.Column="2" Text="0" />
+                        <TextBlock Margin="2" Grid.Row="2" Grid.Column="0" Text="0" />
+                        <TextBlock Margin="2" Grid.Row="2" Grid.Column="1" Text="0" />
+                        <TextBlock Margin="2" Grid.Row="2" Grid.Column="2" Text="0" />
+
+                    </Grid>
+                </Border>
+
+                <Border Grid.Row="2"
+                        Grid.Column="1"
+                        BorderBrush="Black"
+                        BorderThickness="2">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Margin="2" Grid.Row="0" Grid.Column="0" Text="C" />
+                        <TextBlock Margin="2" Grid.Row="0" Grid.Column="1" Text="C" />
+                        <TextBlock Margin="2" Grid.Row="0" Grid.Column="2" Text="C" />
+                        <TextBlock Margin="2" Grid.Row="1" Grid.Column="0" Text="C" />
+                        <TextBlock Margin="2" Grid.Row="1" Grid.Column="1" Text="C" />
+                        <TextBlock Margin="2" Grid.Row="1" Grid.Column="2" Text="C" />
+                        <TextBlock Margin="2" Grid.Row="2" Grid.Column="0" Text="C" />
+                        <TextBlock Margin="2" Grid.Row="2" Grid.Column="1" Text="C" />
+                        <TextBlock Margin="2" Grid.Row="2" Grid.Column="2" Text="C" />
+
+                    </Grid>
+                </Border>
+
+                <Border Grid.Row="2"
+                        Grid.Column="2"
+                        BorderBrush="Black"
+                        BorderThickness="2">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Margin="2" Grid.Row="0" Grid.Column="0" Text="(D + E)" />
+                        <TextBlock Margin="2" Grid.Row="0" Grid.Column="1" Text="(D + E)" />
+                        <TextBlock Margin="2" Grid.Row="0" Grid.Column="2" Text="(D + E)" />
+                        <TextBlock Margin="2" Grid.Row="1" Grid.Column="0" Text="(D + E)" />
+                        <TextBlock Margin="2" Grid.Row="1" Grid.Column="1" Text="(D + E)" />
+                        <TextBlock Margin="2" Grid.Row="1" Grid.Column="2" Text="(D + E)" />
+                        <TextBlock Margin="2" Grid.Row="2" Grid.Column="0" Text="(D + E)" />
+                        <TextBlock Margin="2" Grid.Row="2" Grid.Column="1" Text="(D + E)" />
+                        <TextBlock Margin="2" Grid.Row="2" Grid.Column="2" Text="(D + E)" />
+
+                    </Grid>
+                </Border>
+
+                <Border Grid.Row="2"
+                        Grid.Column="3"
+                        BorderBrush="Black"
+                        BorderThickness="2">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Margin="2" Grid.Row="0" Grid.Column="0" Text="F" />
+                        <TextBlock Margin="2" Grid.Row="0" Grid.Column="1" Text="F" />
+                        <TextBlock Margin="2" Grid.Row="0" Grid.Column="2" Text="F" />
+                        <TextBlock Margin="2" Grid.Row="1" Grid.Column="0" Text="F" />
+                        <TextBlock Margin="2" Grid.Row="1" Grid.Column="1" Text="F" />
+                        <TextBlock Margin="2" Grid.Row="1" Grid.Column="2" Text="F" />
+                        <TextBlock Margin="2" Grid.Row="2" Grid.Column="0" Text="F" />
+                        <TextBlock Margin="2" Grid.Row="2" Grid.Column="1" Text="F" />
+                        <TextBlock Margin="2" Grid.Row="2" Grid.Column="2" Text="F" />
+
+                    </Grid>
+                </Border>
+
+                <Border Grid.Row="3"
+                        Grid.Column="1"
+                        BorderBrush="Black"
+                        BorderThickness="2">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Margin="2" Grid.Row="0" Grid.Column="0" Text="0" />
+                        <TextBlock Margin="2" Grid.Row="0" Grid.Column="1" Text="0" />
+                        <TextBlock Margin="2" Grid.Row="0" Grid.Column="2" Text="0" />
+                        <TextBlock Margin="2" Grid.Row="1" Grid.Column="0" Text="0" />
+                        <TextBlock Margin="2" Grid.Row="1" Grid.Column="1" Text="0" />
+                        <TextBlock Margin="2" Grid.Row="1" Grid.Column="2" Text="0" />
+                        <TextBlock Margin="2" Grid.Row="2" Grid.Column="0" Text="0" />
+                        <TextBlock Margin="2" Grid.Row="2" Grid.Column="1" Text="0" />
+                        <TextBlock Margin="2" Grid.Row="2" Grid.Column="2" Text="0" />
+
+                    </Grid>
+                </Border>
+
+                <Border Grid.Row="3"
+                        Grid.Column="2"
+                        BorderBrush="Black"
+                        BorderThickness="2">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Margin="2" Grid.Row="0" Grid.Column="0" Text="G" />
+                        <TextBlock Margin="2" Grid.Row="0" Grid.Column="1" Text="G" />
+                        <TextBlock Margin="2" Grid.Row="0" Grid.Column="2" Text="G" />
+                        <TextBlock Margin="2" Grid.Row="1" Grid.Column="0" Text="G" />
+                        <TextBlock Margin="2" Grid.Row="1" Grid.Column="1" Text="G" />
+                        <TextBlock Margin="2" Grid.Row="1" Grid.Column="2" Text="G" />
+                        <TextBlock Margin="2" Grid.Row="2" Grid.Column="0" Text="G" />
+                        <TextBlock Margin="2" Grid.Row="2" Grid.Column="1" Text="G" />
+                        <TextBlock Margin="2" Grid.Row="2" Grid.Column="2" Text="G" />
+
+                    </Grid>
+                </Border>
+
+                <Border Grid.Row="3"
+                        Grid.Column="3"
+                        BorderBrush="Black"
+                        BorderThickness="2">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Margin="2" Grid.Row="0" Grid.Column="0" Text="H" />
+                        <TextBlock Margin="2" Grid.Row="0" Grid.Column="1" Text="H" />
+                        <TextBlock Margin="2" Grid.Row="0" Grid.Column="2" Text="H" />
+                        <TextBlock Margin="2" Grid.Row="1" Grid.Column="0" Text="H" />
+                        <TextBlock Margin="2" Grid.Row="1" Grid.Column="1" Text="H" />
+                        <TextBlock Margin="2" Grid.Row="1" Grid.Column="2" Text="H" />
+                        <TextBlock Margin="2" Grid.Row="2" Grid.Column="0" Text="H" />
+                        <TextBlock Margin="2" Grid.Row="2" Grid.Column="1" Text="H" />
+                        <TextBlock Margin="2" Grid.Row="2" Grid.Column="2" Text="H" />
+
+                    </Grid>
+                </Border>
+
+            </Grid>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

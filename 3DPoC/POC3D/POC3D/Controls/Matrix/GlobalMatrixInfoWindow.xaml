@@ -13,6 +13,9 @@
           DataContext="{Binding Path=.}"
           ProblemViewModel="{Binding ProblemViewModel}" />
       </TabItem>
+      <TabItem Header="How to build the Global Stiffness Matrix">
+        <controls:HowToBuildGlobalStiffnessMatrixControl />
+      </TabItem>
       <TabItem Header="Global Stiffness Matrix">
         <controls:GlobalStiffnessMatrixControl
           DataContext="{Binding Path=.}"

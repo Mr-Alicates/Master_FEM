@@ -8,7 +8,7 @@ using POC3D.ViewModel;
 namespace POC3D.Controls.Matrix.Controls
 {
     /// <summary>
-    ///     Interaction logic for GlobalStiffnessMatrixControl.xaml
+    ///     Interaction logic for CorrespondenceMatrixControl.xaml
     /// </summary>
     public partial class CorrespondenceMatrixControl : UserControl
     {

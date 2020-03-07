@@ -5,9 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:POC3D.Controls.Matrix.Controls"
         mc:Ignorable="d"
-        Title="Global matrix info">
+        Title="Problem global matrices information">
   <Grid>
     <TabControl>
+      <TabItem Header="Correspondence Matrix">
+        <controls:CorrespondenceMatrixControl
+          DataContext="{Binding Path=.}"
+          ProblemViewModel="{Binding ProblemViewModel}" />
+      </TabItem>
       <TabItem Header="Global Stiffness Matrix">
         <controls:GlobalStiffnessMatrixControl
           DataContext="{Binding Path=.}"

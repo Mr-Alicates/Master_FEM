@@ -9,6 +9,9 @@ namespace POC3D.Model.Calculations
 
         public readonly IDictionary<NodeViewModel, int> NodeIndexes;
 
+        public int Rows => NodeIndexes.Count;
+        public int Columns => NodeIndexes.Count;
+
         public CorrespondenceMatrix()
         {
             NodeIndexes = new Dictionary<NodeViewModel, int>();

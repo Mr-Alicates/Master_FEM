@@ -58,9 +58,6 @@
 
       <MenuItem Header="Problem">
 
-        <MenuItem Header="Show Problem details"
-                  Command="{Binding InterfaceControlViewModel.ShowProblemDetailsCommand}" />
-
         <MenuItem Header="Show matrices from problem"
                   Click="ShowGlobalMatrixInfoWindow" />
 

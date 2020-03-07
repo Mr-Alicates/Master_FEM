@@ -149,10 +149,14 @@ namespace POC3D.Controls.Matrix.Controls
                 Foreground = color
             };
 
-            textBlock.SetValue(Grid.RowProperty, rowIndex);
-            textBlock.SetValue(Grid.ColumnProperty, columnIndex);
+            Border border = new Border();
+            border.SetValue(Border.BorderThicknessProperty, new Thickness(2));
+            border.SetValue(Border.BorderBrushProperty, Brushes.Black);
+            border.SetValue(Grid.RowProperty, rowIndex);
+            border.SetValue(Grid.ColumnProperty, columnIndex);
+            border.Child = textBlock;
 
-            container.Children.Add(textBlock);
+            container.Children.Add(border);
         }
     }
 }

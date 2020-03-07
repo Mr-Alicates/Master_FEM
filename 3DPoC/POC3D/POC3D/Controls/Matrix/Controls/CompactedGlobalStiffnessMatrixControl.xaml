@@ -5,23 +5,33 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:helpers="clr-namespace:POC3D.Controls.Matrix.Controls.Helpers"
              mc:Ignorable="d">
-  <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible">
-    <StackPanel Orientation="Horizontal">
+    <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible">
+        <StackPanel Orientation="Vertical">
 
-      <helpers:OpenBracketsControl />
-      <Grid x:Name="GlobalStiffnessMatrixContainer" />
-      <helpers:CloseBracketsControl />
+            <TextBlock Text="Compacted Global Stiffness Matrix" />
+            <Separator />
 
-      <helpers:OpenCurlyBracketsControl />
-      <Grid x:Name="DisplacementsContainer" />
-      <helpers:CloseCurlyBracketsControl />
+            <TextBlock Text="The compacted global stiffness matrix is built by removing the rows and columns that correspond to displacements that are zero" />
+            <Separator />
 
-      <helpers:ScalarControl Scalar="=" />
+            <StackPanel Orientation="Horizontal"
+                        VerticalAlignment="Center">
 
-      <helpers:OpenCurlyBracketsControl />
-      <Grid x:Name="ForcesContainer" />
-      <helpers:CloseCurlyBracketsControl />
+                <helpers:OpenBracketsControl />
+                <Grid x:Name="GlobalStiffnessMatrixContainer" />
+                <helpers:CloseBracketsControl />
 
-    </StackPanel>
-  </ScrollViewer>
+                <helpers:OpenCurlyBracketsControl />
+                <Grid x:Name="DisplacementsContainer" />
+                <helpers:CloseCurlyBracketsControl />
+
+                <helpers:ScalarControl Scalar="=" />
+
+                <helpers:OpenCurlyBracketsControl />
+                <Grid x:Name="ForcesContainer" />
+                <helpers:CloseCurlyBracketsControl />
+
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>

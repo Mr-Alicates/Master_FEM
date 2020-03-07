@@ -5,19 +5,29 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:helpers="clr-namespace:POC3D.Controls.Matrix.Controls.Helpers"
              mc:Ignorable="d">
-  <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible">
-    <StackPanel Orientation="Horizontal">
+    <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible">
+        <StackPanel Orientation="Vertical">
 
-      <helpers:OpenCurlyBracketsControl />
-      <Grid x:Name="DisplacementsContainer" />
-      <helpers:CloseCurlyBracketsControl />
+            <TextBlock Text="Displacement results" />
+            <Separator />
 
-      <helpers:ScalarControl Scalar="=" />
+            <TextBlock Text="The displacements are calculated by solving the linear equation system formed by the compacted stiffness matrix" />
+            <Separator />
 
-      <helpers:OpenCurlyBracketsControl />
-      <Grid x:Name="ResultsContainer" />
-      <helpers:CloseCurlyBracketsControl />
+            <StackPanel Orientation="Horizontal"
+                        VerticalAlignment="Center">
 
-    </StackPanel>
-  </ScrollViewer>
+                <helpers:OpenCurlyBracketsControl />
+                <Grid x:Name="DisplacementsContainer" />
+                <helpers:CloseCurlyBracketsControl />
+
+                <helpers:ScalarControl Scalar="=" />
+
+                <helpers:OpenCurlyBracketsControl />
+                <Grid x:Name="ResultsContainer" />
+                <helpers:CloseCurlyBracketsControl />
+
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>

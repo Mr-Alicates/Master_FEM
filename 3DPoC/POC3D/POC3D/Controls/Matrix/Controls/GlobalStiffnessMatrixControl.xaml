@@ -6,22 +6,29 @@
              xmlns:helpers="clr-namespace:POC3D.Controls.Matrix.Controls.Helpers"
              mc:Ignorable="d">
   <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible">
-    <StackPanel Orientation="Horizontal">
+        <StackPanel Orientation="Vertical">
 
-      <helpers:OpenBracketsControl />
-      <Grid x:Name="GlobalStiffnessMatrixContainer" />
-      <helpers:CloseBracketsControl />
+            <TextBlock Text="Global Stiffness Matrix" />
+            <Separator />
 
-      <helpers:OpenCurlyBracketsControl />
-      <Grid x:Name="DisplacementsContainer" />
-      <helpers:CloseCurlyBracketsControl />
+            <StackPanel Orientation="Horizontal"
+                        VerticalAlignment="Center">
 
-      <helpers:ScalarControl Scalar="=" />
+                <helpers:OpenBracketsControl />
+                <Grid x:Name="GlobalStiffnessMatrixContainer" />
+                <helpers:CloseBracketsControl />
 
-      <helpers:OpenCurlyBracketsControl />
-      <Grid x:Name="ForcesContainer" />
-      <helpers:CloseCurlyBracketsControl />
+                <helpers:OpenCurlyBracketsControl />
+                <Grid x:Name="DisplacementsContainer" />
+                <helpers:CloseCurlyBracketsControl />
 
-    </StackPanel>
-  </ScrollViewer>
+                <helpers:ScalarControl Scalar="=" />
+
+                <helpers:OpenCurlyBracketsControl />
+                <Grid x:Name="ForcesContainer" />
+                <helpers:CloseCurlyBracketsControl />
+
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>

@@ -31,6 +31,11 @@
           DataContext="{Binding Path=.}"
           ProblemViewModel="{Binding ProblemViewModel}" />
       </TabItem>
+      <TabItem Header="Solved reaction forces">
+        <controls:SolvedReactionForcesControl
+          DataContext="{Binding Path=.}"
+          ProblemViewModel="{Binding ProblemViewModel}" />
+      </TabItem>
     </TabControl>
   </Grid>
 </Window>

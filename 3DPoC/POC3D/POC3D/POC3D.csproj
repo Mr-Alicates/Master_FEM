@@ -97,6 +97,9 @@
     <Compile Include="Controls\Matrix\Controls\Helpers\Matrix62Control.xaml.cs">
       <DependentUpon>Matrix62Control.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Matrix\Controls\SolvedReactionForcesControl.xaml.cs">
+      <DependentUpon>SolvedReactionForcesControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Matrix\Controls\SolvedDisplacementsControl.xaml.cs">
       <DependentUpon>SolvedDisplacementsControl.xaml</DependentUpon>
     </Compile>
@@ -249,6 +252,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\Matrix\Controls\Helpers\Matrix62Control.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Matrix\Controls\SolvedReactionForcesControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

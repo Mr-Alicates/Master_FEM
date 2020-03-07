@@ -18,6 +18,8 @@ namespace POC3D.ViewModel
         private bool? _canBeSolved;
         private NumericMatrix _compactedForcesVector;
         private NumericMatrix _compactedMatrix;
+        private NumericMatrix _fullSolvedDisplacementsVector;
+        private NumericMatrix _solvedReactionForces;
 
         private CorrespondenceMatrix _correspondenceMatrix;
         private bool _displacementAnimation;
@@ -153,6 +155,12 @@ namespace POC3D.ViewModel
 
         public NumericMatrix SolvedDisplacementsVector =>
             _solvedDisplacementsVector ??= MatrixHelper.SolveForDisplacements(this);
+
+        public NumericMatrix FullSolvedDisplacementsVector =>
+            _fullSolvedDisplacementsVector ??= MatrixHelper.BuildFullSolvedDisplacementsVector(this);
+
+        public NumericMatrix SolvedReactionForces =>
+            _solvedReactionForces ??= MatrixHelper.SolveForReactionForces(this);
 
         public bool CanBeSolved => _canBeSolved ??= MatrixHelper.CanProblemBeSolved(this);
 
@@ -346,6 +354,8 @@ namespace POC3D.ViewModel
             _compactedMatrix = null;
             _compactedForcesVector = null;
             _solvedDisplacementsVector = null;
+            _fullSolvedDisplacementsVector = null;
+            _solvedReactionForces = null;
             _canBeSolved = null;
 
             OnPropertyChanged(nameof(CorrespondenceMatrix));
@@ -353,12 +363,13 @@ namespace POC3D.ViewModel
             OnPropertyChanged(nameof(CompactedMatrix));
             OnPropertyChanged(nameof(CompactedForcesVector));
             OnPropertyChanged(nameof(SolvedDisplacementsVector));
+            OnPropertyChanged(nameof(FullSolvedDisplacementsVector));
+            OnPropertyChanged(nameof(SolvedReactionForces));
             OnPropertyChanged(nameof(CanBeSolved));
             OnPropertyChanged(nameof(NumberOfNodes));
             OnPropertyChanged(nameof(NumberOfElements));
             OnPropertyChanged(nameof(NumberOfDirichletBoundaryConditions));
         }
-
 
         private void UpdateDisplacementsInResultNodes()
         {

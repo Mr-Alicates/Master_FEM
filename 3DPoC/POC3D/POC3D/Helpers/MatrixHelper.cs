@@ -144,6 +144,51 @@ namespace POC3D.Helpers
             return solution;
         }
 
+        public static NumericMatrix BuildFullSolvedDisplacementsVector(ProblemViewModel problem)
+        {
+            var result = new NumericMatrix(problem.Nodes.Count * 3, 1);
+
+            var solvedDisplacementsVector = problem.SolvedDisplacementsVector;
+
+            var index = 0;
+            var solvedIndex = 0;
+
+            foreach (var node in problem.Nodes)
+            {
+                if (node.IsFixed)
+                {
+
+                    result[index, 0] = 0;
+                    result[index + 1, 0] = 0;
+                    result[index + 2, 0] = 0;
+                }
+                else
+                {
+
+                    result[index, 0] = solvedDisplacementsVector[solvedIndex, 0];
+                    result[index + 1, 0] = solvedDisplacementsVector[solvedIndex + 1, 0];
+                    result[index + 2, 0] = solvedDisplacementsVector[solvedIndex + 2, 0];
+
+                    solvedIndex = solvedIndex + 3;
+                }
+
+                index = index + 3;
+            }
+
+            return result;
+        }
+
+        public static NumericMatrix SolveForReactionForces(ProblemViewModel problem)
+        {
+            var globalStiffnessMatrix = problem.GlobalStiffnessMatrix;
+
+            var fullDisplacementsVector = problem.FullSolvedDisplacementsVector;
+
+            var result = globalStiffnessMatrix * fullDisplacementsVector;
+
+            return result;
+        }
+
         public static CorrespondenceMatrix BuildCorrespondenceMatrix(ProblemViewModel problem)
         {
             var result = new CorrespondenceMatrix();

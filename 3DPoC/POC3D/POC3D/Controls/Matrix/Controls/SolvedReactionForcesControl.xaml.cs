@@ -8,16 +8,16 @@ using POC3D.ViewModel;
 namespace POC3D.Controls.Matrix.Controls
 {
     /// <summary>
-    ///     Interaction logic for GlobalStiffnessMatrixControl.xaml
+    ///     Interaction logic for SolvedReactionForcesControl.xaml
     /// </summary>
-    public partial class GlobalStiffnessMatrixControl : UserControl
+    public partial class SolvedReactionForcesControl : UserControl
     {
         public static readonly DependencyProperty ProblemViewModelProperty = DependencyProperty.Register(
             nameof(ProblemViewModel),
-            typeof(ProblemViewModel), typeof(GlobalStiffnessMatrixControl),
+            typeof(ProblemViewModel), typeof(SolvedReactionForcesControl),
             new PropertyMetadata(null, ProblemViewModelChangedCallback));
 
-        public GlobalStiffnessMatrixControl()
+        public SolvedReactionForcesControl()
         {
             InitializeComponent();
         }
@@ -69,9 +69,9 @@ namespace POC3D.Controls.Matrix.Controls
             }
 
             foreach (var rowIndex in Enumerable.Range(0, globalStiffnessMatrix.Rows))
-            foreach (var columnIndex in Enumerable.Range(0, globalStiffnessMatrix.Columns))
-                BuildTextBlock(GlobalStiffnessMatrixContainer, $"{globalStiffnessMatrix[rowIndex, columnIndex]}",
-                    rowIndex + 1, columnIndex + 1, Brushes.Black);
+                foreach (var columnIndex in Enumerable.Range(0, globalStiffnessMatrix.Columns))
+                    BuildTextBlock(GlobalStiffnessMatrixContainer, $"{globalStiffnessMatrix[rowIndex, columnIndex]}",
+                        rowIndex + 1, columnIndex + 1, Brushes.Black);
         }
 
         private void FillDisplacements(ProblemViewModel problemViewModel)
@@ -91,21 +91,16 @@ namespace POC3D.Controls.Matrix.Controls
             // This is filler to align the items from the global stiffness matrix to the displacement vector
             BuildTextBlock(DisplacementsContainer, "Displacements", 0, 0, Brushes.Black);
 
+            var fullDisplacementsVector = problemViewModel.FullSolvedDisplacementsVector;
+
             var elementIndex = 1;
             foreach (var node in problemViewModel.Nodes)
             {
-                if (node.IsFixed)
-                {
-                    BuildTextBlock(DisplacementsContainer, "0", elementIndex * 3 - 2, 0, Brushes.Red);
-                    BuildTextBlock(DisplacementsContainer, "0", elementIndex * 3 - 1, 0, Brushes.Red);
-                    BuildTextBlock(DisplacementsContainer, "0", elementIndex * 3, 0, Brushes.Red);
-                }
-                else
-                {
-                    BuildTextBlock(DisplacementsContainer, $"d{elementIndex}x", elementIndex * 3 - 2, 0, Brushes.Green);
-                    BuildTextBlock(DisplacementsContainer, $"d{elementIndex}y", elementIndex * 3 - 1, 0, Brushes.Green);
-                    BuildTextBlock(DisplacementsContainer, $"d{elementIndex}z", elementIndex * 3, 0, Brushes.Green);
-                }
+                var color = node.IsFixed ? Brushes.Red : Brushes.Green;
+
+                BuildTextBlock(DisplacementsContainer, $"{fullDisplacementsVector[elementIndex * 3 - 3, 0]}", elementIndex * 3 - 2, 0, color);
+                BuildTextBlock(DisplacementsContainer, $"{fullDisplacementsVector[elementIndex * 3 - 2, 0]}", elementIndex * 3 - 1, 0, color);
+                BuildTextBlock(DisplacementsContainer, $"{fullDisplacementsVector[elementIndex * 3 - 1, 0]}", elementIndex * 3, 0, color);
 
                 elementIndex++;
             }
@@ -117,7 +112,6 @@ namespace POC3D.Controls.Matrix.Controls
             ForcesContainer.ColumnDefinitions.Clear();
             ForcesContainer.RowDefinitions.Clear();
 
-
             foreach (var rowIndex in Enumerable.Range(0, problemViewModel.NumberOfNodes * 3 + 1))
                 ForcesContainer.RowDefinitions.Add(new RowDefinition
                 {
@@ -128,34 +122,25 @@ namespace POC3D.Controls.Matrix.Controls
             // This is filler to align the items from the global stiffness matrix to the displacement vector
             BuildTextBlock(ForcesContainer, "Forces", 0, 0, Brushes.Black);
 
+            var solvedReactionForces = problemViewModel.SolvedReactionForces;
+
             var elementIndex = 1;
             foreach (var node in problemViewModel.Nodes)
             {
-                if (node.IsFixed)
-                {
-                    BuildTextBlock(ForcesContainer, $"Reaction F{elementIndex}x", elementIndex * 3 - 2, 0, Brushes.Red);
-                    BuildTextBlock(ForcesContainer, $"Reaction F{elementIndex}y", elementIndex * 3 - 1, 0, Brushes.Red);
-                    BuildTextBlock(ForcesContainer, $"Reaction F{elementIndex}z", elementIndex * 3, 0, Brushes.Red);
-                }
-                else
-                {
-                    var appliedForce = problemViewModel.Forces.FirstOrDefault(force => force.Node == node);
+                var color = node.IsFixed ? Brushes.Red : Brushes.Green;
 
-                    BuildTextBlock(ForcesContainer, appliedForce?.ApplicationVector.X.ToString() ?? "0",
-                        elementIndex * 3 - 2, 0, Brushes.Green);
-                    BuildTextBlock(ForcesContainer, appliedForce?.ApplicationVector.Y.ToString() ?? "0",
-                        elementIndex * 3 - 1, 0, Brushes.Green);
-                    BuildTextBlock(ForcesContainer, appliedForce?.ApplicationVector.Z.ToString() ?? "0",
-                        elementIndex * 3, 0, Brushes.Green);
-                }
+                BuildTextBlock(ForcesContainer, $"{solvedReactionForces[elementIndex * 3 - 3, 0]}", elementIndex * 3 - 2, 0, color);
+                BuildTextBlock(ForcesContainer, $"{solvedReactionForces[elementIndex * 3 - 2, 0]}", elementIndex * 3 - 1, 0, color);
+                BuildTextBlock(ForcesContainer, $"{solvedReactionForces[elementIndex * 3 - 1, 0]}", elementIndex * 3, 0, color);
 
                 elementIndex++;
             }
+
         }
 
         private static void ProblemViewModelChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var control = d as GlobalStiffnessMatrixControl;
+            var control = d as SolvedReactionForcesControl;
 
             if (control == null) return;
 

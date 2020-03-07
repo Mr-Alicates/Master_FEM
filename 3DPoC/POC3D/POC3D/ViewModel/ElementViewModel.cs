@@ -32,6 +32,7 @@ namespace POC3D.ViewModel
             Origin = origin;
             Destination = destination;
             _materialViewModel = new MaterialViewModel(Element.Material);
+            UpdateGeometryMesh();
         }
 
         public bool IsSelected

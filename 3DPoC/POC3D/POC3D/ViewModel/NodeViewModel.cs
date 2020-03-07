@@ -16,6 +16,7 @@ namespace POC3D.ViewModel
         public NodeViewModel(ModelNode modelNode)
         {
             Node = modelNode;
+            UpdateGeometryMesh();
         }
 
         public int Id => Node.Id;

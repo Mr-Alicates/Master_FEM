@@ -19,6 +19,7 @@ namespace POC3D.ViewModel
         {
             Force = force;
             Node = node;
+            UpdateGeometryMesh();
         }
 
         public ModelForce Force { get; }

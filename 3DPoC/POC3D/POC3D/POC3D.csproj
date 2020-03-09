@@ -1,0 +1,407 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <LangVersion>8.0</LangVersion>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B661A982-1AEA-4B06-84D3-03B3F726EA8B}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>POC3D</RootNamespace>
+    <AssemblyName>POC3D</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MathNet.Numerics, Version=4.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MathNet.Numerics.4.9.0\lib\net461\MathNet.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Controls\ManagementControl.xaml.cs">
+      <DependentUpon>ManagementControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Elements\ElementAddingControl.xaml.cs">
+      <DependentUpon>ElementAddingControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Elements\SelectedElementDetailsControl.xaml.cs">
+      <DependentUpon>SelectedElementDetailsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Elements\ElementListingControl.xaml.cs">
+      <DependentUpon>ElementListingControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Forces\ForceAddingControl.xaml.cs">
+      <DependentUpon>ForceAddingControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Forces\SelectedForceDetailsControl.xaml.cs">
+      <DependentUpon>SelectedForceDetailsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Forces\ForceListingControl.xaml.cs">
+      <DependentUpon>ForceListingControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Matrix\Controls\HowToBuildGlobalStiffnessMatrixControl.xaml.cs">
+      <DependentUpon>HowToBuildGlobalStiffnessMatrixControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Matrix\Controls\CorrespondenceMatrixControl.xaml.cs">
+      <DependentUpon>CorrespondenceMatrixControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Matrix\Controls\Helpers\Matrix26Control.xaml.cs">
+      <DependentUpon>Matrix26Control.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Matrix\Controls\Helpers\Matrix62Control.xaml.cs">
+      <DependentUpon>Matrix62Control.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Matrix\Controls\SolvedReactionForcesControl.xaml.cs">
+      <DependentUpon>SolvedReactionForcesControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Matrix\Controls\SolvedDisplacementsControl.xaml.cs">
+      <DependentUpon>SolvedDisplacementsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Matrix\Controls\GlobalElementStiffnessMatrixControl.xaml.cs">
+      <DependentUpon>GlobalElementStiffnessMatrixControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Matrix\Controls\CompactedGlobalStiffnessMatrixControl.xaml.cs">
+      <DependentUpon>CompactedGlobalStiffnessMatrixControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Matrix\Controls\GlobalStiffnessMatrixControl.xaml.cs">
+      <DependentUpon>GlobalStiffnessMatrixControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Matrix\Controls\Helpers\CloseBracketsControl.xaml.cs">
+      <DependentUpon>CloseBracketsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Matrix\Controls\Helpers\CloseCurlyBracketsControl.xaml.cs">
+      <DependentUpon>CloseCurlyBracketsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Matrix\Controls\Helpers\Matrix1Control.xaml.cs">
+      <DependentUpon>Matrix1Control.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Matrix\Controls\Helpers\Matrix6Control.xaml.cs">
+      <DependentUpon>Matrix6Control.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Matrix\Controls\Helpers\ScalarControl.xaml.cs">
+      <DependentUpon>ScalarControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Matrix\Controls\Helpers\Matrix2Control.xaml.cs">
+      <DependentUpon>Matrix2Control.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Matrix\Controls\Helpers\OpenBracketsControl.xaml.cs">
+      <DependentUpon>OpenBracketsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Matrix\Controls\Helpers\OpenCurlyBracketsControl.xaml.cs">
+      <DependentUpon>OpenCurlyBracketsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Matrix\Controls\Helpers\Vector1Control.xaml.cs">
+      <DependentUpon>Vector1Control.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Matrix\Controls\Helpers\Vector6Control.xaml.cs">
+      <DependentUpon>Vector6Control.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Matrix\Controls\Helpers\Vector2Control.xaml.cs">
+      <DependentUpon>Vector2Control.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Matrix\Controls\LocalElementExpandedMatrixControl.xaml.cs">
+      <DependentUpon>LocalElementExpandedMatrixControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Matrix\Controls\LocalElementMatrixControl.xaml.cs">
+      <DependentUpon>LocalElementMatrixControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Matrix\Controls\TransformationMatrixControl.xaml.cs">
+      <DependentUpon>TransformationMatrixControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Matrix\Controls\TransformToGlobalCoordinateSystemControl.xaml.cs">
+      <DependentUpon>TransformToGlobalCoordinateSystemControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Matrix\GlobalMatrixInfoWindow.xaml.cs">
+      <DependentUpon>GlobalMatrixInfoWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Matrix\MatrixInfoWindow.xaml.cs">
+      <DependentUpon>MatrixInfoWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Nodes\SelectedNodeDetailsControl.xaml.cs">
+      <DependentUpon>SelectedNodeDetailsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Nodes\NodeListingControl.xaml.cs">
+      <DependentUpon>NodeListingControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Problem\ProblemDetailsControl.xaml.cs">
+      <DependentUpon>ProblemDetailsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\VisualAreaControl.xaml.cs">
+      <DependentUpon>VisualAreaControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\MatrixHelper.cs" />
+    <Compile Include="Helpers\GraphicsHelper.cs" />
+    <Compile Include="Helpers\MaterialsHelper.cs" />
+    <Compile Include="Model\Calculations\ConstantMatrix.cs" />
+    <Compile Include="Model\Calculations\CorrespondenceMatrix.cs" />
+    <Compile Include="Model\Calculations\NumericMatrix.cs" />
+    <Compile Include="Model\ModelBarElement.cs" />
+    <Compile Include="Model\IModelElement.cs" />
+    <Compile Include="Model\ModelForce.cs" />
+    <Compile Include="Model\ModelMaterial.cs" />
+    <Compile Include="Model\ModelNode.cs" />
+    <Compile Include="Model\ModelPoint.cs" />
+    <Compile Include="Model\ModelProblem.cs" />
+    <Compile Include="Model\ModelVector.cs" />
+    <Compile Include="ViewModel\Base\GeometryViewModel.cs" />
+    <Compile Include="ViewModel\Commands\AddElementCommand.cs" />
+    <Compile Include="ViewModel\Commands\AddForceCommand.cs" />
+    <Compile Include="ViewModel\Commands\AddNodeCommand.cs" />
+    <Compile Include="ViewModel\Commands\ButtonCommand.cs" />
+    <Compile Include="ViewModel\Commands\DeleteElementCommand.cs" />
+    <Compile Include="ViewModel\Commands\DeleteForceCommand.cs" />
+    <Compile Include="ViewModel\Commands\DeleteNodeCommand.cs" />
+    <Compile Include="ViewModel\ForceViewModel.cs" />
+    <Compile Include="ViewModel\InterfaceControlViewModel.cs" />
+    <Compile Include="ViewModel\CameraViewModel.cs" />
+    <Compile Include="ViewModel\ElementViewModel.cs" />
+    <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\MaterialViewModel.cs" />
+    <Compile Include="ViewModel\NewForceViewModel.cs" />
+    <Compile Include="ViewModel\NewElementViewModel.cs" />
+    <Compile Include="ViewModel\NodeViewModel.cs" />
+    <Compile Include="ViewModel\Base\Observable.cs" />
+    <Compile Include="ViewModel\ProblemViewModel.cs" />
+    <Compile Include="ViewModel\ResultElementViewModel.cs" />
+    <Compile Include="ViewModel\ResultForceViewModel.cs" />
+    <Compile Include="ViewModel\ResultNodeViewModel.cs" />
+    <Page Include="Controls\ManagementControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Elements\ElementAddingControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Elements\SelectedElementDetailsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Elements\ElementListingControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Forces\ForceAddingControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Forces\SelectedForceDetailsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Forces\ForceListingControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Matrix\Controls\HowToBuildGlobalStiffnessMatrixControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Matrix\Controls\CorrespondenceMatrixControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Matrix\Controls\Helpers\Matrix26Control.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Matrix\Controls\Helpers\Matrix62Control.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Matrix\Controls\SolvedReactionForcesControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Matrix\Controls\SolvedDisplacementsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Matrix\Controls\GlobalElementStiffnessMatrixControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Matrix\Controls\CompactedGlobalStiffnessMatrixControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Matrix\Controls\GlobalStiffnessMatrixControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Matrix\Controls\Helpers\CloseBracketsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Matrix\Controls\Helpers\CloseCurlyBracketsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Matrix\Controls\Helpers\Matrix1Control.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Matrix\Controls\Helpers\Matrix6Control.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Matrix\Controls\Helpers\ScalarControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Matrix\Controls\Helpers\Matrix2Control.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Matrix\Controls\Helpers\OpenBracketsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Matrix\Controls\Helpers\OpenCurlyBracketsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Matrix\Controls\Helpers\Vector1Control.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Matrix\Controls\Helpers\Vector6Control.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Matrix\Controls\Helpers\Vector2Control.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Matrix\Controls\LocalElementExpandedMatrixControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Matrix\Controls\LocalElementMatrixControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Matrix\Controls\TransformationMatrixControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Matrix\Controls\TransformToGlobalCoordinateSystemControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Matrix\GlobalMatrixInfoWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Matrix\MatrixInfoWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Nodes\SelectedNodeDetailsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Nodes\NodeListingControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Problem\ProblemDetailsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\VisualAreaControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon.ico" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

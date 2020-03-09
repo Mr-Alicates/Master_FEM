@@ -1,0 +1,41 @@
+﻿<Window x:Class="POC3D.Controls.Matrix.GlobalMatrixInfoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:POC3D.Controls.Matrix.Controls"
+        mc:Ignorable="d"
+        Title="Problem global matrices information">
+  <Grid>
+    <TabControl>
+      <TabItem Header="Correspondence Matrix">
+        <controls:CorrespondenceMatrixControl
+          DataContext="{Binding Path=.}"
+          ProblemViewModel="{Binding ProblemViewModel}" />
+      </TabItem>
+      <TabItem Header="How to build the Global Stiffness Matrix">
+        <controls:HowToBuildGlobalStiffnessMatrixControl />
+      </TabItem>
+      <TabItem Header="Global Stiffness Matrix">
+        <controls:GlobalStiffnessMatrixControl
+          DataContext="{Binding Path=.}"
+          ProblemViewModel="{Binding ProblemViewModel}" />
+      </TabItem>
+      <TabItem Header="Compacted global Stiffness Matrix">
+        <controls:CompactedGlobalStiffnessMatrixControl
+          DataContext="{Binding Path=.}"
+          ProblemViewModel="{Binding ProblemViewModel}" />
+      </TabItem>
+      <TabItem Header="Solved displacements">
+        <controls:SolvedDisplacementsControl
+          DataContext="{Binding Path=.}"
+          ProblemViewModel="{Binding ProblemViewModel}" />
+      </TabItem>
+      <TabItem Header="Solved reaction forces">
+        <controls:SolvedReactionForcesControl
+          DataContext="{Binding Path=.}"
+          ProblemViewModel="{Binding ProblemViewModel}" />
+      </TabItem>
+    </TabControl>
+  </Grid>
+</Window>

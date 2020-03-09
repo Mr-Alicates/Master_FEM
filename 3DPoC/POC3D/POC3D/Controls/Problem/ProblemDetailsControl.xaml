@@ -1,0 +1,75 @@
+﻿<UserControl x:Class="POC3D.Controls.Forces.ProblemDetailsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewModel="clr-namespace:POC3D.ViewModel"
+             mc:Ignorable="d"
+             MinWidth="300">
+  <StackPanel>
+
+    <TextBlock Text="Problem details" HorizontalAlignment="Center" FontWeight="Bold" />
+    <Separator />
+
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+      </Grid.RowDefinitions>
+
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+
+      <TextBox Grid.Row="0"
+               Grid.Column="0"
+               IsReadOnly="True"
+               Text="{Binding ProblemViewModel.CanBeSolved,Mode=OneWay}" />
+      <TextBlock Grid.Row="0" Grid.Column="1" Text="Is problem solvable?" />
+
+      <TextBox Grid.Row="1"
+               Grid.Column="0"
+               IsReadOnly="True"
+               Text="{Binding ProblemViewModel.NumberOfNodes,Mode=OneWay}" />
+      <TextBlock Grid.Row="1" Grid.Column="1" Text="Number of nodes" />
+
+      <TextBox Grid.Row="2"
+               Grid.Column="0"
+               IsReadOnly="True"
+               Text="{Binding ProblemViewModel.NumberOfElements,Mode=OneWay}" />
+      <TextBlock Grid.Row="2" Grid.Column="1" Text="Number of elements" />
+
+      <TextBox Grid.Row="3"
+               Grid.Column="0"
+               IsReadOnly="True"
+               Text="{Binding ProblemViewModel.NumberOfDirichletBoundaryConditions,Mode=OneWay}" />
+      <TextBlock Grid.Row="3" Grid.Column="1" Text="Dirichlet boundary conditions" />
+      <!-- Number of fixed nodes -->
+
+      <CheckBox Grid.Row="4"
+                Grid.Column="0"
+                IsChecked="{Binding ProblemViewModel.ShowProblem, Mode=TwoWay}" />
+      <TextBlock Grid.Row="4" Grid.Column="1" Text="Show problem" />
+
+      <TextBox Grid.Row="5"
+               Grid.Column="0"
+               Text="{Binding ProblemViewModel.DisplacementsMultiplier, Mode=TwoWay}" />
+      <TextBlock Grid.Row="5" Grid.Column="1" Text="Displacements multiplier" />
+
+      <CheckBox Grid.Row="6"
+                Grid.Column="0"
+                IsChecked="{Binding ProblemViewModel.DisplacementAnimation, Mode=TwoWay}" />
+      <TextBlock Grid.Row="6" Grid.Column="1" Text="Displacement animation" />
+
+    </Grid>
+
+    <Separator />
+
+  </StackPanel>
+</UserControl>

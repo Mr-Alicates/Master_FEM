@@ -1,0 +1,116 @@
+﻿<UserControl x:Class="POC3D.Controls.Matrix.Controls.TransformationMatrixControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:helpers="clr-namespace:POC3D.Controls.Matrix.Controls.Helpers"
+             mc:Ignorable="d">
+  <StackPanel Orientation="Vertical">
+
+    <TextBlock Text="Transformation matrix calculations" />
+    <Separator />
+    <TextBlock
+      Text="To transform the element local matrix into the global matrix of an element, we need to follow this steps:" />
+
+    <TextBlock Text="* Find out Cx: The cosine of the angle between the local X axis and the global X axis" />
+    <TextBlock Text="* Find out Cy: The cosine of the angle between the local Y axis and the global Y axis" />
+    <TextBlock Text="* Find out Cz: The cosine of the angle between the local Z axis and the global Z axis" />
+    <TextBlock Text="* Use values Cx, Cy and Cz to assemble the transformation matrix" />
+    <Separator />
+
+    <TextBlock Text="* Cx = (X2 - X1) / L" />
+    <TextBlock Text="* Cy = (Y2 - Y1) / L" />
+    <TextBlock Text="* Cz = (Z2 - Z1) / L" />
+
+    <TextBlock Text="* L is the length of the element" />
+    <TextBlock Text="* (X1, Y1, Z1) are the coordinates of the first node of the element" />
+    <TextBlock Text="* (X2, Y2, Z2) are the coordinates of the second node of the element" />
+
+    <Separator />
+
+    <StackPanel
+      HorizontalAlignment="Center"
+      Orientation="Horizontal"
+      Height="180"
+      Width="Auto">
+
+      <helpers:Matrix26Control
+        M11="Cx"
+        M12="Cy"
+        M13="Cz"
+
+        M24="Cx"
+        M25="Cy"
+        M26="Cz" />
+
+    </StackPanel>
+
+    <StackPanel
+      HorizontalAlignment="Center"
+      Orientation="Horizontal"
+      Height="60"
+      Width="Auto">
+
+      <helpers:ScalarControl
+        Scalar="Cx" />
+
+      <helpers:ScalarControl
+        Scalar="=" />
+
+      <helpers:ScalarControl
+        Scalar="{Binding ProblemViewModel.SelectedElement.Cx}" />
+
+    </StackPanel>
+
+    <StackPanel
+      HorizontalAlignment="Center"
+      Orientation="Horizontal"
+      Height="60"
+      Width="Auto">
+
+      <helpers:ScalarControl
+        Scalar="Cy" />
+
+      <helpers:ScalarControl
+        Scalar="=" />
+
+      <helpers:ScalarControl
+        Scalar="{Binding ProblemViewModel.SelectedElement.Cy}" />
+
+    </StackPanel>
+
+    <StackPanel
+      HorizontalAlignment="Center"
+      Orientation="Horizontal"
+      Height="60"
+      Width="Auto">
+
+      <helpers:ScalarControl
+        Scalar="Cz" />
+
+      <helpers:ScalarControl
+        Scalar="=" />
+
+      <helpers:ScalarControl
+        Scalar="{Binding ProblemViewModel.SelectedElement.Cz}" />
+
+    </StackPanel>
+
+
+    <TextBlock Text="The transformation matrix of the selected element is:" />
+
+    <StackPanel
+      HorizontalAlignment="Center"
+      Orientation="Horizontal"
+      Height="180"
+      Width="Auto">
+
+      <helpers:Matrix26Control
+        Matrix="{Binding ProblemViewModel.SelectedElement.TransformationMatrix}" />
+
+    </StackPanel>
+
+    <Separator />
+
+  </StackPanel>
+</UserControl>

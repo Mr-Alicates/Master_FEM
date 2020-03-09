@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="POC3D.Controls.Forces.ForceListingControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewModel="clr-namespace:POC3D.ViewModel"
+             mc:Ignorable="d"
+             MinWidth="300">
+  <StackPanel>
+
+    <TextBlock Text="List of forces" HorizontalAlignment="Center" FontWeight="Bold" />
+    <Separator />
+
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="*" />
+        <RowDefinition Height="30" />
+      </Grid.RowDefinitions>
+
+      <ListView Grid.Row="0"
+                ItemsSource="{Binding ProblemViewModel.Forces,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
+                SelectedItem="{Binding ProblemViewModel.SelectedForce,Mode=TwoWay}">
+
+        <ListView.ItemTemplate>
+          <DataTemplate DataType="viewModel:ForceViewModel">
+            <StackPanel Orientation="Horizontal">
+              <TextBlock Text="{Binding Name, Mode=OneWay}" />
+            </StackPanel>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+
+      </ListView>
+
+      <Button Grid.Row="1"
+              Content="Delete selected Force"
+              Command="{Binding ProblemViewModel.DeleteForceCommand}" />
+    </Grid>
+
+    <Separator />
+
+  </StackPanel>
+</UserControl>

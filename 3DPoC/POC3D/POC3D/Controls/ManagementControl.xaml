@@ -1,0 +1,48 @@
+﻿<UserControl x:Class="POC3D.Controls.ManagementControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:forces="clr-namespace:POC3D.Controls.Forces"
+             xmlns:elements="clr-namespace:POC3D.Controls.Elements"
+             xmlns:nodes="clr-namespace:POC3D.Controls.Nodes"
+             mc:Ignorable="d">
+  <Grid Background="LightGray">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*" />
+      <RowDefinition Height="auto" />
+      <RowDefinition Height="auto" />
+    </Grid.RowDefinitions>
+
+    <StackPanel Grid.Row="0" Orientation="Vertical">
+
+      <nodes:SelectedNodeDetailsControl DataContext="{Binding Path=.}"
+                                        Visibility="{Binding Path=InterfaceControlViewModel.NodeDetailsControlVisibility}" />
+
+      <elements:SelectedElementDetailsControl DataContext="{Binding Path=.}"
+                                              Visibility="{Binding Path=InterfaceControlViewModel.ElementDetailsControlVisibility}" />
+
+      <forces:SelectedForceDetailsControl DataContext="{Binding Path=.}"
+                                          Visibility="{Binding Path=InterfaceControlViewModel.ForceDetailsControlVisibility}" />
+
+      <nodes:NodeListingControl DataContext="{Binding Path=.}"
+                                Visibility="{Binding Path=InterfaceControlViewModel.NodeListingControlVisibility}" />
+
+      <elements:ElementListingControl DataContext="{Binding Path=.}"
+                                      Visibility="{Binding Path=InterfaceControlViewModel.ElementListingControlVisibility}" />
+
+      <forces:ForceListingControl DataContext="{Binding Path=.}"
+                                  Visibility="{Binding Path=InterfaceControlViewModel.ForceListingControlVisibility}" />
+
+      <elements:ElementAddingControl DataContext="{Binding Path=.}"
+                                     Visibility="{Binding Path=InterfaceControlViewModel.ElementAddingControlVisibility}" />
+
+      <forces:ForceAddingControl DataContext="{Binding Path=.}"
+                                 Visibility="{Binding Path=InterfaceControlViewModel.ForceAddingControlVisibility}" />
+
+    </StackPanel>
+
+    <Separator Grid.Row="1" Background="White" />
+    <forces:ProblemDetailsControl Grid.Row="2" VerticalAlignment="Bottom" DataContext="{Binding Path=.}" />
+  </Grid>
+</UserControl>

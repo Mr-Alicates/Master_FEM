@@ -1,0 +1,84 @@
+﻿<Window x:Class="POC3D.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:POC3D.Controls"
+        Title="POC3D">
+
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+
+    <Menu Grid.Row="0">
+
+      <MenuItem Header="Hide all" Command="{Binding InterfaceControlViewModel.HideAllCommand}" />
+
+      <MenuItem Header="Nodes">
+
+        <MenuItem Header="Show selected Node details"
+                  Command="{Binding InterfaceControlViewModel.ShowNodesControlCommand}" />
+
+        <MenuItem Header="Add new Node"
+                  Command="{Binding InterfaceControlViewModel.AddNodeCommand}" />
+
+        <MenuItem Header="Show list of Nodes"
+                  Command="{Binding InterfaceControlViewModel.ShowNodeListingCommand}" />
+
+      </MenuItem>
+
+      <MenuItem Header="Elements">
+
+        <MenuItem Header="Show selected Element details"
+                  Command="{Binding InterfaceControlViewModel.ShowElementsControlCommand}" />
+
+        <MenuItem Header="Add new Element"
+                  Command="{Binding InterfaceControlViewModel.AddElementCommand}" />
+
+        <MenuItem Header="Show list of Elements"
+                  Command="{Binding InterfaceControlViewModel.ShowElementListingCommand}" />
+
+        <MenuItem Header="Show matrices from element"
+                  Click="ShowMatrixInfoWindow" />
+
+      </MenuItem>
+
+      <MenuItem Header="Forces">
+
+        <MenuItem Header="Show selected Force details"
+                  Command="{Binding InterfaceControlViewModel.ShowForcesControlCommand}" />
+
+        <MenuItem Header="Add new Force"
+                  Command="{Binding InterfaceControlViewModel.AddForceCommand}" />
+
+        <MenuItem Header="Show list of Forces"
+                  Command="{Binding InterfaceControlViewModel.ShowForceListingCommand}" />
+
+      </MenuItem>
+
+      <MenuItem Header="Problem">
+
+        <MenuItem Header="Show matrices from problem"
+                  Click="ShowGlobalMatrixInfoWindow" />
+
+      </MenuItem>
+
+
+    </Menu>
+
+    <Grid Grid.Row="1">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="Auto" />
+      </Grid.ColumnDefinitions>
+
+      <controls:VisualAreaControl Grid.Column="0"
+                                  MainViewModel="{Binding Path=.}"
+                                  x:Name="Viewport"
+                                  Focusable="True" />
+
+      <controls:ManagementControl Grid.Column="1" DataContext="{Binding Path=.}" />
+
+    </Grid>
+  </Grid>
+</Window>

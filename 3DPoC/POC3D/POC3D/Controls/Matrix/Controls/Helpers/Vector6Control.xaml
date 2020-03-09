@@ -1,0 +1,63 @@
+﻿<UserControl x:Class="POC3D.Controls.Matrix.Controls.Helpers.Vector6Control"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:helpers="clr-namespace:POC3D.Controls.Matrix.Controls.Helpers"
+             mc:Ignorable="d">
+  <Grid Margin="5 0 5 0">
+
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="30" />
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition Width="30" />
+    </Grid.ColumnDefinitions>
+
+    <helpers:OpenCurlyBracketsControl Grid.Column="0" />
+
+    <Grid Grid.Column="1">
+
+      <Grid.RowDefinitions>
+        <RowDefinition Height="*" />
+        <RowDefinition Height="*" />
+        <RowDefinition Height="*" />
+        <RowDefinition Height="*" />
+        <RowDefinition Height="*" />
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+
+      <TextBlock x:Name="Position1"
+                 Grid.Row="0"
+                 VerticalAlignment="Center"
+                 HorizontalAlignment="Center" />
+
+      <TextBlock x:Name="Position2"
+                 Grid.Row="1"
+                 VerticalAlignment="Center"
+                 HorizontalAlignment="Center" />
+
+      <TextBlock x:Name="Position3"
+                 Grid.Row="2"
+                 VerticalAlignment="Center"
+                 HorizontalAlignment="Center" />
+
+      <TextBlock x:Name="Position4"
+                 Grid.Row="3"
+                 VerticalAlignment="Center"
+                 HorizontalAlignment="Center" />
+
+      <TextBlock x:Name="Position5"
+                 Grid.Row="4"
+                 VerticalAlignment="Center"
+                 HorizontalAlignment="Center" />
+
+      <TextBlock x:Name="Position6"
+                 Grid.Row="5"
+                 VerticalAlignment="Center"
+                 HorizontalAlignment="Center" />
+
+    </Grid>
+
+    <helpers:CloseCurlyBracketsControl Grid.Column="2" />
+  </Grid>
+</UserControl>

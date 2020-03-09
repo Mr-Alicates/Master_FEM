@@ -1,0 +1,113 @@
+﻿<UserControl x:Class="POC3D.Controls.Elements.SelectedElementDetailsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewModel="clr-namespace:POC3D.ViewModel"
+             mc:Ignorable="d"
+             MinWidth="300">
+  <StackPanel>
+
+    <TextBlock Text="Element details" HorizontalAlignment="Center" FontWeight="Bold" />
+    <Separator />
+
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+      </Grid.RowDefinitions>
+
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+
+      <TextBox IsReadOnly="True" Grid.Row="0" Grid.Column="0"
+               Text="{Binding ProblemViewModel.SelectedElement.Id, Mode=OneWay}" />
+      <TextBlock Grid.Row="0" Grid.Column="1" Text="Id" />
+
+      <TextBox IsReadOnly="True" Grid.Row="1" Grid.Column="0"
+               Text="{Binding ProblemViewModel.SelectedElement.Description, Mode=OneWay}" />
+      <TextBlock Grid.Row="1" Grid.Column="1" Text="Description" />
+
+      <ComboBox Grid.Row="2"
+                Grid.Column="0"
+                SelectedItem="{Binding ProblemViewModel.SelectedElement.Origin,Mode=TwoWay}"
+                ItemsSource="{Binding ProblemViewModel.Nodes}">
+        <ComboBox.ItemTemplate>
+          <DataTemplate DataType="viewModel:NodeViewModel">
+            <StackPanel Orientation="Horizontal">
+              <TextBlock Text="{Binding Name, Mode=OneWay}" />
+            </StackPanel>
+          </DataTemplate>
+        </ComboBox.ItemTemplate>
+      </ComboBox>
+      <TextBlock Grid.Row="2" Grid.Column="1" Text="Origin node" />
+
+      <ComboBox Grid.Row="3"
+                Grid.Column="0"
+                SelectedItem="{Binding ProblemViewModel.SelectedElement.Destination,Mode=TwoWay}"
+                ItemsSource="{Binding ProblemViewModel.Nodes}">
+
+        <ComboBox.ItemTemplate>
+          <DataTemplate DataType="viewModel:NodeViewModel">
+            <StackPanel Orientation="Horizontal">
+              <TextBlock Text="{Binding Name, Mode=OneWay}" />
+            </StackPanel>
+          </DataTemplate>
+        </ComboBox.ItemTemplate>
+      </ComboBox>
+      <TextBlock Grid.Row="3" Grid.Column="1" Text="Destination node" />
+
+
+      <ComboBox Grid.Row="4"
+                Grid.Column="0"
+                SelectedItem="{Binding ProblemViewModel.SelectedElement.Material,Mode=TwoWay}"
+                ItemsSource="{Binding ProblemViewModel.Materials}">
+        <ComboBox.ItemTemplate>
+          <DataTemplate DataType="viewModel:NodeViewModel">
+            <StackPanel Orientation="Horizontal">
+              <TextBlock Text="{Binding Name, Mode=OneWay}" />
+            </StackPanel>
+          </DataTemplate>
+        </ComboBox.ItemTemplate>
+      </ComboBox>
+      <TextBlock Grid.Row="4" Grid.Column="1" Text="Material" />
+
+
+      <TextBox IsReadOnly="True" Grid.Row="5" Grid.Column="0"
+               Text="{Binding ProblemViewModel.SelectedElement.Material.YoungsModulus, Mode=OneWay}" />
+      <TextBlock Grid.Row="5" Grid.Column="1" Text="YoungsModulus" />
+
+      <TextBox IsReadOnly="True" Grid.Row="6" Grid.Column="0"
+               Text="{Binding ProblemViewModel.SelectedElement.Material.PoissonRatio, Mode=OneWay}" />
+      <TextBlock Grid.Row="6" Grid.Column="1" Text="PoissonRatio" />
+
+
+      <TextBox Grid.Row="7" Grid.Column="0"
+               Text="{Binding ProblemViewModel.SelectedElement.CrossSectionArea, Mode=TwoWay}" />
+      <TextBlock Grid.Row="7" Grid.Column="1" Text="Cross section area (m^2)" />
+
+      <TextBox IsReadOnly="True" Grid.Row="8" Grid.Column="0"
+               Text="{Binding ProblemViewModel.SelectedElement.Length, Mode=OneWay}" />
+      <TextBlock Grid.Row="8" Grid.Column="1" Text="Length" />
+
+      <TextBox IsReadOnly="True" Grid.Row="9" Grid.Column="0"
+               Text="{Binding ProblemViewModel.SelectedElement.K, Mode=OneWay}" />
+      <TextBlock Grid.Row="9" Grid.Column="1" Text="K constant" />
+
+
+    </Grid>
+
+    <Separator />
+
+  </StackPanel>
+</UserControl>

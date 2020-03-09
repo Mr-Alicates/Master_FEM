@@ -1,0 +1,178 @@
+﻿<UserControl x:Class="POC3D.Controls.Matrix.Controls.GlobalElementStiffnessMatrixControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:helpers="clr-namespace:POC3D.Controls.Matrix.Controls.Helpers"
+             mc:Ignorable="d">
+  <StackPanel Orientation="Vertical">
+
+    <TextBlock Text="Calculation of the element's global stiffness matrix" />
+    <Separator />
+    <TextBlock Text="The equation for the element is as follows" />
+
+    <StackPanel
+      HorizontalAlignment="Center"
+      Orientation="Horizontal"
+      Margin="5">
+
+      <helpers:Vector1Control
+        V1="Global forces" />
+
+      <helpers:ScalarControl
+        Scalar="=" />
+
+      <helpers:ScalarControl
+        Scalar="Transpose (" />
+
+      <helpers:Matrix1Control
+        M11="Transformation Matrix T" />
+
+      <helpers:ScalarControl
+        Scalar=")" />
+
+      <helpers:Matrix1Control
+        M11="Local k" />
+
+      <helpers:Matrix1Control
+        M11="Transformation Matrix T" />
+
+      <helpers:Vector1Control
+        V1="Global displacements" />
+
+    </StackPanel>
+
+    <Separator />
+
+    <StackPanel
+      HorizontalAlignment="Center"
+      Orientation="Horizontal"
+      Margin="5">
+
+      <helpers:Vector6Control
+        V1="Global f1x(1)"
+        V2="Global f1y(1)"
+        V3="Global f1z(1)"
+        V4="Global f2x(1)"
+        V5="Global f2y(1)"
+        V6="Global f2z(1)" />
+
+      <helpers:ScalarControl
+        Scalar="=" />
+
+      <helpers:Matrix26Control
+        M11="Cx"
+        M12="Cy"
+        M13="Cz"
+
+        M24="Cx"
+        M25="Cy"
+        M26="Cz" />
+
+      <helpers:ScalarControl
+        Scalar="k" />
+
+      <helpers:Matrix6Control
+        M11="1"
+        M14="-1"
+        M41="-1"
+        M44="1" />
+
+      <helpers:Matrix62Control
+        M11="Cx"
+        M21="Cy"
+        M31="Cz"
+
+        M42="Cx"
+        M52="Cy"
+        M62="Cz" />
+
+      <helpers:Vector6Control
+        V1="Global d1x(1)"
+        V2="Global d1y(1)"
+        V3="Global d1z(1)"
+        V4="Global d2x(1)"
+        V5="Global d2y(1)"
+        V6="Global d2z(1)" />
+
+    </StackPanel>
+
+    <Separator />
+
+    <StackPanel
+      HorizontalAlignment="Center"
+      Orientation="Horizontal"
+      Margin="5">
+
+      <helpers:Vector6Control
+        V1="Global f1x(1)"
+        V2="Global f1y(1)"
+        V3="Global f1z(1)"
+        V4="Global f2x(1)"
+        V5="Global f2y(1)"
+        V6="Global f2z(1)" />
+
+      <helpers:ScalarControl
+        Scalar="=" />
+
+
+      <helpers:Matrix62Control
+        Matrix="{Binding ProblemViewModel.SelectedElement.TransformationMatrixTransposed}" />
+
+
+      <helpers:ScalarControl
+        Scalar="{Binding ProblemViewModel.SelectedElement.K}" />
+
+      <helpers:Matrix2Control
+        M11="1"
+        M12="-1"
+        M21="-1"
+        M22="1" />
+
+      <helpers:Matrix26Control
+        Matrix="{Binding ProblemViewModel.SelectedElement.TransformationMatrix}" />
+
+      <helpers:Vector6Control
+        V1="Global d1x(1)"
+        V2="Global d1y(1)"
+        V3="Global d1z(1)"
+        V4="Global d2x(1)"
+        V5="Global d2y(1)"
+        V6="Global d2z(1)" />
+
+    </StackPanel>
+
+    <Separator />
+
+    <StackPanel
+      HorizontalAlignment="Center"
+      Orientation="Horizontal"
+      Margin="5">
+
+      <helpers:Vector6Control
+        V1="Global f1x(1)"
+        V2="Global f1y(1)"
+        V3="Global f1z(1)"
+        V4="Global f2x(1)"
+        V5="Global f2y(1)"
+        V6="Global f2z(1)" />
+
+      <helpers:ScalarControl
+        Scalar="=" />
+
+      <helpers:Matrix6Control
+        Matrix="{Binding ProblemViewModel.SelectedElement.GlobalStiffnessMatrix}" />
+
+      <helpers:Vector6Control
+        V1="Global d1x(1)"
+        V2="Global d1y(1)"
+        V3="Global d1z(1)"
+        V4="Global d2x(1)"
+        V5="Global d2y(1)"
+        V6="Global d2z(1)" />
+
+    </StackPanel>
+
+
+  </StackPanel>
+</UserControl>

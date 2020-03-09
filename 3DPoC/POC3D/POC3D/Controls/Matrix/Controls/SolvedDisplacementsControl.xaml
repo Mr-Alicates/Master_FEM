@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="POC3D.Controls.Matrix.Controls.SolvedDisplacementsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:helpers="clr-namespace:POC3D.Controls.Matrix.Controls.Helpers"
+             mc:Ignorable="d">
+    <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible">
+        <StackPanel Orientation="Vertical">
+
+            <TextBlock Text="Displacement results" />
+            <Separator />
+
+            <TextBlock Text="The displacements are calculated by solving the linear equation system formed by the compacted stiffness matrix" />
+            <Separator />
+
+            <StackPanel Orientation="Horizontal"
+                        VerticalAlignment="Center">
+
+                <helpers:OpenCurlyBracketsControl />
+                <Grid x:Name="DisplacementsContainer" />
+                <helpers:CloseCurlyBracketsControl />
+
+                <helpers:ScalarControl Scalar="=" />
+
+                <helpers:OpenCurlyBracketsControl />
+                <Grid x:Name="ResultsContainer" />
+                <helpers:CloseCurlyBracketsControl />
+
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

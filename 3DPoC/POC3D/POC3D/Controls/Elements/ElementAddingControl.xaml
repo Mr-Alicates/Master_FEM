@@ -1,0 +1,54 @@
+﻿<UserControl x:Class="POC3D.Controls.Elements.ElementAddingControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             MinWidth="300">
+  <StackPanel>
+
+    <TextBlock Text="Add new element" HorizontalAlignment="Center" FontWeight="Bold" />
+    <Separator />
+
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="30" />
+      </Grid.RowDefinitions>
+
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+
+      <ComboBox Grid.Row="0"
+                Grid.Column="0"
+                ItemsSource="{Binding ProblemViewModel.Nodes,Mode=OneWay}"
+                DisplayMemberPath="Name"
+                SelectedItem="{Binding ProblemViewModel.NewElementViewModel.OriginNode}" />
+      <TextBlock Grid.Row="0"
+                 Grid.Column="1"
+                 Text="Origin node" />
+
+      <ComboBox Grid.Row="1"
+                Grid.Column="0"
+                ItemsSource="{Binding ProblemViewModel.Nodes,Mode=OneWay}"
+                DisplayMemberPath="Name"
+                SelectedItem="{Binding ProblemViewModel.NewElementViewModel.DestinationNode}" />
+      <TextBlock Grid.Row="1"
+                 Grid.Column="1"
+                 Text="Destination node" />
+
+      <Button Grid.Row="2"
+              Grid.Column="0"
+              Grid.ColumnSpan="2"
+              Content="Add new element"
+              Command="{Binding ProblemViewModel.NewElementViewModel.AddElementCommand}" />
+
+    </Grid>
+
+    <Separator />
+
+  </StackPanel>
+</UserControl>

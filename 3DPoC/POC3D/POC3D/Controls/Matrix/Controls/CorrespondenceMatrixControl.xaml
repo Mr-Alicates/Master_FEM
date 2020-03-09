@@ -1,0 +1,26 @@
+﻿<UserControl x:Class="POC3D.Controls.Matrix.Controls.CorrespondenceMatrixControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d">
+  <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible">
+
+        <StackPanel Orientation="Vertical">
+
+            <TextBlock Text="Correspondence matrix" />
+            <Separator />
+            <TextBlock Text="The correspondence matrix is used to build the global stiffness matrix from all the elements' stiffness matrices" />
+            <TextBlock Text="The correspondence matrix has a column and a row for each of the nodes in the problem" />
+            <TextBlock Text="The cells in the matrix may contain none, one or more elements that are touching the elements corresponding to the column or the row" />
+            <TextBlock Text="The correspondence matrix is always symmetrical" />
+            <Separator />
+            <TextBlock Text="Example: Element 'A ---> B' will appear in cells [A, A], [A, B], [B, A], [B, B]" />
+            <Separator />
+
+            <StackPanel Orientation="Horizontal">
+              <Grid x:Name="CorrespondenceMatrixContainer" />
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

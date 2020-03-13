@@ -4,17 +4,17 @@ namespace POC3D.Model
 {
     public interface IModelProblem
     {
+        IEnumerable<IModelNode> Nodes { get; }
+
         IEnumerable<IModelElement> Elements { get; }
 
-        List<IModelNode> Nodes { get; }
-
-        List<IModelForce> Forces { get; }
+        IEnumerable<IModelForce> Forces { get; }
 
         IModelNode AddNode();
-        
-        IModelForce AddForce(IModelNode node);
 
-        IModelElement AddBarElement(IModelNode node1, IModelNode node2);
+        IModelElement AddElement(IModelNode node1, IModelNode node2);
+
+        IModelForce AddForce(IModelNode node);
 
         void DeleteNode(IModelNode selectedNodeNode);
 

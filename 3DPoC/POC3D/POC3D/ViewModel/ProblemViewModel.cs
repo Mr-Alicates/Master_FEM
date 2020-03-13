@@ -277,7 +277,7 @@ namespace POC3D.ViewModel
 
         public ElementViewModel AddBarElement(NodeViewModel node1, NodeViewModel node2)
         {
-            var element = _modelProblem.AddBarElement(node1.Node, node2.Node);
+            var element = _modelProblem.AddElement(node1.Node, node2.Node);
 
             var result = new ElementViewModel(element, node1, node2);
 

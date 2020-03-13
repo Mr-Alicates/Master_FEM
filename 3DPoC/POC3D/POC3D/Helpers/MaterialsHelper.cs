@@ -5,7 +5,7 @@ namespace POC3D.Helpers
 {
     public static class MaterialsHelper
     {
-        private static readonly ModelMaterial[] Materials =
+        private static readonly IModelMaterial[] Materials =
         {
             ModelMaterial.None,
 
@@ -15,7 +15,7 @@ namespace POC3D.Helpers
             new ModelMaterial("Grey Cast Iron", 210000000000, 0.211)
         };
 
-        public static IEnumerable<ModelMaterial> GetAvailableMaterials()
+        public static IEnumerable<IModelMaterial> GetAvailableMaterials()
         {
             return Materials;
         }

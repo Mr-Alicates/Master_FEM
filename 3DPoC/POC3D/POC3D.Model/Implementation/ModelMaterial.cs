@@ -1,8 +1,8 @@
 ﻿namespace POC3D.Model
 {
-    public class ModelMaterial
+    public class ModelMaterial : IModelMaterial
     {
-        public static readonly ModelMaterial None = new ModelMaterial("None", 1, 1);
+        public static readonly IModelMaterial None = new ModelMaterial("None", 1, 1);
 
         public ModelMaterial(string name, double youngsModulus, double poissonRatio)
         {

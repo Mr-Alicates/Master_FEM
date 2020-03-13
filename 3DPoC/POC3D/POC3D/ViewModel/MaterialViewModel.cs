@@ -4,12 +4,12 @@ namespace POC3D.ViewModel
 {
     public class MaterialViewModel
     {
-        public MaterialViewModel(ModelMaterial modelMaterial)
+        public MaterialViewModel(IModelMaterial modelMaterial)
         {
             ModelMaterial = modelMaterial;
         }
 
-        public ModelMaterial ModelMaterial { get; }
+        public IModelMaterial ModelMaterial { get; }
 
         public string Name => ModelMaterial.Name;
 

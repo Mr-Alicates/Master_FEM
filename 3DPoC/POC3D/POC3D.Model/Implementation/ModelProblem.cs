@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace POC3D.Model
 {
-    public class ModelProblem
+    public class ModelProblem : IModelProblem
     {
         private readonly List<IModelElement> _elements = new List<IModelElement>();
 
@@ -16,18 +16,18 @@ namespace POC3D.Model
 
         public IEnumerable<IModelElement> Elements => _elements;
 
-        public List<ModelNode> Nodes { get; } = new List<ModelNode>();
+        public List<IModelNode> Nodes { get; } = new List<IModelNode>();
 
-        public List<ModelForce> Forces { get; } = new List<ModelForce>();
+        public List<IModelForce> Forces { get; } = new List<IModelForce>();
 
-        public ModelNode AddNode()
+        public IModelNode AddNode()
         {
             var result = ModelNode.CreateNewNode();
             Nodes.Add(result);
             return result;
         }
 
-        public ModelForce AddForce(ModelNode node)
+        public IModelForce AddForce(IModelNode node)
         {
             if (!Nodes.Contains(node)) throw new InvalidOperationException();
 
@@ -38,7 +38,7 @@ namespace POC3D.Model
             return force;
         }
 
-        public IModelElement AddBarElement(ModelNode node1, ModelNode node2)
+        public IModelElement AddBarElement(IModelNode node1, IModelNode node2)
         {
             if (!Nodes.Contains(node1)) throw new InvalidOperationException();
 
@@ -51,7 +51,7 @@ namespace POC3D.Model
             return element;
         }
 
-        public void DeleteNode(ModelNode selectedNodeNode)
+        public void DeleteNode(IModelNode selectedNodeNode)
         {
             Nodes.Remove(selectedNodeNode);
         }
@@ -61,7 +61,7 @@ namespace POC3D.Model
             _elements.Remove(element);
         }
 
-        public void DeleteForce(ModelForce force)
+        public void DeleteForce(IModelForce force)
         {
             Forces.Remove(force);
         }

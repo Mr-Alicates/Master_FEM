@@ -13,7 +13,7 @@ namespace POC3D.ViewModel
 
         private bool _isSelected;
 
-        public NodeViewModel(ModelNode modelNode)
+        public NodeViewModel(IModelNode modelNode)
         {
             Node = modelNode;
             UpdateGeometryMesh();
@@ -21,7 +21,7 @@ namespace POC3D.ViewModel
 
         public int Id => Node.Id;
 
-        public ModelNode Node { get; }
+        public IModelNode Node { get; }
 
         public Point3D Coordinates => new Point3D(
             Node.Coordinates.X,

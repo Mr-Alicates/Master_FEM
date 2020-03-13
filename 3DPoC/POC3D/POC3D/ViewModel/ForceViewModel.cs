@@ -15,14 +15,14 @@ namespace POC3D.ViewModel
         private bool _isSelected;
         private NodeViewModel _nodeViewModel;
 
-        public ForceViewModel(ModelForce force, NodeViewModel node)
+        public ForceViewModel(IModelForce force, NodeViewModel node)
         {
             Force = force;
             Node = node;
             UpdateGeometryMesh();
         }
 
-        public ModelForce Force { get; }
+        public IModelForce Force { get; }
 
         public NodeViewModel Node
         {

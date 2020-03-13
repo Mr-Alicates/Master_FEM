@@ -6,13 +6,11 @@
 
         string Description { get; }
 
-        ModelNode OriginNode { get; set; }
+        IModelNode OriginNode { get; set; }
 
-        ModelNode DestinationNode { get; set; }
+        IModelNode DestinationNode { get; set; }
 
-        ModelVector Direction { get; }
-
-        ModelMaterial Material { get; set; }
+        IModelMaterial Material { get; set; }
 
         double CrossSectionArea { get; set; }
 

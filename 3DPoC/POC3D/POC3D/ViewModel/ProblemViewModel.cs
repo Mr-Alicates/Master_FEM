@@ -14,7 +14,7 @@ namespace POC3D.ViewModel
 {
     public class ProblemViewModel : Observable
     {
-        private readonly ModelProblem _modelProblem;
+        private readonly IModelProblem _modelProblem;
         private bool? _canBeSolved;
         private NumericMatrix _compactedForcesVector;
         private NumericMatrix _compactedMatrix;

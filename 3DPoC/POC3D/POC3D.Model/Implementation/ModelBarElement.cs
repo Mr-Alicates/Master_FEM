@@ -5,7 +5,7 @@
         //I will cleanup this later;
         private static int IdCounter = 1;
 
-        public ModelBarElement(ModelNode origin, ModelNode destination)
+        public ModelBarElement(IModelNode origin, IModelNode destination)
         {
             OriginNode = origin;
             DestinationNode = destination;
@@ -16,13 +16,13 @@
 
         public string Description => $"({OriginNode.Id}) ---> ({DestinationNode.Id})";
 
-        public ModelNode OriginNode { get; set; }
+        public IModelNode OriginNode { get; set; }
 
-        public ModelNode DestinationNode { get; set; }
+        public IModelNode DestinationNode { get; set; }
 
         public ModelVector Direction => new ModelVector(DestinationNode.Coordinates, OriginNode.Coordinates);
 
-        public ModelMaterial Material { get; set; } = ModelMaterial.None;
+        public IModelMaterial Material { get; set; } = ModelMaterial.None;
 
         public double CrossSectionArea { get; set; }
 

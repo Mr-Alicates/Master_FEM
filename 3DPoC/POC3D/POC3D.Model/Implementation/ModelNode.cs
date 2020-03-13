@@ -1,6 +1,6 @@
 ﻿namespace POC3D.Model
 {
-    public class ModelNode
+    public class ModelNode : IModelNode
     {
         //I will cleanup this later;
         private static int IdCounter = 1;
@@ -17,7 +17,7 @@
 
         public bool IsFixed { get; set; }
 
-        public static ModelNode CreateNewNode()
+        public static IModelNode CreateNewNode()
         {
             return new ModelNode(IdCounter++, new ModelPoint(0, 0, 0));
         }

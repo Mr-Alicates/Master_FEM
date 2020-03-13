@@ -1,14 +1,14 @@
 ﻿namespace POC3D.Model
 {
-    public class ModelForce
+    public class ModelForce : IModelForce
     {
-        public ModelForce(ModelNode applicationNode)
+        public ModelForce(IModelNode applicationNode)
         {
             Node = applicationNode;
             ApplicationVector = new ModelVector();
         }
 
-        public ModelNode Node { get; set; }
+        public IModelNode Node { get; set; }
 
         public ModelVector ApplicationVector { get; }
 

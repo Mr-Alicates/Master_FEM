@@ -181,14 +181,6 @@
     <Compile Include="Model\Calculations\ConstantMatrix.cs" />
     <Compile Include="Model\Calculations\CorrespondenceMatrix.cs" />
     <Compile Include="Model\Calculations\NumericMatrix.cs" />
-    <Compile Include="Model\ModelBarElement.cs" />
-    <Compile Include="Model\IModelElement.cs" />
-    <Compile Include="Model\ModelForce.cs" />
-    <Compile Include="Model\ModelMaterial.cs" />
-    <Compile Include="Model\ModelNode.cs" />
-    <Compile Include="Model\ModelPoint.cs" />
-    <Compile Include="Model\ModelProblem.cs" />
-    <Compile Include="Model\ModelVector.cs" />
     <Compile Include="ViewModel\Base\GeometryViewModel.cs" />
     <Compile Include="ViewModel\Commands\AddElementCommand.cs" />
     <Compile Include="ViewModel\Commands\AddForceCommand.cs" />
@@ -402,6 +394,11 @@
   <ItemGroup>
     <Resource Include="Icon.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\POC3D.Model\POC3D.Model.csproj">
+      <Project>{385e6a2a-71fc-4ecf-b32c-663d28653f7a}</Project>
+      <Name>POC3D.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

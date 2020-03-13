@@ -1,8 +1,9 @@
 ﻿namespace POC3D.Model
 {
-    public class ModelForce : IModelForce
+    public class ModelForce : Entity, IModelForce
     {
-        public ModelForce(IModelNode applicationNode)
+        public ModelForce(int id, IModelNode applicationNode)
+            : base(id)
         {
             Node = applicationNode;
             ApplicationVector = new ModelVector();

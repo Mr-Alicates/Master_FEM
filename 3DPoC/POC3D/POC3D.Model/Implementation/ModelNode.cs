@@ -1,25 +1,15 @@
 ﻿namespace POC3D.Model
 {
-    public class ModelNode : IModelNode
+    public class ModelNode : Entity, IModelNode
     {
-        //I will cleanup this later;
-        private static int IdCounter = 1;
-
-        public ModelNode(int id, ModelPoint coordinates)
+        public ModelNode(int id)
+            : base(id)
         {
-            Coordinates = coordinates;
-            Id = id;
+            Coordinates = new ModelPoint();
         }
-
-        public int Id { get; }
 
         public ModelPoint Coordinates { get; }
 
         public bool IsFixed { get; set; }
-
-        public static IModelNode CreateNewNode()
-        {
-            return new ModelNode(IdCounter++, new ModelPoint(0, 0, 0));
-        }
     }
 }

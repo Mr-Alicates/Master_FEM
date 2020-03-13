@@ -1,6 +1,6 @@
 ﻿namespace POC3D.Model
 {
-    public interface IModelForce
+    public interface IModelForce : IEntity
     {
         IModelNode Node { get; set; }
 

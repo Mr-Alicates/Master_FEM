@@ -2,6 +2,11 @@
 {
     public class ModelPoint
     {
+        public ModelPoint()
+            : this(0, 0, 0)
+        {
+        }
+
         public ModelPoint(double x, double y, double z)
         {
             X = x;

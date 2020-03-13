@@ -1,18 +1,13 @@
 ﻿namespace POC3D.Model
 {
-    public class ModelBarElement : IModelElement
+    public class ModelBarElement : Entity, IModelElement
     {
-        //I will cleanup this later;
-        private static int IdCounter = 1;
-
-        public ModelBarElement(IModelNode origin, IModelNode destination)
+        public ModelBarElement(int id, IModelNode origin, IModelNode destination)
+            : base(id)
         {
             OriginNode = origin;
             DestinationNode = destination;
-            Id = IdCounter++;
         }
-
-        public int Id { get; }
 
         public string Description => $"({OriginNode.Id}) ---> ({DestinationNode.Id})";
 

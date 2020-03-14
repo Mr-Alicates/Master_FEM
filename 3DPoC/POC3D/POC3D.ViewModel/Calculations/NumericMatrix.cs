@@ -2,7 +2,7 @@
 using System.Linq;
 using MathNet.Numerics.LinearAlgebra;
 
-namespace POC3D.Model.Calculations
+namespace POC3D.ViewModel.Calculations
 {
     public class NumericMatrix
     {

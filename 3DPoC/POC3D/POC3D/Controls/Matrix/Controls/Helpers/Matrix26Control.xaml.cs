@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using POC3D.Model.Calculations;
+using POC3D.ViewModel.Calculations;
 
 namespace POC3D.Controls.Matrix.Controls.Helpers
 {

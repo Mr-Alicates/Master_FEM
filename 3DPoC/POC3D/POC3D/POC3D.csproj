@@ -177,30 +177,9 @@
     <Compile Include="Controls\VisualAreaControl.xaml.cs">
       <DependentUpon>VisualAreaControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\MatrixHelper.cs" />
-    <Compile Include="Model\Calculations\ConstantMatrix.cs" />
-    <Compile Include="Model\Calculations\CorrespondenceMatrix.cs" />
-    <Compile Include="Model\Calculations\NumericMatrix.cs" />
-    <Compile Include="ViewModel\Commands\AddElementCommand.cs" />
-    <Compile Include="ViewModel\Commands\AddForceCommand.cs" />
-    <Compile Include="ViewModel\Commands\AddNodeCommand.cs" />
-    <Compile Include="ViewModel\Commands\ButtonCommand.cs" />
-    <Compile Include="ViewModel\Commands\DeleteElementCommand.cs" />
-    <Compile Include="ViewModel\Commands\DeleteForceCommand.cs" />
-    <Compile Include="ViewModel\Commands\DeleteNodeCommand.cs" />
-    <Compile Include="ViewModel\ForceViewModel.cs" />
     <Compile Include="ViewModel\InterfaceControlViewModel.cs" />
     <Compile Include="ViewModel\CameraViewModel.cs" />
-    <Compile Include="ViewModel\ElementViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\MaterialViewModel.cs" />
-    <Compile Include="ViewModel\NewForceViewModel.cs" />
-    <Compile Include="ViewModel\NewElementViewModel.cs" />
-    <Compile Include="ViewModel\NodeViewModel.cs" />
-    <Compile Include="ViewModel\ProblemViewModel.cs" />
-    <Compile Include="ViewModel\ResultElementViewModel.cs" />
-    <Compile Include="ViewModel\ResultForceViewModel.cs" />
-    <Compile Include="ViewModel\ResultNodeViewModel.cs" />
     <Page Include="Controls\ManagementControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -401,6 +380,9 @@
       <Project>{011c1c91-287c-4502-9647-91e844843630}</Project>
       <Name>POC3D.ViewModel</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Helpers\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

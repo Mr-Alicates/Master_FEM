@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using POC3D.ViewModel;
 
-namespace POC3D.Model.Calculations
+namespace POC3D.ViewModel.Calculations
 {
     public class CorrespondenceMatrix
     {

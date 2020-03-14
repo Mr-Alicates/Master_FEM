@@ -1,10 +1,9 @@
 ﻿using System.Linq;
 using System.Windows.Media.Media3D;
 using POC3D.Model;
-using POC3D.Model.Calculations;
 using POC3D.ViewModel;
 
-namespace POC3D.Helpers
+namespace POC3D.ViewModel.Calculations
 {
     public static class MatrixHelper
     {
@@ -229,12 +228,12 @@ namespace POC3D.Helpers
             var result = new NumericMatrix(nodeCount * 3, nodeCount * 3);
 
             for (var row = 0; row < nodeCount; row++)
-            for (var column = 0; column < nodeCount; column++)
-            {
-                var sourceMatrix = unAssembledStiffnessMatrix[row][column];
+                for (var column = 0; column < nodeCount; column++)
+                {
+                    var sourceMatrix = unAssembledStiffnessMatrix[row][column];
 
-                if (sourceMatrix != null) result.SetSubMatrix(row * 3, column * 3, sourceMatrix);
-            }
+                    if (sourceMatrix != null) result.SetSubMatrix(row * 3, column * 3, sourceMatrix);
+                }
 
             return result;
         }

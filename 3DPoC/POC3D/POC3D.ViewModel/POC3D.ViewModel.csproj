@@ -2,6 +2,7 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
+    <LangVersion>8.0</LangVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{011C1C91-287C-4502-9647-91E844843630}</ProjectGuid>
@@ -31,10 +32,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MathNet.Numerics, Version=4.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MathNet.Numerics.4.9.0\lib\net461\MathNet.Numerics.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,8 +54,29 @@
   <ItemGroup>
     <Compile Include="Base\GeometryViewModel.cs" />
     <Compile Include="Base\Observable.cs" />
+    <Compile Include="Calculations\MatrixHelper.cs" />
+    <Compile Include="Calculations\NumericMatrix.cs" />
+    <Compile Include="Commands\AddElementCommand.cs" />
+    <Compile Include="Commands\AddForceCommand.cs" />
+    <Compile Include="Commands\AddNodeCommand.cs" />
+    <Compile Include="Commands\ButtonCommand.cs" />
+    <Compile Include="Commands\DeleteElementCommand.cs" />
+    <Compile Include="Commands\DeleteForceCommand.cs" />
+    <Compile Include="Commands\DeleteNodeCommand.cs" />
+    <Compile Include="ElementViewModel.cs" />
+    <Compile Include="ForceViewModel.cs" />
+    <Compile Include="Calculations\ConstantMatrix.cs" />
+    <Compile Include="Calculations\CorrespondenceMatrix.cs" />
     <Compile Include="Geometry\GraphicsHelper.cs" />
+    <Compile Include="MaterialViewModel.cs" />
+    <Compile Include="NewElementViewModel.cs" />
+    <Compile Include="NewForceViewModel.cs" />
+    <Compile Include="NodeViewModel.cs" />
+    <Compile Include="ProblemViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResultElementViewModel.cs" />
+    <Compile Include="ResultForceViewModel.cs" />
+    <Compile Include="ResultNodeViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\POC3D.Model\POC3D.Model.csproj">

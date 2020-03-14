@@ -1,7 +1,7 @@
 ﻿using System.Windows.Media;
 using System.Windows.Media.Media3D;
 
-namespace POC3D.Helpers
+namespace POC3D.ViewModel.Geometry
 {
     public static class GraphicsHelper
     {

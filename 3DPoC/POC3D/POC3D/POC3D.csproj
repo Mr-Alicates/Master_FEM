@@ -55,9 +55,11 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsBase, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsBase.4.6.1055.0\lib\WindowsBase.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -176,11 +178,9 @@
       <DependentUpon>VisualAreaControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\MatrixHelper.cs" />
-    <Compile Include="Helpers\GraphicsHelper.cs" />
     <Compile Include="Model\Calculations\ConstantMatrix.cs" />
     <Compile Include="Model\Calculations\CorrespondenceMatrix.cs" />
     <Compile Include="Model\Calculations\NumericMatrix.cs" />
-    <Compile Include="ViewModel\Base\GeometryViewModel.cs" />
     <Compile Include="ViewModel\Commands\AddElementCommand.cs" />
     <Compile Include="ViewModel\Commands\AddForceCommand.cs" />
     <Compile Include="ViewModel\Commands\AddNodeCommand.cs" />
@@ -197,7 +197,6 @@
     <Compile Include="ViewModel\NewForceViewModel.cs" />
     <Compile Include="ViewModel\NewElementViewModel.cs" />
     <Compile Include="ViewModel\NodeViewModel.cs" />
-    <Compile Include="ViewModel\Base\Observable.cs" />
     <Compile Include="ViewModel\ProblemViewModel.cs" />
     <Compile Include="ViewModel\ResultElementViewModel.cs" />
     <Compile Include="ViewModel\ResultForceViewModel.cs" />
@@ -397,6 +396,10 @@
     <ProjectReference Include="..\POC3D.Model\POC3D.Model.csproj">
       <Project>{385e6a2a-71fc-4ecf-b32c-663d28653f7a}</Project>
       <Name>POC3D.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\POC3D.ViewModel\POC3D.ViewModel.csproj">
+      <Project>{011c1c91-287c-4502-9647-91e844843630}</Project>
+      <Name>POC3D.ViewModel</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

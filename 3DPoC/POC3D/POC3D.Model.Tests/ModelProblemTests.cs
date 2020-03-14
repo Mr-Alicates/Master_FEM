@@ -118,6 +118,21 @@ namespace POC3D.Model.Tests
         }
 
         [Test]
+        public void AddElement_ElementWithSameNodesAlreadyExists_ExpectInvalidOperationException()
+        {
+            //Arrange
+            var modelProblem = new ModelProblem("problem");
+
+            var origin = modelProblem.AddNode();
+            var destination = modelProblem.AddNode();
+            modelProblem.AddElement(origin, destination);
+
+            //Act
+            //Assert
+            Assert.Throws<InvalidOperationException>(() => modelProblem.AddElement(origin, destination));
+        }
+
+        [Test]
         public void AddElement_EmptyProblem_ExpectElementAddedToCollection()
         {
             //Arrange
@@ -188,6 +203,20 @@ namespace POC3D.Model.Tests
             var modelProblem = new ModelProblem("problem");
 
             var node = new ModelNode(123);
+
+            //Act
+            //Assert
+            Assert.Throws<InvalidOperationException>(() => modelProblem.AddForce(node));
+        }
+
+        [Test]
+        public void AddForce_ForceWithSameNodeAlreadyExists_ExpectInvalidOperationException()
+        {
+            //Arrange
+            var modelProblem = new ModelProblem("problem");
+
+            var node = modelProblem.AddNode();
+            modelProblem.AddForce(node);
 
             //Act
             //Assert

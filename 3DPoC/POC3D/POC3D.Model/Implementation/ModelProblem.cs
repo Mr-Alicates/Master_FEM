@@ -54,6 +54,12 @@ namespace POC3D.Model
                 throw new InvalidOperationException($"Node {nameof(destination)} does not exist in current problem");
             }
 
+            if (Elements.Any(other => other.OriginNode == origin && other.DestinationNode == destination ||
+                                      other.OriginNode == destination && other.DestinationNode == origin ))
+            {
+                throw new InvalidOperationException($"An element with nodes {origin.Id} and {destination.Id} already exists in current problem");
+            }
+
             var id = GetNextId(_elements);
             var element = new ModelBarElement(id, origin, destination);
 
@@ -71,6 +77,11 @@ namespace POC3D.Model
             if (!Nodes.Contains(node))
             {
                 throw new InvalidOperationException();
+            }
+
+            if (Forces.Any(other => other.Node == node))
+            {
+                throw new InvalidOperationException($"A force with node {node.Id} already exists in current problem");
             }
 
             var id = GetNextId(_forces);

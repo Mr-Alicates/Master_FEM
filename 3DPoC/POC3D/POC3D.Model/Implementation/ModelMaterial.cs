@@ -1,20 +1,16 @@
 ﻿namespace POC3D.Model
 {
-    public class ModelMaterial : IModelMaterial
+    public class ModelMaterial : Entity, IModelMaterial
     {
-        public static readonly IModelMaterial None = new ModelMaterial("None", 1, 1);
-
-        public ModelMaterial(string name, double youngsModulus, double poissonRatio)
+        public ModelMaterial(int id, string name, double youngsModulus)
+            : base(id)
         {
             Name = name;
             YoungsModulus = youngsModulus;
-            PoissonRatio = poissonRatio;
         }
 
-        public string Name { get; }
+        public string Name { get; set; }
 
-        public double YoungsModulus { get; }
-
-        public double PoissonRatio { get; }
+        public double YoungsModulus { get; set; }
     }
 }

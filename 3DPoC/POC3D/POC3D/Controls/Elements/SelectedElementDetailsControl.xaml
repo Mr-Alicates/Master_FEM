@@ -84,13 +84,13 @@
 
 
       <TextBox IsReadOnly="True" Grid.Row="5" Grid.Column="0"
-               Text="{Binding ProblemViewModel.SelectedElement.Material.YoungsModulus, Mode=OneWay}" />
-      <TextBlock Grid.Row="5" Grid.Column="1" Text="YoungsModulus" />
+               Text="{Binding ProblemViewModel.SelectedElement.Material.Name, Mode=TwoWay}" />
+      <TextBlock Grid.Row="5" Grid.Column="1" Text="Materal Name" />
 
       <TextBox IsReadOnly="True" Grid.Row="6" Grid.Column="0"
-               Text="{Binding ProblemViewModel.SelectedElement.Material.PoissonRatio, Mode=OneWay}" />
-      <TextBlock Grid.Row="6" Grid.Column="1" Text="PoissonRatio" />
 
+               Text="{Binding ProblemViewModel.SelectedElement.Material.YoungsModulus, Mode=TwoWay}" />
+      <TextBlock Grid.Row="6" Grid.Column="1" Text="Material Young's Modulus" />
 
       <TextBox Grid.Row="7" Grid.Column="0"
                Text="{Binding ProblemViewModel.SelectedElement.CrossSectionArea, Mode=TwoWay}" />

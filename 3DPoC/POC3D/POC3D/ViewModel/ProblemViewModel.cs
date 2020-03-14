@@ -40,7 +40,6 @@ namespace POC3D.ViewModel
             Elements = new ObservableCollection<ElementViewModel>();
             Forces = new ObservableCollection<ForceViewModel>();
             Materials = new ObservableCollection<MaterialViewModel>();
-            InitializeMaterials();
 
             ResultNodes = new ObservableCollection<ResultNodeViewModel>();
             ResultElements = new ObservableCollection<ResultElementViewModel>();
@@ -230,12 +229,6 @@ namespace POC3D.ViewModel
             DisplacementsMultiplier = savedMultiplier;
         }
 
-        private void InitializeMaterials()
-        {
-            foreach (var modelMaterial in MaterialsHelper.GetAvailableMaterials())
-                Materials.Add(new MaterialViewModel(modelMaterial));
-        }
-
         public NodeViewModel AddNode(Point3D point)
         {
             var nodeViewModel = AddNode();
@@ -279,14 +272,11 @@ namespace POC3D.ViewModel
         {
             var element = _modelProblem.AddElement(node1.Node, node2.Node);
 
-            var result = new ElementViewModel(element, node1, node2);
+            var materialViewModel = GetOrInitMaterialViewModel(element.Material);
 
-            //Test: to be removed
-            result.CrossSectionArea = 10;
-            result.Material = Materials.First();
+            var result = new ElementViewModel(element, node1, node2, materialViewModel);
 
             Elements.Add(result);
-            SelectedElement = result;
 
             result.PropertyChanged += ElementPropertyChanged;
             ProblemChanged();
@@ -400,6 +390,20 @@ namespace POC3D.ViewModel
 
                 ResultForces.Add(new ResultForceViewModel(force, node));
             }
+        }
+
+        private MaterialViewModel GetOrInitMaterialViewModel(IModelMaterial modelMaterial)
+        {
+            var result = Materials.FirstOrDefault(vm => vm.ModelMaterial == modelMaterial);
+
+            if(result == null)
+            {
+                result = new MaterialViewModel(modelMaterial);
+
+                Materials.Add(result);
+            }
+
+            return result;
         }
     }
 }

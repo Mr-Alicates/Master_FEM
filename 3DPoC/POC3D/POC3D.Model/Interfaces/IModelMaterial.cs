@@ -1,11 +1,9 @@
 ﻿namespace POC3D.Model
 {
-    public interface IModelMaterial
+    public interface IModelMaterial : IEntity
     {
-        string Name { get; }
+        string Name { get; set; }
 
-        double YoungsModulus { get; }
-
-        double PoissonRatio { get; }
+        double YoungsModulus { get; set; }
     }
 }

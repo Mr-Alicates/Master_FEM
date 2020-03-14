@@ -26,12 +26,12 @@ namespace POC3D.ViewModel
         private NumericMatrix _transformationMatrix;
         private NumericMatrix _transformationMatrixTransposed;
 
-        public ElementViewModel(IModelElement modelElement, NodeViewModel origin, NodeViewModel destination)
+        public ElementViewModel(IModelElement modelElement, NodeViewModel origin, NodeViewModel destination, MaterialViewModel materialViewModel)
         {
             Element = modelElement;
             Origin = origin;
             Destination = destination;
-            _materialViewModel = new MaterialViewModel(Element.Material);
+            Material = materialViewModel;
             UpdateGeometryMesh();
         }
 
@@ -137,6 +137,8 @@ namespace POC3D.ViewModel
         protected override void UpdateGeometryMesh()
         {
             if (Destination == null || Origin == null) return;
+
+            MaterialBrush = IsSelected ? SelectedBarBrush : BarBrush;
 
             var vector = Destination.Coordinates - Origin.Coordinates;
 

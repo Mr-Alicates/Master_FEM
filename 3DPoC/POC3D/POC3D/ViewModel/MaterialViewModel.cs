@@ -11,11 +11,17 @@ namespace POC3D.ViewModel
 
         public IModelMaterial ModelMaterial { get; }
 
-        public string Name => ModelMaterial.Name;
+        public string Name
+        { 
+            get => ModelMaterial.Name;
+            set => ModelMaterial.Name = value;
+        }
 
-        public double YoungsModulus => ModelMaterial.YoungsModulus;
-
-        public double PoissonRatio => ModelMaterial.PoissonRatio;
+        public double YoungsModulus
+        {
+            get => ModelMaterial.YoungsModulus;
+            set => ModelMaterial.YoungsModulus = value;
+        }
 
         public override bool Equals(object obj)
         {

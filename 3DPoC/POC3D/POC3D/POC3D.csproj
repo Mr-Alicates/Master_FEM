@@ -177,7 +177,6 @@
     </Compile>
     <Compile Include="Helpers\MatrixHelper.cs" />
     <Compile Include="Helpers\GraphicsHelper.cs" />
-    <Compile Include="Helpers\MaterialsHelper.cs" />
     <Compile Include="Model\Calculations\ConstantMatrix.cs" />
     <Compile Include="Model\Calculations\CorrespondenceMatrix.cs" />
     <Compile Include="Model\Calculations\NumericMatrix.cs" />

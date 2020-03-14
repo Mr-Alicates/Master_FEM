@@ -17,7 +17,7 @@
 
         public ModelVector Direction => new ModelVector(DestinationNode.Coordinates, OriginNode.Coordinates);
 
-        public IModelMaterial Material { get; set; } = ModelMaterial.None;
+        public IModelMaterial Material { get; set; }
 
         public double CrossSectionArea { get; set; }
 

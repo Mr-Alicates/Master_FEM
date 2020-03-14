@@ -9,6 +9,7 @@ namespace POC3D.Model
         private readonly List<IModelNode> _nodes = new List<IModelNode>();
         private readonly List<IModelElement> _elements = new List<IModelElement>();
         private readonly List<IModelForce> _forces = new List<IModelForce>();
+        private readonly List<IModelMaterial> _materials = new List<IModelMaterial>();
 
         public ModelProblem(string name)
         {
@@ -22,6 +23,8 @@ namespace POC3D.Model
         public IEnumerable<IModelElement> Elements => _elements;
         
         public IEnumerable<IModelForce> Forces => _forces;
+
+        public IEnumerable<IModelMaterial> Materials => _materials;
 
         public IModelNode AddNode()
         {
@@ -61,9 +64,13 @@ namespace POC3D.Model
             }
 
             var id = GetNextId(_elements);
-            var element = new ModelBarElement(id, origin, destination);
+            var element = new ModelBarElement(id, origin, destination)
+            {
+                Material = GetOrCreateDefaultMaterial()
+            };
 
             _elements.Add(element);
+
             return element;
         }
 
@@ -91,11 +98,32 @@ namespace POC3D.Model
             return force;
         }
 
+        public IModelMaterial AddMaterial()
+        {
+            var materialId = GetNextId(_materials);
+            var material = new ModelMaterial(materialId, $"Material{materialId}", 1);
+
+            _materials.Add(material);
+            EnsureEntitiesAreSorted(_materials);
+            return material;
+        }
+
         public void DeleteNode(IModelNode node)
         {
             if (node is null)
             {
                 throw new ArgumentNullException(nameof(node));
+            }
+
+            if (_elements.Any(element => element.OriginNode == node ||
+                                        element.DestinationNode == node))
+            {
+                throw new InvalidOperationException($"Node {node.Id} cannot be deleted. It is being used by one or more elements");
+            }
+
+            if (_forces.Any(force => force.Node == node))
+            {
+                throw new InvalidOperationException($"Node {node.Id} cannot be deleted. It is being used by one or more forces");
             }
 
             _nodes.Remove(node);
@@ -122,6 +150,32 @@ namespace POC3D.Model
 
             _forces.Remove(force);
             EnsureEntitiesAreSorted(_forces);
+        }
+
+        public void DeleteMaterial(IModelMaterial material)
+        {
+            if (material is null)
+            {
+                throw new ArgumentNullException(nameof(material));
+            }
+
+            if(_elements.Any(element => element.Material == material))
+            {
+                throw new InvalidOperationException($"Material {material.Name} cannot be deleted. It is being used by one or more elements");
+            }
+
+            _materials.Remove(material);
+            EnsureEntitiesAreSorted(_materials);
+        }
+
+        private IModelMaterial GetOrCreateDefaultMaterial()
+        {
+            if (_materials.Any())
+            {
+                return _materials.First();
+            }
+
+            return AddMaterial();
         }
 
         private static int GetNextId(IEnumerable<IEntity> entities)

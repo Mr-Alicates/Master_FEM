@@ -149,6 +149,58 @@ namespace POC3D.Model.Tests
         }
 
         [Test]
+        public void AddElement_EmptyProblem_ExpectElementMaterialAddedToCollection()
+        {
+            //Arrange
+            var modelProblem = new ModelProblem("problem");
+
+            var origin = modelProblem.AddNode();
+            var destination = modelProblem.AddNode();
+
+            //Act
+            var element = modelProblem.AddElement(origin, destination);
+
+            //Assert
+            Assert.That(modelProblem.Materials.Contains(element.Material), Is.True);
+        }
+
+        [Test]
+        public void AddElement_ProblemWithMaterials_ExpectNoNewMaterialWasCreated()
+        {
+            //Arrange
+            var modelProblem = new ModelProblem("problem");
+
+            var origin = modelProblem.AddNode();
+            var destination = modelProblem.AddNode();
+
+            modelProblem.AddElement(modelProblem.AddNode(), modelProblem.AddNode());
+
+            //Act
+            var element = modelProblem.AddElement(origin, destination);
+
+            //Assert
+            Assert.That(modelProblem.Materials.Count(), Is.EqualTo(1));
+        }
+
+        [Test]
+        public void AddElement_ProblemWithMaterials_ExpectElementMaterialIsExistingMaterial()
+        {
+            //Arrange
+            var modelProblem = new ModelProblem("problem");
+
+            var origin = modelProblem.AddNode();
+            var destination = modelProblem.AddNode();
+
+            var otherElement = modelProblem.AddElement(modelProblem.AddNode(), modelProblem.AddNode());
+
+            //Act
+            var element = modelProblem.AddElement(origin, destination);
+
+            //Assert
+            Assert.That(element.Material, Is.EqualTo(otherElement.Material));
+        }
+
+        [Test]
         public void AddElement_EmptyProblem_ExpectElementIdCorrectlyInitialized()
         {
             //Arrange
@@ -274,6 +326,48 @@ namespace POC3D.Model.Tests
         }
 
         [Test]
+        public void AddMaterial_EmptyProblem_ExpectMaterialAddedToCollection()
+        {
+            //Arrange
+            var modelProblem = new ModelProblem("problem");
+
+            //Act
+            var material = modelProblem.AddMaterial();
+
+            //Assert
+            Assert.That(modelProblem.Materials.Contains(material), Is.True);
+        }
+
+        [Test]
+        public void AddMaterial_EmptyProblem_ExpectMaterialIdCorrectlyInitialized()
+        {
+            //Arrange
+            var modelProblem = new ModelProblem("problem");
+
+            //Act
+            var material = modelProblem.AddMaterial();
+
+            //Assert
+            Assert.That(material.Id, Is.EqualTo(1));
+        }
+
+        [Test]
+        public void AddMaterial_ProblemWithMaterials_ExpectMaterialIdCorrectlyInitialized()
+        {
+            //Arrange
+            var modelProblem = new ModelProblem("problem");
+            modelProblem.AddMaterial();
+            modelProblem.AddMaterial();
+            modelProblem.AddMaterial();
+
+            //Act
+            var material = modelProblem.AddMaterial();
+
+            //Assert
+            Assert.That(material.Id, Is.EqualTo(4));
+        }
+
+        [Test]
         public void DeleteNode_NullNode_ExpectArgumentNullException()
         {
             //Arrange
@@ -282,6 +376,48 @@ namespace POC3D.Model.Tests
             //Act
             //Assert
             Assert.Throws<ArgumentNullException>(() => modelProblem.DeleteNode(null));
+        }
+
+        [Test]
+        public void DeleteNode_NodeIsUsedByElementInOriginNode_ExpectInvalidOperationException()
+        {
+            //Arrange
+            var modelProblem = new ModelProblem("problem");
+
+            var node = modelProblem.AddNode();
+            var element = modelProblem.AddElement(node, modelProblem.AddNode());
+
+            //Act
+            //Assert
+            Assert.Throws<InvalidOperationException>(() => modelProblem.DeleteNode(node));
+        }
+
+        [Test]
+        public void DeleteNode_NodeIsUsedByElementInForce_ExpectInvalidOperationException()
+        {
+            //Arrange
+            var modelProblem = new ModelProblem("problem");
+
+            var node = modelProblem.AddNode();
+            var force = modelProblem.AddForce(node);
+
+            //Act
+            //Assert
+            Assert.Throws<InvalidOperationException>(() => modelProblem.DeleteNode(node));
+        }
+
+        [Test]
+        public void DeleteNode_NodeIsUsedByElementInDestinationNode_ExpectInvalidOperationException()
+        {
+            //Arrange
+            var modelProblem = new ModelProblem("problem");
+
+            var node = modelProblem.AddNode();
+            var element = modelProblem.AddElement(modelProblem.AddNode(), node);
+
+            //Act
+            //Assert
+            Assert.Throws<InvalidOperationException>(() => modelProblem.DeleteNode(node));
         }
 
         [Test]
@@ -401,6 +537,24 @@ namespace POC3D.Model.Tests
         }
 
         [Test]
+        public void DeleteElement_ElementDoesExistInProblem_ExpectElementMaterialRemovedFromCollection()
+        {
+            //Arrange
+            var modelProblem = new ModelProblem("problem");
+
+            var origin = modelProblem.AddNode();
+            var destination = modelProblem.AddNode();
+
+            var element = modelProblem.AddElement(origin, destination);
+
+            //Act
+            modelProblem.DeleteElement(element);
+
+            //Assert
+            Assert.That(modelProblem.Elements, Is.Empty);
+        }
+
+        [Test]
         public void DeleteForce_NullForce_ExpectArgumentNullException()
         {
             //Arrange
@@ -461,6 +615,82 @@ namespace POC3D.Model.Tests
             Assert.AreEqual(force3.Id, 2);
             Assert.AreEqual(force4.Id, 3);
             Assert.AreEqual(force5.Id, 4);
+        }
+
+        [Test]
+        public void DeleteMaterial_NullMaterial_ExpectArgumentNullException()
+        {
+            //Arrange
+            var modelProblem = new ModelProblem("problem");
+
+            //Act
+            //Assert
+            Assert.Throws<ArgumentNullException>(() => modelProblem.DeleteMaterial(null));
+        }
+
+        [Test]
+        public void DeleteMaterial_MaterialIsUsedByElement_ExpectInvalidOperationException()
+        {
+            //Arrange
+            var modelProblem = new ModelProblem("problem");
+
+            var element = modelProblem.AddElement(modelProblem.AddNode(), modelProblem.AddNode());
+
+            //Act
+            //Assert
+            Assert.Throws<InvalidOperationException>(() => modelProblem.DeleteMaterial(element.Material));
+        }
+
+        [Test]
+        public void DeleteMaterial_MaterialDoesNotExistInProblem_ExpectNothingHappens()
+        {
+            //Arrange
+            var modelProblem = new ModelProblem("problem");
+
+            var strayMaterial = new ModelMaterial(666, "strayMaterial", 1);
+
+            //Act
+            modelProblem.DeleteMaterial(strayMaterial);
+
+            //Assert
+            Assert.That(modelProblem.Materials, Is.Empty);
+        }
+
+        [Test]
+        public void DeleteMaterial_MaterialDoesExistInProblem_ExpectMaterialRemovedFromCollection()
+        {
+            //Arrange
+            var modelProblem = new ModelProblem("problem");
+
+            var material = modelProblem.AddMaterial();
+
+            //Act
+            modelProblem.DeleteMaterial(material);
+
+            //Assert
+            Assert.That(modelProblem.Materials, Is.Empty);
+        }
+
+        [Test]
+        public void DeleteMaterial_ProblemWithSeveralMaterials_ExpectMaterialIdsAreCorrect()
+        {
+            //Arrange
+            var modelProblem = new ModelProblem("problem");
+
+            var material1 = modelProblem.AddMaterial();
+            var material2 = modelProblem.AddMaterial();
+            var material3 = modelProblem.AddMaterial();
+            var material4 = modelProblem.AddMaterial();
+            var material5 = modelProblem.AddMaterial();
+
+            //Act
+            modelProblem.DeleteMaterial(material1);
+
+            //Assert
+            Assert.AreEqual(material2.Id, 1);
+            Assert.AreEqual(material3.Id, 2);
+            Assert.AreEqual(material4.Id, 3);
+            Assert.AreEqual(material5.Id, 4);
         }
     }
 }

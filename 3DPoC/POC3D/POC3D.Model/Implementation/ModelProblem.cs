@@ -32,15 +32,30 @@ namespace POC3D.Model
             return result;
         }
 
-        public IModelElement AddElement(IModelNode node1, IModelNode node2)
+        public IModelElement AddElement(IModelNode origin, IModelNode destination)
         {
-            if (!Nodes.Contains(node1) || !Nodes.Contains(node2))
+            if (origin is null)
             {
-                throw new InvalidOperationException();
+                throw new ArgumentNullException(nameof(origin));
+            }
+
+            if (destination is null)
+            {
+                throw new ArgumentNullException(nameof(destination));
+            }
+
+            if (!Nodes.Contains(origin))
+            {
+                throw new InvalidOperationException($"Node {nameof(origin)} does not exist in current problem");
+            }
+
+            if (!Nodes.Contains(destination))
+            {
+                throw new InvalidOperationException($"Node {nameof(destination)} does not exist in current problem");
             }
 
             var id = GetNextId(_elements);
-            var element = new ModelBarElement(id, node1, node2);
+            var element = new ModelBarElement(id, origin, destination);
 
             _elements.Add(element);
             return element;
@@ -48,32 +63,52 @@ namespace POC3D.Model
 
         public IModelForce AddForce(IModelNode node)
         {
-            if (!_nodes.Contains(node))
+            if (node is null)
+            {
+                throw new ArgumentNullException(nameof(node));
+            }
+
+            if (!Nodes.Contains(node))
             {
                 throw new InvalidOperationException();
             }
 
-            var id = GetNextId(_nodes);
+            var id = GetNextId(_forces);
             var force = new ModelForce(id, node);
 
             _forces.Add(force);
             return force;
         }
 
-        public void DeleteNode(IModelNode selectedNodeNode)
+        public void DeleteNode(IModelNode node)
         {
-            _nodes.Remove(selectedNodeNode);
+            if (node is null)
+            {
+                throw new ArgumentNullException(nameof(node));
+            }
+
+            _nodes.Remove(node);
             EnsureEntitiesAreSorted(_nodes);
         }
 
         public void DeleteElement(IModelElement element)
         {
+            if (element is null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
+
             _elements.Remove(element);
             EnsureEntitiesAreSorted(_elements);
         }
 
         public void DeleteForce(IModelForce force)
         {
+            if (force is null)
+            {
+                throw new ArgumentNullException(nameof(force));
+            }
+
             _forces.Remove(force);
             EnsureEntitiesAreSorted(_forces);
         }

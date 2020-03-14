@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POC3D", "POC3D\POC3D.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POC3D.Model", "POC3D.Model\POC3D.Model.csproj", "{385E6A2A-71FC-4ECF-B32C-663D28653F7A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{727E8E2D-2582-499E-999D-9870228B79B7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POC3D.Model.Tests", "POC3D.Model.Tests\POC3D.Model.Tests.csproj", "{F038248C-EA0C-465A-8D8B-F84A012BF864}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,9 +25,16 @@ Global
 		{385E6A2A-71FC-4ECF-B32C-663D28653F7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{385E6A2A-71FC-4ECF-B32C-663D28653F7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{385E6A2A-71FC-4ECF-B32C-663D28653F7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F038248C-EA0C-465A-8D8B-F84A012BF864}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F038248C-EA0C-465A-8D8B-F84A012BF864}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F038248C-EA0C-465A-8D8B-F84A012BF864}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F038248C-EA0C-465A-8D8B-F84A012BF864}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F038248C-EA0C-465A-8D8B-F84A012BF864} = {727E8E2D-2582-499E-999D-9870228B79B7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6A1F2ADB-9D58-41BF-9934-D1098915FC3F}

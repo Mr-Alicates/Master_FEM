@@ -12,11 +12,11 @@ namespace POC3D.Model
 
         IModelNode AddNode();
 
-        IModelElement AddElement(IModelNode node1, IModelNode node2);
+        IModelElement AddElement(IModelNode origin, IModelNode destination);
 
         IModelForce AddForce(IModelNode node);
 
-        void DeleteNode(IModelNode selectedNodeNode);
+        void DeleteNode(IModelNode node);
 
         void DeleteElement(IModelElement element);
 

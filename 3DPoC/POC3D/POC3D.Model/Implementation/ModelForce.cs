@@ -2,14 +2,24 @@
 {
     public class ModelForce : Entity, IModelForce
     {
-        public ModelForce(int id, IModelNode applicationNode)
-            : base(id)
+        private IModelNode _node;
+
+        public ModelForce(ModelProblem modelProblem, int id, IModelNode applicationNode)
+            : base(modelProblem, id)
         {
-            Node = applicationNode;
+            _node = applicationNode;
             ApplicationVector = new ModelVector();
         }
 
-        public IModelNode Node { get; set; }
+        public IModelNode Node 
+        { 
+            get => _node;
+            set 
+            {
+                _node = value;
+                ModelProblem.ValidateForces();
+            } 
+        }
 
         public ModelVector ApplicationVector { get; }
 

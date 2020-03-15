@@ -2,8 +2,8 @@
 {
     public class ModelNode : Entity, IModelNode
     {
-        public ModelNode(int id)
-            : base(id)
+        public ModelNode(ModelProblem modelProblem, int id)
+            : base(modelProblem, id)
         {
             Coordinates = new ModelPoint();
         }

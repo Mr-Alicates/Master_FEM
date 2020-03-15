@@ -29,7 +29,7 @@ namespace POC3D.Model
         public IModelNode AddNode()
         {
             var id = GetNextId(_nodes);
-            var result = new ModelNode(id);
+            var result = new ModelNode(this, id);
 
             _nodes.Add(result);
             return result;
@@ -57,6 +57,11 @@ namespace POC3D.Model
                 throw new InvalidOperationException($"Node {nameof(destination)} does not exist in current problem");
             }
 
+            if (origin == destination)
+            {
+                throw new InvalidOperationException($"Nodes {nameof(origin)} and {nameof(destination)} are the same node");
+            }
+
             if (Elements.Any(other => other.OriginNode == origin && other.DestinationNode == destination ||
                                       other.OriginNode == destination && other.DestinationNode == origin ))
             {
@@ -64,7 +69,7 @@ namespace POC3D.Model
             }
 
             var id = GetNextId(_elements);
-            var element = new ModelBarElement(id, origin, destination)
+            var element = new ModelBarElement(this, id, origin, destination)
             {
                 Material = GetOrCreateDefaultMaterial()
             };
@@ -92,7 +97,7 @@ namespace POC3D.Model
             }
 
             var id = GetNextId(_forces);
-            var force = new ModelForce(id, node);
+            var force = new ModelForce(this, id, node);
 
             _forces.Add(force);
             return force;
@@ -101,7 +106,7 @@ namespace POC3D.Model
         public IModelMaterial AddMaterial()
         {
             var materialId = GetNextId(_materials);
-            var material = new ModelMaterial(materialId, $"Material{materialId}", 1);
+            var material = new ModelMaterial(this, materialId, $"Material{materialId}", 1);
 
             _materials.Add(material);
             EnsureEntitiesAreSorted(_materials);
@@ -166,6 +171,78 @@ namespace POC3D.Model
 
             _materials.Remove(material);
             EnsureEntitiesAreSorted(_materials);
+        }
+        
+        public void ValidateForces()
+        {
+            //Ensure there is only one force applied on each node
+            var invalidForces = _forces.GroupBy(force => force.Node)
+                .Any(group => group.Count() > 1);
+
+            if (invalidForces)
+            {
+                throw new InvalidOperationException("There is more than one force applied on the same node. Problem is invalid");
+            }
+
+            //Ensure there are no forces with stray nodes
+            var invalidForceNodes = _forces.Select(force => force.Node)
+                .Any(node => !_nodes.Contains(node));
+
+            if (invalidForceNodes)
+            {
+                throw new InvalidOperationException("There is one or more forces whose application nodes are invalid. Problem is invalid");
+            }
+        }
+
+        public void ValidateElements()
+        {
+            //Ensure there are no elements whose origin and destination nodes are the same
+            var zeroLengthElements = _elements.Any(element => element.OriginNode == element.DestinationNode);
+
+            if (zeroLengthElements)
+            {
+                throw new InvalidOperationException($"There is one or more elements whose {nameof(IModelElement.OriginNode)} and {nameof(IModelElement.OriginNode)} are the same. Problem is invalid");
+            }
+
+            //Ensure there are no elements with the same nodes
+            foreach (var element in _elements)
+            {
+                foreach (var otherElement in _elements)
+                {
+                    if (otherElement.Id == element.Id)
+                    {
+                        continue;
+                    }
+
+                    if (otherElement.OriginNode == element.OriginNode &&
+                        otherElement.DestinationNode == element.DestinationNode ||
+                        otherElement.OriginNode == element.DestinationNode &&
+                        otherElement.DestinationNode == element.OriginNode)
+                    {
+                        throw new InvalidOperationException("There is one or more duplicate elements (with the same set of nodes). Problem is invalid");
+                    }
+                }
+            }
+
+            //Ensure there are no elements with stray nodes
+            var invalidElementNodes = _elements.Select(x => x.OriginNode)
+                .Union(_elements.Select(x => x.DestinationNode))
+                .Any(node => !_nodes.Contains(node));
+
+            if (invalidElementNodes)
+            {
+                throw new InvalidOperationException("There is more than one elements whose nodes are invalid. Problem is invalid");
+            }
+
+            //Ensure there are no stray materials
+            var invalidMaterials = _elements.Select(element => element.Material)
+                .Any(material => !_materials.Contains(material));
+
+            if (invalidMaterials)
+            {
+                throw new InvalidOperationException("There is one or more elements whose materials are invalid. Problem is invalid");
+            }
+
         }
 
         private IModelMaterial GetOrCreateDefaultMaterial()

@@ -2,8 +2,8 @@
 {
     public class ModelMaterial : Entity, IModelMaterial
     {
-        public ModelMaterial(int id, string name, double youngsModulus)
-            : base(id)
+        public ModelMaterial(ModelProblem modelProblem, int id, string name, double youngsModulus)
+            : base(modelProblem, id)
         {
             Name = name;
             YoungsModulus = youngsModulus;

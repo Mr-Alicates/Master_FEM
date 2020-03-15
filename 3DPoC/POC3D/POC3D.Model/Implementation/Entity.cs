@@ -2,8 +2,9 @@
 {
     public abstract class Entity : IEntity
     {
-        protected Entity(int id)
+        protected Entity(ModelProblem modelProblem, int id)
         {
+            ModelProblem = modelProblem;
             Id = id;
         }
 
@@ -13,5 +14,7 @@
         {
             Id = newId;
         }
+
+        public ModelProblem ModelProblem { get; }
     }
 }

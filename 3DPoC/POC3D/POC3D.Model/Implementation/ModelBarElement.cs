@@ -2,8 +2,12 @@
 {
     public class ModelBarElement : Entity, IModelElement
     {
-        public ModelBarElement(int id, IModelNode origin, IModelNode destination)
-            : base(id)
+        private IModelNode _originNode;
+        private IModelNode _destinationNode;
+        private IModelMaterial _material;
+
+        public ModelBarElement(ModelProblem modelProblem, int id, IModelNode origin, IModelNode destination)
+            : base(modelProblem, id)
         {
             OriginNode = origin;
             DestinationNode = destination;
@@ -11,13 +15,37 @@
 
         public string Description => $"({OriginNode.Id}) ---> ({DestinationNode.Id})";
 
-        public IModelNode OriginNode { get; set; }
+        public IModelNode OriginNode
+        {
+            get => _originNode;
+            set
+            {
+                _originNode = value;
+                ModelProblem.ValidateElements();
+            }
+        }
 
-        public IModelNode DestinationNode { get; set; }
+        public IModelNode DestinationNode
+        {
+            get => _destinationNode;
+            set
+            {
+                _destinationNode = value;
+                ModelProblem.ValidateElements();
+            }
+        }
 
         public ModelVector Direction => new ModelVector(DestinationNode.Coordinates, OriginNode.Coordinates);
 
-        public IModelMaterial Material { get; set; }
+        public IModelMaterial Material
+        {
+            get => _material;
+            set
+            {
+                _material = value;
+                ModelProblem.ValidateElements();
+            }
+        }
 
         public double CrossSectionArea { get; set; }
 

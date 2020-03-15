@@ -95,7 +95,7 @@ namespace POC3D.Model.Tests
             //Arrange
             var modelProblem = new ModelProblem("problem");
 
-            var origin = new ModelNode(123);
+            var origin = new ModelNode(new ModelProblem("otherProblem"), 123);
             var destination = modelProblem.AddNode();
 
             //Act
@@ -110,11 +110,24 @@ namespace POC3D.Model.Tests
             var modelProblem = new ModelProblem("problem");
 
             var origin = modelProblem.AddNode();
-            var destination = new ModelNode(123);
+            var destination = new ModelNode(new ModelProblem("otherProblem"), 123);
 
             //Act
             //Assert
             Assert.Throws<InvalidOperationException>(() => modelProblem.AddElement(origin, destination));
+        }
+
+        [Test]
+        public void AddElement_BothNodesAreTheSame_ExpectInvalidOperationException()
+        {
+            //Arrange
+            var modelProblem = new ModelProblem("problem");
+
+            var origin = modelProblem.AddNode();
+
+            //Act
+            //Assert
+            Assert.Throws<InvalidOperationException>(() => modelProblem.AddElement(origin, origin));
         }
 
         [Test]
@@ -254,7 +267,7 @@ namespace POC3D.Model.Tests
             //Arrange
             var modelProblem = new ModelProblem("problem");
 
-            var node = new ModelNode(123);
+            var node = new ModelNode(new ModelProblem("otherProblem"), 123);
 
             //Act
             //Assert
@@ -426,7 +439,7 @@ namespace POC3D.Model.Tests
             //Arrange
             var modelProblem = new ModelProblem("problem");
 
-            var strayNode = new ModelNode(666);
+            var strayNode = new ModelNode(new ModelProblem("otherProblem"), 666);
 
             //Act
             modelProblem.DeleteNode(strayNode);
@@ -489,7 +502,8 @@ namespace POC3D.Model.Tests
             //Arrange
             var modelProblem = new ModelProblem("problem");
 
-            var strayElement = new ModelBarElement(1234, new ModelNode(123), new ModelNode(1234));
+            var otherProblem = new ModelProblem("otherProblem");
+            var strayElement = new ModelBarElement(otherProblem, 1234, new ModelNode(otherProblem, 123), new ModelNode(otherProblem, 1234));
 
             //Act
             modelProblem.DeleteElement(strayElement);
@@ -571,7 +585,8 @@ namespace POC3D.Model.Tests
             //Arrange
             var modelProblem = new ModelProblem("problem");
 
-            var strayForce = new ModelForce(345, new ModelNode(1234));
+            var otherProblem = new ModelProblem("otherProblem");
+            var strayForce = new ModelForce(otherProblem, 345, new ModelNode(otherProblem, 1234));
 
             //Act
             modelProblem.DeleteForce(strayForce);
@@ -647,7 +662,8 @@ namespace POC3D.Model.Tests
             //Arrange
             var modelProblem = new ModelProblem("problem");
 
-            var strayMaterial = new ModelMaterial(666, "strayMaterial", 1);
+            var otherProblem = new ModelProblem("otherProblem");
+            var strayMaterial = new ModelMaterial(otherProblem, 666, "strayMaterial", 1);
 
             //Act
             modelProblem.DeleteMaterial(strayMaterial);

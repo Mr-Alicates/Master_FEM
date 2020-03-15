@@ -27,5 +27,9 @@ namespace POC3D.Model
         void DeleteForce(IModelForce force);
 
         void DeleteMaterial(IModelMaterial material);
+
+        void ValidateForces();
+
+        void ValidateElements();
     }
 }

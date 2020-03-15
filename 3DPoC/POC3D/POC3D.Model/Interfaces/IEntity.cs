@@ -5,5 +5,7 @@
         int Id { get; }
 
         void SetId(int newId);
+
+        ModelProblem ModelProblem { get; }
     }
 }

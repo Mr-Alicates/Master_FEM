@@ -34,7 +34,7 @@ namespace POC3D.Controls.Matrix.Controls
             GlobalStiffnessMatrixContainer.RowDefinitions.Clear();
             GlobalStiffnessMatrixContainer.Children.Clear();
 
-            var globalStiffnessMatrix = problemViewModel.GlobalStiffnessMatrix;
+            var globalStiffnessMatrix = problemViewModel.ProblemCalculationViewModel.GlobalStiffnessMatrix;
 
             //Create rows and columns in the grid
             foreach (var columnIndex in Enumerable.Range(0, globalStiffnessMatrix.Columns + 1))
@@ -91,7 +91,7 @@ namespace POC3D.Controls.Matrix.Controls
             // This is filler to align the items from the global stiffness matrix to the displacement vector
             BuildTextBlock(DisplacementsContainer, "Displacements", 0, 0, Brushes.Black);
 
-            var fullDisplacementsVector = problemViewModel.FullSolvedDisplacementsVector;
+            var fullDisplacementsVector = problemViewModel.ProblemCalculationViewModel.FullSolvedDisplacementsVector;
 
             var elementIndex = 1;
             foreach (var node in problemViewModel.Nodes)
@@ -122,7 +122,7 @@ namespace POC3D.Controls.Matrix.Controls
             // This is filler to align the items from the global stiffness matrix to the displacement vector
             BuildTextBlock(ForcesContainer, "Forces", 0, 0, Brushes.Black);
 
-            var solvedReactionForces = problemViewModel.SolvedReactionForces;
+            var solvedReactionForces = problemViewModel.ProblemCalculationViewModel.SolvedReactionForces;
 
             var elementIndex = 1;
             foreach (var node in problemViewModel.Nodes)

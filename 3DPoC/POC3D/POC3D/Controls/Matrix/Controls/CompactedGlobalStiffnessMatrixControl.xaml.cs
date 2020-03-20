@@ -34,7 +34,7 @@ namespace POC3D.Controls.Matrix.Controls
             GlobalStiffnessMatrixContainer.RowDefinitions.Clear();
             GlobalStiffnessMatrixContainer.Children.Clear();
 
-            var matrix = problemViewModel.CompactedMatrix;
+            var matrix = problemViewModel.ProblemCalculationViewModel.CompactedMatrix;
 
             //Create rows and columns in the grid
             foreach (var columnIndex in Enumerable.Range(0, matrix.Columns))
@@ -98,7 +98,7 @@ namespace POC3D.Controls.Matrix.Controls
             ForcesContainer.ColumnDefinitions.Clear();
             ForcesContainer.RowDefinitions.Clear();
 
-            var forces = problemViewModel.CompactedForcesVector;
+            var forces = problemViewModel.ProblemCalculationViewModel.CompactedForcesVector;
 
             foreach (var rowIndex in Enumerable.Range(0, forces.Rows))
                 ForcesContainer.RowDefinitions.Add(new RowDefinition

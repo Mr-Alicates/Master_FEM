@@ -66,7 +66,7 @@ namespace POC3D.Controls.Matrix.Controls
             ResultsContainer.Children.Clear();
             ResultsContainer.RowDefinitions.Clear();
 
-            var resultsMatrix = problemViewModel.SolvedDisplacementsVector;
+            var resultsMatrix = problemViewModel.ProblemCalculationViewModel.SolvedDisplacementsVector;
 
             foreach (var rowIndex in Enumerable.Range(0, resultsMatrix.Rows))
                 ResultsContainer.RowDefinitions.Add(new RowDefinition

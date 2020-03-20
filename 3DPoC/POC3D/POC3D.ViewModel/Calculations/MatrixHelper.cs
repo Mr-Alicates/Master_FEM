@@ -132,11 +132,11 @@ namespace POC3D.ViewModel.Calculations
             return result;
         }
 
-        public static NumericMatrix SolveForDisplacements(ProblemViewModel problem)
+        public static NumericMatrix SolveForDisplacements(ProblemCalculationViewModel problemCalculationViewModel)
         {
-            var compactedStiffnessMatrix = problem.CompactedMatrix;
+            var compactedStiffnessMatrix = problemCalculationViewModel.CompactedMatrix;
 
-            var compactedForcesVector = problem.CompactedForcesVector;
+            var compactedForcesVector = problemCalculationViewModel.CompactedForcesVector;
 
             var solution = compactedStiffnessMatrix.Solve(compactedForcesVector);
 
@@ -147,7 +147,7 @@ namespace POC3D.ViewModel.Calculations
         {
             var result = new NumericMatrix(problem.Nodes.Count * 3, 1);
 
-            var solvedDisplacementsVector = problem.SolvedDisplacementsVector;
+            var solvedDisplacementsVector = problem.ProblemCalculationViewModel.SolvedDisplacementsVector;
 
             var index = 0;
             var solvedIndex = 0;
@@ -177,11 +177,11 @@ namespace POC3D.ViewModel.Calculations
             return result;
         }
 
-        public static NumericMatrix SolveForReactionForces(ProblemViewModel problem)
+        public static NumericMatrix SolveForReactionForces(ProblemCalculationViewModel problemCalculationViewModel)
         {
-            var globalStiffnessMatrix = problem.GlobalStiffnessMatrix;
+            var globalStiffnessMatrix = problemCalculationViewModel.GlobalStiffnessMatrix;
 
-            var fullDisplacementsVector = problem.FullSolvedDisplacementsVector;
+            var fullDisplacementsVector = problemCalculationViewModel.FullSolvedDisplacementsVector;
 
             var result = globalStiffnessMatrix * fullDisplacementsVector;
 
@@ -200,7 +200,7 @@ namespace POC3D.ViewModel.Calculations
 
         public static NumericMatrix BuildGlobalStiffnessMatrix(ProblemViewModel problem)
         {
-            var correspondenceMatrix = problem.CorrespondenceMatrix;
+            var correspondenceMatrix = problem.ProblemCalculationViewModel.CorrespondenceMatrix;
 
             var nodeCount = correspondenceMatrix.NodeIndexes.Count;
 

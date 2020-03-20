@@ -34,7 +34,7 @@ namespace POC3D.Controls.Matrix.Controls
             CorrespondenceMatrixContainer.RowDefinitions.Clear();
             CorrespondenceMatrixContainer.Children.Clear();
 
-            var correspondenceMatrix = problemViewModel.CorrespondenceMatrix;
+            var correspondenceMatrix = problemViewModel.ProblemCalculationViewModel.CorrespondenceMatrix;
 
             //Create rows and columns in the grid
             foreach (var columnIndex in Enumerable.Range(0, correspondenceMatrix.Columns + 1))

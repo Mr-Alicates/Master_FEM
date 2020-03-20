@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="Base\SelectableViewModel.cs" />
     <Compile Include="Calculations\ElementCalculationViewModel.cs" />
+    <Compile Include="Calculations\ProblemCalculationViewModel.cs" />
     <Compile Include="Geometry\ElementGeometryViewModel.cs" />
     <Compile Include="Geometry\ForceGeometryViewModel.cs" />
     <Compile Include="Geometry\GeometryViewModel.cs" />

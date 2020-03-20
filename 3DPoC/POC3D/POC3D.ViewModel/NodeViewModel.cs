@@ -8,11 +8,17 @@ namespace POC3D.ViewModel
     public class NodeViewModel : SelectableViewModel
     {
         private NodeGeometryViewModel _nodeGeometryViewModel;
+        private ResultNodeGeometryViewModel _resultNodeGeometryViewmodel;
+
+        private double _displacementX;
+        private double _displacementY;
+        private double _displacementZ;
 
         public NodeViewModel(IModelNode modelNode)
         {
             Node = modelNode;
             _nodeGeometryViewModel = new NodeGeometryViewModel(this);
+            _resultNodeGeometryViewmodel = new ResultNodeGeometryViewModel(this);
         }
 
         public int Id => Node.Id;
@@ -67,8 +73,48 @@ namespace POC3D.ViewModel
             }
         }
 
+        public Vector3D Displacement => new Vector3D(
+            DisplacementX,
+            DisplacementY,
+            DisplacementZ);
+
+        public double DisplacementX
+        {
+            get => _displacementX;
+            set
+            {
+                _displacementX = value;
+                OnPropertyChanged(nameof(DisplacementX));
+                OnPropertyChanged(nameof(Displacement));
+            }
+        }
+
+        public double DisplacementY
+        {
+            get => _displacementY;
+            set
+            {
+                _displacementY = value;
+                OnPropertyChanged(nameof(DisplacementY));
+                OnPropertyChanged(nameof(Displacement));
+            }
+        }
+
+        public double DisplacementZ
+        {
+            get => _displacementZ;
+            set
+            {
+                _displacementZ = value;
+                OnPropertyChanged(nameof(DisplacementZ));
+                OnPropertyChanged(nameof(Displacement));
+            }
+        }
+
         public string Name => $"{Id} ({Coordinates.ToString()})";
 
         public GeometryModel3D Geometry => _nodeGeometryViewModel.Geometry;
+
+        public GeometryModel3D ResultGeometry => _resultNodeGeometryViewmodel.Geometry;
     }
 }

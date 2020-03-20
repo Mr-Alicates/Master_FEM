@@ -9,12 +9,14 @@ namespace POC3D.ViewModel
     {
         private NodeViewModel _nodeViewModel;
         private readonly ForceGeometryViewModel _forceGeometryViewModel;
+        private readonly ResultForceGeometryViewModel _resultForceGeometryViewModel;
 
         public ForceViewModel(IModelForce force, NodeViewModel node)
         {
             Force = force;
             Node = node;
             _forceGeometryViewModel = new ForceGeometryViewModel(this);
+            _resultForceGeometryViewModel = new ResultForceGeometryViewModel(this);
         }
 
         public IModelForce Force { get; }
@@ -78,5 +80,7 @@ namespace POC3D.ViewModel
             $"({Node.Id}) ---> ({ApplicationVectorX:N}/{ApplicationVectorY:N}/{ApplicationVectorZ:N}) ({Magnitude:N})";
 
         public GeometryModel3D Geometry => _forceGeometryViewModel.Geometry;
+
+        public GeometryModel3D ResultGeometry => _resultForceGeometryViewModel.Geometry;
     }
 }

@@ -5,9 +5,9 @@ namespace POC3D.ViewModel.Geometry
 {
     public class ElementGeometryViewModel : GeometryViewModel<ElementViewModel>
     {
-        private static readonly Vector3D VerticalVector = new Vector3D(0, 0, 1);
-        private static readonly Brush BarBrush = Brushes.Blue;
-        private static readonly Brush SelectedBarBrush = Brushes.Red;
+        protected static readonly Vector3D VerticalVector = new Vector3D(0, 0, 1);
+        protected static readonly Brush BarBrush = Brushes.Blue;
+        protected static readonly Brush SelectedBarBrush = Brushes.Red;
 
         public ElementGeometryViewModel(ElementViewModel elementViewModel)
             : base(elementViewModel)

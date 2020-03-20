@@ -33,10 +33,6 @@ namespace POC3D.ViewModel
             Forces = new ObservableCollection<ForceViewModel>();
             Materials = new ObservableCollection<MaterialViewModel>();
 
-            ResultNodes = new ObservableCollection<ResultNodeViewModel>();
-            ResultElements = new ObservableCollection<ResultElementViewModel>();
-            ResultForces = new ObservableCollection<ResultForceViewModel>();
-
             NewElementViewModel = new NewElementViewModel(this);
             NewForceViewModel = new NewForceViewModel(this);
 
@@ -121,12 +117,6 @@ namespace POC3D.ViewModel
 
         public ObservableCollection<MaterialViewModel> Materials { get; }
 
-        public ObservableCollection<ResultNodeViewModel> ResultNodes { get; }
-
-        public ObservableCollection<ResultElementViewModel> ResultElements { get; }
-
-        public ObservableCollection<ResultForceViewModel> ResultForces { get; }
-
         public ICommand AddNodeCommand => new AddNodeCommand(this);
 
         public ICommand DeleteNodeCommand => new DeleteNodeCommand(this);
@@ -148,7 +138,7 @@ namespace POC3D.ViewModel
             {
                 _showProblem = value;
                 if (!_showProblem)
-                    UpdateDisplacementsInResultNodes();
+                    UpdateDisplacementsInNodes();
                 OnPropertyChanged(nameof(ShowProblem));
             }
         }
@@ -160,7 +150,7 @@ namespace POC3D.ViewModel
             {
                 _displacementsMultiplier = value;
                 if (!_showProblem)
-                    UpdateDisplacementsInResultNodes();
+                    UpdateDisplacementsInNodes();
                 OnPropertyChanged(nameof(DisplacementsMultiplier));
             }
         }
@@ -217,10 +207,8 @@ namespace POC3D.ViewModel
         {
             var modelNode = _modelProblem.AddNode();
             var nodeViewModel = new NodeViewModel(modelNode);
-            var resultNodeViewModel = new ResultNodeViewModel(nodeViewModel);
 
             Nodes.Add(nodeViewModel);
-            ResultNodes.Add(resultNodeViewModel);
             SelectedNode = nodeViewModel;
 
             ProblemChanged();
@@ -234,8 +222,6 @@ namespace POC3D.ViewModel
 
             _modelProblem.DeleteNode(selectedNode.Node);
             Nodes.Remove(selectedNode);
-            var resultNode = ResultNodes.First(x => x.NodeViewModel == selectedNode);
-            ResultNodes.Remove(resultNode);
 
             SelectedNode = null;
 
@@ -318,34 +304,24 @@ namespace POC3D.ViewModel
             OnPropertyChanged(nameof(NumberOfDirichletBoundaryConditions));
         }
 
-        private void UpdateDisplacementsInResultNodes()
+        private void UpdateDisplacementsInNodes()
         {
             var index = 0;
-            foreach (var resultNode in ResultNodes)
+            foreach (var node in Nodes)
             {
-                if (resultNode.NodeViewModel.IsFixed) continue;
-
-                resultNode.DisplacementX = ProblemCalculationViewModel.SolvedDisplacementsVector[index + 0, 0] * DisplacementsMultiplier;
-                resultNode.DisplacementY = ProblemCalculationViewModel.SolvedDisplacementsVector[index + 1, 0] * DisplacementsMultiplier;
-                resultNode.DisplacementZ = ProblemCalculationViewModel.SolvedDisplacementsVector[index + 2, 0] * DisplacementsMultiplier;
-                index = index + 3;
-            }
-
-            ResultElements.Clear();
-
-            foreach (var element in Elements)
-            {
-                var originResultNode = ResultNodes.First(x => x.NodeViewModel == element.Origin);
-                var destinationResultNode = ResultNodes.First(x => x.NodeViewModel == element.Destination);
-
-                ResultElements.Add(new ResultElementViewModel(originResultNode, destinationResultNode));
-            }
-
-            foreach (var force in Forces)
-            {
-                var node = ResultNodes.First(x => x.NodeViewModel == force.Node);
-
-                ResultForces.Add(new ResultForceViewModel(force, node));
+                if (node.IsFixed)
+                {
+                    node.DisplacementX = 0;
+                    node.DisplacementY = 0;
+                    node.DisplacementZ = 0;
+                }
+                else
+                {
+                    node.DisplacementX = ProblemCalculationViewModel.SolvedDisplacementsVector[index + 0, 0] * DisplacementsMultiplier;
+                    node.DisplacementY = ProblemCalculationViewModel.SolvedDisplacementsVector[index + 1, 0] * DisplacementsMultiplier;
+                    node.DisplacementZ = ProblemCalculationViewModel.SolvedDisplacementsVector[index + 2, 0] * DisplacementsMultiplier;
+                    index = index + 3;
+                }
             }
         }
 

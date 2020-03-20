@@ -15,6 +15,7 @@ namespace POC3D.ViewModel
         private NodeViewModel _destination;
 
         private readonly ElementGeometryViewModel _elementGeometryViewModel;
+        private readonly ResultElementGeometryViewModel _resultElementGeometryViewModel;
 
         public ElementViewModel(IModelElement modelElement, NodeViewModel origin, NodeViewModel destination, MaterialViewModel materialViewModel)
         {
@@ -24,6 +25,7 @@ namespace POC3D.ViewModel
             Material = materialViewModel;
 
             _elementGeometryViewModel = new ElementGeometryViewModel(this);
+            _resultElementGeometryViewModel = new ResultElementGeometryViewModel(this);
             ElementCalculationViewModel = new ElementCalculationViewModel(this);
         }
 
@@ -93,6 +95,8 @@ namespace POC3D.ViewModel
         public string K => Element.K.ToString("E2");
 
         public GeometryModel3D Geometry => _elementGeometryViewModel.Geometry;
+
+        public GeometryModel3D ResultGeometry => _resultElementGeometryViewModel.Geometry;
 
         public ElementCalculationViewModel ElementCalculationViewModel { get; }
     }

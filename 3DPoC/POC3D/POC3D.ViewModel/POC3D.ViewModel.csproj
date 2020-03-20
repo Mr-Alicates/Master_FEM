@@ -55,6 +55,7 @@
     <Compile Include="Base\SelectableViewModel.cs" />
     <Compile Include="Calculations\ElementCalculationViewModel.cs" />
     <Compile Include="Calculations\ProblemCalculationViewModel.cs" />
+    <Compile Include="Geometry\ResultElementGeometryViewModel.cs" />
     <Compile Include="Geometry\ElementGeometryViewModel.cs" />
     <Compile Include="Geometry\ForceGeometryViewModel.cs" />
     <Compile Include="Geometry\GeometryViewModel.cs" />
@@ -74,15 +75,14 @@
     <Compile Include="Calculations\CorrespondenceMatrix.cs" />
     <Compile Include="Geometry\GraphicsHelper.cs" />
     <Compile Include="Geometry\NodeGeometryViewModel.cs" />
+    <Compile Include="Geometry\ResultForceGeometryViewModel.cs" />
+    <Compile Include="Geometry\ResultNodeGeometryViewModel.cs" />
     <Compile Include="MaterialViewModel.cs" />
     <Compile Include="NewElementViewModel.cs" />
     <Compile Include="NewForceViewModel.cs" />
     <Compile Include="NodeViewModel.cs" />
     <Compile Include="ProblemViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ResultElementViewModel.cs" />
-    <Compile Include="ResultForceViewModel.cs" />
-    <Compile Include="ResultNodeViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\POC3D.Model\POC3D.Model.csproj">

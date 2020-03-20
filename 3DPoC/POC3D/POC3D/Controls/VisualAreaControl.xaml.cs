@@ -160,13 +160,13 @@ namespace POC3D.Controls
         {
             InitialSetup();
 
-            foreach (var node in MainViewModel.ProblemViewModel.ResultNodes) Model3DGroup.Children.Add(node.Geometry);
+            foreach (var node in MainViewModel.ProblemViewModel.Nodes) Model3DGroup.Children.Add(node.ResultGeometry);
 
-            foreach (var element in MainViewModel.ProblemViewModel.ResultElements)
-                Model3DGroup.Children.Add(element.Geometry);
+            foreach (var element in MainViewModel.ProblemViewModel.Elements)
+                Model3DGroup.Children.Add(element.ResultGeometry);
 
-            foreach (var force in MainViewModel.ProblemViewModel.ResultForces)
-                Model3DGroup.Children.Add(force.Geometry);
+            foreach (var force in MainViewModel.ProblemViewModel.Forces)
+                Model3DGroup.Children.Add(force.ResultGeometry);
         }
 
         public void UpdateCamera()

@@ -278,7 +278,7 @@ namespace POC3D.ViewModel
 
             Elements.Add(result);
 
-            result.PropertyChanged += ElementPropertyChanged;
+            result.ElementCalculationViewModel.PropertyChanged += ElementPropertyChanged;
             ProblemChanged();
 
             return result;
@@ -291,7 +291,7 @@ namespace POC3D.ViewModel
             _modelProblem.DeleteElement(selectedElement.Element);
             Elements.Remove(selectedElement);
 
-            SelectedElement.PropertyChanged -= ElementPropertyChanged;
+            SelectedElement.ElementCalculationViewModel.PropertyChanged -= ElementPropertyChanged;
             SelectedElement = null;
 
             ProblemChanged();
@@ -327,7 +327,7 @@ namespace POC3D.ViewModel
 
         private void ElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(ElementViewModel.GlobalStiffnessMatrix)) ProblemChanged();
+            if (e.PropertyName == nameof(ElementCalculationViewModel.GlobalStiffnessMatrix)) ProblemChanged();
         }
 
         private void ForcePropertyChanged(object sender, PropertyChangedEventArgs e)

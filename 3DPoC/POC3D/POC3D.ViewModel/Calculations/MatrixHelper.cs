@@ -53,29 +53,29 @@ namespace POC3D.ViewModel.Calculations
             };
         }
 
-        public static NumericMatrix BuildTransformationMatrix(ElementViewModel element)
+        public static NumericMatrix BuildTransformationMatrix(ElementCalculationViewModel elementCalculationViewModel)
         {
             var result = new NumericMatrix(2, 6)
             {
-                [0, 0] = element.Cx,
-                [0, 1] = element.Cy,
-                [0, 2] = element.Cz,
+                [0, 0] = elementCalculationViewModel.Cx,
+                [0, 1] = elementCalculationViewModel.Cy,
+                [0, 2] = elementCalculationViewModel.Cz,
 
-                [1, 3] = element.Cx,
-                [1, 4] = element.Cy,
-                [1, 5] = element.Cz
+                [1, 3] = elementCalculationViewModel.Cx,
+                [1, 4] = elementCalculationViewModel.Cy,
+                [1, 5] = elementCalculationViewModel.Cz
             };
 
             return result;
         }
 
-        public static NumericMatrix BuildElementGlobalStiffnessMatrix(ElementViewModel element)
+        public static NumericMatrix BuildElementGlobalStiffnessMatrix(ElementCalculationViewModel elementCalculationViewModel)
         {
-            var transformationMatrix = element.TransformationMatrix;
+            var transformationMatrix = elementCalculationViewModel.TransformationMatrix;
 
-            var transformationMatrixTransposed = transformationMatrix.Transpose();
+            var transformationMatrixTransposed = elementCalculationViewModel.TransformationMatrixTransposed;
 
-            var localStiffnessMatrix = element.LocalStiffnessMatrix;
+            var localStiffnessMatrix = elementCalculationViewModel.LocalStiffnessMatrix;
 
             return transformationMatrixTransposed * localStiffnessMatrix * transformationMatrix;
         }
@@ -210,7 +210,7 @@ namespace POC3D.ViewModel.Calculations
 
             foreach (var element in problem.Elements)
             {
-                var elementGlobalStiffnessMatrix = element.GlobalStiffnessMatrix;
+                var elementGlobalStiffnessMatrix = element.ElementCalculationViewModel.GlobalStiffnessMatrix;
 
                 var originNodeIndex = correspondenceMatrix.NodeIndexes[element.Origin];
                 var destinationNodeIndex = correspondenceMatrix.NodeIndexes[element.Destination];

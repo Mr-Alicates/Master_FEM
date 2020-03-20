@@ -117,7 +117,7 @@
 
 
       <helpers:Matrix62Control
-        Matrix="{Binding ProblemViewModel.SelectedElement.TransformationMatrixTransposed}" />
+        Matrix="{Binding ProblemViewModel.SelectedElement.ElementCalculationViewModel.TransformationMatrixTransposed}" />
 
 
       <helpers:ScalarControl
@@ -130,7 +130,7 @@
         M22="1" />
 
       <helpers:Matrix26Control
-        Matrix="{Binding ProblemViewModel.SelectedElement.TransformationMatrix}" />
+        Matrix="{Binding ProblemViewModel.SelectedElement.ElementCalculationViewModel.TransformationMatrix}" />
 
       <helpers:Vector6Control
         V1="Global d1x(1)"
@@ -161,7 +161,7 @@
         Scalar="=" />
 
       <helpers:Matrix6Control
-        Matrix="{Binding ProblemViewModel.SelectedElement.GlobalStiffnessMatrix}" />
+        Matrix="{Binding ProblemViewModel.SelectedElement.ElementCalculationViewModel.GlobalStiffnessMatrix}" />
 
       <helpers:Vector6Control
         V1="Global d1x(1)"

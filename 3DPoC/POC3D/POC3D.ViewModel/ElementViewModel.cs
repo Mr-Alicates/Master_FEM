@@ -8,14 +8,6 @@ namespace POC3D.ViewModel
 {
     public class ElementViewModel : SelectableViewModel
     {
-        private double? _cx;
-        private double? _cy;
-        private double? _cz;
-        private NumericMatrix _transformationMatrix;
-        private NumericMatrix _transformationMatrixTransposed;
-        private NumericMatrix _localStiffnessMatrix;
-        private NumericMatrix _globalStiffnessMatrix;
-        
         private MaterialViewModel _materialViewModel;
         private NodeViewModel _origin;
         private NodeViewModel _destination;
@@ -30,6 +22,7 @@ namespace POC3D.ViewModel
             Material = materialViewModel;
 
             _elementGeometryViewModel = new ElementGeometryViewModel(this);
+            ElementCalculationViewModel = new ElementCalculationViewModel(this);
         }
 
         public IModelElement Element { get; }
@@ -41,7 +34,9 @@ namespace POC3D.ViewModel
             {
                 _origin = value;
                 Element.OriginNode = _origin.Node;
-                InvalidateCaches();
+                OnPropertyChanged(nameof(Origin));
+                OnPropertyChanged(nameof(Length));
+                OnPropertyChanged(nameof(K));
             }
         }
 
@@ -52,7 +47,9 @@ namespace POC3D.ViewModel
             {
                 _destination = value;
                 Element.DestinationNode = _destination.Node;
-                InvalidateCaches();
+                OnPropertyChanged(nameof(Destination));
+                OnPropertyChanged(nameof(Length));
+                OnPropertyChanged(nameof(K));
             }
         }
 
@@ -67,7 +64,8 @@ namespace POC3D.ViewModel
             {
                 _materialViewModel = value;
                 Element.Material = _materialViewModel.ModelMaterial;
-                InvalidateCaches();
+                OnPropertyChanged(nameof(Material));
+                OnPropertyChanged(nameof(K));
             }
         }
 
@@ -77,7 +75,8 @@ namespace POC3D.ViewModel
             set
             {
                 Element.CrossSectionArea = value;
-                InvalidateCaches();
+                OnPropertyChanged(nameof(CrossSectionArea));
+                OnPropertyChanged(nameof(K));
             }
         }
 
@@ -85,50 +84,18 @@ namespace POC3D.ViewModel
 
         public string K => Element.K.ToString("E2");
 
-        public NumericMatrix TransformationMatrix =>
-            _transformationMatrix ??= MatrixHelper.BuildTransformationMatrix(this);
-
-        public NumericMatrix TransformationMatrixTransposed =>
-            _transformationMatrixTransposed ??= TransformationMatrix.Transpose();
-
-        public NumericMatrix LocalStiffnessMatrix =>
-            _localStiffnessMatrix ??= MatrixHelper.BuildElementLocalStiffnessMatrix(this);
-
-        public NumericMatrix GlobalStiffnessMatrix =>
-            _globalStiffnessMatrix ??= MatrixHelper.BuildElementGlobalStiffnessMatrix(this);
-
-        public double Cx => _cx ??= (Destination.Coordinates.X - Origin.Coordinates.X) / Length;
-
-        public double Cy => _cy ??= (Destination.Coordinates.Y - Origin.Coordinates.Y) / Length;
-
-        public double Cz => _cz ??= (Destination.Coordinates.Z - Origin.Coordinates.Z) / Length;
-
         public GeometryModel3D Geometry => _elementGeometryViewModel.Geometry;
 
-        private void InvalidateCaches()
+        public ElementCalculationViewModel ElementCalculationViewModel { get; }
+
+        private void OriginNodeChanged()
         {
-            _cx = null;
-            _cy = null;
-            _cz = null;
-
-            _transformationMatrix = null;
-            _transformationMatrixTransposed = null;
-            _localStiffnessMatrix = null;
-            _globalStiffnessMatrix = null;
-
-            OnPropertyChanged(nameof(Material));
             OnPropertyChanged(nameof(Origin));
+        }
+
+        private void DestinationNodeChanged()
+        {
             OnPropertyChanged(nameof(Destination));
-            OnPropertyChanged(nameof(Length));
-            OnPropertyChanged(nameof(CrossSectionArea));
-            OnPropertyChanged(nameof(K));
-            OnPropertyChanged(nameof(Cx));
-            OnPropertyChanged(nameof(Cy));
-            OnPropertyChanged(nameof(Cz));
-            OnPropertyChanged(nameof(TransformationMatrix));
-            OnPropertyChanged(nameof(TransformationMatrixTransposed));
-            OnPropertyChanged(nameof(LocalStiffnessMatrix));
-            OnPropertyChanged(nameof(GlobalStiffnessMatrix));
         }
     }
 }

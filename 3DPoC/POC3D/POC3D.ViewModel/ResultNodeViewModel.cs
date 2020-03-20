@@ -1,8 +1,9 @@
-﻿using System.Windows.Media.Media3D;
+﻿using POC3D.ViewModel.Base;
+using System.Windows.Media.Media3D;
 
 namespace POC3D.ViewModel
 {
-    public class ResultNodeViewModel
+    public class ResultNodeViewModel : Observable
     {
         public ResultNodeViewModel(NodeViewModel nodeViewModel)
         {

@@ -1,8 +1,6 @@
-﻿using System.Linq;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Media.Media3D;
 using POC3D.Controls.Matrix;
-using POC3D.Model;
 using POC3D.ViewModel;
 
 namespace POC3D
@@ -38,11 +36,15 @@ namespace POC3D
         {
             MainViewModel.CameraViewModel.Position = new Point3D(-100, 0, 0);
 
-            var node1 = MainViewModel.ProblemViewModel.AddNode(new Point3D(-10, -10, -10)).SetAsFixed();
-            var node5 = MainViewModel.ProblemViewModel.AddNode(new Point3D(0, 0, 10)).SetAsFree();
-            var node2 = MainViewModel.ProblemViewModel.AddNode(new Point3D(10, -10, -10)).SetAsFixed();
-            var node3 = MainViewModel.ProblemViewModel.AddNode(new Point3D(10, 10, -10)).SetAsFixed();
+            var node1 = MainViewModel.ProblemViewModel.AddNode(new Point3D(-10, -10, -10));
+            var node5 = MainViewModel.ProblemViewModel.AddNode(new Point3D(0, 0, 10));
+            var node2 = MainViewModel.ProblemViewModel.AddNode(new Point3D(10, -10, -10));
+            var node3 = MainViewModel.ProblemViewModel.AddNode(new Point3D(10, 10, -10));
 
+            node1.IsFixed = true;
+            node5.IsFixed = false;
+            node2.IsFixed = true;
+            node3.IsFixed = true;
 
             MainViewModel.ProblemViewModel.SelectedNode = null;
 

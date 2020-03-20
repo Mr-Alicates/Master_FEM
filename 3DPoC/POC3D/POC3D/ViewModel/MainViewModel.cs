@@ -1,4 +1,6 @@
-﻿namespace POC3D.ViewModel
+﻿using POC3D.ViewModel.Base;
+
+namespace POC3D.ViewModel
 {
     public class MainViewModel : Observable
     {

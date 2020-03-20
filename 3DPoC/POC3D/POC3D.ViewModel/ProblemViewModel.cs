@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Media3D;
 using POC3D.Model;
+using POC3D.ViewModel.Base;
 using POC3D.ViewModel.Calculations;
 using POC3D.ViewModel.Commands;
 

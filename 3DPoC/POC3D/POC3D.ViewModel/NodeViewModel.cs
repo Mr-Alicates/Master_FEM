@@ -1,22 +1,18 @@
-﻿using System.Windows.Media;
-using System.Windows.Media.Media3D;
+﻿using System.Windows.Media.Media3D;
 using POC3D.Model;
+using POC3D.ViewModel.Base;
 using POC3D.ViewModel.Geometry;
 
 namespace POC3D.ViewModel
 {
-    public class NodeViewModel : GeometryViewModel
+    public class NodeViewModel : SelectableViewModel
     {
-        private static readonly Brush FreeNodeBrush = Brushes.LightGreen;
-        private static readonly Brush FixedNodeBrush = Brushes.DarkGreen;
-        private static readonly Brush SelectedNodeBrush = Brushes.Red;
-
-        private bool _isSelected;
+        private NodeGeometryViewModel _nodeGeometryViewModel;
 
         public NodeViewModel(IModelNode modelNode)
         {
             Node = modelNode;
-            UpdateGeometryMesh();
+            _nodeGeometryViewModel = new NodeGeometryViewModel(this);
         }
 
         public int Id => Node.Id;
@@ -34,7 +30,6 @@ namespace POC3D.ViewModel
             set
             {
                 Node.Coordinates.X = value;
-                OffsetX = value;
                 OnPropertyChanged(nameof(X));
                 OnPropertyChanged(nameof(Coordinates));
             }
@@ -46,7 +41,6 @@ namespace POC3D.ViewModel
             set
             {
                 Node.Coordinates.Y = value;
-                OffsetY = value;
                 OnPropertyChanged(nameof(Y));
                 OnPropertyChanged(nameof(Coordinates));
             }
@@ -58,7 +52,6 @@ namespace POC3D.ViewModel
             set
             {
                 Node.Coordinates.Z = value;
-                OffsetZ = value;
                 OnPropertyChanged(nameof(Z));
                 OnPropertyChanged(nameof(Coordinates));
             }
@@ -70,41 +63,12 @@ namespace POC3D.ViewModel
             set
             {
                 Node.IsFixed = value;
-                UpdateGeometryMesh();
                 OnPropertyChanged(nameof(IsFixed));
-            }
-        }
-
-        public bool IsSelected
-        {
-            get => _isSelected;
-            set
-            {
-                _isSelected = value;
-                MaterialBrush = IsSelected ? SelectedNodeBrush : IsFixed ? FixedNodeBrush : FreeNodeBrush;
             }
         }
 
         public string Name => $"{Id} ({Coordinates.ToString()})";
 
-        public NodeViewModel SetAsFixed()
-        {
-            IsFixed = true;
-            return this;
-        }
-
-        public NodeViewModel SetAsFree()
-        {
-            IsFixed = false;
-            return this;
-        }
-
-        protected override void UpdateGeometryMesh()
-        {
-            if (IsFixed)
-                GraphicsHelper.BuildPyramidMesh(MeshGeometry3D, 2);
-            else
-                GraphicsHelper.BuildCubeMesh(MeshGeometry3D, 1);
-        }
+        public GeometryModel3D Geometry => _nodeGeometryViewModel.Geometry;
     }
 }

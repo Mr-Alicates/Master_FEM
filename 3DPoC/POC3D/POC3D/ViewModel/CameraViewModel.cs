@@ -1,4 +1,5 @@
-﻿using System;
+﻿using POC3D.ViewModel.Base;
+using System;
 using System.Windows.Media.Media3D;
 
 namespace POC3D.ViewModel

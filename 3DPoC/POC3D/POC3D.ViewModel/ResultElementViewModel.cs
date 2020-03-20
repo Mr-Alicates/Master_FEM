@@ -4,12 +4,13 @@ using POC3D.ViewModel.Geometry;
 
 namespace POC3D.ViewModel
 {
-    public class ResultElementViewModel : GeometryViewModel
+    public class ResultElementViewModel : GeometryViewModel<ResultNodeViewModel>
     {
         private static readonly Vector3D VerticalVector = new Vector3D(0, 0, 1);
         private static readonly Brush BarBrush = Brushes.Blue;
 
         public ResultElementViewModel(ResultNodeViewModel origin, ResultNodeViewModel destination)
+            : base(origin) //HACK fix this class
         {
             Origin = origin;
             Destination = destination;

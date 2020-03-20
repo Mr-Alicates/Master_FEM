@@ -52,7 +52,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base\GeometryViewModel.cs" />
+    <Compile Include="Base\SelectableViewModel.cs" />
+    <Compile Include="Geometry\ElementGeometryViewModel.cs" />
+    <Compile Include="Geometry\ForceGeometryViewModel.cs" />
+    <Compile Include="Geometry\GeometryViewModel.cs" />
     <Compile Include="Base\Observable.cs" />
     <Compile Include="Calculations\MatrixHelper.cs" />
     <Compile Include="Calculations\NumericMatrix.cs" />
@@ -68,6 +71,7 @@
     <Compile Include="Calculations\ConstantMatrix.cs" />
     <Compile Include="Calculations\CorrespondenceMatrix.cs" />
     <Compile Include="Geometry\GraphicsHelper.cs" />
+    <Compile Include="Geometry\NodeGeometryViewModel.cs" />
     <Compile Include="MaterialViewModel.cs" />
     <Compile Include="NewElementViewModel.cs" />
     <Compile Include="NewForceViewModel.cs" />

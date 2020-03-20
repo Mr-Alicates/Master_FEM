@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
+using POC3D.ViewModel.Base;
 using POC3D.ViewModel.Commands;
 
 namespace POC3D.ViewModel

@@ -56,11 +56,7 @@ namespace POC3D.Controls
 
         private void ShowProblemChangedCallback(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName != nameof(ProblemViewModel.ShowProblem) &&
-                e.PropertyName != nameof(ProblemViewModel.DisplacementsMultiplier))
-                return;
-
-            if (MainViewModel.ProblemViewModel.ShowProblem)
+            if (MainViewModel.ProblemViewModel.ProblemCalculationViewModel.ShowProblem)
                 DisplayProblem();
             else
                 DisplayResults();
@@ -178,7 +174,7 @@ namespace POC3D.Controls
 
         private void ProblemNodesChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (!MainViewModel.ProblemViewModel.ShowProblem) return;
+            if (!MainViewModel.ProblemViewModel.ProblemCalculationViewModel.ShowProblem) return;
 
             if (e.NewItems != null)
                 foreach (NodeViewModel node in e.NewItems)
@@ -191,7 +187,7 @@ namespace POC3D.Controls
 
         private void ProblemElementsChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (!MainViewModel.ProblemViewModel.ShowProblem) return;
+            if (!MainViewModel.ProblemViewModel.ProblemCalculationViewModel.ShowProblem) return;
 
             if (e.NewItems != null)
                 foreach (ElementViewModel element in e.NewItems)
@@ -204,7 +200,7 @@ namespace POC3D.Controls
 
         private void ProblemForcesChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (!MainViewModel.ProblemViewModel.ShowProblem) return;
+            if (!MainViewModel.ProblemViewModel.ProblemCalculationViewModel.ShowProblem) return;
 
             if (e.NewItems != null)
                 foreach (ForceViewModel force in e.NewItems)

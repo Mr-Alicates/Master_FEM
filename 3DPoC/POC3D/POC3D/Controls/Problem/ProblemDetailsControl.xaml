@@ -54,17 +54,17 @@
 
       <CheckBox Grid.Row="4"
                 Grid.Column="0"
-                IsChecked="{Binding ProblemViewModel.ShowProblem, Mode=TwoWay}" />
+                IsChecked="{Binding ProblemViewModel.ProblemCalculationViewModel.ShowProblem, Mode=TwoWay}" />
       <TextBlock Grid.Row="4" Grid.Column="1" Text="Show problem" />
 
       <TextBox Grid.Row="5"
                Grid.Column="0"
-               Text="{Binding ProblemViewModel.DisplacementsMultiplier, Mode=TwoWay}" />
+               Text="{Binding ProblemViewModel.ProblemCalculationViewModel.DisplacementsMultiplier, Mode=TwoWay}" />
       <TextBlock Grid.Row="5" Grid.Column="1" Text="Displacements multiplier" />
 
       <CheckBox Grid.Row="6"
                 Grid.Column="0"
-                IsChecked="{Binding ProblemViewModel.DisplacementAnimation, Mode=TwoWay}" />
+                IsChecked="{Binding ProblemViewModel.ProblemCalculationViewModel.DisplacementAnimation, Mode=TwoWay}" />
       <TextBlock Grid.Row="6" Grid.Column="1" Text="Displacement animation" />
 
     </Grid>

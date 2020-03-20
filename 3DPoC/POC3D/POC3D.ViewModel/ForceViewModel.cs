@@ -24,6 +24,9 @@ namespace POC3D.ViewModel
             get => _nodeViewModel;
             set
             {
+                if (_nodeViewModel != null) _nodeViewModel.PropertyChanged -= (_, __) => OnPropertyChanged(nameof(Node)); ;
+
+                value.PropertyChanged += (_, __) => OnPropertyChanged(nameof(Node)); ;
                 _nodeViewModel = value;
                 Force.Node = _nodeViewModel.Node;
                 OnPropertyChanged(nameof(Node));

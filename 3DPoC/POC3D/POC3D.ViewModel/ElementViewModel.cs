@@ -1,4 +1,6 @@
-﻿using System.Windows.Media.Media3D;
+﻿using System;
+using System.ComponentModel;
+using System.Windows.Media.Media3D;
 using POC3D.Model;
 using POC3D.ViewModel.Base;
 using POC3D.ViewModel.Calculations;
@@ -32,6 +34,9 @@ namespace POC3D.ViewModel
             get => _origin;
             set
             {
+                if (_origin != null) _origin.PropertyChanged -= (_, __) => OnPropertyChanged(nameof(Origin));
+
+                value.PropertyChanged += (_, __) => OnPropertyChanged(nameof(Origin)); ;
                 _origin = value;
                 Element.OriginNode = _origin.Node;
                 OnPropertyChanged(nameof(Origin));
@@ -45,6 +50,9 @@ namespace POC3D.ViewModel
             get => _destination;
             set
             {
+                if (_destination != null) _destination.PropertyChanged -= (_, __) => OnPropertyChanged(nameof(Destination));
+
+                value.PropertyChanged += (_, __) => OnPropertyChanged(nameof(Destination));
                 _destination = value;
                 Element.DestinationNode = _destination.Node;
                 OnPropertyChanged(nameof(Destination));
@@ -87,15 +95,5 @@ namespace POC3D.ViewModel
         public GeometryModel3D Geometry => _elementGeometryViewModel.Geometry;
 
         public ElementCalculationViewModel ElementCalculationViewModel { get; }
-
-        private void OriginNodeChanged()
-        {
-            OnPropertyChanged(nameof(Origin));
-        }
-
-        private void DestinationNodeChanged()
-        {
-            OnPropertyChanged(nameof(Destination));
-        }
     }
 }

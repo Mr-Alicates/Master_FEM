@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ModelBarElementTests.cs" />
     <Compile Include="ModelProblemTests.cs" />
     <Compile Include="ModelProblemValidationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

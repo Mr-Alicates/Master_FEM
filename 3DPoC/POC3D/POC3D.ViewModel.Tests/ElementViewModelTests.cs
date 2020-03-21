@@ -26,7 +26,7 @@ namespace POC3D.ViewModel.Tests
             Assert.That(elementViewModel.Origin, Is.EqualTo(originNodeViewModel));
             Assert.That(elementViewModel.Destination, Is.EqualTo(destinationNodeViewModel));
             Assert.That(elementViewModel.Id, Is.EqualTo(modelElement.Id));
-            Assert.That(elementViewModel.Description, Is.EqualTo(modelElement.Description));
+            Assert.That(elementViewModel.Description, Is.EqualTo("(1) ---> (2)"));
             Assert.That(elementViewModel.Material, Is.EqualTo(materialViewModel));
             Assert.That(elementViewModel.Geometry, Is.Not.Null);
             Assert.That(elementViewModel.ResultGeometry, Is.Not.Null);
@@ -162,7 +162,7 @@ namespace POC3D.ViewModel.Tests
             elementViewModel.Origin = additionalNodeViewModel;
 
             //Assert
-            Assert.That(modelElement.Description, Is.EqualTo("(3) ---> (2)"));
+            Assert.That(elementViewModel.Description, Is.EqualTo("(3) ---> (2)"));
         }
 
         [Test]
@@ -390,7 +390,7 @@ namespace POC3D.ViewModel.Tests
             elementViewModel.Destination = additionalNodeViewModel;
 
             //Assert
-            Assert.That(modelElement.Description, Is.EqualTo("(1) ---> (3)"));
+            Assert.That(elementViewModel.Description, Is.EqualTo("(1) ---> (3)"));
         }
 
         [Test]

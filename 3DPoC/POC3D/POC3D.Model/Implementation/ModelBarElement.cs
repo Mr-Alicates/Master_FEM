@@ -13,8 +13,6 @@
             DestinationNode = destination;
         }
 
-        public string Description => $"({OriginNode.Id}) ---> ({DestinationNode.Id})";
-
         public IModelNode OriginNode
         {
             get => _originNode;

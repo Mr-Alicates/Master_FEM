@@ -86,7 +86,7 @@ namespace POC3D.ViewModel
 
         public int Id => Element.Id;
 
-        public string Description => Element.Description;
+        public string Description => $"({Origin.Id}) ---> ({Destination.Id})";
 
         public MaterialViewModel Material
         {

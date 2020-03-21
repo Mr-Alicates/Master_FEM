@@ -2,8 +2,6 @@
 {
     public interface IModelElement : IEntity
     {
-        string Description { get; }
-
         IModelNode OriginNode { get; set; }
 
         IModelNode DestinationNode { get; set; }

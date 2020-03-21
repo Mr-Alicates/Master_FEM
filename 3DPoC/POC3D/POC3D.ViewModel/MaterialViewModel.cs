@@ -21,7 +21,11 @@ namespace POC3D.ViewModel
         public double YoungsModulus
         {
             get => ModelMaterial.YoungsModulus;
-            set => ModelMaterial.YoungsModulus = value;
+            set
+            {
+                ModelMaterial.YoungsModulus = value;
+                OnPropertyChanged(nameof(YoungsModulus));
+            }
         }
     }
 }

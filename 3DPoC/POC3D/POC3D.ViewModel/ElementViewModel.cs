@@ -20,9 +20,14 @@ namespace POC3D.ViewModel
         public ElementViewModel(IModelElement modelElement, NodeViewModel origin, NodeViewModel destination, MaterialViewModel materialViewModel)
         {
             Element = modelElement;
-            Origin = origin;
-            Destination = destination;
-            Material = materialViewModel;
+
+            _origin = origin;
+            _origin.PropertyChanged += NodeChanged;
+            _destination = destination;
+            _destination.PropertyChanged += NodeChanged;
+
+            _materialViewModel = materialViewModel;
+            _materialViewModel.PropertyChanged += MaterialChanged;
 
             _elementGeometryViewModel = new ElementGeometryViewModel(this);
             _resultElementGeometryViewModel = new ResultElementGeometryViewModel(this);
@@ -36,14 +41,22 @@ namespace POC3D.ViewModel
             get => _origin;
             set
             {
-                if (_origin != null) _origin.PropertyChanged -= (_, __) => OnPropertyChanged(nameof(Origin));
+                if(value == null)
+                {
+                    throw new ArgumentNullException(nameof(Origin));
+                }
 
-                value.PropertyChanged += (_, __) => OnPropertyChanged(nameof(Origin)); ;
+                _origin.PropertyChanged -= NodeChanged;
                 _origin = value;
+                _origin.PropertyChanged += NodeChanged;
+
                 Element.OriginNode = _origin.Node;
                 OnPropertyChanged(nameof(Origin));
                 OnPropertyChanged(nameof(Length));
                 OnPropertyChanged(nameof(K));
+                OnPropertyChanged(nameof(Description));
+                OnPropertyChanged(nameof(Geometry));
+                OnPropertyChanged(nameof(ResultGeometry));
             }
         }
 
@@ -52,14 +65,22 @@ namespace POC3D.ViewModel
             get => _destination;
             set
             {
-                if (_destination != null) _destination.PropertyChanged -= (_, __) => OnPropertyChanged(nameof(Destination));
+                if (value == null)
+                {
+                    throw new ArgumentNullException(nameof(Origin));
+                }
 
-                value.PropertyChanged += (_, __) => OnPropertyChanged(nameof(Destination));
+                _destination.PropertyChanged -= NodeChanged;
                 _destination = value;
+                _destination.PropertyChanged += NodeChanged;
+
                 Element.DestinationNode = _destination.Node;
                 OnPropertyChanged(nameof(Destination));
                 OnPropertyChanged(nameof(Length));
                 OnPropertyChanged(nameof(K));
+                OnPropertyChanged(nameof(Description));
+                OnPropertyChanged(nameof(Geometry));
+                OnPropertyChanged(nameof(ResultGeometry));
             }
         }
 
@@ -72,7 +93,15 @@ namespace POC3D.ViewModel
             get => _materialViewModel;
             set
             {
+                if (value == null)
+                {
+                    throw new ArgumentNullException(nameof(Origin));
+                }
+
+                _materialViewModel.PropertyChanged -= MaterialChanged;
                 _materialViewModel = value;
+                _materialViewModel.PropertyChanged += MaterialChanged;
+
                 Element.Material = _materialViewModel.ModelMaterial;
                 OnPropertyChanged(nameof(Material));
                 OnPropertyChanged(nameof(K));
@@ -99,5 +128,30 @@ namespace POC3D.ViewModel
         public GeometryModel3D ResultGeometry => _resultElementGeometryViewModel.Geometry;
 
         public ElementCalculationViewModel ElementCalculationViewModel { get; }
+
+        private void MaterialChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(MaterialViewModel.YoungsModulus))
+            {
+                OnPropertyChanged(nameof(Material));
+                OnPropertyChanged(nameof(K));
+            }
+        }
+
+        private void NodeChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(NodeViewModel.Coordinates) ||
+                e.PropertyName == nameof(NodeViewModel.IsFixed))
+            {
+                if(sender == Origin)
+                {
+                    OnPropertyChanged(nameof(Origin));
+                }
+                else
+                {
+                    OnPropertyChanged(nameof(Destination));
+                }
+            }
+        }
     }
 }

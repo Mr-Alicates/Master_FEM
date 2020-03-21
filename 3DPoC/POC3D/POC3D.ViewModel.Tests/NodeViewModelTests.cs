@@ -58,6 +58,20 @@ namespace POC3D.ViewModel.Tests
         }
 
         [Test]
+        public void X_ValueChanged_ExpectNameUpdated()
+        {
+            //Arrange
+            var modelNode = BuildTestNode();
+            var nodeViewModel = new NodeViewModel(modelNode);
+
+            //Act
+            nodeViewModel.X = 1234;
+
+            //Assert
+            Assert.That(nodeViewModel.Name, Is.EqualTo("1 (1234;0;0)"));
+        }
+
+        [Test]
         public void X_ValueChanged_ExpectPropertiesChangedEventRaised()
         {
             //Arrange
@@ -74,6 +88,7 @@ namespace POC3D.ViewModel.Tests
             {
                 "X",
                 "Coordinates",
+                "Name",
                 "Geometry",
                 "ResultGeometry"
             }));
@@ -108,6 +123,20 @@ namespace POC3D.ViewModel.Tests
         }
 
         [Test]
+        public void Y_ValueChanged_ExpectNameUpdated()
+        {
+            //Arrange
+            var modelNode = BuildTestNode();
+            var nodeViewModel = new NodeViewModel(modelNode);
+
+            //Act
+            nodeViewModel.Y = 1234;
+
+            //Assert
+            Assert.That(nodeViewModel.Name, Is.EqualTo("1 (0;1234;0)"));
+        }
+
+        [Test]
         public void Y_ValueChanged_ExpectPropertiesChangedEventRaised()
         {
             //Arrange
@@ -124,6 +153,7 @@ namespace POC3D.ViewModel.Tests
             {
                 "Y",
                 "Coordinates",
+                "Name",
                 "Geometry",
                 "ResultGeometry"
             }));
@@ -158,6 +188,20 @@ namespace POC3D.ViewModel.Tests
         }
 
         [Test]
+        public void Z_ValueChanged_ExpectNameUpdated()
+        {
+            //Arrange
+            var modelNode = BuildTestNode();
+            var nodeViewModel = new NodeViewModel(modelNode);
+
+            //Act
+            nodeViewModel.Z = 1234;
+
+            //Assert
+            Assert.That(nodeViewModel.Name, Is.EqualTo("1 (0;0;1234)"));
+        }
+
+        [Test]
         public void Z_ValueChanged_ExpectPropertiesChangedEventRaised()
         {
             //Arrange
@@ -174,6 +218,7 @@ namespace POC3D.ViewModel.Tests
             {
                 "Z",
                 "Coordinates",
+                "Name",
                 "Geometry",
                 "ResultGeometry"
             }));

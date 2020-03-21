@@ -1,4 +1,5 @@
-﻿using System.Windows.Media.Media3D;
+﻿using System;
+using System.Windows.Media.Media3D;
 using POC3D.Model;
 using POC3D.ViewModel.Base;
 using POC3D.ViewModel.Geometry;
@@ -14,7 +15,10 @@ namespace POC3D.ViewModel
         public ForceViewModel(IModelForce force, NodeViewModel node)
         {
             Force = force;
-            Node = node;
+
+            _nodeViewModel = node;
+            _nodeViewModel.PropertyChanged += NodeChanged;
+
             _forceGeometryViewModel = new ForceGeometryViewModel(this);
             _resultForceGeometryViewModel = new ResultForceGeometryViewModel(this);
         }
@@ -26,10 +30,15 @@ namespace POC3D.ViewModel
             get => _nodeViewModel;
             set
             {
-                if (_nodeViewModel != null) _nodeViewModel.PropertyChanged -= (_, __) => OnPropertyChanged(nameof(Node)); ;
+                if(value == null)
+                {
+                    throw new ArgumentNullException(nameof(Node));
+                }
 
-                value.PropertyChanged += (_, __) => OnPropertyChanged(nameof(Node)); ;
+                _nodeViewModel.PropertyChanged -= NodeChanged;
                 _nodeViewModel = value;
+                _nodeViewModel.PropertyChanged += NodeChanged;
+
                 Force.Node = _nodeViewModel.Node;
                 OnPropertyChanged(nameof(Node));
             }
@@ -44,6 +53,7 @@ namespace POC3D.ViewModel
                 OnPropertyChanged(nameof(ApplicationVectorX));
                 OnPropertyChanged(nameof(ApplicationVector));
                 OnPropertyChanged(nameof(Magnitude));
+                OnPropertyChanged(nameof(Name));
             }
         }
 
@@ -56,6 +66,7 @@ namespace POC3D.ViewModel
                 OnPropertyChanged(nameof(ApplicationVectorY));
                 OnPropertyChanged(nameof(ApplicationVector));
                 OnPropertyChanged(nameof(Magnitude));
+                OnPropertyChanged(nameof(Name));
             }
         }
 
@@ -68,6 +79,7 @@ namespace POC3D.ViewModel
                 OnPropertyChanged(nameof(ApplicationVectorZ));
                 OnPropertyChanged(nameof(ApplicationVector));
                 OnPropertyChanged(nameof(Magnitude));
+                OnPropertyChanged(nameof(Name));
             }
         }
 
@@ -82,5 +94,13 @@ namespace POC3D.ViewModel
         public GeometryModel3D Geometry => _forceGeometryViewModel.Geometry;
 
         public GeometryModel3D ResultGeometry => _resultForceGeometryViewModel.Geometry;
+
+        private void NodeChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName == nameof(NodeViewModel.Coordinates))
+            {
+                OnPropertyChanged(nameof(Node));
+            }
+        }
     }
 }

@@ -38,6 +38,7 @@ namespace POC3D.ViewModel
                 Node.Coordinates.X = value;
                 OnPropertyChanged(nameof(X));
                 OnPropertyChanged(nameof(Coordinates));
+                OnPropertyChanged(nameof(Name));
                 OnPropertyChanged(nameof(Geometry));
                 OnPropertyChanged(nameof(ResultGeometry));
             }
@@ -51,6 +52,7 @@ namespace POC3D.ViewModel
                 Node.Coordinates.Y = value;
                 OnPropertyChanged(nameof(Y));
                 OnPropertyChanged(nameof(Coordinates));
+                OnPropertyChanged(nameof(Name));
                 OnPropertyChanged(nameof(Geometry));
                 OnPropertyChanged(nameof(ResultGeometry));
             }
@@ -64,6 +66,7 @@ namespace POC3D.ViewModel
                 Node.Coordinates.Z = value;
                 OnPropertyChanged(nameof(Z));
                 OnPropertyChanged(nameof(Coordinates));
+                OnPropertyChanged(nameof(Name));
                 OnPropertyChanged(nameof(Geometry));
                 OnPropertyChanged(nameof(ResultGeometry));
             }

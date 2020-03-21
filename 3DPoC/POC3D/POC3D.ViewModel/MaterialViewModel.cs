@@ -15,7 +15,11 @@ namespace POC3D.ViewModel
         public string Name
         { 
             get => ModelMaterial.Name;
-            set => ModelMaterial.Name = value;
+            set
+            {
+                ModelMaterial.Name = value;
+                OnPropertyChanged(nameof(Name));
+            }
         }
 
         public double YoungsModulus

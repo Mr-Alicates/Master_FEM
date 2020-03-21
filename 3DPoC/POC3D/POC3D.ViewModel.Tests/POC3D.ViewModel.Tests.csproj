@@ -54,6 +54,7 @@
     <Compile Include="ElementViewModelTests.cs" />
     <Compile Include="ForceViewModelTests.cs" />
     <Compile Include="Helper\PropertyChangedEventChecker.cs" />
+    <Compile Include="MaterialViewModelTests.cs" />
     <Compile Include="NodeViewModelTests.cs" />
     <Compile Include="ProblemViewModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

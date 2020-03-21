@@ -1,8 +1,9 @@
 ﻿using POC3D.Model;
+using POC3D.ViewModel.Base;
 
 namespace POC3D.ViewModel
 {
-    public class MaterialViewModel
+    public class MaterialViewModel : SelectableViewModel
     {
         public MaterialViewModel(IModelMaterial modelMaterial)
         {
@@ -21,21 +22,6 @@ namespace POC3D.ViewModel
         {
             get => ModelMaterial.YoungsModulus;
             set => ModelMaterial.YoungsModulus = value;
-        }
-
-        public override bool Equals(object obj)
-        {
-            return obj is MaterialViewModel other && Equals(other);
-        }
-
-        protected bool Equals(MaterialViewModel other)
-        {
-            return Equals(ModelMaterial, other.ModelMaterial);
-        }
-
-        public override int GetHashCode()
-        {
-            return ModelMaterial != null ? ModelMaterial.GetHashCode() : 0;
         }
     }
 }

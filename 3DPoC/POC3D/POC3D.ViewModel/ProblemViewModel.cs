@@ -128,16 +128,6 @@ namespace POC3D.ViewModel
 
         public ProblemCalculationViewModel ProblemCalculationViewModel { get; }
 
-        public NodeViewModel AddNode(Point3D point)
-        {
-            var nodeViewModel = AddNode();
-            nodeViewModel.X = point.X;
-            nodeViewModel.Y = point.Y;
-            nodeViewModel.Z = point.Z;
-
-            return nodeViewModel;
-        }
-
         public NodeViewModel AddNode()
         {
             var modelNode = _modelProblem.AddNode();

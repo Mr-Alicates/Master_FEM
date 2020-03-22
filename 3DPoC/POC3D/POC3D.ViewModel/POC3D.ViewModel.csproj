@@ -77,9 +77,12 @@
     <Compile Include="Geometry\NodeGeometryViewModel.cs" />
     <Compile Include="Geometry\ResultForceGeometryViewModel.cs" />
     <Compile Include="Geometry\ResultNodeGeometryViewModel.cs" />
+    <Compile Include="InterfaceControlViewModel.cs" />
+    <Compile Include="MainViewModel.cs" />
     <Compile Include="MaterialViewModel.cs" />
     <Compile Include="NewElementViewModel.cs" />
     <Compile Include="NewForceViewModel.cs" />
+    <Compile Include="NodeManagementViewModel.cs" />
     <Compile Include="NodeViewModel.cs" />
     <Compile Include="ProblemViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

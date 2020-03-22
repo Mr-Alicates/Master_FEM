@@ -177,9 +177,6 @@
     <Compile Include="Controls\VisualAreaControl.xaml.cs">
       <DependentUpon>VisualAreaControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\InterfaceControlViewModel.cs" />
-    <Compile Include="ViewModel\CameraViewModel.cs" />
-    <Compile Include="ViewModel\MainViewModel.cs" />
     <Page Include="Controls\ManagementControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

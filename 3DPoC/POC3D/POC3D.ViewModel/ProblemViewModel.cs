@@ -17,9 +17,7 @@ namespace POC3D.ViewModel
     public class ProblemViewModel : Observable
     {
         private readonly IModelProblem _modelProblem;
-        private ElementViewModel _selectedElement;
-        private ForceViewModel _selectedForce;
-        private NodeViewModel _selectedNode;
+        private SelectableViewModel _selectedItem;
 
         public ProblemViewModel()
         {
@@ -33,78 +31,62 @@ namespace POC3D.ViewModel
             ProblemCalculationViewModel = new ProblemCalculationViewModel(this);
         }
 
-        public NodeViewModel SelectedNode
+        public SelectableViewModel SelectedItem
         {
-            get => _selectedNode;
+            get => _selectedItem;
             set
             {
-                if (_selectedNode == value) return;
-
-                if (_selectedNode != null) _selectedNode.IsSelected = false;
-
-                _selectedNode = value;
-
-                if (_selectedNode != null)
+                if(_selectedItem != null)
                 {
-                    _selectedNode.IsSelected = true;
-                    SelectedElement = null;
-                    SelectedForce = null;
+                    _selectedItem.IsSelected = false;
+                }
+
+                _selectedItem = value;
+
+                if(_selectedItem != null)
+                {
+                    _selectedItem.IsSelected = true;
                 }
 
                 OnPropertyChanged(nameof(SelectedNode));
-            }
-        }
-
-        public ElementViewModel SelectedElement
-        {
-            get => _selectedElement;
-            set
-            {
-                if (_selectedElement == value) return;
-
-                if (_selectedElement != null)
-                {
-                    _selectedElement.IsSelected = false;
-                    _selectedElement.PropertyChanged -= SelectedElementChanged;
-                }
-
-                _selectedElement = value;
-
-                if (_selectedElement != null)
-                {
-                    _selectedElement.IsSelected = true;
-                    _selectedElement.PropertyChanged += SelectedElementChanged;
-                    SelectedNode = null;
-                    SelectedForce = null;
-                }
-
                 OnPropertyChanged(nameof(SelectedElement));
+                OnPropertyChanged(nameof(SelectedForce));
+
+                OnPropertyChanged(nameof(AvailableNodesForSelectedForces));
                 OnPropertyChanged(nameof(AvailableOriginNodesForSelectedElements));
                 OnPropertyChanged(nameof(AvailableDestinationNodesForSelectedElements));
             }
         }
 
-        public ForceViewModel SelectedForce
+        public NodeViewModel SelectedNode
         {
-            get => _selectedForce;
+            get => SelectedItem as NodeViewModel;
+            set => SelectedItem = value;
+        }
+
+        public ElementViewModel SelectedElement
+        {
+            get => SelectedItem as ElementViewModel;
             set
             {
-                if (_selectedForce == value) return;
-
-                if (_selectedForce != null) _selectedForce.IsSelected = false;
-
-                _selectedForce = value;
-
-                if (_selectedForce != null)
+                if (SelectedItem != null)
                 {
-                    _selectedForce.IsSelected = true;
-                    SelectedNode = null;
-                    SelectedElement = null;
+                    SelectedItem.PropertyChanged -= SelectedElementChanged;
                 }
 
-                OnPropertyChanged(nameof(SelectedForce));
-                OnPropertyChanged(nameof(AvailableNodesForSelectedForces));
+                SelectedItem = value;
+
+                if (SelectedItem != null)
+                {
+                    SelectedItem.PropertyChanged += SelectedElementChanged;
+                }
             }
+        }
+
+        public ForceViewModel SelectedForce
+        {
+            get => SelectedItem as ForceViewModel;
+            set => SelectedItem = value;
         }
 
         public IEnumerable<NodeViewModel> AvailableNodesForSelectedForces

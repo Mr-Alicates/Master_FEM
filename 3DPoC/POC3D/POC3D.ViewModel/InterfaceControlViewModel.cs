@@ -63,7 +63,7 @@ namespace POC3D.ViewModel
 
         public ICommand ShowSelectedNodeDetailsCommand => new ButtonCommand(ShowSelectedNodeDetails);
 
-        public ICommand AddNodeCommand => new AddNodeCommand(_problemViewModel);
+        public ICommand AddNodeCommand => NodeManagementViewModel.AddNodeCommand;
 
         public ICommand ShowNodeListingCommand => new ButtonCommand(ShowNodeListing);
 

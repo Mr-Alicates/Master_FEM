@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using POC3D.Model;
@@ -22,10 +24,15 @@ namespace POC3D.ViewModel.Implementation
             Forces = new ObservableCollection<ForceViewModel>();
             Materials = new ObservableCollection<MaterialViewModel>();
 
+            Nodes.CollectionChanged += CollectionChanged;
+            Elements.CollectionChanged += CollectionChanged;
+            Forces.CollectionChanged += CollectionChanged;
+            Materials.CollectionChanged += CollectionChanged;
+
             ProblemCalculationViewModel = new ProblemCalculationViewModel(this);
         }
 
-        public SelectableViewModel SelectedItem
+        private SelectableViewModel SelectedItem
         {
             get => _selectedItem;
             set
@@ -33,6 +40,7 @@ namespace POC3D.ViewModel.Implementation
                 if (_selectedItem != null)
                 {
                     _selectedItem.IsSelected = false;
+                    _selectedItem.PropertyChanged -= SelectedItemChanged;
                 }
 
                 _selectedItem = value;
@@ -40,11 +48,13 @@ namespace POC3D.ViewModel.Implementation
                 if (_selectedItem != null)
                 {
                     _selectedItem.IsSelected = true;
+                    _selectedItem.PropertyChanged += SelectedItemChanged;
                 }
 
                 OnPropertyChanged(nameof(SelectedNode));
                 OnPropertyChanged(nameof(SelectedElement));
                 OnPropertyChanged(nameof(SelectedForce));
+                OnPropertyChanged(nameof(SelectedMaterial));
 
                 OnPropertyChanged(nameof(AvailableNodesForSelectedForces));
                 OnPropertyChanged(nameof(AvailableOriginNodesForSelectedElements));
@@ -61,25 +71,18 @@ namespace POC3D.ViewModel.Implementation
         public ElementViewModel SelectedElement
         {
             get => SelectedItem as ElementViewModel;
-            set
-            {
-                if (SelectedItem != null)
-                {
-                    SelectedItem.PropertyChanged -= SelectedElementChanged;
-                }
-
-                SelectedItem = value;
-
-                if (SelectedItem != null)
-                {
-                    SelectedItem.PropertyChanged += SelectedElementChanged;
-                }
-            }
+            set => SelectedItem = value;
         }
 
         public ForceViewModel SelectedForce
         {
             get => SelectedItem as ForceViewModel;
+            set => SelectedItem = value;
+        }
+
+        public MaterialViewModel SelectedMaterial
+        {
+            get => SelectedItem as MaterialViewModel;
             set => SelectedItem = value;
         }
 
@@ -184,8 +187,6 @@ namespace POC3D.ViewModel.Implementation
             Nodes.Add(nodeViewModel);
             SelectedNode = nodeViewModel;
 
-            ProblemChanged();
-
             return nodeViewModel;
         }
 
@@ -197,8 +198,6 @@ namespace POC3D.ViewModel.Implementation
             Nodes.Remove(selectedNode);
 
             SelectedNode = null;
-
-            ProblemChanged();
         }
 
         public ElementViewModel AddBarElement(NodeViewModel node1, NodeViewModel node2)
@@ -211,9 +210,6 @@ namespace POC3D.ViewModel.Implementation
 
             Elements.Add(result);
 
-            result.ElementCalculationViewModel.PropertyChanged += ElementPropertyChanged;
-            ProblemChanged();
-
             return result;
         }
 
@@ -223,10 +219,8 @@ namespace POC3D.ViewModel.Implementation
 
             _modelProblem.DeleteElement(selectedElement.Element);
             Elements.Remove(selectedElement);
-            selectedElement.ElementCalculationViewModel.PropertyChanged -= ElementPropertyChanged;
-            SelectedElement = null;
 
-            ProblemChanged();
+            SelectedElement = null;
         }
 
         public ForceViewModel AddForce(NodeViewModel node)
@@ -238,9 +232,6 @@ namespace POC3D.ViewModel.Implementation
             Forces.Add(result);
             SelectedForce = result;
 
-            result.PropertyChanged += ForcePropertyChanged;
-            ProblemChanged();
-
             return result;
         }
 
@@ -250,30 +241,20 @@ namespace POC3D.ViewModel.Implementation
 
             _modelProblem.DeleteForce(selectedForce.Force);
 
-            selectedForce.PropertyChanged -= ForcePropertyChanged;
             Forces.Remove(selectedForce);
             SelectedForce = null;
-
-            ProblemChanged();
         }
 
-        private void ElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        public MaterialViewModel AddMaterial()
         {
-            if (e.PropertyName == nameof(ElementCalculationViewModel.GlobalStiffnessMatrix)) ProblemChanged();
-        }
+            var modelMaterial = _modelProblem.AddMaterial();
 
-        private void ForcePropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(ForceViewModel.Magnitude) ||
-                e.PropertyName == nameof(ForceViewModel.Node))
-                ProblemChanged();
-        }
+            var result = new MaterialViewModel(modelMaterial);
+            Materials.Add(result);
 
-        private void ProblemChanged()
-        {
-            OnPropertyChanged(nameof(NumberOfNodes));
-            OnPropertyChanged(nameof(NumberOfElements));
-            OnPropertyChanged(nameof(NumberOfDirichletBoundaryConditions));
+            SelectedMaterial = result;
+
+            return result;
         }
 
         private MaterialViewModel GetOrInitMaterialViewModel(IModelMaterial modelMaterial)
@@ -282,24 +263,59 @@ namespace POC3D.ViewModel.Implementation
 
             if (result == null)
             {
-                result = new MaterialViewModel(modelMaterial);
-
-                Materials.Add(result);
+                result = AddMaterial();
             }
 
             return result;
         }
 
-        private void SelectedElementChanged(object sender, PropertyChangedEventArgs e)
+        private void SelectedItemChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(ElementViewModel.Origin))
+            switch (e.PropertyName)
             {
-                OnPropertyChanged(nameof(AvailableDestinationNodesForSelectedElements));
+                case nameof(ElementViewModel.Origin):
+                    OnPropertyChanged(nameof(AvailableDestinationNodesForSelectedElements));
+                    break;
+
+                case nameof(ElementViewModel.Destination):
+                    OnPropertyChanged(nameof(AvailableOriginNodesForSelectedElements));
+                    break;
             }
-            if (e.PropertyName == nameof(ElementViewModel.Destination))
+        }
+
+        private void ItemPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(ForceViewModel.Magnitude) ||
+                e.PropertyName == nameof(ForceViewModel.Node) ||
+                e.PropertyName == nameof(ElementCalculationViewModel.GlobalStiffnessMatrix))
             {
-                OnPropertyChanged(nameof(AvailableOriginNodesForSelectedElements));
+                OnPropertyChanged(nameof(NumberOfNodes));
+                OnPropertyChanged(nameof(NumberOfElements));
+                OnPropertyChanged(nameof(NumberOfDirichletBoundaryConditions));
             }
+        }
+
+        private void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.OldItems != null)
+            {
+                foreach (SelectableViewModel item in e.OldItems)
+                {
+                    item.PropertyChanged -= ItemPropertyChanged;
+                }
+            }
+
+            if (e.NewItems != null)
+            {
+                foreach (SelectableViewModel item in e.NewItems)
+                {
+                    item.PropertyChanged += ItemPropertyChanged;
+                }
+            }
+
+            OnPropertyChanged(nameof(NumberOfNodes));
+            OnPropertyChanged(nameof(NumberOfElements));
+            OnPropertyChanged(nameof(NumberOfDirichletBoundaryConditions));
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -97,6 +98,22 @@ namespace POC3D.ViewModel
                 }
 
                 OnPropertyChanged(nameof(SelectedForce));
+                OnPropertyChanged(nameof(AvailableNodesForSelectedForces));
+            }
+        }
+
+        public IEnumerable<NodeViewModel> AvailableNodesForSelectedForces
+        {
+            get
+            {
+                var forcesNodes = Forces.Select(force => force.Node);
+
+                if(SelectedForce != null)
+                {
+                    forcesNodes = forcesNodes.Except(new[] { SelectedForce.Node });
+                }
+
+                return Nodes.Except(forcesNodes);
             }
         }
 

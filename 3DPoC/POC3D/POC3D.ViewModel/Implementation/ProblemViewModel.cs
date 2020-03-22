@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
-using System.Windows.Media.Media3D;
 using POC3D.Model;
 using POC3D.ViewModel.Base;
 using POC3D.ViewModel.Calculations;
-using POC3D.ViewModel.Commands;
 
 namespace POC3D.ViewModel.Implementation
 {

@@ -1,9 +1,4 @@
-﻿using System.ComponentModel;
-using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-using POC3D.ViewModel;
+﻿using System.Windows.Controls;
 
 namespace POC3D.Controls.Matrix.Controls
 {

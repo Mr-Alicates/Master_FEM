@@ -3,10 +3,6 @@ using POC3D.Model;
 using POC3D.ViewModel.Implementation;
 using POC3D.ViewModel.Tests.Helper;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace POC3D.ViewModel.Tests
 {

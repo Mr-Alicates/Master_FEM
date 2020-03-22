@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -64,18 +65,25 @@ namespace POC3D.ViewModel
             {
                 if (_selectedElement == value) return;
 
-                if (_selectedElement != null) _selectedElement.IsSelected = false;
+                if (_selectedElement != null)
+                {
+                    _selectedElement.IsSelected = false;
+                    _selectedElement.PropertyChanged -= SelectedElementChanged;
+                }
 
                 _selectedElement = value;
 
                 if (_selectedElement != null)
                 {
                     _selectedElement.IsSelected = true;
+                    _selectedElement.PropertyChanged += SelectedElementChanged;
                     SelectedNode = null;
                     SelectedForce = null;
                 }
 
                 OnPropertyChanged(nameof(SelectedElement));
+                OnPropertyChanged(nameof(AvailableOriginNodesForSelectedElements));
+                OnPropertyChanged(nameof(AvailableDestinationNodesForSelectedElements));
             }
         }
 
@@ -108,12 +116,74 @@ namespace POC3D.ViewModel
             {
                 var forcesNodes = Forces.Select(force => force.Node);
 
-                if(SelectedForce != null)
+                if (SelectedForce != null)
                 {
                     forcesNodes = forcesNodes.Except(new[] { SelectedForce.Node });
                 }
 
                 return Nodes.Except(forcesNodes);
+            }
+        }
+
+        public IEnumerable<NodeViewModel> AvailableOriginNodesForSelectedElements
+        {
+            get
+            {
+                var origin = SelectedElement?.Origin;
+                var destination = SelectedElement?.Destination;
+
+                foreach (var possibleOriginNode in Nodes)
+                {
+                    if(possibleOriginNode == origin)
+                    {
+                        yield return possibleOriginNode;
+                    }
+
+                    if (possibleOriginNode == destination)
+                    {
+                        continue;
+                    }
+
+                    if(Elements.Any(element => 
+                        element.Origin == possibleOriginNode && element.Destination == destination ||
+                        element.Origin == destination && element.Destination == possibleOriginNode))
+                    {
+                        continue;
+                    }
+
+                    yield return possibleOriginNode;
+                }
+            }
+        }
+
+        public IEnumerable<NodeViewModel> AvailableDestinationNodesForSelectedElements
+        {
+            get
+            {
+                var origin = SelectedElement?.Origin;
+                var destination = SelectedElement?.Destination;
+
+                foreach (var possibleDestinationNode in Nodes)
+                {
+                    if (possibleDestinationNode == destination)
+                    {
+                        yield return possibleDestinationNode;
+                    }
+
+                    if (possibleDestinationNode == origin)
+                    {
+                        continue;
+                    }
+
+                    if (Elements.Any(element =>
+                         element.Origin == origin && element.Destination == possibleDestinationNode ||
+                         element.Origin == possibleDestinationNode && element.Destination == origin))
+                    {
+                        continue;
+                    }
+
+                    yield return possibleDestinationNode;
+                }
             }
         }
 
@@ -258,6 +328,18 @@ namespace POC3D.ViewModel
             }
 
             return result;
+        }
+
+        private void SelectedElementChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(ElementViewModel.Origin))
+            {
+                OnPropertyChanged(nameof(AvailableDestinationNodesForSelectedElements));
+            }
+            if (e.PropertyName == nameof(ElementViewModel.Destination))
+            {
+                OnPropertyChanged(nameof(AvailableOriginNodesForSelectedElements));
+            }
         }
     }
 }

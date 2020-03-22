@@ -41,7 +41,7 @@
       <ComboBox Grid.Row="2"
                 Grid.Column="0"
                 SelectedItem="{Binding ProblemViewModel.SelectedElement.Origin,Mode=TwoWay}"
-                ItemsSource="{Binding ProblemViewModel.Nodes}">
+                ItemsSource="{Binding ProblemViewModel.AvailableOriginNodesForSelectedElements}">
         <ComboBox.ItemTemplate>
           <DataTemplate DataType="viewModel:NodeViewModel">
             <StackPanel Orientation="Horizontal">
@@ -55,7 +55,7 @@
       <ComboBox Grid.Row="3"
                 Grid.Column="0"
                 SelectedItem="{Binding ProblemViewModel.SelectedElement.Destination,Mode=TwoWay}"
-                ItemsSource="{Binding ProblemViewModel.Nodes}">
+                ItemsSource="{Binding ProblemViewModel.AvailableDestinationNodesForSelectedElements}">
 
         <ComboBox.ItemTemplate>
           <DataTemplate DataType="viewModel:NodeViewModel">

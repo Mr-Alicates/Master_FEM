@@ -7,11 +7,11 @@ namespace POC3D.ViewModel.Commands
 {
     public class AddForceCommand : ICommand
     {
-        private readonly NewForceViewModel _newForceViewModel;
+        private readonly ForceManagementViewModel _newForceViewModel;
         private readonly ProblemViewModel _problemViewModel;
         private bool _canExecute;
 
-        public AddForceCommand(NewForceViewModel newForceViewModel, ProblemViewModel problemViewModel)
+        public AddForceCommand(ForceManagementViewModel newForceViewModel, ProblemViewModel problemViewModel)
         {
             _newForceViewModel = newForceViewModel;
             _problemViewModel = problemViewModel;

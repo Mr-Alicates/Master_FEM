@@ -55,6 +55,7 @@
     <Compile Include="Base\SelectableViewModel.cs" />
     <Compile Include="Calculations\ElementCalculationViewModel.cs" />
     <Compile Include="Calculations\ProblemCalculationViewModel.cs" />
+    <Compile Include="CameraViewModel.cs" />
     <Compile Include="Geometry\ResultElementGeometryViewModel.cs" />
     <Compile Include="Geometry\ElementGeometryViewModel.cs" />
     <Compile Include="Geometry\ForceGeometryViewModel.cs" />
@@ -80,8 +81,8 @@
     <Compile Include="InterfaceControlViewModel.cs" />
     <Compile Include="MainViewModel.cs" />
     <Compile Include="MaterialViewModel.cs" />
-    <Compile Include="NewElementViewModel.cs" />
-    <Compile Include="NewForceViewModel.cs" />
+    <Compile Include="ElementManagementViewModel.cs" />
+    <Compile Include="ForceManagementViewModel.cs" />
     <Compile Include="NodeManagementViewModel.cs" />
     <Compile Include="NodeViewModel.cs" />
     <Compile Include="ProblemViewModel.cs" />

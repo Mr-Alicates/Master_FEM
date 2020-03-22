@@ -4,13 +4,13 @@ using POC3D.ViewModel.Commands;
 
 namespace POC3D.ViewModel
 {
-    public class NewElementViewModel : Observable
+    public class ElementManagementViewModel : Observable
     {
         private readonly ProblemViewModel _problemViewModel;
         private NodeViewModel _destinationNode;
         private NodeViewModel _originNode;
 
-        public NewElementViewModel(ProblemViewModel problemViewModel)
+        public ElementManagementViewModel(ProblemViewModel problemViewModel)
         {
             _problemViewModel = problemViewModel;
         }
@@ -36,5 +36,7 @@ namespace POC3D.ViewModel
         }
 
         public ICommand AddElementCommand => new AddElementCommand(this, _problemViewModel);
+
+        public ICommand DeleteElementCommand => new DeleteElementCommand(_problemViewModel);
     }
 }

@@ -30,9 +30,6 @@ namespace POC3D.ViewModel
             Forces = new ObservableCollection<ForceViewModel>();
             Materials = new ObservableCollection<MaterialViewModel>();
 
-            NewElementViewModel = new NewElementViewModel(this);
-            NewForceViewModel = new NewForceViewModel(this);
-
             ProblemCalculationViewModel = new ProblemCalculationViewModel(this);
         }
 
@@ -187,10 +184,6 @@ namespace POC3D.ViewModel
             }
         }
 
-        public NewElementViewModel NewElementViewModel { get; }
-
-        public NewForceViewModel NewForceViewModel { get; }
-
         public ObservableCollection<NodeViewModel> Nodes { get; }
 
         public ObservableCollection<ElementViewModel> Elements { get; }
@@ -198,14 +191,6 @@ namespace POC3D.ViewModel
         public ObservableCollection<ForceViewModel> Forces { get; }
 
         public ObservableCollection<MaterialViewModel> Materials { get; }
-
-        public ICommand AddNodeCommand => new AddNodeCommand(this);
-
-        public ICommand DeleteNodeCommand => new DeleteNodeCommand(this);
-
-        public ICommand DeleteElementCommand => new DeleteElementCommand(this);
-
-        public ICommand DeleteForceCommand => new DeleteForceCommand(this);
 
         public int NumberOfNodes => Nodes.Count;
 
@@ -262,8 +247,7 @@ namespace POC3D.ViewModel
 
             _modelProblem.DeleteElement(selectedElement.Element);
             Elements.Remove(selectedElement);
-
-            SelectedElement.ElementCalculationViewModel.PropertyChanged -= ElementPropertyChanged;
+            selectedElement.ElementCalculationViewModel.PropertyChanged -= ElementPropertyChanged;
             SelectedElement = null;
 
             ProblemChanged();

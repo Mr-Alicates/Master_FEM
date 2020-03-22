@@ -26,7 +26,7 @@
                 Grid.Column="0"
                 ItemsSource="{Binding ProblemViewModel.Nodes,Mode=OneWay}"
                 DisplayMemberPath="Name"
-                SelectedItem="{Binding ProblemViewModel.NewElementViewModel.OriginNode}" />
+                SelectedItem="{Binding InterfaceControlViewModel.ElementManagementViewModel.OriginNode}" />
       <TextBlock Grid.Row="0"
                  Grid.Column="1"
                  Text="Origin node" />
@@ -35,7 +35,7 @@
                 Grid.Column="0"
                 ItemsSource="{Binding ProblemViewModel.Nodes,Mode=OneWay}"
                 DisplayMemberPath="Name"
-                SelectedItem="{Binding ProblemViewModel.NewElementViewModel.DestinationNode}" />
+                SelectedItem="{Binding InterfaceControlViewModel.ElementManagementViewModel.DestinationNode}" />
       <TextBlock Grid.Row="1"
                  Grid.Column="1"
                  Text="Destination node" />
@@ -44,7 +44,7 @@
               Grid.Column="0"
               Grid.ColumnSpan="2"
               Content="Add new element"
-              Command="{Binding ProblemViewModel.NewElementViewModel.AddElementCommand}" />
+              Command="{Binding InterfaceControlViewModel.ElementManagementViewModel.AddElementCommand}" />
 
     </Grid>
 

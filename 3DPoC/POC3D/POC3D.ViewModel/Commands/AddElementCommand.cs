@@ -7,11 +7,11 @@ namespace POC3D.ViewModel.Commands
 {
     public class AddElementCommand : ICommand
     {
-        private readonly NewElementViewModel _newElementViewModel;
+        private readonly ElementManagementViewModel _newElementViewModel;
         private readonly ProblemViewModel _problemViewModel;
         private bool _canExecute;
 
-        public AddElementCommand(NewElementViewModel newElementViewModel, ProblemViewModel problemViewModel)
+        public AddElementCommand(ElementManagementViewModel newElementViewModel, ProblemViewModel problemViewModel)
         {
             _newElementViewModel = newElementViewModel;
             _problemViewModel = problemViewModel;

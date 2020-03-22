@@ -23,9 +23,9 @@
 
       <ComboBox Grid.Row="0"
                 Grid.Column="0"
-                ItemsSource="{Binding ProblemViewModel.NewForceViewModel.AvailableNodesForNewForces, Mode=OneWay}"
+                ItemsSource="{Binding InterfaceControlViewModel.ForceManagementViewModel.AvailableNodesForNewForces, Mode=OneWay}"
                 DisplayMemberPath="Name"
-                SelectedItem="{Binding ProblemViewModel.NewForceViewModel.Node}" />
+                SelectedItem="{Binding InterfaceControlViewModel.ForceManagementViewModel.Node}" />
       <TextBlock Grid.Row="0"
                  Grid.Column="1"
                  Text="Application node" />
@@ -35,7 +35,7 @@
               Grid.Column="0"
               Grid.ColumnSpan="2"
               Content="Add new force"
-              Command="{Binding ProblemViewModel.NewForceViewModel.AddForceCommand}" />
+              Command="{Binding InterfaceControlViewModel.ForceManagementViewModel.AddForceCommand}" />
 
     </Grid>
 

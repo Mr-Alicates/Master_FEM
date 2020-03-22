@@ -29,9 +29,19 @@ namespace POC3D.ViewModel
         {
             _problemViewModel = problemViewModel;
             _cameraViewModel = cameraViewModel;
+            
+            ElementManagementViewModel = new ElementManagementViewModel(_problemViewModel);
+            ForceManagementViewModel = new ForceManagementViewModel(_problemViewModel);
+            NodeManagementViewModel = new NodeManagementViewModel(_problemViewModel);
 
             problemViewModel.PropertyChanged += ProblemViewModel_PropertyChanged;
         }
+
+        public ElementManagementViewModel ElementManagementViewModel { get; }
+
+        public ForceManagementViewModel ForceManagementViewModel { get; }
+
+        public NodeManagementViewModel NodeManagementViewModel { get; }
 
         public ICommand HideAllCommand => new ButtonCommand(HideAllControls);
 

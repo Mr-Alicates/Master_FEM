@@ -6,12 +6,12 @@ using POC3D.ViewModel.Commands;
 
 namespace POC3D.ViewModel
 {
-    public class NewForceViewModel : Observable
+    public class ForceManagementViewModel : Observable
     {
         private readonly ProblemViewModel _problemViewModel;
         private NodeViewModel _node;
 
-        public NewForceViewModel(ProblemViewModel problemViewModel)
+        public ForceManagementViewModel(ProblemViewModel problemViewModel)
         {
             _problemViewModel = problemViewModel;
 
@@ -31,6 +31,8 @@ namespace POC3D.ViewModel
         public IEnumerable<NodeViewModel> AvailableNodesForNewForces => _problemViewModel.Nodes.Except(_problemViewModel.Forces.Select(force => force.Node));
 
         public ICommand AddForceCommand => new AddForceCommand(this, _problemViewModel);
+
+        public ICommand DeleteForceCommand => new DeleteForceCommand(_problemViewModel);
 
         private void ForcesChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {

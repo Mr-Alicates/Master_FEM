@@ -19,8 +19,7 @@ namespace POC3D.ViewModel.Calculations
         {
             _elementViewModel = elementViewModel;
 
-            _elementViewModel.PropertyChanged += (_, __) => ElementViewModelChanged();
-            ElementViewModelChanged();
+            _elementViewModel.PropertyChanged += ElementViewModelChanged; 
         }
 
         public NumericMatrix TransformationMatrix =>
@@ -41,8 +40,13 @@ namespace POC3D.ViewModel.Calculations
 
         public double Cz => _cz ??= (_elementViewModel.Destination.Coordinates.Z - _elementViewModel.Origin.Coordinates.Z) / _elementViewModel.Length;
 
-        private void ElementViewModelChanged()
+        private void ElementViewModelChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
+            if(e.PropertyName != nameof(ElementViewModel.Geometry))
+            {
+                return;
+            }
+
             _cx = null;
             _cy = null;
             _cz = null;

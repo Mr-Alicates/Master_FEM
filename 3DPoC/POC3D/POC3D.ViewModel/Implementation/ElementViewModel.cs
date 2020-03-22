@@ -32,6 +32,8 @@ namespace POC3D.ViewModel.Implementation
             _elementGeometryViewModel = new ElementGeometryViewModel(this);
             _resultElementGeometryViewModel = new ResultElementGeometryViewModel(this);
             ElementCalculationViewModel = new ElementCalculationViewModel(this);
+
+            ElementCalculationViewModel.PropertyChanged += PropagateEvents;
         }
 
         public IModelElement Element { get; }

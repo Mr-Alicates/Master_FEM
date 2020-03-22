@@ -216,6 +216,13 @@ namespace POC3D.ViewModel.Tests
                 "Length",
                 "K",
                 "Description",
+                "Cx",
+                "Cy",
+                "Cz",
+                "TransformationMatrix",
+                "TransformationMatrixTransposed",
+                "LocalStiffnessMatrix",
+                "GlobalStiffnessMatrix",
                 "Geometry",
                 "ResultGeometry"
             }));
@@ -444,6 +451,13 @@ namespace POC3D.ViewModel.Tests
                 "Length",
                 "K",
                 "Description",
+                "Cx",
+                "Cy",
+                "Cz",
+                "TransformationMatrix",
+                "TransformationMatrixTransposed",
+                "LocalStiffnessMatrix",
+                "GlobalStiffnessMatrix",
                 "Geometry",
                 "ResultGeometry"
             }));

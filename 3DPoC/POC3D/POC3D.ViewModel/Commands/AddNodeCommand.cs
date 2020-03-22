@@ -1,4 +1,5 @@
-﻿using System;
+﻿using POC3D.ViewModel.Implementation;
+using System;
 using System.Windows.Input;
 
 namespace POC3D.ViewModel.Commands

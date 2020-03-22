@@ -12,7 +12,7 @@ using POC3D.ViewModel.Base;
 using POC3D.ViewModel.Calculations;
 using POC3D.ViewModel.Commands;
 
-namespace POC3D.ViewModel
+namespace POC3D.ViewModel.Implementation
 {
     public class ProblemViewModel : Observable
     {
@@ -36,14 +36,14 @@ namespace POC3D.ViewModel
             get => _selectedItem;
             set
             {
-                if(_selectedItem != null)
+                if (_selectedItem != null)
                 {
                     _selectedItem.IsSelected = false;
                 }
 
                 _selectedItem = value;
 
-                if(_selectedItem != null)
+                if (_selectedItem != null)
                 {
                     _selectedItem.IsSelected = true;
                 }
@@ -113,7 +113,7 @@ namespace POC3D.ViewModel
 
                 foreach (var possibleOriginNode in Nodes)
                 {
-                    if(possibleOriginNode == origin)
+                    if (possibleOriginNode == origin)
                     {
                         yield return possibleOriginNode;
                     }
@@ -123,9 +123,9 @@ namespace POC3D.ViewModel
                         continue;
                     }
 
-                    if(Elements.Any(element => 
-                        element.Origin == possibleOriginNode && element.Destination == destination ||
-                        element.Origin == destination && element.Destination == possibleOriginNode))
+                    if (Elements.Any(element =>
+                         element.Origin == possibleOriginNode && element.Destination == destination ||
+                         element.Origin == destination && element.Destination == possibleOriginNode))
                     {
                         continue;
                     }
@@ -286,7 +286,7 @@ namespace POC3D.ViewModel
         {
             var result = Materials.FirstOrDefault(vm => vm.ModelMaterial == modelMaterial);
 
-            if(result == null)
+            if (result == null)
             {
                 result = new MaterialViewModel(modelMaterial);
 

@@ -1,4 +1,5 @@
-﻿using System.Windows.Media;
+﻿using POC3D.ViewModel.Implementation;
+using System.Windows.Media;
 using System.Windows.Media.Media3D;
 
 namespace POC3D.ViewModel.Geometry

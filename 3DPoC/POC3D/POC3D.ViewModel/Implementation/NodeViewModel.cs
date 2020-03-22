@@ -3,7 +3,7 @@ using POC3D.Model;
 using POC3D.ViewModel.Base;
 using POC3D.ViewModel.Geometry;
 
-namespace POC3D.ViewModel
+namespace POC3D.ViewModel.Implementation
 {
     public class NodeViewModel : SelectableViewModel
     {

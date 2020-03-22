@@ -4,7 +4,7 @@ using POC3D.Model;
 using POC3D.ViewModel.Base;
 using POC3D.ViewModel.Geometry;
 
-namespace POC3D.ViewModel
+namespace POC3D.ViewModel.Implementation
 {
     public class ForceViewModel : SelectableViewModel
     {
@@ -30,7 +30,7 @@ namespace POC3D.ViewModel
             get => _nodeViewModel;
             set
             {
-                if(value == null)
+                if (value == null)
                 {
                     throw new ArgumentNullException(nameof(Node));
                 }
@@ -97,7 +97,7 @@ namespace POC3D.ViewModel
 
         private void NodeChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if(e.PropertyName == nameof(NodeViewModel.Coordinates))
+            if (e.PropertyName == nameof(NodeViewModel.Coordinates))
             {
                 OnPropertyChanged(nameof(Node));
             }

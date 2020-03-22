@@ -1,4 +1,6 @@
-﻿using System;
+﻿using POC3D.ViewModel.Implementation;
+using POC3D.ViewModel.InterfaceManagement;
+using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;

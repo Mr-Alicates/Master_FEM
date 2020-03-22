@@ -7,6 +7,7 @@ using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using POC3D.ViewModel;
 using POC3D.ViewModel.Geometry;
+using POC3D.ViewModel.Implementation;
 
 namespace POC3D.Controls
 {

@@ -1,4 +1,6 @@
 ﻿using POC3D.ViewModel.Base;
+using POC3D.ViewModel.Implementation;
+using POC3D.ViewModel.InterfaceManagement;
 
 namespace POC3D.ViewModel
 {

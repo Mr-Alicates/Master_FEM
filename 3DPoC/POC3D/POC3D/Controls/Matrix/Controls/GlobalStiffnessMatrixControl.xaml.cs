@@ -3,7 +3,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using POC3D.ViewModel;
+using POC3D.ViewModel.Implementation;
 
 namespace POC3D.Controls.Matrix.Controls
 {

@@ -1,7 +1,7 @@
 ﻿using POC3D.Model;
 using POC3D.ViewModel.Base;
 
-namespace POC3D.ViewModel
+namespace POC3D.ViewModel.Implementation
 {
     public class MaterialViewModel : SelectableViewModel
     {
@@ -13,7 +13,7 @@ namespace POC3D.ViewModel
         public IModelMaterial ModelMaterial { get; }
 
         public string Name
-        { 
+        {
             get => ModelMaterial.Name;
             set
             {

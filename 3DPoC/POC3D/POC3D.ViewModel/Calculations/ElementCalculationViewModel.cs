@@ -1,4 +1,5 @@
 ﻿using POC3D.ViewModel.Base;
+using POC3D.ViewModel.Implementation;
 
 namespace POC3D.ViewModel.Calculations
 {

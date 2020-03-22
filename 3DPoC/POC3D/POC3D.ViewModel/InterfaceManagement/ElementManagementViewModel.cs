@@ -1,8 +1,9 @@
 ﻿using System.Windows.Input;
 using POC3D.ViewModel.Base;
 using POC3D.ViewModel.Commands;
+using POC3D.ViewModel.Implementation;
 
-namespace POC3D.ViewModel
+namespace POC3D.ViewModel.InterfaceManagement
 {
     public class ElementManagementViewModel : Observable
     {

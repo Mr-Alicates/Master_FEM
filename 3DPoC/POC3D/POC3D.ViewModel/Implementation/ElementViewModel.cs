@@ -6,7 +6,7 @@ using POC3D.ViewModel.Base;
 using POC3D.ViewModel.Calculations;
 using POC3D.ViewModel.Geometry;
 
-namespace POC3D.ViewModel
+namespace POC3D.ViewModel.Implementation
 {
     public class ElementViewModel : SelectableViewModel
     {
@@ -41,7 +41,7 @@ namespace POC3D.ViewModel
             get => _origin;
             set
             {
-                if(value == null)
+                if (value == null)
                 {
                     throw new ArgumentNullException(nameof(Origin));
                 }
@@ -143,7 +143,7 @@ namespace POC3D.ViewModel
             if (e.PropertyName == nameof(NodeViewModel.Coordinates) ||
                 e.PropertyName == nameof(NodeViewModel.IsFixed))
             {
-                if(sender == Origin)
+                if (sender == Origin)
                 {
                     OnPropertyChanged(nameof(Origin));
                 }

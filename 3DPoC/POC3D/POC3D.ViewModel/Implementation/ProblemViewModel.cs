@@ -4,9 +4,12 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows.Input;
+using Microsoft.Win32;
 using POC3D.Model;
 using POC3D.ViewModel.Base;
 using POC3D.ViewModel.Calculations;
+using POC3D.ViewModel.Commands;
 
 namespace POC3D.ViewModel.Implementation
 {
@@ -30,7 +33,14 @@ namespace POC3D.ViewModel.Implementation
             Materials.CollectionChanged += CollectionChanged;
 
             ProblemCalculationViewModel = new ProblemCalculationViewModel(this);
+
+            SaveProblemCommand = new Command(SaveProblem);
+            LoadProblemCommand = new Command(LoadProblem);
         }
+
+        public ICommand SaveProblemCommand { get; }
+
+        public ICommand LoadProblemCommand { get; }
 
         private SelectableViewModel SelectedItem
         {
@@ -334,6 +344,34 @@ namespace POC3D.ViewModel.Implementation
             OnPropertyChanged(nameof(NumberOfNodes));
             OnPropertyChanged(nameof(NumberOfElements));
             OnPropertyChanged(nameof(NumberOfDirichletBoundaryConditions));
+        }
+
+        private void SaveProblem()
+        {
+            SaveFileDialog openFileDialog = new SaveFileDialog()
+            {
+                Filter = "3DPoC problem files (*.3DPoC)|*.3dPoc",
+                AddExtension = true,
+            };
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                var result = openFileDialog.FileName;
+            }
+        }
+
+        private void LoadProblem()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog()
+            {
+                Filter = "3DPoC problem files (*.3DPoC)|*.3dPoc",
+                Multiselect = false
+            };
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                var result = openFileDialog.FileName;
+            }
         }
     }
 }

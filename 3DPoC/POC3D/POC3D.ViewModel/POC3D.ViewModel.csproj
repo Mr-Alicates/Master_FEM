@@ -67,7 +67,7 @@
     <Compile Include="Commands\AddElementCommand.cs" />
     <Compile Include="Commands\AddForceCommand.cs" />
     <Compile Include="Commands\AddNodeCommand.cs" />
-    <Compile Include="Commands\ButtonCommand.cs" />
+    <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\DeleteElementCommand.cs" />
     <Compile Include="Commands\DeleteForceCommand.cs" />
     <Compile Include="Commands\DeleteNodeCommand.cs" />

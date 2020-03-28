@@ -3,11 +3,11 @@ using System.Windows.Input;
 
 namespace POC3D.ViewModel.Commands
 {
-    public class ButtonCommand : ICommand
+    public class Command : ICommand
     {
         private readonly Action _buttonAction;
 
-        public ButtonCommand(Action buttonAction)
+        public Command(Action buttonAction)
         {
             _buttonAction = buttonAction;
         }

@@ -44,7 +44,7 @@ namespace POC3D.ViewModel.InterfaceManagement
 
         public NodeManagementViewModel NodeManagementViewModel { get; }
 
-        public ICommand HideAllCommand => new ButtonCommand(HideAllControls);
+        public ICommand HideAllCommand => new Command(HideAllControls);
 
         private void HideAllControls()
         {
@@ -62,11 +62,11 @@ namespace POC3D.ViewModel.InterfaceManagement
 
         #region Nodes
 
-        public ICommand ShowSelectedNodeDetailsCommand => new ButtonCommand(ShowSelectedNodeDetails);
+        public ICommand ShowSelectedNodeDetailsCommand => new Command(ShowSelectedNodeDetails);
 
         public ICommand AddNodeCommand => NodeManagementViewModel.AddNodeCommand;
 
-        public ICommand ShowNodeListingCommand => new ButtonCommand(ShowNodeListing);
+        public ICommand ShowNodeListingCommand => new Command(ShowNodeListing);
 
         private void ShowSelectedNodeDetails()
         {
@@ -93,11 +93,11 @@ namespace POC3D.ViewModel.InterfaceManagement
 
         #region Elements
 
-        public ICommand ShowSelectedElementDetailsCommand => new ButtonCommand(ShowSelectedElementDetails);
+        public ICommand ShowSelectedElementDetailsCommand => new Command(ShowSelectedElementDetails);
 
-        public ICommand AddElementCommand => new ButtonCommand(AddElement);
+        public ICommand AddElementCommand => new Command(AddElement);
 
-        public ICommand ShowElementListingCommand => new ButtonCommand(ShowElementListing);
+        public ICommand ShowElementListingCommand => new Command(ShowElementListing);
 
         private void ShowSelectedElementDetails()
         {
@@ -132,11 +132,11 @@ namespace POC3D.ViewModel.InterfaceManagement
 
         #region Forces
 
-        public ICommand ShowSelectedForceDetailsCommand => new ButtonCommand(ShowSelectedForceDetails);
+        public ICommand ShowSelectedForceDetailsCommand => new Command(ShowSelectedForceDetails);
 
-        public ICommand AddForceCommand => new ButtonCommand(AddForce);
+        public ICommand AddForceCommand => new Command(AddForce);
 
-        public ICommand ShowForceListingCommand => new ButtonCommand(ShowForceListing);
+        public ICommand ShowForceListingCommand => new Command(ShowForceListing);
 
         private void ShowSelectedForceDetails()
         {

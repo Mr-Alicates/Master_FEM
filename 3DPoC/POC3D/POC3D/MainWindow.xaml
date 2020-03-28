@@ -12,6 +12,17 @@
 
     <Menu Grid.Row="0">
 
+
+      <MenuItem Header="File">
+
+      <MenuItem Header="Load problem" 
+                Command="{Binding ProblemViewModel.LoadProblemCommand}" />
+
+      <MenuItem Header="Save problem" 
+                Command="{Binding ProblemViewModel.SaveProblemCommand}" />
+
+      </MenuItem>
+
       <MenuItem Header="Hide all" Command="{Binding InterfaceControlViewModel.HideAllCommand}" />
 
       <MenuItem Header="Nodes">

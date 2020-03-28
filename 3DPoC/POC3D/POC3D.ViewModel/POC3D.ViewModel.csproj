@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <LangVersion>8.0</LangVersion>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{011C1C91-287C-4502-9647-91E844843630}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>POC3D.ViewModel</RootNamespace>
+    <AssemblyName>POC3D.ViewModel</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MathNet.Numerics, Version=4.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MathNet.Numerics.4.9.0\lib\net461\MathNet.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsBase.4.6.1055.0\lib\WindowsBase.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Base\SelectableViewModel.cs" />
+    <Compile Include="Calculations\ElementCalculationViewModel.cs" />
+    <Compile Include="Calculations\ProblemCalculationViewModel.cs" />
+    <Compile Include="Implementation\ElementViewModel.cs" />
+    <Compile Include="InterfaceManagement\CameraViewModel.cs" />
+    <Compile Include="Geometry\ResultElementGeometryViewModel.cs" />
+    <Compile Include="Geometry\ElementGeometryViewModel.cs" />
+    <Compile Include="Geometry\ForceGeometryViewModel.cs" />
+    <Compile Include="Geometry\GeometryViewModel.cs" />
+    <Compile Include="Base\Observable.cs" />
+    <Compile Include="Calculations\MatrixHelper.cs" />
+    <Compile Include="Calculations\NumericMatrix.cs" />
+    <Compile Include="Commands\AddElementCommand.cs" />
+    <Compile Include="Commands\AddForceCommand.cs" />
+    <Compile Include="Commands\AddNodeCommand.cs" />
+    <Compile Include="Commands\ButtonCommand.cs" />
+    <Compile Include="Commands\DeleteElementCommand.cs" />
+    <Compile Include="Commands\DeleteForceCommand.cs" />
+    <Compile Include="Commands\DeleteNodeCommand.cs" />
+    <Compile Include="Implementation\ForceViewModel.cs" />
+    <Compile Include="Calculations\ConstantMatrix.cs" />
+    <Compile Include="Calculations\CorrespondenceMatrix.cs" />
+    <Compile Include="Geometry\GraphicsHelper.cs" />
+    <Compile Include="Geometry\NodeGeometryViewModel.cs" />
+    <Compile Include="Geometry\ResultForceGeometryViewModel.cs" />
+    <Compile Include="Geometry\ResultNodeGeometryViewModel.cs" />
+    <Compile Include="InterfaceManagement\InterfaceControlViewModel.cs" />
+    <Compile Include="MainViewModel.cs" />
+    <Compile Include="Implementation\MaterialViewModel.cs" />
+    <Compile Include="InterfaceManagement\ElementManagementViewModel.cs" />
+    <Compile Include="InterfaceManagement\ForceManagementViewModel.cs" />
+    <Compile Include="InterfaceManagement\NodeManagementViewModel.cs" />
+    <Compile Include="Implementation\NodeViewModel.cs" />
+    <Compile Include="Implementation\ProblemViewModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\POC3D.Model\POC3D.Model.csproj">
+      <Project>{385e6a2a-71fc-4ecf-b32c-663d28653f7a}</Project>
+      <Name>POC3D.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

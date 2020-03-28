@@ -58,7 +58,7 @@
         Scalar="=" />
 
       <helpers:ScalarControl
-        Scalar="{Binding ProblemViewModel.SelectedElement.Cx}" />
+        Scalar="{Binding ProblemViewModel.SelectedElement.ElementCalculationViewModel.Cx}" />
 
     </StackPanel>
 
@@ -75,7 +75,7 @@
         Scalar="=" />
 
       <helpers:ScalarControl
-        Scalar="{Binding ProblemViewModel.SelectedElement.Cy}" />
+        Scalar="{Binding ProblemViewModel.SelectedElement.ElementCalculationViewModel.Cy}" />
 
     </StackPanel>
 
@@ -92,7 +92,7 @@
         Scalar="=" />
 
       <helpers:ScalarControl
-        Scalar="{Binding ProblemViewModel.SelectedElement.Cz}" />
+        Scalar="{Binding ProblemViewModel.SelectedElement.ElementCalculationViewModel.Cz}" />
 
     </StackPanel>
 
@@ -106,7 +106,7 @@
       Width="Auto">
 
       <helpers:Matrix26Control
-        Matrix="{Binding ProblemViewModel.SelectedElement.TransformationMatrix}" />
+        Matrix="{Binding ProblemViewModel.SelectedElement.ElementCalculationViewModel.TransformationMatrix}" />
 
     </StackPanel>
 

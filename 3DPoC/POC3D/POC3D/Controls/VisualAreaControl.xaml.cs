@@ -5,8 +5,9 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
-using POC3D.Helpers;
 using POC3D.ViewModel;
+using POC3D.ViewModel.Geometry;
+using POC3D.ViewModel.Implementation;
 
 namespace POC3D.Controls
 {
@@ -56,11 +57,7 @@ namespace POC3D.Controls
 
         private void ShowProblemChangedCallback(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName != nameof(ProblemViewModel.ShowProblem) &&
-                e.PropertyName != nameof(ProblemViewModel.DisplacementsMultiplier))
-                return;
-
-            if (MainViewModel.ProblemViewModel.ShowProblem)
+            if (MainViewModel.ProblemViewModel.ProblemCalculationViewModel.ShowProblem)
                 DisplayProblem();
             else
                 DisplayResults();
@@ -160,13 +157,13 @@ namespace POC3D.Controls
         {
             InitialSetup();
 
-            foreach (var node in MainViewModel.ProblemViewModel.ResultNodes) Model3DGroup.Children.Add(node.Geometry);
+            foreach (var node in MainViewModel.ProblemViewModel.Nodes) Model3DGroup.Children.Add(node.ResultGeometry);
 
-            foreach (var element in MainViewModel.ProblemViewModel.ResultElements)
-                Model3DGroup.Children.Add(element.Geometry);
+            foreach (var element in MainViewModel.ProblemViewModel.Elements)
+                Model3DGroup.Children.Add(element.ResultGeometry);
 
-            foreach (var force in MainViewModel.ProblemViewModel.ResultForces)
-                Model3DGroup.Children.Add(force.Geometry);
+            foreach (var force in MainViewModel.ProblemViewModel.Forces)
+                Model3DGroup.Children.Add(force.ResultGeometry);
         }
 
         public void UpdateCamera()
@@ -178,7 +175,7 @@ namespace POC3D.Controls
 
         private void ProblemNodesChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (!MainViewModel.ProblemViewModel.ShowProblem) return;
+            if (!MainViewModel.ProblemViewModel.ProblemCalculationViewModel.ShowProblem) return;
 
             if (e.NewItems != null)
                 foreach (NodeViewModel node in e.NewItems)
@@ -191,7 +188,7 @@ namespace POC3D.Controls
 
         private void ProblemElementsChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (!MainViewModel.ProblemViewModel.ShowProblem) return;
+            if (!MainViewModel.ProblemViewModel.ProblemCalculationViewModel.ShowProblem) return;
 
             if (e.NewItems != null)
                 foreach (ElementViewModel element in e.NewItems)
@@ -204,7 +201,7 @@ namespace POC3D.Controls
 
         private void ProblemForcesChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (!MainViewModel.ProblemViewModel.ShowProblem) return;
+            if (!MainViewModel.ProblemViewModel.ProblemCalculationViewModel.ShowProblem) return;
 
             if (e.NewItems != null)
                 foreach (ForceViewModel force in e.NewItems)

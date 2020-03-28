@@ -41,13 +41,13 @@
               Grid.Column="0"
               x:Name="AddNodeButton"
               Content="Add new node"
-              Command="{Binding ProblemViewModel.AddNodeCommand}" />
+              Command="{Binding InterfaceControlViewModel.NodeManagementViewModel.AddNodeCommand}" />
 
       <Button Grid.Row="1"
               Grid.Column="1"
               x:Name="DeleteNodeButton"
               Content="Delete selected node"
-              Command="{Binding ProblemViewModel.DeleteNodeCommand}" />
+              Command="{Binding InterfaceControlViewModel.NodeManagementViewModel.DeleteNodeCommand}" />
 
     </Grid>
 

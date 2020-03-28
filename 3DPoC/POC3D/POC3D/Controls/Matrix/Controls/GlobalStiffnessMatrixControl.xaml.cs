@@ -3,7 +3,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using POC3D.ViewModel;
+using POC3D.ViewModel.Implementation;
 
 namespace POC3D.Controls.Matrix.Controls
 {
@@ -34,7 +34,7 @@ namespace POC3D.Controls.Matrix.Controls
             GlobalStiffnessMatrixContainer.RowDefinitions.Clear();
             GlobalStiffnessMatrixContainer.Children.Clear();
 
-            var globalStiffnessMatrix = problemViewModel.GlobalStiffnessMatrix;
+            var globalStiffnessMatrix = problemViewModel.ProblemCalculationViewModel.GlobalStiffnessMatrix;
 
             //Create rows and columns in the grid
             foreach (var columnIndex in Enumerable.Range(0, globalStiffnessMatrix.Columns + 1))

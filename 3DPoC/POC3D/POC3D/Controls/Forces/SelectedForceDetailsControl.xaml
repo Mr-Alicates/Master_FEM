@@ -27,8 +27,8 @@
 
       <ComboBox Grid.Row="0"
                 Grid.Column="0"
-                SelectedItem="{Binding ProblemViewModel.SelectedForce.Node,Mode=TwoWay}"
-                ItemsSource="{Binding ProblemViewModel.Nodes}">
+                SelectedItem="{Binding ProblemViewModel.SelectedForce.Node, Mode=TwoWay}"
+                ItemsSource="{Binding ProblemViewModel.AvailableNodesForSelectedForces}">
 
         <ComboBox.ItemTemplate>
           <DataTemplate DataType="viewModel:NodeViewModel">

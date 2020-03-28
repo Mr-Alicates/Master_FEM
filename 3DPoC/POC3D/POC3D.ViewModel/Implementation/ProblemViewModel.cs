@@ -192,11 +192,13 @@ namespace POC3D.ViewModel.Implementation
 
         public void DeleteSelectedNode()
         {
-            var selectedNode = SelectedNode;
+            if(SelectedNode == null)
+            {
+                return;
+            }
 
-            _modelProblem.DeleteNode(selectedNode.Node);
-            Nodes.Remove(selectedNode);
-
+            _modelProblem.DeleteNode(SelectedNode.Node);
+            Nodes.Remove(SelectedNode);
             SelectedNode = null;
         }
 
@@ -207,19 +209,21 @@ namespace POC3D.ViewModel.Implementation
             var materialViewModel = GetOrInitMaterialViewModel(element.Material);
 
             var result = new ElementViewModel(element, node1, node2, materialViewModel);
-
             Elements.Add(result);
+            SelectedElement = result;
 
             return result;
         }
 
         public void DeleteSelectedElement()
         {
-            var selectedElement = SelectedElement;
+            if(SelectedElement == null)
+            {
+                return;
+            }
 
-            _modelProblem.DeleteElement(selectedElement.Element);
-            Elements.Remove(selectedElement);
-
+            _modelProblem.DeleteElement(SelectedElement.Element);
+            Elements.Remove(SelectedElement);
             SelectedElement = null;
         }
 
@@ -237,11 +241,13 @@ namespace POC3D.ViewModel.Implementation
 
         public void DeleteSelectedForce()
         {
-            var selectedForce = SelectedForce;
-
-            _modelProblem.DeleteForce(selectedForce.Force);
-
-            Forces.Remove(selectedForce);
+            if(SelectedForce == null)
+            {
+                return;
+            }
+            
+            _modelProblem.DeleteForce(SelectedForce.Force);
+            Forces.Remove(SelectedForce);
             SelectedForce = null;
         }
 
@@ -255,6 +261,18 @@ namespace POC3D.ViewModel.Implementation
             SelectedMaterial = result;
 
             return result;
+        }
+
+        public void DeleteSelectedMaterial()
+        {
+            if (SelectedMaterial == null)
+            {
+                return;
+            }
+
+            _modelProblem.DeleteMaterial(SelectedMaterial.ModelMaterial);
+            Materials.Remove(SelectedMaterial);
+            SelectedMaterial = null;
         }
 
         private MaterialViewModel GetOrInitMaterialViewModel(IModelMaterial modelMaterial)

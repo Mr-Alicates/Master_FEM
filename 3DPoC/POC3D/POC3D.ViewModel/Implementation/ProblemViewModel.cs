@@ -17,7 +17,7 @@ namespace POC3D.ViewModel.Implementation
 {
     public class ProblemViewModel : Observable
     {
-        private readonly IModelProblem _modelProblem;
+        private IModelProblem _modelProblem;
         private SelectableViewModel _selectedItem;
 
         public ProblemViewModel()
@@ -379,6 +379,42 @@ namespace POC3D.ViewModel.Implementation
                 var loadPath = openFileDialog.FileName;
 
                 var newModelProblem = ProblemSerializer.DeserializeProblem(loadPath);
+
+                //Clear previous problem
+                SelectedItem = null;
+                Nodes.Clear();
+                Forces.Clear();
+                Elements.Clear();
+                Materials.Clear();
+
+                //Load the problem
+                _modelProblem = newModelProblem;
+
+                foreach (var modelNode in _modelProblem.Nodes) 
+                {
+                    Nodes.Add(new NodeViewModel(modelNode));
+                }
+
+                foreach(var modelForce in _modelProblem.Forces)
+                {
+                    var nodeViewModel = Nodes.First(x => x.Node == modelForce.Node);
+                    var result = new ForceViewModel(modelForce, nodeViewModel);
+                    Forces.Add(result);
+                }
+
+                foreach (var modelMaterial in _modelProblem.Materials)
+                {
+                    Materials.Add(new MaterialViewModel(modelMaterial));
+                }
+
+                foreach(var modelElement in _modelProblem.Elements)
+                {
+                    var originNodeViewModel = Nodes.First(x => x.Node == modelElement.OriginNode);
+                    var destinationNodeViewModel = Nodes.First(x => x.Node == modelElement.DestinationNode);
+                    var materialViewModel = Materials.First(x => x.ModelMaterial == modelElement.Material);
+
+                    Elements.Add(new ElementViewModel(modelElement, originNodeViewModel, destinationNodeViewModel, materialViewModel));
+                }
             }
         }
     }

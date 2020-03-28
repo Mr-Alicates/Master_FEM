@@ -130,7 +130,7 @@ namespace POC3D.Model.Serialization
 
             foreach (var forceMemento in problemMemento.Forces.OrderBy(x => x.Id))
             {
-                var applicationNode = nodesDictionary[forceMemento.Id];
+                var applicationNode = nodesDictionary[forceMemento.NodeId];
 
                 var modelForce = modelProblem.AddForce(applicationNode);
                 modelForce.ApplicationVector.X = forceMemento.ApplicationVectorX;

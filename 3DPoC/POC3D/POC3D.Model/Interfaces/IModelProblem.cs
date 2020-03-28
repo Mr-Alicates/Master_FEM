@@ -4,6 +4,8 @@ namespace POC3D.Model
 {
     public interface IModelProblem
     {
+        string Name { get; set; }
+
         IEnumerable<IModelNode> Nodes { get; }
 
         IEnumerable<IModelElement> Elements { get; }

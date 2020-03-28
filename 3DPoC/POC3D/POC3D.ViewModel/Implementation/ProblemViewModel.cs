@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Windows.Input;
 using Microsoft.Win32;
 using POC3D.Model;
+using POC3D.Model.Serialization;
 using POC3D.ViewModel.Base;
 using POC3D.ViewModel.Calculations;
 using POC3D.ViewModel.Commands;
@@ -356,7 +358,11 @@ namespace POC3D.ViewModel.Implementation
 
             if (openFileDialog.ShowDialog() == true)
             {
-                var result = openFileDialog.FileName;
+                var savePath = openFileDialog.FileName;
+
+                _modelProblem.Name = Path.GetFileNameWithoutExtension(savePath);
+
+                ProblemSerializer.SerializeProblem(_modelProblem, savePath);
             }
         }
 
@@ -370,7 +376,9 @@ namespace POC3D.ViewModel.Implementation
 
             if (openFileDialog.ShowDialog() == true)
             {
-                var result = openFileDialog.FileName;
+                var loadPath = openFileDialog.FileName;
+
+                var newModelProblem = ProblemSerializer.DeserializeProblem(loadPath);
             }
         }
     }

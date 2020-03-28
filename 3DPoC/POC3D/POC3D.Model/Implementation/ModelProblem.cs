@@ -16,7 +16,7 @@ namespace POC3D.Model
             Name = name;
         }
 
-        public string Name { get; }
+        public string Name { get; set; }
 
         public IEnumerable<IModelNode> Nodes => _nodes;
 

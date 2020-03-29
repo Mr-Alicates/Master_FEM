@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 using Microsoft.Win32;
 using POC3D.Model;
@@ -356,19 +358,27 @@ namespace POC3D.ViewModel.Implementation
 
         private void SaveProblem()
         {
-            SaveFileDialog openFileDialog = new SaveFileDialog()
+            SaveFileDialog saveFileDialog = new SaveFileDialog()
             {
                 Filter = "3DPoC problem files (*.3DPoC)|*.3dPoc",
                 AddExtension = true,
             };
 
-            if (openFileDialog.ShowDialog() == true)
+            if (saveFileDialog.ShowDialog() != true) 
             {
-                var savePath = openFileDialog.FileName;
+                return;
+            }
 
+            try
+            {
+                var savePath = saveFileDialog.FileName;
                 _modelProblem.Name = Path.GetFileNameWithoutExtension(savePath);
-
                 _problemSerializer.SerializeProblem(_modelProblem, savePath);
+            }
+            catch(Exception ex)
+            {
+                var message = $"There was an error saving the problem: {ex}";
+                MessageBox.Show(message, "Error");
             }
         }
 
@@ -380,14 +390,22 @@ namespace POC3D.ViewModel.Implementation
                 Multiselect = false
             };
 
-            if (openFileDialog.ShowDialog() == true)
+            if (openFileDialog.ShowDialog() != true)
+            {
+                return;
+            }
+
+            try
             {
                 var loadPath = openFileDialog.FileName;
-
                 var modelProblem = _problemSerializer.DeserializeProblem(loadPath);
-
                 LoadProblem(modelProblem);
             }
+            catch (Exception ex)
+            {
+                var message = $"There was an error saving the problem: {ex}";
+                MessageBox.Show(message, "Error");
+            }            
         }
 
         private void LoadProblem(IModelProblem modelProblem)

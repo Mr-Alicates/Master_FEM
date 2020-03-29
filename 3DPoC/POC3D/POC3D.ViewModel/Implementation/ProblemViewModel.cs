@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -19,15 +18,22 @@ namespace POC3D.ViewModel.Implementation
     {
         private IModelProblem _modelProblem;
         private SelectableViewModel _selectedItem;
+        private IProblemSerializer _problemSerializer;
 
         public ProblemViewModel()
+            : this(new ModelProblem("Problem1"), new ProblemSerializer(new FileSystem()))
         {
-            _modelProblem = new ModelProblem("Problem1");
+        }
 
+        public ProblemViewModel(IModelProblem modelProblem, IProblemSerializer problemSerializer)
+        {
             Nodes = new ObservableCollection<NodeViewModel>();
             Elements = new ObservableCollection<ElementViewModel>();
             Forces = new ObservableCollection<ForceViewModel>();
             Materials = new ObservableCollection<MaterialViewModel>();
+
+            _problemSerializer = problemSerializer;
+            LoadProblem(modelProblem);
 
             Nodes.CollectionChanged += CollectionChanged;
             Elements.CollectionChanged += CollectionChanged;
@@ -362,7 +368,7 @@ namespace POC3D.ViewModel.Implementation
 
                 _modelProblem.Name = Path.GetFileNameWithoutExtension(savePath);
 
-                ProblemSerializer.SerializeProblem(_modelProblem, savePath);
+                _problemSerializer.SerializeProblem(_modelProblem, savePath);
             }
         }
 
@@ -378,43 +384,48 @@ namespace POC3D.ViewModel.Implementation
             {
                 var loadPath = openFileDialog.FileName;
 
-                var newModelProblem = ProblemSerializer.DeserializeProblem(loadPath);
+                var modelProblem = _problemSerializer.DeserializeProblem(loadPath);
 
-                //Clear previous problem
-                SelectedItem = null;
-                Nodes.Clear();
-                Forces.Clear();
-                Elements.Clear();
-                Materials.Clear();
+                LoadProblem(modelProblem);
+            }
+        }
 
-                //Load the problem
-                _modelProblem = newModelProblem;
+        private void LoadProblem(IModelProblem modelProblem)
+        {
+            //Clear previous problem
+            SelectedItem = null;
+            Nodes.Clear();
+            Forces.Clear();
+            Elements.Clear();
+            Materials.Clear();
 
-                foreach (var modelNode in _modelProblem.Nodes) 
-                {
-                    Nodes.Add(new NodeViewModel(modelNode));
-                }
+            //Load the problem
+            _modelProblem = modelProblem;
 
-                foreach(var modelForce in _modelProblem.Forces)
-                {
-                    var nodeViewModel = Nodes.First(x => x.Node == modelForce.Node);
-                    var result = new ForceViewModel(modelForce, nodeViewModel);
-                    Forces.Add(result);
-                }
+            foreach (var modelNode in _modelProblem.Nodes)
+            {
+                Nodes.Add(new NodeViewModel(modelNode));
+            }
 
-                foreach (var modelMaterial in _modelProblem.Materials)
-                {
-                    Materials.Add(new MaterialViewModel(modelMaterial));
-                }
+            foreach (var modelForce in _modelProblem.Forces)
+            {
+                var nodeViewModel = Nodes.First(x => x.Node == modelForce.Node);
+                var result = new ForceViewModel(modelForce, nodeViewModel);
+                Forces.Add(result);
+            }
 
-                foreach(var modelElement in _modelProblem.Elements)
-                {
-                    var originNodeViewModel = Nodes.First(x => x.Node == modelElement.OriginNode);
-                    var destinationNodeViewModel = Nodes.First(x => x.Node == modelElement.DestinationNode);
-                    var materialViewModel = Materials.First(x => x.ModelMaterial == modelElement.Material);
+            foreach (var modelMaterial in _modelProblem.Materials)
+            {
+                Materials.Add(new MaterialViewModel(modelMaterial));
+            }
 
-                    Elements.Add(new ElementViewModel(modelElement, originNodeViewModel, destinationNodeViewModel, materialViewModel));
-                }
+            foreach (var modelElement in _modelProblem.Elements)
+            {
+                var originNodeViewModel = Nodes.First(x => x.Node == modelElement.OriginNode);
+                var destinationNodeViewModel = Nodes.First(x => x.Node == modelElement.DestinationNode);
+                var materialViewModel = Materials.First(x => x.ModelMaterial == modelElement.Material);
+
+                Elements.Add(new ElementViewModel(modelElement, originNodeViewModel, destinationNodeViewModel, materialViewModel));
             }
         }
     }

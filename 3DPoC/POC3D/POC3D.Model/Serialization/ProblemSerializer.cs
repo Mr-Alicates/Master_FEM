@@ -1,39 +1,43 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace POC3D.Model.Serialization
 {
-    public static class ProblemSerializer
+    public class ProblemSerializer : IProblemSerializer
     {
-        public static void SerializeProblem(IModelProblem modelProblem, string filePath)
+        private readonly IFileSystem _fileSystem;
+
+        public ProblemSerializer(IFileSystem fileSystem)
         {
-            if (File.Exists(filePath))
+            _fileSystem = fileSystem;
+        }
+
+        public void SerializeProblem(IModelProblem modelProblem, string filePath)
+        {
+            if (_fileSystem.FileExists(filePath))
             {
-                File.Delete(filePath);
+                _fileSystem.FileDelete(filePath);
             }
 
             var memento = BuildMemento(modelProblem);
 
             var json = JsonConvert.SerializeObject(memento);
 
-            File.WriteAllText(filePath, json);
+            _fileSystem.FileWrite(filePath, json);
         }
 
-        public static IModelProblem DeserializeProblem(string filePath)
+        public IModelProblem DeserializeProblem(string filePath)
         {
-            if (!File.Exists(filePath))
+            if (!_fileSystem.FileExists(filePath))
             {
                 throw new InvalidOperationException($"Invalid path {filePath}");
             }
 
             try
             {
-                var json = File.ReadAllText(filePath);
+                var json = _fileSystem.FileRead(filePath);
 
                 var memento = JsonConvert.DeserializeObject<ProblemMemento>(json);
 

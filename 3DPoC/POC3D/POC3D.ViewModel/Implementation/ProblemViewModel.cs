@@ -306,7 +306,8 @@ namespace POC3D.ViewModel.Implementation
 
             if (result == null)
             {
-                result = AddMaterial();
+                result = new MaterialViewModel(modelMaterial);
+                Materials.Add(result);
             }
 
             return result;

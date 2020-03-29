@@ -10,6 +10,8 @@ namespace POC3D.ViewModel.Implementation
             ModelMaterial = modelMaterial;
         }
 
+        public int Id => ModelMaterial.Id;
+
         public IModelMaterial ModelMaterial { get; }
 
         public string Name

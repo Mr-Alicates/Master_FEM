@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace POC3D.Model.Serialization
@@ -16,6 +17,23 @@ namespace POC3D.Model.Serialization
 
         public void SerializeProblem(IModelProblem modelProblem, string filePath)
         {
+            if (modelProblem is null)
+            {
+                throw new ArgumentNullException(nameof(modelProblem));
+            }
+
+            if (string.IsNullOrEmpty(filePath))
+            {
+                throw new ArgumentException(nameof(filePath));
+            }
+
+            var directoryPath = Path.GetDirectoryName(filePath);
+
+            if (!_fileSystem.DirectoryExists(directoryPath))
+            {
+                _fileSystem.CreateDirectory(directoryPath);
+            }
+
             if (_fileSystem.FileExists(filePath))
             {
                 _fileSystem.FileDelete(filePath);
@@ -30,6 +48,11 @@ namespace POC3D.Model.Serialization
 
         public IModelProblem DeserializeProblem(string filePath)
         {
+            if (string.IsNullOrEmpty(filePath))
+            {
+                throw new ArgumentException(nameof(filePath));
+            }
+
             if (!_fileSystem.FileExists(filePath))
             {
                 throw new InvalidOperationException($"Invalid path {filePath}");

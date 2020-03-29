@@ -23,5 +23,15 @@ namespace POC3D.Model.Serialization
         {
             return File.ReadAllText(path);
         }
+
+        public bool DirectoryExists(string path)
+        {
+            return Directory.Exists(path);
+        }
+
+        public void CreateDirectory(string path)
+        {
+            Directory.CreateDirectory(path);
+        }
     }
 }

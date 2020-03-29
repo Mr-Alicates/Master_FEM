@@ -9,5 +9,9 @@
         void FileWrite(string path, string content);
 
         string FileRead(string path);
+
+        bool DirectoryExists(string path);
+
+        void CreateDirectory(string path);
     }
 }

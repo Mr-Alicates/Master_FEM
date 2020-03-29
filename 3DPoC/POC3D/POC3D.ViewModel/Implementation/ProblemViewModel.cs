@@ -3,26 +3,42 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
+using System.Windows;
+using System.Windows.Input;
+using Microsoft.Win32;
 using POC3D.Model;
+using POC3D.Model.Serialization;
 using POC3D.ViewModel.Base;
 using POC3D.ViewModel.Calculations;
+using POC3D.ViewModel.Commands;
+using POC3D.ViewModel.Dialog;
 
 namespace POC3D.ViewModel.Implementation
 {
     public class ProblemViewModel : Observable
     {
-        private readonly IModelProblem _modelProblem;
+        private IModelProblem _modelProblem;
+        private IProblemSerializer _problemSerializer;
+        private IDialogService _dialogService;
         private SelectableViewModel _selectedItem;
 
         public ProblemViewModel()
+            : this(new ModelProblem("Problem1"), new ProblemSerializer(new FileSystem()), new DialogService())
         {
-            _modelProblem = new ModelProblem("Problem1");
+        }
 
+        public ProblemViewModel(IModelProblem modelProblem, IProblemSerializer problemSerializer, IDialogService dialogService)
+        {
             Nodes = new ObservableCollection<NodeViewModel>();
             Elements = new ObservableCollection<ElementViewModel>();
             Forces = new ObservableCollection<ForceViewModel>();
             Materials = new ObservableCollection<MaterialViewModel>();
+
+            _dialogService = dialogService;
+            _problemSerializer = problemSerializer;
+            LoadProblem(modelProblem);
 
             Nodes.CollectionChanged += CollectionChanged;
             Elements.CollectionChanged += CollectionChanged;
@@ -30,7 +46,16 @@ namespace POC3D.ViewModel.Implementation
             Materials.CollectionChanged += CollectionChanged;
 
             ProblemCalculationViewModel = new ProblemCalculationViewModel(this);
+
+            SaveProblemCommand = new Command(SaveProblem);
+            LoadProblemCommand = new Command(LoadProblem);
         }
+
+        public ICommand SaveProblemCommand { get; }
+
+        public ICommand LoadProblemCommand { get; }
+
+        public string Name => _modelProblem.Name;
 
         private SelectableViewModel SelectedItem
         {
@@ -281,7 +306,8 @@ namespace POC3D.ViewModel.Implementation
 
             if (result == null)
             {
-                result = AddMaterial();
+                result = new MaterialViewModel(modelMaterial);
+                Materials.Add(result);
             }
 
             return result;
@@ -334,6 +360,87 @@ namespace POC3D.ViewModel.Implementation
             OnPropertyChanged(nameof(NumberOfNodes));
             OnPropertyChanged(nameof(NumberOfElements));
             OnPropertyChanged(nameof(NumberOfDirichletBoundaryConditions));
+        }
+
+        private void SaveProblem()
+        {
+            var savePath = _dialogService.ShowSaveFileDialog();
+
+            if (string.IsNullOrEmpty(savePath)) 
+            {
+                return;
+            }
+
+            try
+            {
+                _modelProblem.Name = Path.GetFileNameWithoutExtension(savePath);
+                _problemSerializer.SerializeProblem(_modelProblem, savePath);
+            }
+            catch(Exception ex)
+            {
+                var message = $"There was an error saving the problem: {ex}";
+                MessageBox.Show(message, "Error");
+            }
+        }
+
+        private void LoadProblem()
+        {
+            var loadPath = _dialogService.ShowSaveFileDialog();
+
+            if (string.IsNullOrEmpty(loadPath))
+            {
+                return;
+            }
+
+            try
+            {
+                var modelProblem = _problemSerializer.DeserializeProblem(loadPath);
+                LoadProblem(modelProblem);
+            }
+            catch (Exception ex)
+            {
+                var message = $"There was an error saving the problem: {ex}";
+                MessageBox.Show(message, "Error");
+            }            
+        }
+
+        private void LoadProblem(IModelProblem modelProblem)
+        {
+            //Clear previous problem
+            SelectedItem = null;
+            Nodes.Clear();
+            Forces.Clear();
+            Elements.Clear();
+            Materials.Clear();
+
+            //Load the problem
+            _modelProblem = modelProblem;
+
+            foreach (var modelNode in _modelProblem.Nodes)
+            {
+                Nodes.Add(new NodeViewModel(modelNode));
+            }
+
+            foreach (var modelForce in _modelProblem.Forces)
+            {
+                var nodeViewModel = Nodes.First(x => x.Node == modelForce.Node);
+                var result = new ForceViewModel(modelForce, nodeViewModel);
+                Forces.Add(result);
+            }
+
+            foreach (var modelMaterial in _modelProblem.Materials)
+            {
+                Materials.Add(new MaterialViewModel(modelMaterial));
+            }
+
+            foreach (var modelElement in _modelProblem.Elements)
+            {
+                var originNodeViewModel = Nodes.First(x => x.Node == modelElement.OriginNode);
+                var destinationNodeViewModel = Nodes.First(x => x.Node == modelElement.DestinationNode);
+                var materialViewModel = Materials.First(x => x.ModelMaterial == modelElement.Material);
+
+                Elements.Add(new ElementViewModel(modelElement, originNodeViewModel, destinationNodeViewModel, materialViewModel));
+            }
         }
     }
 }

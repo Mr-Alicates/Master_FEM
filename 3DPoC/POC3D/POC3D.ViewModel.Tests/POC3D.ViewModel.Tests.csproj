@@ -53,9 +53,11 @@
   <ItemGroup>
     <Compile Include="ElementViewModelTests.cs" />
     <Compile Include="ForceViewModelTests.cs" />
+    <Compile Include="Helper\FakeDialogService.cs" />
     <Compile Include="Helper\PropertyChangedEventChecker.cs" />
     <Compile Include="MaterialViewModelTests.cs" />
     <Compile Include="NodeViewModelTests.cs" />
+    <Compile Include="ProblemViewModelIntegrationTests.cs" />
     <Compile Include="ProblemViewModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -63,6 +65,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\POC3D.Model.Tests\POC3D.Model.Tests.csproj">
+      <Project>{F038248C-EA0C-465A-8D8B-F84A012BF864}</Project>
+      <Name>POC3D.Model.Tests</Name>
+    </ProjectReference>
     <ProjectReference Include="..\POC3D.Model\POC3D.Model.csproj">
       <Project>{385E6A2A-71FC-4ECF-B32C-663D28653F7A}</Project>
       <Name>POC3D.Model</Name>

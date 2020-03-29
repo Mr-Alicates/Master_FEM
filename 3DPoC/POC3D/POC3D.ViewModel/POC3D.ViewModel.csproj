@@ -55,6 +55,8 @@
     <Compile Include="Base\SelectableViewModel.cs" />
     <Compile Include="Calculations\ElementCalculationViewModel.cs" />
     <Compile Include="Calculations\ProblemCalculationViewModel.cs" />
+    <Compile Include="Dialog\DialogService.cs" />
+    <Compile Include="Dialog\IDialogService.cs" />
     <Compile Include="Implementation\ElementViewModel.cs" />
     <Compile Include="InterfaceManagement\CameraViewModel.cs" />
     <Compile Include="Geometry\ResultElementGeometryViewModel.cs" />
@@ -67,7 +69,7 @@
     <Compile Include="Commands\AddElementCommand.cs" />
     <Compile Include="Commands\AddForceCommand.cs" />
     <Compile Include="Commands\AddNodeCommand.cs" />
-    <Compile Include="Commands\ButtonCommand.cs" />
+    <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\DeleteElementCommand.cs" />
     <Compile Include="Commands\DeleteForceCommand.cs" />
     <Compile Include="Commands\DeleteNodeCommand.cs" />

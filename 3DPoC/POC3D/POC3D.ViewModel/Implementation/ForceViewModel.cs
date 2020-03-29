@@ -23,6 +23,8 @@ namespace POC3D.ViewModel.Implementation
             _resultForceGeometryViewModel = new ResultForceGeometryViewModel(this);
         }
 
+        public int Id => Force.Id;
+
         public IModelForce Force { get; }
 
         public NodeViewModel Node

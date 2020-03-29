@@ -13,27 +13,30 @@ using POC3D.Model.Serialization;
 using POC3D.ViewModel.Base;
 using POC3D.ViewModel.Calculations;
 using POC3D.ViewModel.Commands;
+using POC3D.ViewModel.Dialog;
 
 namespace POC3D.ViewModel.Implementation
 {
     public class ProblemViewModel : Observable
     {
         private IModelProblem _modelProblem;
-        private SelectableViewModel _selectedItem;
         private IProblemSerializer _problemSerializer;
+        private IDialogService _dialogService;
+        private SelectableViewModel _selectedItem;
 
         public ProblemViewModel()
-            : this(new ModelProblem("Problem1"), new ProblemSerializer(new FileSystem()))
+            : this(new ModelProblem("Problem1"), new ProblemSerializer(new FileSystem()), new DialogService())
         {
         }
 
-        public ProblemViewModel(IModelProblem modelProblem, IProblemSerializer problemSerializer)
+        public ProblemViewModel(IModelProblem modelProblem, IProblemSerializer problemSerializer, IDialogService dialogService)
         {
             Nodes = new ObservableCollection<NodeViewModel>();
             Elements = new ObservableCollection<ElementViewModel>();
             Forces = new ObservableCollection<ForceViewModel>();
             Materials = new ObservableCollection<MaterialViewModel>();
 
+            _dialogService = dialogService;
             _problemSerializer = problemSerializer;
             LoadProblem(modelProblem);
 
@@ -51,6 +54,8 @@ namespace POC3D.ViewModel.Implementation
         public ICommand SaveProblemCommand { get; }
 
         public ICommand LoadProblemCommand { get; }
+
+        public string Name => _modelProblem.Name;
 
         private SelectableViewModel SelectedItem
         {
@@ -358,20 +363,15 @@ namespace POC3D.ViewModel.Implementation
 
         private void SaveProblem()
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog()
-            {
-                Filter = "3DPoC problem files (*.3DPoC)|*.3dPoc",
-                AddExtension = true,
-            };
+            var savePath = _dialogService.ShowSaveFileDialog();
 
-            if (saveFileDialog.ShowDialog() != true) 
+            if (string.IsNullOrEmpty(savePath)) 
             {
                 return;
             }
 
             try
             {
-                var savePath = saveFileDialog.FileName;
                 _modelProblem.Name = Path.GetFileNameWithoutExtension(savePath);
                 _problemSerializer.SerializeProblem(_modelProblem, savePath);
             }
@@ -384,20 +384,15 @@ namespace POC3D.ViewModel.Implementation
 
         private void LoadProblem()
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog()
-            {
-                Filter = "3DPoC problem files (*.3DPoC)|*.3dPoc",
-                Multiselect = false
-            };
+            var loadPath = _dialogService.ShowSaveFileDialog();
 
-            if (openFileDialog.ShowDialog() != true)
+            if (string.IsNullOrEmpty(loadPath))
             {
                 return;
             }
 
             try
             {
-                var loadPath = openFileDialog.FileName;
                 var modelProblem = _problemSerializer.DeserializeProblem(loadPath);
                 LoadProblem(modelProblem);
             }

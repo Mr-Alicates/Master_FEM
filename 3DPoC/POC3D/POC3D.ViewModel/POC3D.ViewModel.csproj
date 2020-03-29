@@ -55,6 +55,8 @@
     <Compile Include="Base\SelectableViewModel.cs" />
     <Compile Include="Calculations\ElementCalculationViewModel.cs" />
     <Compile Include="Calculations\ProblemCalculationViewModel.cs" />
+    <Compile Include="Dialog\DialogService.cs" />
+    <Compile Include="Dialog\IDialogService.cs" />
     <Compile Include="Implementation\ElementViewModel.cs" />
     <Compile Include="InterfaceManagement\CameraViewModel.cs" />
     <Compile Include="Geometry\ResultElementGeometryViewModel.cs" />

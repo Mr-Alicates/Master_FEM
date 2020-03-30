@@ -1,5 +1,8 @@
 ﻿using POC3D.ViewModel.Base;
 using System;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media.Media3D;
 
 namespace POC3D.ViewModel.InterfaceManagement
@@ -12,11 +15,27 @@ namespace POC3D.ViewModel.InterfaceManagement
         private int _cameraRotationZ;
         private Point3D _position;
 
+        private Vector3D _movementVector = new Vector3D();
+
         public EventHandler OnCameraViewModelChanged;
 
         public CameraViewModel()
         {
             UpDirection = new Vector3D(0, 0, 1);
+            Application.Current.Dispatcher.InvokeAsync(UpdateCamera);
+        }
+
+        private async Task UpdateCamera()
+        {
+            while (true)
+            {
+                if (_movementVector.Length != 0)
+                {
+                    Position = Position + _movementVector;
+                }
+
+                await Task.Delay(1);
+            }
         }
 
         public string FriendlyPosition => $"Camera Position ({Position.X:0.##}/{Position.Y:0.##}/{Position.Z:0.##})";
@@ -161,5 +180,106 @@ namespace POC3D.ViewModel.InterfaceManagement
         }
 
         #endregion
+
+        private Point _lastMousePosition;
+
+        public void ReactToMouseWheelMovement(int delta)
+        {
+            var movements = Math.Abs(delta / 10);
+
+            for (var i = 0; i < movements; i++)
+            {
+                if (delta > 0) MoveForward();
+
+                if (delta < 0) MoveBackwards();
+            }
+        }
+
+        public void ReactToMouseMovement(
+            MouseButtonState middleButton,
+            MouseButtonState rightButton,
+            Point currentCursorPosition)
+        {
+            if (middleButton == MouseButtonState.Pressed) ReactToCameraPanMouse(currentCursorPosition);
+
+            if (rightButton == MouseButtonState.Pressed) ReactToCameraRotateMouse(currentCursorPosition);
+
+            _lastMousePosition = currentCursorPosition;
+        }
+
+        public void ReactToKeyBoardKeyDown(bool isLeftShiftPressed, Key pressedKey)
+        {
+            if (isLeftShiftPressed)
+                ReactToCameraRotationKeyDown(pressedKey);
+            else
+                ReactToMovementKeyDown(pressedKey);
+        }
+
+        private void ReactToCameraRotateMouse(Point currentCursorPosition)
+        {
+            if (currentCursorPosition.X < _lastMousePosition.X) CameraRotationZUp();
+
+            if (currentCursorPosition.X > _lastMousePosition.X) CameraRotationZDown();
+
+            if (currentCursorPosition.Y < _lastMousePosition.Y) CameraRotationYDown();
+
+            if (currentCursorPosition.Y > _lastMousePosition.Y) CameraRotationYUp();
+        }
+
+        private void ReactToCameraPanMouse(Point currentCursorPosition)
+        {
+            if (currentCursorPosition.X < _lastMousePosition.X) MoveLeft();
+
+            if (currentCursorPosition.X > _lastMousePosition.X) MoveRight();
+
+            if (currentCursorPosition.Y < _lastMousePosition.Y) MoveUp();
+
+            if (currentCursorPosition.Y > _lastMousePosition.Y) MoveDown();
+        }
+
+        private void ReactToCameraRotationKeyDown(Key pressedKey)
+        {
+            switch (pressedKey)
+            {
+                case Key.A:
+                    CameraRotationZUp();
+                    break;
+                case Key.D:
+                    CameraRotationZDown();
+                    break;
+                case Key.S:
+                    CameraRotationYUp();
+                    break;
+                case Key.W:
+                    CameraRotationYDown();
+                    break;
+            }
+        }
+
+        private void ReactToMovementKeyDown(Key pressedKey)
+        {
+            switch (pressedKey)
+            {
+                case Key.A:
+                    MoveLeft();
+                    break;
+                case Key.D:
+                    MoveRight();
+                    break;
+                case Key.W:
+                    MoveForward();
+                    break;
+                case Key.S:
+                    MoveBackwards();
+                    break;
+                case Key.R:
+                    MoveUp();
+                    break;
+                case Key.F:
+                    MoveDown();
+                    break;
+            }
+        }
+
     }
 }

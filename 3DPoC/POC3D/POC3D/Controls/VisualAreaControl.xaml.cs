@@ -111,18 +111,17 @@ namespace POC3D.Controls
 
         private void Viewport_PreviewMouseMove(object sender, MouseEventArgs e)
         {
-            MainViewModel.InterfaceControlViewModel.ReactToMouseMovement(e.MiddleButton, e.RightButton,
-                e.GetPosition(Viewport));
+            MainViewModel.CameraViewModel.ReactToMouseMovement(e.MiddleButton, e.RightButton, e.GetPosition(Viewport));
         }
 
         private void Viewport_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            MainViewModel.InterfaceControlViewModel.ReactToKeyBoardKeyDown(Keyboard.IsKeyDown(Key.LeftShift), e.Key);
+            MainViewModel.CameraViewModel.ReactToKeyBoardKeyDown(Keyboard.IsKeyDown(Key.LeftShift), e.Key);
         }
 
         private void Viewport_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
-            MainViewModel.InterfaceControlViewModel.ReactToMouseWheelMovement(e.Delta);
+            MainViewModel.CameraViewModel.ReactToMouseWheelMovement(e.Delta);
         }
 
         private void InitialSetup()

@@ -1,5 +1,7 @@
 ﻿using POC3D.ViewModel.Base;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -11,11 +13,48 @@ namespace POC3D.ViewModel.InterfaceManagement
     {
         private const int RotationDelta = 1;
 
-        private int _cameraRotationY;
-        private int _cameraRotationZ;
+        private double _cameraRotationY;
+        private double _cameraRotationZ;
         private Point3D _position;
 
-        private Vector3D _movementVector = new Vector3D();
+
+        #region Keyboard movement
+
+        private HashSet<Key> _pressedKeys = new HashSet<Key>();
+        private Vector3D _keyboardMovementVector = new Vector3D();
+        private double _keyboardRotationY;
+        private double _keyboardRotationZ;
+        private static readonly Key _forward = Key.W;
+        private static readonly Key _backward = Key.S;
+        private static readonly Key _left = Key.A;
+        private static readonly Key _right = Key.D;
+        private static readonly Key _up = Key.R;
+        private static readonly Key _down = Key.F;
+        private static readonly Key _special = Key.LeftShift;
+        private static readonly double _keyboardRotationDelta = 0.5;
+
+        #endregion
+
+        #region Mouse Wheel
+
+        #endregion
+
+        private Vector3D _wheelMovementVector = new Vector3D();
+        private int _wheelDelta;
+
+
+        #region Mouse movement
+
+        private Dictionary<MouseButton, Point> _pressedButtons = new Dictionary<MouseButton, Point>(); 
+        private Vector3D _mouseMovementVector = new Vector3D();
+        private Point _currentMousePosition = new Point();
+        private MouseButton _panMouseButton = MouseButton.Middle;
+        private MouseButton _rotateMouseButton = MouseButton.Right;
+        private double _mouseRotationY;
+        private double _mouseRotationZ;
+
+        #endregion
+
 
         public EventHandler OnCameraViewModelChanged;
 
@@ -27,11 +66,25 @@ namespace POC3D.ViewModel.InterfaceManagement
 
         private async Task UpdateCamera()
         {
+            const double multiplier = 0.5;
+
             while (true)
             {
+                UpdateKeyboardRotation();
+                UpdateMouseRotation();
+
+                CameraRotationY += _keyboardRotationY + _mouseRotationY;
+                CameraRotationZ += _keyboardRotationZ + _mouseRotationZ;
+
+                UpdateKeyboardMovement();
+                UpdateMouseWheelMovement();
+                UpdateMouseMovement();
+
+                var _movementVector = _keyboardMovementVector + _mouseMovementVector + _wheelMovementVector;
+                
                 if (_movementVector.Length != 0)
                 {
-                    Position = Position + _movementVector;
+                    Position += _movementVector * multiplier;
                 }
 
                 await Task.Delay(1);
@@ -45,7 +98,7 @@ namespace POC3D.ViewModel.InterfaceManagement
 
         public Vector3D UpDirection { get; }
 
-        public int CameraRotationY
+        public double CameraRotationY
         {
             get => _cameraRotationY;
             protected set
@@ -56,7 +109,7 @@ namespace POC3D.ViewModel.InterfaceManagement
             }
         }
 
-        public int CameraRotationZ
+        public double CameraRotationZ
         {
             get => _cameraRotationZ;
             protected set
@@ -147,139 +200,191 @@ namespace POC3D.ViewModel.InterfaceManagement
 
         #endregion
 
-        #region Movement
 
-        public void MoveForward()
+        #region Keyboard
+
+        public void ReactToKeyboardKeyDown(Key pressedKey)
         {
-            Position = Position + UnaryForward;
+            _pressedKeys.Add(pressedKey);
         }
 
-        public void MoveBackwards()
+        public void ReactToKeyboardKeyUp(Key liftedKey)
         {
-            Position = Position - UnaryForward;
+            _pressedKeys.Remove(liftedKey);
         }
 
-        public void MoveUp()
+        private void UpdateKeyboardRotation()
         {
-            Position = Position + UnaryUp;
+            _keyboardRotationY = 0;
+            _keyboardRotationZ = 0;
+
+            if (!_pressedKeys.Contains(_special))
+            {
+                return;
+            }
+
+            if (_pressedKeys.Contains(_forward))
+            {
+                _keyboardRotationY -= _keyboardRotationDelta;
+            }
+            if (_pressedKeys.Contains(_backward))
+            {
+                _keyboardRotationY += _keyboardRotationDelta;
+            }
+
+            if (_pressedKeys.Contains(_left))
+            {
+                _keyboardRotationZ += _keyboardRotationDelta;
+            }
+            if (_pressedKeys.Contains(_right))
+            {
+                _keyboardRotationZ -= _keyboardRotationDelta;
+            }
         }
 
-        public void MoveDown()
+        private void UpdateKeyboardMovement()
         {
-            Position = Position - UnaryUp;
-        }
+            _keyboardMovementVector = new Vector3D();
 
-        public void MoveLeft()
-        {
-            Position = Position + UnaryLeft;
-        }
+            if (_pressedKeys.Contains(_special))
+            {
+                return;
+            }
 
-        public void MoveRight()
-        {
-            Position = Position - UnaryLeft;
+            if (_pressedKeys.Contains(_forward))
+            {
+                _keyboardMovementVector += UnaryForward;
+            }
+            if (_pressedKeys.Contains(_backward))
+            {
+                _keyboardMovementVector -= UnaryForward;
+            }
+
+            if (_pressedKeys.Contains(_left))
+            {
+                _keyboardMovementVector += UnaryLeft;
+            }
+            if (_pressedKeys.Contains(_right))
+            {
+                _keyboardMovementVector -= UnaryLeft;
+            }
+
+            if (_pressedKeys.Contains(_up))
+            {
+                _keyboardMovementVector += UnaryUp;
+            }
+            if (_pressedKeys.Contains(_down))
+            {
+                _keyboardMovementVector -= UnaryUp;
+            }
+
+            if (_keyboardMovementVector.Length > 0) 
+            {
+                _keyboardMovementVector.Normalize();
+            }
         }
 
         #endregion
 
-        private Point _lastMousePosition;
+        #region MouseWheel
 
         public void ReactToMouseWheelMovement(int delta)
         {
-            var movements = Math.Abs(delta / 10);
+            _wheelDelta = delta / 5;
+        }
 
-            for (var i = 0; i < movements; i++)
+        private void UpdateMouseWheelMovement()
+        {
+            if (_wheelDelta != 0)
             {
-                if (delta > 0) MoveForward();
-
-                if (delta < 0) MoveBackwards();
+                if (_wheelDelta > 0)
+                {
+                    _wheelDelta--;
+                    _wheelMovementVector = UnaryForward;
+                }
+                else
+                {
+                    _wheelDelta++;
+                    _wheelMovementVector = -UnaryForward;
+                }
             }
-        }
-
-        public void ReactToMouseMovement(
-            MouseButtonState middleButton,
-            MouseButtonState rightButton,
-            Point currentCursorPosition)
-        {
-            if (middleButton == MouseButtonState.Pressed) ReactToCameraPanMouse(currentCursorPosition);
-
-            if (rightButton == MouseButtonState.Pressed) ReactToCameraRotateMouse(currentCursorPosition);
-
-            _lastMousePosition = currentCursorPosition;
-        }
-
-        public void ReactToKeyBoardKeyDown(bool isLeftShiftPressed, Key pressedKey)
-        {
-            if (isLeftShiftPressed)
-                ReactToCameraRotationKeyDown(pressedKey);
             else
-                ReactToMovementKeyDown(pressedKey);
-        }
-
-        private void ReactToCameraRotateMouse(Point currentCursorPosition)
-        {
-            if (currentCursorPosition.X < _lastMousePosition.X) CameraRotationZUp();
-
-            if (currentCursorPosition.X > _lastMousePosition.X) CameraRotationZDown();
-
-            if (currentCursorPosition.Y < _lastMousePosition.Y) CameraRotationYDown();
-
-            if (currentCursorPosition.Y > _lastMousePosition.Y) CameraRotationYUp();
-        }
-
-        private void ReactToCameraPanMouse(Point currentCursorPosition)
-        {
-            if (currentCursorPosition.X < _lastMousePosition.X) MoveLeft();
-
-            if (currentCursorPosition.X > _lastMousePosition.X) MoveRight();
-
-            if (currentCursorPosition.Y < _lastMousePosition.Y) MoveUp();
-
-            if (currentCursorPosition.Y > _lastMousePosition.Y) MoveDown();
-        }
-
-        private void ReactToCameraRotationKeyDown(Key pressedKey)
-        {
-            switch (pressedKey)
             {
-                case Key.A:
-                    CameraRotationZUp();
-                    break;
-                case Key.D:
-                    CameraRotationZDown();
-                    break;
-                case Key.S:
-                    CameraRotationYUp();
-                    break;
-                case Key.W:
-                    CameraRotationYDown();
-                    break;
+                _wheelMovementVector = new Vector3D();
+            }
+        }
+        #endregion
+
+        public void ReactToMouseDown(MouseButton mouseButton)
+        {
+            if (_pressedButtons.ContainsKey(mouseButton))
+            {
+                _pressedButtons[mouseButton] = _currentMousePosition;
+            }
+            else
+            {
+                _pressedButtons.Add(mouseButton, _currentMousePosition);
             }
         }
 
-        private void ReactToMovementKeyDown(Key pressedKey)
+        public void ReactToMouseUp(MouseButton mouseButton)
         {
-            switch (pressedKey)
+            _pressedButtons.Remove(mouseButton);
+        }
+
+        public void ReactToMouseMovement(Point currentCursorPosition)
+        {
+            _currentMousePosition = currentCursorPosition;
+        }
+
+        private void UpdateMouseMovement()
+        {
+            _mouseMovementVector.Y = 0;
+            _mouseMovementVector.Z = 0;
+
+            if (!_pressedButtons.ContainsKey(_panMouseButton))
             {
-                case Key.A:
-                    MoveLeft();
-                    break;
-                case Key.D:
-                    MoveRight();
-                    break;
-                case Key.W:
-                    MoveForward();
-                    break;
-                case Key.S:
-                    MoveBackwards();
-                    break;
-                case Key.R:
-                    MoveUp();
-                    break;
-                case Key.F:
-                    MoveDown();
-                    break;
+                return;
+            }
+
+            var mousePositionWhenButtonPressed = _pressedButtons[_panMouseButton];
+
+            //Pan movement is in the Z - Y plane
+            var vector = mousePositionWhenButtonPressed - _currentMousePosition;
+
+            _mouseMovementVector.Y = vector.X;
+            _mouseMovementVector.Z = vector.Y;
+
+            if (_mouseMovementVector.Length != 0)
+            {
+                _mouseMovementVector.Normalize();
             }
         }
 
+        private void UpdateMouseRotation()
+        {
+            _mouseRotationY = 0;
+            _mouseRotationZ = 0;
+
+            if (!_pressedButtons.ContainsKey(_rotateMouseButton))
+            {
+                return;
+            }
+
+            var mousePositionWhenButtonPressed = _pressedButtons[_rotateMouseButton];
+
+            //Rotation is in the X - Y plane
+            var vector = mousePositionWhenButtonPressed - _currentMousePosition;
+            
+            if(vector.Length != 0)
+            {
+                vector.Normalize();
+            }
+
+            vector = vector * 0.4;
+
+            _mouseRotationY = -vector.Y;
+            _mouseRotationZ = vector.X;
+        }
     }
 }

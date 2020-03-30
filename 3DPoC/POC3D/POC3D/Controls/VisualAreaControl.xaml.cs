@@ -1,4 +1,5 @@
-﻿using System.Collections.Specialized;
+﻿using System;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -38,10 +39,16 @@ namespace POC3D.Controls
 
         public void InitViewModel()
         {
-            Viewport.PreviewMouseMove += Viewport_PreviewMouseMove;
-            Viewport.PreviewMouseWheel += Viewport_PreviewMouseWheel;
-            Viewport.PreviewKeyDown += Viewport_PreviewKeyDown;
-            Viewport.PreviewMouseDown += Viewport_PreviewMouseDown;
+            Viewport.PreviewMouseDown += ViewPortClicked;
+
+            //Events to wire the CameraViewmodel to this control
+            var cameraVM = MainViewModel.CameraViewModel;
+            Viewport.PreviewMouseMove += (_, e) => cameraVM.ReactToMouseMovement(e.GetPosition(Viewport));
+            Viewport.PreviewMouseWheel += (_, e) => cameraVM.ReactToMouseWheelMovement(e.Delta);
+            Viewport.PreviewMouseDown += (_, e) => cameraVM.ReactToMouseDown(e.ChangedButton);
+            Viewport.PreviewMouseUp += (_, e) => cameraVM.ReactToMouseUp(e.ChangedButton);
+            Viewport.PreviewKeyDown += (_, e) => cameraVM.ReactToKeyboardKeyDown(e.Key);
+            Viewport.PreviewKeyUp += (_, e) => cameraVM.ReactToKeyboardKeyUp(e.Key);
 
             MainViewModel.CameraViewModel.OnCameraViewModelChanged += (a, b) => UpdateCamera();
 
@@ -53,6 +60,7 @@ namespace POC3D.Controls
 
             UpdateCamera();
             DisplayProblem();
+            Focus();
         }
 
         private void ShowProblemChangedCallback(object sender, PropertyChangedEventArgs e)
@@ -63,8 +71,13 @@ namespace POC3D.Controls
                 DisplayResults();
         }
 
-        private void Viewport_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void ViewPortClicked(object sender, MouseButtonEventArgs e)
         {
+            if(e.ChangedButton != MouseButton.Left)
+            {
+                return;
+            }
+
             Focus();
 
             var ptMouse = e.GetPosition(Viewport);
@@ -107,21 +120,6 @@ namespace POC3D.Controls
                     }
                 }
             }
-        }
-
-        private void Viewport_PreviewMouseMove(object sender, MouseEventArgs e)
-        {
-            MainViewModel.CameraViewModel.ReactToMouseMovement(e.MiddleButton, e.RightButton, e.GetPosition(Viewport));
-        }
-
-        private void Viewport_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            MainViewModel.CameraViewModel.ReactToKeyBoardKeyDown(Keyboard.IsKeyDown(Key.LeftShift), e.Key);
-        }
-
-        private void Viewport_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
-        {
-            MainViewModel.CameraViewModel.ReactToMouseWheelMovement(e.Delta);
         }
 
         private void InitialSetup()

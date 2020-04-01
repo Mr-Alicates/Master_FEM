@@ -10,56 +10,58 @@ using System.Windows.Media.Media3D;
 namespace POC3D.ViewModel.InterfaceManagement
 {
     public class CameraViewModel : Observable
-    {
-        private const int RotationDelta = 1;
-
-        private double _cameraRotationY;
-        private double _cameraRotationZ;
-        private Point3D _position;
-
+    {        
+        private Point3D _position = new Point3D();
+        private Vector3D _forwardVector = new Vector3D(1,0,0);
+        private Vector3D _upVector = new Vector3D(0, 0, 1);
 
         #region Keyboard movement
 
         private HashSet<Key> _pressedKeys = new HashSet<Key>();
-        private Vector3D _keyboardMovementVector = new Vector3D();
-        private double _keyboardRotationY;
-        private double _keyboardRotationZ;
+        private Vector3D _keyboardPositionDeltaVector = new Vector3D();
         private static readonly Key _forward = Key.W;
         private static readonly Key _backward = Key.S;
         private static readonly Key _left = Key.A;
         private static readonly Key _right = Key.D;
         private static readonly Key _up = Key.R;
         private static readonly Key _down = Key.F;
+        private static readonly Key _pitchUp = Key.W;
+        private static readonly Key _pitchDown = Key.S;
+        private static readonly Key _yawUp = Key.A;
+        private static readonly Key _yawDown = Key.D;
+        private static readonly Key _rollUp = Key.E;
+        private static readonly Key _rollDown = Key.Q;
         private static readonly Key _special = Key.LeftShift;
         private static readonly double _keyboardRotationDelta = 0.5;
+        private double _keyboardRotationX;
+        private double _keyboardRotationY;
+        private double _keyboardRotationZ;
 
         #endregion
 
         #region Mouse Wheel
 
-        #endregion
-
         private Vector3D _wheelMovementVector = new Vector3D();
         private int _wheelDelta;
 
+        #endregion
 
         #region Mouse movement
 
-        private Dictionary<MouseButton, Point> _pressedButtons = new Dictionary<MouseButton, Point>(); 
+        private Dictionary<MouseButton, Point> _pressedButtons = new Dictionary<MouseButton, Point>();
         private Vector3D _mouseMovementVector = new Vector3D();
         private Point _currentMousePosition = new Point();
         private MouseButton _panMouseButton = MouseButton.Middle;
         private MouseButton _rotateMouseButton = MouseButton.Left;
+        private static readonly double _mouseRotationDelta = 0.5;
         private double _mouseRotationY;
         private double _mouseRotationZ;
 
         #endregion
 
         #region Orbiting
-        private bool _isOrbiting => _pressedButtons.ContainsKey(_orbitMouseButton);
-        private Vector3D _orbitMovementVector = new Vector3D();
+
         private MouseButton _orbitMouseButton = MouseButton.Right;
-        private double _orbitRotationZ = 0.5;
 
         #endregion 
 
@@ -73,38 +75,37 @@ namespace POC3D.ViewModel.InterfaceManagement
 
         private async Task UpdateCamera()
         {
-            const double multiplier = 0.5;
-
             while (true)
             {
-                if (_isOrbiting)
+                UpdateKeyboardRotation();
+                UpdateMouseRotation();
+
+                var rotationX = _keyboardRotationX;
+                var rotationY = _keyboardRotationY + _mouseRotationY;
+                var rotationZ = _keyboardRotationZ + _mouseRotationZ;
+
+                var transformGroup = new Transform3DGroup
                 {
-                    CameraRotationZ += _orbitRotationZ;
-                    
-                    UpdateOrbitMovement();
-                    UpdateMouseWheelMovement();
-                    
-                    Position += _orbitMovementVector + _wheelMovementVector;
-                }
-                else
+                    Children = new Transform3DCollection
                 {
-                    UpdateKeyboardRotation();
-                    UpdateMouseRotation();
-
-                    CameraRotationY += _keyboardRotationY + _mouseRotationY;
-                    CameraRotationZ += _keyboardRotationZ + _mouseRotationZ;
-
-                    UpdateKeyboardMovement();
-                    UpdateMouseWheelMovement();
-                    UpdateMouseMovement();
-
-                    var _movementVector = _keyboardMovementVector + _mouseMovementVector + _wheelMovementVector;
-
-                    if (_movementVector.Length != 0)
-                    {
-                        Position += _movementVector * multiplier;
-                    }
+                    new RotateTransform3D(new AxisAngleRotation3D(UnaryForward, rotationX), Position),
+                    new RotateTransform3D(new AxisAngleRotation3D(UnaryLeft, rotationY), Position),
+                    new RotateTransform3D(new AxisAngleRotation3D(UnaryUp, rotationZ), Position)
                 }
+                };
+
+                //This does the "turning" of the camera
+                UnaryUp = transformGroup.Transform(UnaryUp);
+                UnaryForward = transformGroup.Transform(UnaryForward);
+
+                UpdateKeyboardMovement();
+                UpdateMouseWheelMovement();
+                UpdateMousePan();
+
+                var positionDelta = _keyboardPositionDeltaVector + _mouseMovementVector + _wheelMovementVector;
+                Position += positionDelta;
+
+                DoOrbitMovement();
 
                 await Task.Delay(1);
             }
@@ -117,28 +118,6 @@ namespace POC3D.ViewModel.InterfaceManagement
 
         public Vector3D UpDirection { get; }
 
-        public double CameraRotationY
-        {
-            get => _cameraRotationY;
-            protected set
-            {
-                _cameraRotationY = value;
-                OnPropertyChanged(nameof(FriendlyLookDirection));
-                OnCameraViewModelChanged?.Invoke(this, null);
-            }
-        }
-
-        public double CameraRotationZ
-        {
-            get => _cameraRotationZ;
-            protected set
-            {
-                _cameraRotationZ = value;
-                OnPropertyChanged(nameof(FriendlyLookDirection));
-                OnCameraViewModelChanged?.Invoke(this, null);
-            }
-        }
-
         public Point3D Position
         {
             get => _position;
@@ -150,75 +129,37 @@ namespace POC3D.ViewModel.InterfaceManagement
             }
         }
 
-        public Vector3D UnaryUp => new Vector3D(0, 0, 1);
-
-        public Vector3D UnaryLeft
+        public Vector3D UnaryUp
         {
-            get
+            get => _upVector;
+            set
             {
-                var forward = new Vector3D(UnaryForward.X, UnaryForward.Y, 0);
-                forward.Normalize();
-
-                var transformGroup = new Transform3DGroup
-                {
-                    Children = new Transform3DCollection
-                    {
-                        new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 0, 1), 90))
-                    }
-                };
-
-                var left = transformGroup.Transform(forward);
-                left.Normalize();
-                return left;
+                _upVector = value;
+                OnCameraViewModelChanged?.Invoke(this, null);
             }
         }
+
+        public Vector3D UnaryLeft => Vector3D.CrossProduct(UnaryUp, UnaryForward);
 
         public Vector3D UnaryForward
         {
-            get
+            get => _forwardVector;
+            set
             {
-                var vector = new Vector3D(1, 0, 0);
-
-                var transformGroup = new Transform3DGroup
+                if(value == null || value.Length == 0)
                 {
-                    Children = new Transform3DCollection
-                    {
-                        new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 1, 0), CameraRotationY)),
-                        new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 0, 1), CameraRotationZ))
-                    }
-                };
-
-                var transformedVector = transformGroup.Transform(vector);
-                transformedVector.Normalize();
-
-                return transformedVector;
+                    _forwardVector = new Vector3D(1, 0, 0);
+                }
+                else
+                {
+                    _forwardVector = value;
+                    _forwardVector.Normalize();
+                }                
+                
+                OnPropertyChanged(nameof(FriendlyLookDirection));
+                OnCameraViewModelChanged?.Invoke(this, null);
             }
         }
-
-        #region CameraRotation
-
-        public void CameraRotationZUp()
-        {
-            CameraRotationZ = CameraRotationZ + RotationDelta;
-        }
-
-        public void CameraRotationZDown()
-        {
-            CameraRotationZ = CameraRotationZ - RotationDelta;
-        }
-
-        public void CameraRotationYUp()
-        {
-            CameraRotationY = CameraRotationY + RotationDelta;
-        }
-
-        public void CameraRotationYDown()
-        {
-            CameraRotationY = CameraRotationY - RotationDelta;
-        }
-
-        #endregion
-
 
         #region Keyboard
 
@@ -232,8 +173,48 @@ namespace POC3D.ViewModel.InterfaceManagement
             _pressedKeys.Remove(liftedKey);
         }
 
+        private void UpdateKeyboardMovement()
+        {
+            _keyboardPositionDeltaVector = new Vector3D();
+
+            if (_pressedKeys.Contains(_special))
+            {
+                return;
+            }
+
+            var delta = new Vector3D();
+
+            if (_pressedKeys.Contains(_forward))
+            {
+                delta += UnaryForward;
+            }
+            if (_pressedKeys.Contains(_backward))
+            {
+                delta -= UnaryForward;
+            }
+            if (_pressedKeys.Contains(_left))
+            {
+                delta += UnaryLeft;
+            }
+            if (_pressedKeys.Contains(_right))
+            {
+                delta -= UnaryLeft;
+            }
+            if (_pressedKeys.Contains(_up))
+            {
+                delta += UnaryUp;
+            }
+            if (_pressedKeys.Contains(_down))
+            {
+                delta -= UnaryUp;
+            }
+
+            _keyboardPositionDeltaVector = delta;
+        }
+
         private void UpdateKeyboardRotation()
         {
+            _keyboardRotationX = 0;
             _keyboardRotationY = 0;
             _keyboardRotationZ = 0;
 
@@ -242,64 +223,29 @@ namespace POC3D.ViewModel.InterfaceManagement
                 return;
             }
 
-            if (_pressedKeys.Contains(_forward))
+            if (_pressedKeys.Contains(_pitchUp))
             {
-                _keyboardRotationY -= _keyboardRotationDelta;
+                _keyboardRotationY = _keyboardRotationDelta;
             }
-            if (_pressedKeys.Contains(_backward))
+            if (_pressedKeys.Contains(_pitchDown))
             {
-                _keyboardRotationY += _keyboardRotationDelta;
+                _keyboardRotationY = -_keyboardRotationDelta;
             }
-
-            if (_pressedKeys.Contains(_left))
+            if (_pressedKeys.Contains(_yawUp))
             {
-                _keyboardRotationZ += _keyboardRotationDelta;
+                _keyboardRotationZ = _keyboardRotationDelta;
             }
-            if (_pressedKeys.Contains(_right))
+            if (_pressedKeys.Contains(_yawDown))
             {
-                _keyboardRotationZ -= _keyboardRotationDelta;
+                _keyboardRotationZ = -_keyboardRotationDelta;
             }
-        }
-
-        private void UpdateKeyboardMovement()
-        {
-            _keyboardMovementVector = new Vector3D();
-
-            if (_pressedKeys.Contains(_special))
+            if (_pressedKeys.Contains(_rollUp))
             {
-                return;
+                _keyboardRotationX = _keyboardRotationDelta;
             }
-
-            if (_pressedKeys.Contains(_forward))
+            if (_pressedKeys.Contains(_rollDown))
             {
-                _keyboardMovementVector += UnaryForward;
-            }
-            if (_pressedKeys.Contains(_backward))
-            {
-                _keyboardMovementVector -= UnaryForward;
-            }
-
-            if (_pressedKeys.Contains(_left))
-            {
-                _keyboardMovementVector += UnaryLeft;
-            }
-            if (_pressedKeys.Contains(_right))
-            {
-                _keyboardMovementVector -= UnaryLeft;
-            }
-
-            if (_pressedKeys.Contains(_up))
-            {
-                _keyboardMovementVector += UnaryUp;
-            }
-            if (_pressedKeys.Contains(_down))
-            {
-                _keyboardMovementVector -= UnaryUp;
-            }
-
-            if (_keyboardMovementVector.Length > 0) 
-            {
-                _keyboardMovementVector.Normalize();
+                _keyboardRotationX = -_keyboardRotationDelta;
             }
         }
 
@@ -332,6 +278,7 @@ namespace POC3D.ViewModel.InterfaceManagement
                 _wheelMovementVector = new Vector3D();
             }
         }
+
         #endregion
 
         public void ReactToMouseDown(MouseButton mouseButton)
@@ -356,7 +303,7 @@ namespace POC3D.ViewModel.InterfaceManagement
             _currentMousePosition = currentCursorPosition;
         }
 
-        private void UpdateMouseMovement()
+        private void UpdateMousePan()
         {
             _mouseMovementVector.Y = 0;
             _mouseMovementVector.Z = 0;
@@ -367,8 +314,6 @@ namespace POC3D.ViewModel.InterfaceManagement
             }
 
             var mousePositionWhenButtonPressed = _pressedButtons[_panMouseButton];
-
-            //Pan movement is in the Z - Y plane
             var vector = mousePositionWhenButtonPressed - _currentMousePosition;
 
             _mouseMovementVector.Y = vector.X;
@@ -391,33 +336,54 @@ namespace POC3D.ViewModel.InterfaceManagement
             }
 
             var mousePositionWhenButtonPressed = _pressedButtons[_rotateMouseButton];
-
-            //Rotation is in the X - Y plane
             var vector = mousePositionWhenButtonPressed - _currentMousePosition;
-            
-            if(vector.Length != 0)
+
+            if (vector.Length != 0)
             {
                 vector.Normalize();
             }
 
-            vector = vector * 0.4;
+            vector = vector * _mouseRotationDelta;
 
             _mouseRotationY = -vector.Y;
             _mouseRotationZ = vector.X;
         }
 
-        private void UpdateOrbitMovement()
+        private void DoOrbitMovement()
         {
+            if (!_pressedButtons.ContainsKey(_orbitMouseButton))
+            {
+                return;
+            }
+
+            var sphereCenter = new Point3D(0, 0, 0);
+
+            var mousePositionWhenButtonPressed = _pressedButtons[_orbitMouseButton];
+            var vector = mousePositionWhenButtonPressed - _currentMousePosition;
+
+            if (vector.Length != 0)
+            {
+                vector.Normalize();
+            }
+
+            var rotationY = -vector.Y;
+            var rotationZ = vector.X;
+
             var transformGroup = new Transform3DGroup
             {
                 Children = new Transform3DCollection
-                        {
-                            new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 0, 1), _orbitRotationZ))
-                        }
+                    {
+                        new RotateTransform3D(new AxisAngleRotation3D(UnaryLeft, rotationY), sphereCenter),
+                        new RotateTransform3D(new AxisAngleRotation3D(UnaryUp, rotationZ), sphereCenter)
+                    }
             };
-            var transformedPosition = transformGroup.Transform(Position);
 
-            _orbitMovementVector = transformedPosition - Position;
+            //This does the orbiting
+            Position = transformGroup.Transform(Position);
+
+            //This makes the camera face the center of the sphere
+            UnaryForward = sphereCenter - Position;
+            UnaryUp = Vector3D.CrossProduct(UnaryForward, UnaryLeft);
         }
     }
 }

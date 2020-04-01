@@ -166,7 +166,7 @@ namespace POC3D.Controls
         public void UpdateCamera()
         {
             Camera.Position = MainViewModel.CameraViewModel.Position;
-            Camera.UpDirection = MainViewModel.CameraViewModel.UpDirection;
+            Camera.UpDirection = MainViewModel.CameraViewModel.UnaryUp;
             Camera.LookDirection = MainViewModel.CameraViewModel.UnaryForward;
         }
 

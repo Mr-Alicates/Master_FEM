@@ -49,12 +49,19 @@ namespace POC3D.ViewModel.InterfaceManagement
         private Vector3D _mouseMovementVector = new Vector3D();
         private Point _currentMousePosition = new Point();
         private MouseButton _panMouseButton = MouseButton.Middle;
-        private MouseButton _rotateMouseButton = MouseButton.Right;
+        private MouseButton _rotateMouseButton = MouseButton.Left;
         private double _mouseRotationY;
         private double _mouseRotationZ;
 
         #endregion
 
+        #region Orbiting
+        private bool _isOrbiting => _pressedButtons.ContainsKey(_orbitMouseButton);
+        private Vector3D _orbitMovementVector = new Vector3D();
+        private MouseButton _orbitMouseButton = MouseButton.Right;
+        private double _orbitRotationZ = 0.5;
+
+        #endregion 
 
         public EventHandler OnCameraViewModelChanged;
 
@@ -70,21 +77,33 @@ namespace POC3D.ViewModel.InterfaceManagement
 
             while (true)
             {
-                UpdateKeyboardRotation();
-                UpdateMouseRotation();
-
-                CameraRotationY += _keyboardRotationY + _mouseRotationY;
-                CameraRotationZ += _keyboardRotationZ + _mouseRotationZ;
-
-                UpdateKeyboardMovement();
-                UpdateMouseWheelMovement();
-                UpdateMouseMovement();
-
-                var _movementVector = _keyboardMovementVector + _mouseMovementVector + _wheelMovementVector;
-                
-                if (_movementVector.Length != 0)
+                if (_isOrbiting)
                 {
-                    Position += _movementVector * multiplier;
+                    CameraRotationZ += _orbitRotationZ;
+                    
+                    UpdateOrbitMovement();
+                    UpdateMouseWheelMovement();
+                    
+                    Position += _orbitMovementVector + _wheelMovementVector;
+                }
+                else
+                {
+                    UpdateKeyboardRotation();
+                    UpdateMouseRotation();
+
+                    CameraRotationY += _keyboardRotationY + _mouseRotationY;
+                    CameraRotationZ += _keyboardRotationZ + _mouseRotationZ;
+
+                    UpdateKeyboardMovement();
+                    UpdateMouseWheelMovement();
+                    UpdateMouseMovement();
+
+                    var _movementVector = _keyboardMovementVector + _mouseMovementVector + _wheelMovementVector;
+
+                    if (_movementVector.Length != 0)
+                    {
+                        Position += _movementVector * multiplier;
+                    }
                 }
 
                 await Task.Delay(1);
@@ -385,6 +404,20 @@ namespace POC3D.ViewModel.InterfaceManagement
 
             _mouseRotationY = -vector.Y;
             _mouseRotationZ = vector.X;
+        }
+
+        private void UpdateOrbitMovement()
+        {
+            var transformGroup = new Transform3DGroup
+            {
+                Children = new Transform3DCollection
+                        {
+                            new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 0, 1), _orbitRotationZ))
+                        }
+            };
+            var transformedPosition = transformGroup.Transform(Position);
+
+            _orbitMovementVector = transformedPosition - Position;
         }
     }
 }

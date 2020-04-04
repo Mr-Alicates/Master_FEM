@@ -2,9 +2,9 @@
 {
     public abstract class BaseCameraControlViewModel
     {
-        protected CameraViewModel CameraViewModel;
+        protected ICameraViewModel CameraViewModel;
 
-        protected BaseCameraControlViewModel(CameraViewModel cameraViewModel)
+        protected BaseCameraControlViewModel(ICameraViewModel cameraViewModel)
         {
             CameraViewModel = cameraViewModel;
         }

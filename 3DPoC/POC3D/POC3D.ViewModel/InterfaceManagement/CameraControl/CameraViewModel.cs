@@ -1,13 +1,12 @@
 ﻿using POC3D.ViewModel.Base;
-using POC3D.ViewModel.InterfaceManagement.CameraControl;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Media3D;
 
-namespace POC3D.ViewModel.InterfaceManagement
+namespace POC3D.ViewModel.InterfaceManagement.CameraControl
 {
-    public class CameraViewModel : Observable
+    public class CameraViewModel : Observable, ICameraViewModel
     {
         private Point3D _position = new Point3D();
         private Vector3D _forwardVector = new Vector3D(1, 0, 0);

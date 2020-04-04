@@ -4,6 +4,7 @@ using System.Windows.Input;
 using POC3D.ViewModel.Base;
 using POC3D.ViewModel.Commands;
 using POC3D.ViewModel.Implementation;
+using POC3D.ViewModel.InterfaceManagement.CameraControl;
 
 namespace POC3D.ViewModel.InterfaceManagement
 {

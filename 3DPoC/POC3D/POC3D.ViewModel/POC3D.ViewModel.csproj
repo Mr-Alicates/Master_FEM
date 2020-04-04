@@ -58,6 +58,9 @@
     <Compile Include="Dialog\DialogService.cs" />
     <Compile Include="Dialog\IDialogService.cs" />
     <Compile Include="Implementation\ElementViewModel.cs" />
+    <Compile Include="InterfaceManagement\CameraControl\BaseCameraControlViewModel.cs" />
+    <Compile Include="InterfaceManagement\CameraControl\KeyboardCameraControlViewModel.cs" />
+    <Compile Include="InterfaceManagement\CameraControl\MouseCameraControlViewModel.cs" />
     <Compile Include="InterfaceManagement\CameraViewModel.cs" />
     <Compile Include="Geometry\ResultElementGeometryViewModel.cs" />
     <Compile Include="Geometry\ElementGeometryViewModel.cs" />

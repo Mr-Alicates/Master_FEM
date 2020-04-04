@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using Microsoft.Win32;
 using POC3D.Model;
 using POC3D.Model.Serialization;
 using POC3D.ViewModel.Base;

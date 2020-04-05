@@ -87,9 +87,14 @@ namespace POC3D.ViewModel.InterfaceManagement.CameraControl
             var mousePositionWhenButtonPressed = _pressedButtons[_panMouseButton];
             var vector = mousePositionWhenButtonPressed - _currentMousePosition;
 
-            var mouseMovementVector = new Vector3D(0, vector.X, vector.Y);
+            if (vector.Length != 0)
+            {
+                vector.Normalize();
+            }
 
-            CameraViewModel.Move(mouseMovementVector);
+            var movementVector = CameraViewModel.UnaryUp * vector.Y + CameraViewModel.UnaryLeft * vector.X;
+
+            CameraViewModel.Move(movementVector);
         }
 
         private void DoMouseRotation()

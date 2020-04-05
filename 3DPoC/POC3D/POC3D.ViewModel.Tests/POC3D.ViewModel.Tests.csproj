@@ -53,9 +53,12 @@
   <ItemGroup>
     <Compile Include="ElementViewModelTests.cs" />
     <Compile Include="ForceViewModelTests.cs" />
+    <Compile Include="Helper\FakeCameraViewModel.cs" />
     <Compile Include="Helper\FakeDialogService.cs" />
     <Compile Include="Helper\PropertyChangedEventChecker.cs" />
+    <Compile Include="KeyboardCameraControlViewModelTests.cs" />
     <Compile Include="MaterialViewModelTests.cs" />
+    <Compile Include="MouseCameraControlViewModelTests.cs" />
     <Compile Include="NodeViewModelTests.cs" />
     <Compile Include="ProblemViewModelIntegrationTests.cs" />
     <Compile Include="ProblemViewModelTests.cs" />

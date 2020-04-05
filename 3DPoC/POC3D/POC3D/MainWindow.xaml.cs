@@ -34,7 +34,7 @@ namespace POC3D
 
         public void InitSimple()
         {
-            MainViewModel.CameraViewModel.Position = new Point3D(-100, 0, 0);
+            MainViewModel.CameraViewModel.Move(new Point3D(-100, 0, 0));
 
             var node1 = MainViewModel.ProblemViewModel.AddNode();
             var node5 = MainViewModel.ProblemViewModel.AddNode();

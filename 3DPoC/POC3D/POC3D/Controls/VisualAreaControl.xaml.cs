@@ -40,14 +40,12 @@ namespace POC3D.Controls
         {
             Viewport.PreviewMouseDown += ViewPortClicked;
 
-            //Events to wire the CameraViewmodel to this control
-            var cameraVM = MainViewModel.CameraViewModel;
-            Viewport.PreviewMouseMove += (_, e) => cameraVM.MouseCameraControlViewModel.ReactToMouseMovement(e.GetPosition(Viewport));
-            Viewport.PreviewMouseWheel += (_, e) => cameraVM.MouseCameraControlViewModel.ReactToMouseWheelMovement(e.Delta);
-            Viewport.PreviewMouseDown += (_, e) => cameraVM.MouseCameraControlViewModel.ReactToMouseDown(e.ChangedButton);
-            Viewport.PreviewMouseUp += (_, e) => cameraVM.MouseCameraControlViewModel.ReactToMouseUp(e.ChangedButton);
-            Viewport.PreviewKeyDown += (_, e) => cameraVM.KeyboardCameraControlViewModel.ReactToKeyboardKeyDown(e.Key);
-            Viewport.PreviewKeyUp += (_, e) => cameraVM.KeyboardCameraControlViewModel.ReactToKeyboardKeyUp(e.Key);
+            Viewport.PreviewMouseMove += (_, e) => MainViewModel.InterfaceControlViewModel.MouseCameraControlViewModel.ReactToMouseMovement(e.GetPosition(Viewport));
+            Viewport.PreviewMouseWheel += (_, e) => MainViewModel.InterfaceControlViewModel.MouseCameraControlViewModel.ReactToMouseWheelMovement(e.Delta);
+            Viewport.PreviewMouseDown += (_, e) => MainViewModel.InterfaceControlViewModel.MouseCameraControlViewModel.ReactToMouseDown(e.ChangedButton);
+            Viewport.PreviewMouseUp += (_, e) => MainViewModel.InterfaceControlViewModel.MouseCameraControlViewModel.ReactToMouseUp(e.ChangedButton);
+            Viewport.PreviewKeyDown += (_, e) => MainViewModel.InterfaceControlViewModel.KeyboardCameraControlViewModel.ReactToKeyboardKeyDown(e.Key);
+            Viewport.PreviewKeyUp += (_, e) => MainViewModel.InterfaceControlViewModel.KeyboardCameraControlViewModel.ReactToKeyboardKeyUp(e.Key);
 
             MainViewModel.CameraViewModel.OnCameraViewModelChanged += (a, b) => UpdateCamera();
 

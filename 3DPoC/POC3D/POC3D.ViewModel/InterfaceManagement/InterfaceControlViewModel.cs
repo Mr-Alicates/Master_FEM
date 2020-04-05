@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using POC3D.ViewModel.Base;
@@ -33,7 +34,12 @@ namespace POC3D.ViewModel.InterfaceManagement
             ForceManagementViewModel = new ForceManagementViewModel(_problemViewModel);
             NodeManagementViewModel = new NodeManagementViewModel(_problemViewModel);
 
+            KeyboardCameraControlViewModel = new KeyboardCameraControlViewModel(_cameraViewModel);
+            MouseCameraControlViewModel = new MouseCameraControlViewModel(_cameraViewModel);
+
             problemViewModel.PropertyChanged += ProblemViewModel_PropertyChanged;
+
+            Application.Current.Dispatcher.InvokeAsync(UpdateCamera);
         }
 
         public ElementManagementViewModel ElementManagementViewModel { get; }
@@ -263,6 +269,25 @@ namespace POC3D.ViewModel.InterfaceManagement
                 OnPropertyChanged(nameof(ForceAddingControlVisibility));
             }
         }
+
+        #endregion
+
+        #region Camera
+
+        private async Task UpdateCamera()
+        {
+            while (true)
+            {
+                KeyboardCameraControlViewModel.UpdateCamera();
+                MouseCameraControlViewModel.UpdateCamera();
+
+                await Task.Delay(1);
+            }
+        }
+
+        public KeyboardCameraControlViewModel KeyboardCameraControlViewModel { get; }
+
+        public MouseCameraControlViewModel MouseCameraControlViewModel { get; }
 
         #endregion
     }

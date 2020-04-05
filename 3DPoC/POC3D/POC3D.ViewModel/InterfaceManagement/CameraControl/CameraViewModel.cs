@@ -1,7 +1,5 @@
 ﻿using POC3D.ViewModel.Base;
 using System;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Media.Media3D;
 
 namespace POC3D.ViewModel.InterfaceManagement.CameraControl
@@ -14,33 +12,9 @@ namespace POC3D.ViewModel.InterfaceManagement.CameraControl
 
         public EventHandler OnCameraViewModelChanged;
 
-        public CameraViewModel()
-        {
-            KeyboardCameraControlViewModel = new KeyboardCameraControlViewModel(this);
-            MouseCameraControlViewModel = new MouseCameraControlViewModel(this);
-
-            Application.Current.Dispatcher.InvokeAsync(UpdateCamera);
-        }
-
-        private async Task UpdateCamera()
-        {
-            while (true)
-            {
-                KeyboardCameraControlViewModel.UpdateCamera();
-                MouseCameraControlViewModel.UpdateCamera();
-
-                await Task.Delay(1);
-            }
-        }
-
-        public KeyboardCameraControlViewModel KeyboardCameraControlViewModel { get; }
-
-        public MouseCameraControlViewModel MouseCameraControlViewModel { get; }
-
         public string FriendlyPosition => $"Camera Position ({Position.X:0.##}/{Position.Y:0.##}/{Position.Z:0.##})";
 
-        public string FriendlyLookDirection =>
-            $"Look Direction ({UnaryForward.X:0.##}/{UnaryForward.Y:0.##}/{UnaryForward.Z:0.##})";
+        public string FriendlyLookDirection => $"Look Direction ({UnaryForward.X:0.##}/{UnaryForward.Y:0.##}/{UnaryForward.Z:0.##})";
 
         public Point3D Position
         {

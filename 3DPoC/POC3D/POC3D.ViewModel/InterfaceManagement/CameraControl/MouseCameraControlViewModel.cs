@@ -18,7 +18,7 @@ namespace POC3D.ViewModel.InterfaceManagement.CameraControl
         private MouseButton _rotateMouseButton = MouseButton.Middle;
         private MouseButton _orbitMouseButton = MouseButton.Right;
 
-        public MouseCameraControlViewModel(CameraViewModel cameraViewModel)
+        public MouseCameraControlViewModel(ICameraViewModel cameraViewModel)
             : base(cameraViewModel)
         {
         }

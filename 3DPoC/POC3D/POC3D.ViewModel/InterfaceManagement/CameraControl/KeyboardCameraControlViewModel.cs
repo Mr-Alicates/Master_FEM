@@ -25,7 +25,7 @@ namespace POC3D.ViewModel.InterfaceManagement.CameraControl
         private static readonly Key _rollDown = Key.Q;
         private static readonly Key _special = Key.LeftShift;
 
-        public KeyboardCameraControlViewModel(CameraViewModel cameraViewModel)
+        public KeyboardCameraControlViewModel(ICameraViewModel cameraViewModel)
             : base(cameraViewModel)
         {
         }

@@ -41,7 +41,8 @@ namespace POC3D.ViewModel.Tests
             //Assert
             Assert.That(eventChecker.PropertiesRaised, Is.EqualTo(new[]
             {
-                "Node"
+                "Node",
+                "ResultGeometry"
             }));
         }
 
@@ -60,7 +61,8 @@ namespace POC3D.ViewModel.Tests
             //Assert
             Assert.That(eventChecker.PropertiesRaised, Is.EqualTo(new[]
             {
-                "Node"
+                "Node",
+                "ResultGeometry"
             }));
         }
 
@@ -79,7 +81,8 @@ namespace POC3D.ViewModel.Tests
             //Assert
             Assert.That(eventChecker.PropertiesRaised, Is.EqualTo(new[]
             {
-                "Node"
+                "Node",
+                "ResultGeometry"
             }));
         }
 
@@ -187,7 +190,8 @@ namespace POC3D.ViewModel.Tests
             //Assert
             Assert.That(eventChecker.PropertiesRaised, Is.EqualTo(new[]
             {
-                "Node"
+                "Node",
+                "ResultGeometry"
             }));
         }
 

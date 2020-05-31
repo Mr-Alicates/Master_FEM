@@ -344,7 +344,8 @@ namespace POC3D.ViewModel.Tests
             //Assert
             Assert.That(checker.PropertiesRaised, Is.EqualTo(new[]
                 {
-                "AvailableDestinationNodesForSelectedElements"
+                "AvailableDestinationNodesForSelectedElements",
+                "ProblemCalculationViewModel"
                 }));
         }
 
@@ -367,12 +368,13 @@ namespace POC3D.ViewModel.Tests
             //Assert
             Assert.That(checker.PropertiesRaised, Is.EqualTo(new[]
                 {
-                "AvailableOriginNodesForSelectedElements"
+                "AvailableOriginNodesForSelectedElements",
+                "ProblemCalculationViewModel"
                 }));
         }
 
         [Test]
-        public void SelectedElement_ElementUnselectedAndElementNodesChanged_ExpectPropertyChangedEventNotRaised()
+        public void SelectedElement_ElementUnselectedAndElementNodesChanged_ExpectPropertyChangedEventRaised()
         {
             //Arrange
             var problemViewModel = new ProblemViewModel();
@@ -385,10 +387,12 @@ namespace POC3D.ViewModel.Tests
 
             //Act
             elementViewModel.Origin.X = 100;
-            elementViewModel.Destination.X = 300; ;
 
             //Assert
-            Assert.That(checker.PropertiesRaised, Is.Empty);
+            Assert.That(checker.PropertiesRaised, Is.EqualTo(new[]
+                {
+                "ProblemCalculationViewModel"
+                }));
         }
 
         [Test]

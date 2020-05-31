@@ -332,9 +332,7 @@ namespace POC3D.ViewModel.Implementation
                 e.PropertyName == nameof(ForceViewModel.Node) ||
                 e.PropertyName == nameof(ElementCalculationViewModel.GlobalStiffnessMatrix))
             {
-                OnPropertyChanged(nameof(NumberOfNodes));
-                OnPropertyChanged(nameof(NumberOfElements));
-                OnPropertyChanged(nameof(NumberOfDirichletBoundaryConditions));
+                OnPropertyChanged(nameof(ProblemCalculationViewModel));
             }
         }
 

@@ -45,7 +45,21 @@ namespace POC3D.ViewModel.Tests
             //Assert
             Assert.That(eventChecker.PropertiesRaised, Is.EqualTo(new[]
             {
-                "Origin"
+                "Origin",
+                "Length",
+                "K",
+                "Description",
+                "Geometry",
+                "ResultGeometry",
+                "Cx",
+                "Cy",
+                "Cz",
+                "TransformationMatrix",
+                "TransformationMatrixTransposed",
+                "LocalStiffnessMatrix",
+                "GlobalStiffnessMatrix",
+                "ElementCalculationViewModel",
+                "ResultGeometry"
             }));
         }
 
@@ -64,7 +78,21 @@ namespace POC3D.ViewModel.Tests
             //Assert
             Assert.That(eventChecker.PropertiesRaised, Is.EqualTo(new[]
             {
-                "Origin"
+                "Origin",
+                "Length",
+                "K",
+                "Description",
+                "Geometry",
+                "ResultGeometry",
+                "Cx",
+                "Cy",
+                "Cz",
+                "TransformationMatrix",
+                "TransformationMatrixTransposed",
+                "LocalStiffnessMatrix",
+                "GlobalStiffnessMatrix",
+                "ElementCalculationViewModel",
+                "ResultGeometry"
             }));
         }
 
@@ -83,7 +111,21 @@ namespace POC3D.ViewModel.Tests
             //Assert
             Assert.That(eventChecker.PropertiesRaised, Is.EqualTo(new[]
             {
-                "Origin"
+                "Origin",
+                "Length",
+                "K",
+                "Description",
+                "Geometry",
+                "ResultGeometry",
+                "Cx",
+                "Cy",
+                "Cz",
+                "TransformationMatrix",
+                "TransformationMatrixTransposed",
+                "LocalStiffnessMatrix",
+                "GlobalStiffnessMatrix",
+                "ElementCalculationViewModel",
+                "ResultGeometry"
             }));
         }
 
@@ -102,7 +144,20 @@ namespace POC3D.ViewModel.Tests
             //Assert
             Assert.That(eventChecker.PropertiesRaised, Is.EqualTo(new[]
             {
-                "Origin"
+                "Origin",
+                "Length",
+                "K",
+                "Description",
+                "Geometry",
+                "ResultGeometry",
+                "Cx",
+                "Cy",
+                "Cz",
+                "TransformationMatrix",
+                "TransformationMatrixTransposed",
+                "LocalStiffnessMatrix",
+                "GlobalStiffnessMatrix",
+                "ElementCalculationViewModel"
             }));
         }
 
@@ -216,6 +271,8 @@ namespace POC3D.ViewModel.Tests
                 "Length",
                 "K",
                 "Description",
+                "Geometry",
+                "ResultGeometry",
                 "Cx",
                 "Cy",
                 "Cz",
@@ -223,8 +280,7 @@ namespace POC3D.ViewModel.Tests
                 "TransformationMatrixTransposed",
                 "LocalStiffnessMatrix",
                 "GlobalStiffnessMatrix",
-                "Geometry",
-                "ResultGeometry"
+                "ElementCalculationViewModel"
             }));
         }
 
@@ -244,7 +300,20 @@ namespace POC3D.ViewModel.Tests
             //Assert
             Assert.That(eventChecker.PropertiesRaised, Is.EqualTo(new[]
             {
-                "Origin"
+                "Origin",
+                "Length",
+                "K",
+                "Description",
+                "Geometry",
+                "ResultGeometry",
+                "Cx",
+                "Cy",
+                "Cz",
+                "TransformationMatrix",
+                "TransformationMatrixTransposed",
+                "LocalStiffnessMatrix",
+                "GlobalStiffnessMatrix",
+                "ElementCalculationViewModel"
             }));
         }
 
@@ -280,7 +349,21 @@ namespace POC3D.ViewModel.Tests
             //Assert
             Assert.That(eventChecker.PropertiesRaised, Is.EqualTo(new[]
             {
-                "Destination"
+                "Destination",
+                "Length",
+                "K",
+                "Description",
+                "Geometry",
+                "ResultGeometry",
+                "Cx",
+                "Cy",
+                "Cz",
+                "TransformationMatrix",
+                "TransformationMatrixTransposed",
+                "LocalStiffnessMatrix",
+                "GlobalStiffnessMatrix",
+                "ElementCalculationViewModel",
+                "ResultGeometry"
             }));
         }
 
@@ -299,7 +382,21 @@ namespace POC3D.ViewModel.Tests
             //Assert
             Assert.That(eventChecker.PropertiesRaised, Is.EqualTo(new[]
             {
-                "Destination"
+                "Destination",
+                "Length",
+                "K",
+                "Description",
+                "Geometry",
+                "ResultGeometry",
+                "Cx",
+                "Cy",
+                "Cz",
+                "TransformationMatrix",
+                "TransformationMatrixTransposed",
+                "LocalStiffnessMatrix",
+                "GlobalStiffnessMatrix",
+                "ElementCalculationViewModel",
+                "ResultGeometry"
             }));
         }
 
@@ -318,7 +415,21 @@ namespace POC3D.ViewModel.Tests
             //Assert
             Assert.That(eventChecker.PropertiesRaised, Is.EqualTo(new[]
             {
-                "Destination"
+                "Destination",
+                "Length",
+                "K",
+                "Description",
+                "Geometry",
+                "ResultGeometry",
+                "Cx",
+                "Cy",
+                "Cz",
+                "TransformationMatrix",
+                "TransformationMatrixTransposed",
+                "LocalStiffnessMatrix",
+                "GlobalStiffnessMatrix",
+                "ElementCalculationViewModel",
+                "ResultGeometry"
             }));
         }
 
@@ -337,7 +448,20 @@ namespace POC3D.ViewModel.Tests
             //Assert
             Assert.That(eventChecker.PropertiesRaised, Is.EqualTo(new[]
             {
-                "Destination"
+                "Destination",
+                "Length",
+                "K",
+                "Description",
+                "Geometry",
+                "ResultGeometry",
+                "Cx",
+                "Cy",
+                "Cz",
+                "TransformationMatrix",
+                "TransformationMatrixTransposed",
+                "LocalStiffnessMatrix",
+                "GlobalStiffnessMatrix",
+                "ElementCalculationViewModel"
             }));
         }
 
@@ -451,6 +575,8 @@ namespace POC3D.ViewModel.Tests
                 "Length",
                 "K",
                 "Description",
+                "Geometry",
+                "ResultGeometry",
                 "Cx",
                 "Cy",
                 "Cz",
@@ -458,8 +584,7 @@ namespace POC3D.ViewModel.Tests
                 "TransformationMatrixTransposed",
                 "LocalStiffnessMatrix",
                 "GlobalStiffnessMatrix",
-                "Geometry",
-                "ResultGeometry"
+                "ElementCalculationViewModel"
             }));
         }
 
@@ -479,7 +604,20 @@ namespace POC3D.ViewModel.Tests
             //Assert
             Assert.That(eventChecker.PropertiesRaised, Is.EqualTo(new[]
             {
-                "Destination"
+                "Destination",
+                "Length",
+                "K",
+                "Description",
+                "Geometry",
+                "ResultGeometry",
+                "Cx",
+                "Cy",
+                "Cz",
+                "TransformationMatrix",
+                "TransformationMatrixTransposed",
+                "LocalStiffnessMatrix",
+                "GlobalStiffnessMatrix",
+                "ElementCalculationViewModel"
             }));
         }
 
@@ -538,7 +676,15 @@ namespace POC3D.ViewModel.Tests
             Assert.That(eventChecker.PropertiesRaised, Is.EqualTo(new[]
             {
                 "CrossSectionArea",
-                "K"
+                "K",
+                "Cx",
+                "Cy",
+                "Cz",
+                "TransformationMatrix",
+                "TransformationMatrixTransposed",
+                "LocalStiffnessMatrix",
+                "GlobalStiffnessMatrix",
+                "ElementCalculationViewModel"
             }));
         }
 
@@ -558,7 +704,15 @@ namespace POC3D.ViewModel.Tests
             Assert.That(eventChecker.PropertiesRaised, Is.EqualTo(new[]
             {
                 "Material",
-                "K"
+                "K",
+                "Cx",
+                "Cy",
+                "Cz",
+                "TransformationMatrix",
+                "TransformationMatrixTransposed",
+                "LocalStiffnessMatrix",
+                "GlobalStiffnessMatrix",
+                "ElementCalculationViewModel"
             }));
         }
 
@@ -639,7 +793,15 @@ namespace POC3D.ViewModel.Tests
             Assert.That(eventChecker.PropertiesRaised, Is.EqualTo(new[]
             {
                 "Material",
-                "K"
+                "K",
+                "Cx",
+                "Cy",
+                "Cz",
+                "TransformationMatrix",
+                "TransformationMatrixTransposed",
+                "LocalStiffnessMatrix",
+                "GlobalStiffnessMatrix",
+                "ElementCalculationViewModel"
             }));
         }
 
@@ -661,7 +823,15 @@ namespace POC3D.ViewModel.Tests
             Assert.That(eventChecker.PropertiesRaised, Is.EqualTo(new[]
             {
                 "Material",
-                "K"
+                "K",
+                "Cx",
+                "Cy",
+                "Cz",
+                "TransformationMatrix",
+                "TransformationMatrixTransposed",
+                "LocalStiffnessMatrix",
+                "GlobalStiffnessMatrix",
+                "ElementCalculationViewModel"
             }));
         }
 

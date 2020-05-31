@@ -107,8 +107,15 @@ namespace POC3D.ViewModel.Calculations
             set
             {
                 _showProblem = value;
-                if (!_showProblem)
+                if (_showProblem)
+                {
+                    _displacementAnimation = false;
+                }
+                else
+                {
                     UpdateDisplacementsInNodes();
+                }
+
                 OnPropertyChanged(nameof(ShowProblem));
             }
         }

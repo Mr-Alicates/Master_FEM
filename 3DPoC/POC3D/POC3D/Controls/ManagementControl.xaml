@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:forces="clr-namespace:POC3D.Controls.Forces"
              xmlns:elements="clr-namespace:POC3D.Controls.Elements"
-             xmlns:nodes="clr-namespace:POC3D.Controls.Nodes"
+             xmlns:nodes="clr-namespace:POC3D.Controls.Nodes" xmlns:materials="clr-namespace:POC3D.Controls.Materials"
              mc:Ignorable="d">
   <Grid Background="LightGray">
     <Grid.RowDefinitions>
@@ -40,7 +40,13 @@
       <forces:ForceAddingControl DataContext="{Binding Path=.}"
                                  Visibility="{Binding Path=InterfaceControlViewModel.ForceAddingControlVisibility}" />
 
-    </StackPanel>
+      <materials:MaterialListingControl DataContext="{Binding Path=.}"
+                            Visibility="{Binding Path=InterfaceControlViewModel.MaterialListingControlVisibility}" />
+
+      <materials:SelectedMaterialDetailsControl DataContext="{Binding Path=.}"
+                                        Visibility="{Binding Path=InterfaceControlViewModel.MaterialDetailsControlVisibility}" />
+
+        </StackPanel>
 
     <Separator Grid.Row="1" Background="White" />
     <forces:ProblemDetailsControl Grid.Row="2" VerticalAlignment="Bottom" DataContext="{Binding Path=.}" />

@@ -87,6 +87,12 @@
     <Compile Include="Controls\Forces\ForceListingControl.xaml.cs">
       <DependentUpon>ForceListingControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Materials\MaterialListingControl.xaml.cs">
+      <DependentUpon>MaterialListingControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Materials\SelectedMaterialDetailsControl.xaml.cs">
+      <DependentUpon>SelectedMaterialDetailsControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Matrix\Controls\HowToBuildGlobalStiffnessMatrixControl.xaml.cs">
       <DependentUpon>HowToBuildGlobalStiffnessMatrixControl.xaml</DependentUpon>
     </Compile>
@@ -204,6 +210,14 @@
     <Page Include="Controls\Forces\ForceListingControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Materials\MaterialListingControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Materials\SelectedMaterialDetailsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\Matrix\Controls\HowToBuildGlobalStiffnessMatrixControl.xaml">
       <Generator>MSBuild:Compile</Generator>

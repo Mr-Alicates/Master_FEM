@@ -103,6 +103,11 @@ namespace POC3D.ViewModel.Implementation
             {
                 OnPropertyChanged(nameof(Node));
             }
+
+            if (e.PropertyName == nameof(NodeViewModel.ResultGeometry))
+            {
+                OnPropertyChanged(nameof(ResultGeometry));
+            }
         }
     }
 }

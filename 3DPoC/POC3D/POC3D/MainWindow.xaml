@@ -52,22 +52,19 @@
         <MenuItem Header="Show matrices from element"
                   Click="ShowMatrixInfoWindow" />
 
-      </MenuItem>
+        </MenuItem>
 
-      <MenuItem Header="Forces">
+        <MenuItem Header="Materials">
 
-        <MenuItem Header="Show selected Force details"
-                  Command="{Binding InterfaceControlViewModel.ShowForcesControlCommand}" />
+            <MenuItem Header="Add new Material"
+                Command="{Binding InterfaceControlViewModel.AddMaterialCommand}" />
 
-        <MenuItem Header="Add new Force"
-                  Command="{Binding InterfaceControlViewModel.AddForceCommand}" />
+            <MenuItem Header="Show list of Materials"
+                Command="{Binding InterfaceControlViewModel.ShowMaterialListingCommand}" />
 
-        <MenuItem Header="Show list of Forces"
-                  Command="{Binding InterfaceControlViewModel.ShowForceListingCommand}" />
+        </MenuItem>
 
-      </MenuItem>
-
-      <MenuItem Header="Problem">
+        <MenuItem Header="Problem">
 
         <MenuItem Header="Show matrices from problem"
                   Click="ShowGlobalMatrixInfoWindow" />

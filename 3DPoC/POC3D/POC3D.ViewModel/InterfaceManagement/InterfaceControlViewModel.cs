@@ -25,6 +25,9 @@ namespace POC3D.ViewModel.InterfaceManagement
         private Visibility _nodeDetailsControlVisibility = Visibility.Collapsed;
         private Visibility _nodeListingControlVisibility = Visibility.Collapsed;
 
+        private Visibility _materialDetailsControlVisibility = Visibility.Collapsed;
+        private Visibility _materialListingControlVisibility = Visibility.Collapsed;
+
         public InterfaceControlViewModel(ProblemViewModel problemViewModel, CameraViewModel cameraViewModel)
         {
             _problemViewModel = problemViewModel;
@@ -33,6 +36,7 @@ namespace POC3D.ViewModel.InterfaceManagement
             ElementManagementViewModel = new ElementManagementViewModel(_problemViewModel);
             ForceManagementViewModel = new ForceManagementViewModel(_problemViewModel);
             NodeManagementViewModel = new NodeManagementViewModel(_problemViewModel);
+            MaterialManagementViewModel = new MaterialManagementViewModel(_problemViewModel);
 
             KeyboardCameraControlViewModel = new KeyboardCameraControlViewModel(_cameraViewModel);
             MouseCameraControlViewModel = new MouseCameraControlViewModel(_cameraViewModel);
@@ -48,6 +52,8 @@ namespace POC3D.ViewModel.InterfaceManagement
 
         public NodeManagementViewModel NodeManagementViewModel { get; }
 
+        public MaterialManagementViewModel MaterialManagementViewModel { get; }
+
         public ICommand HideAllCommand => new Command(HideAllControls);
 
         private void HideAllControls()
@@ -62,6 +68,9 @@ namespace POC3D.ViewModel.InterfaceManagement
             ForceAddingControlVisibility = Visibility.Collapsed;
             ForceDetailsControlVisibility = Visibility.Collapsed;
             ForceListingControlVisibility = Visibility.Collapsed;
+
+            MaterialDetailsControlVisibility = Visibility.Collapsed;
+            MaterialListingControlVisibility = Visibility.Collapsed;
         }
 
         #region Nodes
@@ -83,6 +92,9 @@ namespace POC3D.ViewModel.InterfaceManagement
             ForceListingControlVisibility = Visibility.Collapsed;
 
             NodeDetailsControlVisibility = Visibility.Visible;
+
+            MaterialDetailsControlVisibility = Visibility.Collapsed;
+            MaterialListingControlVisibility = Visibility.Collapsed;
         }
 
         private void ShowNodeListing()
@@ -115,6 +127,9 @@ namespace POC3D.ViewModel.InterfaceManagement
             ForceListingControlVisibility = Visibility.Collapsed;
 
             ElementDetailsControlVisibility = Visibility.Visible;
+
+            MaterialDetailsControlVisibility = Visibility.Collapsed;
+            MaterialListingControlVisibility = Visibility.Collapsed;
         }
 
         private void AddElement()
@@ -154,6 +169,9 @@ namespace POC3D.ViewModel.InterfaceManagement
             ForceAddingControlVisibility = Visibility.Collapsed;
 
             ForceDetailsControlVisibility = Visibility.Visible;
+
+            MaterialDetailsControlVisibility = Visibility.Collapsed;
+            MaterialListingControlVisibility = Visibility.Collapsed;
         }
 
         private void AddForce()
@@ -169,6 +187,22 @@ namespace POC3D.ViewModel.InterfaceManagement
 
             ForceDetailsControlVisibility = Visibility.Visible;
             ForceListingControlVisibility = Visibility.Visible;
+        }
+
+        #endregion
+
+        #region Materials
+
+        public ICommand AddMaterialCommand => MaterialManagementViewModel.AddMaterialCommand;
+
+        public ICommand ShowMaterialListingCommand => new Command(ShowMaterialListing);
+
+        private void ShowMaterialListing()
+        {
+            HideAllControls();
+
+            MaterialDetailsControlVisibility = Visibility.Visible;
+            MaterialListingControlVisibility = Visibility.Visible;
         }
 
         #endregion
@@ -267,6 +301,26 @@ namespace POC3D.ViewModel.InterfaceManagement
             {
                 _forceAddingControlVisibility = value;
                 OnPropertyChanged(nameof(ForceAddingControlVisibility));
+            }
+        }
+
+        public Visibility MaterialListingControlVisibility
+        {
+            get => _materialListingControlVisibility;
+            private set
+            {
+                _materialListingControlVisibility = value;
+                OnPropertyChanged(nameof(MaterialListingControlVisibility));
+            }
+        }
+
+        public Visibility MaterialDetailsControlVisibility
+        {
+            get => _materialDetailsControlVisibility;
+            private set
+            {
+                _materialDetailsControlVisibility = value;
+                OnPropertyChanged(nameof(MaterialDetailsControlVisibility));
             }
         }
 

@@ -27,8 +27,7 @@ namespace POC3D.ViewModel.Calculations
         {
             _problemViewModel = problemViewModel;
 
-            _problemViewModel.PropertyChanged += (_, __) => ProblemViewModelChanged();
-            ProblemViewModelChanged();
+            _problemViewModel.PropertyChanged += (sender, e) => ProblemViewModelChanged(sender, e);
         }
 
         public CorrespondenceMatrix CorrespondenceMatrix =>
@@ -53,8 +52,13 @@ namespace POC3D.ViewModel.Calculations
 
         public bool CanBeSolved => _canBeSolved ??= MatrixHelper.CanProblemBeSolved(_problemViewModel);
 
-        public void ProblemViewModelChanged()
+        private void ProblemViewModelChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
+            if (e.PropertyName != nameof(ProblemViewModel.ProblemCalculationViewModel))
+            {
+                return;
+            }
+
             _correspondenceMatrix = null;
             _globalStiffnessMatrix = null;
             _compactedMatrix = null;
@@ -103,8 +107,15 @@ namespace POC3D.ViewModel.Calculations
             set
             {
                 _showProblem = value;
-                if (!_showProblem)
+                if (_showProblem)
+                {
+                    _displacementAnimation = false;
+                }
+                else
+                {
                     UpdateDisplacementsInNodes();
+                }
+
                 OnPropertyChanged(nameof(ShowProblem));
             }
         }

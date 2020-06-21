@@ -30,7 +30,7 @@
       <TextBox Grid.Row="0"
                Grid.Column="0"
                IsReadOnly="True"
-               Text="{Binding ProblemViewModel.CanBeSolved,Mode=OneWay}" />
+               Text="{Binding ProblemViewModel.ProblemCalculationViewModel.CanBeSolved,Mode=OneWay}" />
       <TextBlock Grid.Row="0" Grid.Column="1" Text="Is problem solvable?" />
 
       <TextBox Grid.Row="1"

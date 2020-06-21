@@ -42,7 +42,7 @@ namespace POC3D.ViewModel.Calculations
 
         private void ElementViewModelChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if(e.PropertyName != nameof(ElementViewModel.Geometry))
+            if(e.PropertyName != nameof(ElementViewModel.ElementCalculationViewModel))
             {
                 return;
             }

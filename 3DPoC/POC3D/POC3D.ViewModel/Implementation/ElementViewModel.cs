@@ -59,6 +59,7 @@ namespace POC3D.ViewModel.Implementation
                 OnPropertyChanged(nameof(Description));
                 OnPropertyChanged(nameof(Geometry));
                 OnPropertyChanged(nameof(ResultGeometry));
+                OnPropertyChanged(nameof(ElementCalculationViewModel));
             }
         }
 
@@ -83,6 +84,7 @@ namespace POC3D.ViewModel.Implementation
                 OnPropertyChanged(nameof(Description));
                 OnPropertyChanged(nameof(Geometry));
                 OnPropertyChanged(nameof(ResultGeometry));
+                OnPropertyChanged(nameof(ElementCalculationViewModel));
             }
         }
 
@@ -107,6 +109,7 @@ namespace POC3D.ViewModel.Implementation
                 Element.Material = _materialViewModel.ModelMaterial;
                 OnPropertyChanged(nameof(Material));
                 OnPropertyChanged(nameof(K));
+                OnPropertyChanged(nameof(ElementCalculationViewModel));
             }
         }
 
@@ -118,6 +121,7 @@ namespace POC3D.ViewModel.Implementation
                 Element.CrossSectionArea = value;
                 OnPropertyChanged(nameof(CrossSectionArea));
                 OnPropertyChanged(nameof(K));
+                OnPropertyChanged(nameof(ElementCalculationViewModel));
             }
         }
 
@@ -137,6 +141,7 @@ namespace POC3D.ViewModel.Implementation
             {
                 OnPropertyChanged(nameof(Material));
                 OnPropertyChanged(nameof(K));
+                OnPropertyChanged(nameof(ElementCalculationViewModel));
             }
         }
 
@@ -153,6 +158,18 @@ namespace POC3D.ViewModel.Implementation
                 {
                     OnPropertyChanged(nameof(Destination));
                 }
+
+                OnPropertyChanged(nameof(Length));
+                OnPropertyChanged(nameof(K));
+                OnPropertyChanged(nameof(Description));
+                OnPropertyChanged(nameof(Geometry));
+                OnPropertyChanged(nameof(ResultGeometry));
+                OnPropertyChanged(nameof(ElementCalculationViewModel));
+            }
+
+            if(e.PropertyName == nameof(NodeViewModel.ResultGeometry))
+            {
+                OnPropertyChanged(nameof(ResultGeometry));
             }
         }
     }

@@ -53,7 +53,7 @@ namespace POC3D.Controls
             MainViewModel.ProblemViewModel.Elements.CollectionChanged += ProblemElementsChanged;
             MainViewModel.ProblemViewModel.Forces.CollectionChanged += ProblemForcesChanged;
 
-            MainViewModel.ProblemViewModel.PropertyChanged += ShowProblemChangedCallback;
+            MainViewModel.ProblemViewModel.ProblemCalculationViewModel.PropertyChanged += ShowProblemChangedCallback;
 
             UpdateCamera();
             DisplayProblem();

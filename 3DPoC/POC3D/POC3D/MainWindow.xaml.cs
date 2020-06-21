@@ -22,66 +22,12 @@ namespace POC3D
             InitializeComponent();
             MainViewModel = new MainViewModel();
             DataContext = MainViewModel;
-
-            InitSimple();
         }
 
         public MainViewModel MainViewModel
         {
             get => (MainViewModel) GetValue(MainViewModelProperty);
             set => SetValue(MainViewModelProperty, value);
-        }
-
-        public void InitSimple()
-        {
-            MainViewModel.CameraViewModel.Move(new Point3D(-100, 0, 0));
-
-            var node1 = MainViewModel.ProblemViewModel.AddNode();
-            var node5 = MainViewModel.ProblemViewModel.AddNode();
-            var node2 = MainViewModel.ProblemViewModel.AddNode();
-            var node3 = MainViewModel.ProblemViewModel.AddNode();
-
-            node1.IsFixed = true;
-            node5.IsFixed = false;
-            node2.IsFixed = true;
-            node3.IsFixed = true;
-
-            node1.X = -10;
-            node1.Y = -10;
-            node1.Z = -10;
-
-            node5.X = 0;
-            node5.Y = 0;
-            node5.Z = 10;
-
-            node2.X = 10;
-            node2.Y = -10;
-            node2.Z = -10;
-
-            node3.X = 10;
-            node3.Y = 10;
-            node3.Z = -10;
-
-            MainViewModel.ProblemViewModel.SelectedNode = null;
-
-            var element1 = MainViewModel.ProblemViewModel.AddBarElement(node1, node5);
-            element1.Material.YoungsModulus = 1E9;
-            element1.CrossSectionArea = 1E-3;
-
-            var element2 = MainViewModel.ProblemViewModel.AddBarElement(node2, node5);
-            element2.CrossSectionArea = 1E-3;
-
-            var element3 = MainViewModel.ProblemViewModel.AddBarElement(node3, node5);
-            element3.CrossSectionArea = 1E-3;
-
-            var force = MainViewModel.ProblemViewModel.AddForce(node5);
-            force.ApplicationVectorZ = -1000;
-
-            MainViewModel.ProblemViewModel.SelectedElement = null;
-            MainViewModel.ProblemViewModel.SelectedNode = null;
-            MainViewModel.ProblemViewModel.SelectedForce = null;
-
-            MainViewModel.InterfaceControlViewModel.HideAllCommand.Execute(null);
         }
 
         private void ShowMatrixInfoWindow(object sender, RoutedEventArgs e)

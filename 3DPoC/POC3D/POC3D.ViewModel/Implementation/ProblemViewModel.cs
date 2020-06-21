@@ -382,7 +382,7 @@ namespace POC3D.ViewModel.Implementation
 
         private void LoadProblem()
         {
-            var loadPath = _dialogService.ShowSaveFileDialog();
+            var loadPath = _dialogService.ShowOpenFileDialog();
 
             if (string.IsNullOrEmpty(loadPath))
             {

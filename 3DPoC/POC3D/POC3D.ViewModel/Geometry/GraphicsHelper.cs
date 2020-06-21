@@ -5,9 +5,11 @@ namespace POC3D.ViewModel.Geometry
 {
     public static class GraphicsHelper
     {
+        public const double _sizeMultiplier = 0.1;
+
         public static void BuildCubeMesh(MeshGeometry3D mesh, double size)
         {
-            var halfSize = size / 2.0;
+            var halfSize = size * _sizeMultiplier / 2.0;
 
             mesh.TriangleIndices.Clear();
             mesh.Positions.Clear();
@@ -54,7 +56,7 @@ namespace POC3D.ViewModel.Geometry
 
         public static void BuildPyramidMesh(MeshGeometry3D mesh, double size)
         {
-            var halfSize = size / 2.0;
+            var halfSize = size * _sizeMultiplier / 2.0;
 
             mesh.TriangleIndices.Clear();
             mesh.Positions.Clear();
@@ -90,7 +92,7 @@ namespace POC3D.ViewModel.Geometry
 
         public static void BuildBarMesh(MeshGeometry3D mesh, double height, double sectionWidth)
         {
-            var halfSize = sectionWidth / 2.0;
+            var halfSize = sectionWidth * _sizeMultiplier / 2.0;
 
             mesh.TriangleIndices.Clear();
             mesh.Positions.Clear();

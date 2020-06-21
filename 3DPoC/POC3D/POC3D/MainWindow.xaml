@@ -52,6 +52,19 @@
         <MenuItem Header="Show matrices from element"
                   Click="ShowMatrixInfoWindow" />
 
+            </MenuItem>
+
+        <MenuItem Header="Forces">
+
+            <MenuItem Header="Show selected Force details"
+                Command="{Binding InterfaceControlViewModel.ShowForcesControlCommand}" />
+
+            <MenuItem Header="Add new Force"
+                Command="{Binding InterfaceControlViewModel.AddForceCommand}" />
+
+            <MenuItem Header="Show list of Forces"
+                Command="{Binding InterfaceControlViewModel.ShowForceListingCommand}" />
+
         </MenuItem>
 
         <MenuItem Header="Materials">

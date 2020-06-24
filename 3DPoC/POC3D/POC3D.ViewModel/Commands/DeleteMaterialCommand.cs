@@ -1,6 +1,7 @@
 ﻿using POC3D.ViewModel.Implementation;
 using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Input;
 
 namespace POC3D.ViewModel.Commands
@@ -31,7 +32,7 @@ namespace POC3D.ViewModel.Commands
 
         private void PropertiesChanged(object sender, PropertyChangedEventArgs e)
         {
-            _canExecute = _problemViewModel.SelectedMaterial != null;
+            _canExecute = _problemViewModel.SelectedMaterial != null && _problemViewModel.Elements.All(element => element.Material != _problemViewModel.SelectedMaterial);
             CanExecuteChanged?.Invoke(this, new EventArgs());
         }
     }

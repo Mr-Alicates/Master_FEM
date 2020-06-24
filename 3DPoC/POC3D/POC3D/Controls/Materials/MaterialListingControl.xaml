@@ -16,7 +16,13 @@
                 <RowDefinition Height="30" />
             </Grid.RowDefinitions>
 
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
             <ListView Grid.Row="0"
+                Grid.ColumnSpan="2"
                 ItemsSource="{Binding ProblemViewModel.Materials,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
                 SelectedItem="{Binding ProblemViewModel.SelectedMaterial,Mode=TwoWay}">
 
@@ -31,7 +37,19 @@
             </ListView>
 
             <Button Grid.Row="1"
-              Content="Delete selected material" />
+              Content="Delete selected material"
+              Command="{Binding InterfaceControlViewModel.MaterialManagementViewModel.DeleteMaterialCommand}" />
+
+
+            <Button Grid.Row="1"
+              Grid.Column="0"
+              Content="Add new material"
+              Command="{Binding InterfaceControlViewModel.MaterialManagementViewModel.AddMaterialCommand}" />
+
+            <Button Grid.Row="1"
+              Grid.Column="1"
+              Content="Delete selected material"
+              Command="{Binding InterfaceControlViewModel.MaterialManagementViewModel.DeleteMaterialCommand}" />
 
         </Grid>
 

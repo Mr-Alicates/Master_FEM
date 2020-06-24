@@ -16,7 +16,8 @@ namespace POC3D.ViewModel.InterfaceManagement
         {
             _problemViewModel = problemViewModel;
 
-            _problemViewModel.Forces.CollectionChanged += ForcesChanged;
+            _problemViewModel.Forces.CollectionChanged += ProblemChanged;
+            _problemViewModel.Nodes.CollectionChanged += ProblemChanged;
         }
 
         public NodeViewModel Node
@@ -35,7 +36,7 @@ namespace POC3D.ViewModel.InterfaceManagement
 
         public ICommand DeleteForceCommand => new DeleteForceCommand(_problemViewModel);
 
-        private void ForcesChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private void ProblemChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             OnPropertyChanged(nameof(AvailableNodesForNewForces));
         }

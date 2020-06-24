@@ -148,7 +148,9 @@ namespace POC3D.ViewModel.Implementation
         private void NodeChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(NodeViewModel.Coordinates) ||
-                e.PropertyName == nameof(NodeViewModel.IsFixed))
+                e.PropertyName == nameof(NodeViewModel.IsXFixed) ||
+                e.PropertyName == nameof(NodeViewModel.IsYFixed) ||
+                e.PropertyName == nameof(NodeViewModel.IsZFixed))
             {
                 if (sender == Origin)
                 {

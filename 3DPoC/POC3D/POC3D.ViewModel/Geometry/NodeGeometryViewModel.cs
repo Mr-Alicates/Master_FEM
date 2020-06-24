@@ -20,9 +20,11 @@ namespace POC3D.ViewModel.Geometry
             OffsetY = ViewModel.Y;
             OffsetZ = ViewModel.Z;
 
-            MaterialBrush = ViewModel.IsSelected ? SelectedNodeBrush : ViewModel.IsFixed ? FixedNodeBrush : FreeNodeBrush;
+            var isFixed = ViewModel.IsXFixed || ViewModel.IsYFixed || ViewModel.IsZFixed;
 
-            if (ViewModel.IsFixed)
+            MaterialBrush = ViewModel.IsSelected ? SelectedNodeBrush : isFixed ? FixedNodeBrush : FreeNodeBrush;
+
+            if (isFixed)
                 GraphicsHelper.BuildPyramidMesh(MeshGeometry3D, 2);
             else
                 GraphicsHelper.BuildCubeMesh(MeshGeometry3D, 1);

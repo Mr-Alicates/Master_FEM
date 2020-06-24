@@ -199,7 +199,7 @@ namespace POC3D.ViewModel.Implementation
 
         public int NumberOfElements => Elements.Count;
 
-        public int NumberOfDirichletBoundaryConditions => Nodes.Count(x => x.IsFixed);
+        public int NumberOfDirichletBoundaryConditions => Nodes.Count(x => x.IsXFixed) + Nodes.Count(x => x.IsYFixed) + Nodes.Count(x => x.IsZFixed);
 
         public ProblemCalculationViewModel ProblemCalculationViewModel { get; }
 

@@ -126,18 +126,34 @@ namespace POC3D.ViewModel.Calculations
 
             foreach (var node in _problemViewModel.Nodes)
             {
-                if (node.IsFixed)
+                if (node.IsXFixed)
                 {
                     node.DisplacementX = 0;
-                    node.DisplacementY = 0;
-                    node.DisplacementZ = 0;
                 }
                 else
                 {
                     node.DisplacementX = SolvedDisplacementsVector[index + 0, 0] * DisplacementsMultiplier;
-                    node.DisplacementY = SolvedDisplacementsVector[index + 1, 0] * DisplacementsMultiplier;
-                    node.DisplacementZ = SolvedDisplacementsVector[index + 2, 0] * DisplacementsMultiplier;
-                    index = index + 3;
+                    index++;
+                }
+
+                if (node.IsYFixed)
+                {
+                    node.DisplacementY = 0;
+                }
+                else
+                {
+                    node.DisplacementY = SolvedDisplacementsVector[index + 0, 0] * DisplacementsMultiplier;
+                    index++;
+                }
+
+                if (node.IsZFixed)
+                {
+                    node.DisplacementZ = 0;
+                }
+                else
+                {
+                    node.DisplacementZ = SolvedDisplacementsVector[index + 0, 0] * DisplacementsMultiplier;
+                    index++;
                 }
             }
         }

@@ -46,6 +46,11 @@ namespace POC3D
 
         private void ShowGlobalMatrixInfoWindow(object sender, RoutedEventArgs e)
         {
+            if (!MainViewModel.ProblemViewModel.ProblemCalculationViewModel.CanBeSolved)
+            {
+                return;
+            }
+
             if (_globalMatrixInfoWindow == null ||
                 !_globalMatrixInfoWindow.IsVisible)
             {

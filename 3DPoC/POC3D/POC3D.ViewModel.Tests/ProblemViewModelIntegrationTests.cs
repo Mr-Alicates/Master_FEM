@@ -45,10 +45,9 @@ namespace POC3D.ViewModel.Tests
 
             #region Node properties
 
-            node1.IsFixed = false;
-            node2.IsFixed = true;
-            node3.IsFixed = true;
-            node4.IsFixed = true;
+            node2.IsXFixed = true;
+            node3.IsYFixed = true;
+            node4.IsZFixed = true;
 
             node1.X = 1;
             node2.X = 2;
@@ -123,10 +122,21 @@ namespace POC3D.ViewModel.Tests
 
             #region NodeProperties
 
-            Assert.That(node1.IsFixed, Is.False);
-            Assert.That(node2.IsFixed, Is.True);
-            Assert.That(node3.IsFixed, Is.True);
-            Assert.That(node4.IsFixed, Is.True);
+            Assert.That(node1.IsXFixed, Is.False);
+            Assert.That(node1.IsYFixed, Is.False);
+            Assert.That(node1.IsZFixed, Is.False);
+
+            Assert.That(node2.IsXFixed, Is.True);
+            Assert.That(node2.IsYFixed, Is.False);
+            Assert.That(node2.IsZFixed, Is.False);
+
+            Assert.That(node3.IsXFixed, Is.False);
+            Assert.That(node3.IsYFixed, Is.True);
+            Assert.That(node3.IsZFixed, Is.False);
+
+            Assert.That(node4.IsXFixed, Is.False);
+            Assert.That(node4.IsYFixed, Is.False);
+            Assert.That(node4.IsZFixed, Is.True);
 
             Assert.That(node1.X, Is.EqualTo(1));
             Assert.That(node2.X, Is.EqualTo(2));

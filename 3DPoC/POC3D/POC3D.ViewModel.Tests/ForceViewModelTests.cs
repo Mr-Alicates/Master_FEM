@@ -96,7 +96,7 @@ namespace POC3D.ViewModel.Tests
             var eventChecker = new PropertyChangedEventChecker(forceViewModel);
 
             //Act
-            nodeViewModel.IsFixed = true;
+            nodeViewModel.IsXFixed = true;
 
             //Assert
             Assert.That(eventChecker.PropertiesRaised, Is.Empty);

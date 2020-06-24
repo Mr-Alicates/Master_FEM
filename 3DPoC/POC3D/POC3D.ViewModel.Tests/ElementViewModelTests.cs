@@ -129,37 +129,37 @@ namespace POC3D.ViewModel.Tests
             }));
         }
 
-        [Test]
-        public void Origin_IsFixedPropertyOfOriginNodeChanged_ExpectPropertiesChangedEventRaised()
-        {
-            //Arrange
-            var (originNodeViewModel, destinationNodeViewModel, materialViewModel, modelElement) = BuildTestElement();
-            var elementViewModel = new ElementViewModel(modelElement, originNodeViewModel, destinationNodeViewModel, materialViewModel);
+        //[Test]
+        //public void Origin_IsFixedPropertyOfOriginNodeChanged_ExpectPropertiesChangedEventRaised()
+        //{
+        //    //Arrange
+        //    var (originNodeViewModel, destinationNodeViewModel, materialViewModel, modelElement) = BuildTestElement();
+        //    var elementViewModel = new ElementViewModel(modelElement, originNodeViewModel, destinationNodeViewModel, materialViewModel);
 
-            var eventChecker = new PropertyChangedEventChecker(elementViewModel);
+        //    var eventChecker = new PropertyChangedEventChecker(elementViewModel);
 
-            //Act
-            originNodeViewModel.IsFixed = true;
+        //    //Act
+        //    originNodeViewModel.IsFixed = true;
 
-            //Assert
-            Assert.That(eventChecker.PropertiesRaised, Is.EqualTo(new[]
-            {
-                "Origin",
-                "Length",
-                "K",
-                "Description",
-                "Geometry",
-                "ResultGeometry",
-                "Cx",
-                "Cy",
-                "Cz",
-                "TransformationMatrix",
-                "TransformationMatrixTransposed",
-                "LocalStiffnessMatrix",
-                "GlobalStiffnessMatrix",
-                "ElementCalculationViewModel"
-            }));
-        }
+        //    //Assert
+        //    Assert.That(eventChecker.PropertiesRaised, Is.EqualTo(new[]
+        //    {
+        //        "Origin",
+        //        "Length",
+        //        "K",
+        //        "Description",
+        //        "Geometry",
+        //        "ResultGeometry",
+        //        "Cx",
+        //        "Cy",
+        //        "Cz",
+        //        "TransformationMatrix",
+        //        "TransformationMatrixTransposed",
+        //        "LocalStiffnessMatrix",
+        //        "GlobalStiffnessMatrix",
+        //        "ElementCalculationViewModel"
+        //    }));
+        //}
 
         [Test]
         public void Origin_NonRelevantPropertyOfNodeChanged_ExpectPropertiesChangedEventNotRaised()
@@ -284,55 +284,55 @@ namespace POC3D.ViewModel.Tests
             }));
         }
 
-        [Test]
-        public void Origin_NodeChangedAndRelevantPropertyOfNewNodeChanged_ExpectPropertiesChangedEventRaised()
-        {
-            //Arrange
-            var (originNodeViewModel, destinationNodeViewModel, additionalNodeViewModel, materialViewModel, modelElement) = BuildTestElementWithAdditionalNode();
-            var elementViewModel = new ElementViewModel(modelElement, originNodeViewModel, destinationNodeViewModel, materialViewModel);
+        //[Test]
+        //public void Origin_NodeChangedAndRelevantPropertyOfNewNodeChanged_ExpectPropertiesChangedEventRaised()
+        //{
+        //    //Arrange
+        //    var (originNodeViewModel, destinationNodeViewModel, additionalNodeViewModel, materialViewModel, modelElement) = BuildTestElementWithAdditionalNode();
+        //    var elementViewModel = new ElementViewModel(modelElement, originNodeViewModel, destinationNodeViewModel, materialViewModel);
 
-            elementViewModel.Origin = additionalNodeViewModel;
-            var eventChecker = new PropertyChangedEventChecker(elementViewModel);
+        //    elementViewModel.Origin = additionalNodeViewModel;
+        //    var eventChecker = new PropertyChangedEventChecker(elementViewModel);
 
-            //Act
-            additionalNodeViewModel.IsFixed = true;
+        //    //Act
+        //    additionalNodeViewModel.IsFixed = true;
 
-            //Assert
-            Assert.That(eventChecker.PropertiesRaised, Is.EqualTo(new[]
-            {
-                "Origin",
-                "Length",
-                "K",
-                "Description",
-                "Geometry",
-                "ResultGeometry",
-                "Cx",
-                "Cy",
-                "Cz",
-                "TransformationMatrix",
-                "TransformationMatrixTransposed",
-                "LocalStiffnessMatrix",
-                "GlobalStiffnessMatrix",
-                "ElementCalculationViewModel"
-            }));
-        }
+        //    //Assert
+        //    Assert.That(eventChecker.PropertiesRaised, Is.EqualTo(new[]
+        //    {
+        //        "Origin",
+        //        "Length",
+        //        "K",
+        //        "Description",
+        //        "Geometry",
+        //        "ResultGeometry",
+        //        "Cx",
+        //        "Cy",
+        //        "Cz",
+        //        "TransformationMatrix",
+        //        "TransformationMatrixTransposed",
+        //        "LocalStiffnessMatrix",
+        //        "GlobalStiffnessMatrix",
+        //        "ElementCalculationViewModel"
+        //    }));
+        //}
 
-        [Test]
-        public void Origin_NodeChangedAndRelevantPropertyOfOldNodeChanged_ExpectPropertiesChangedEventNotRaised()
-        {
-            //Arrange
-            var (originNodeViewModel, destinationNodeViewModel, additionalNodeViewModel, materialViewModel, modelElement) = BuildTestElementWithAdditionalNode();
-            var elementViewModel = new ElementViewModel(modelElement, originNodeViewModel, destinationNodeViewModel, materialViewModel);
+        //[Test]
+        //public void Origin_NodeChangedAndRelevantPropertyOfOldNodeChanged_ExpectPropertiesChangedEventNotRaised()
+        //{
+        //    //Arrange
+        //    var (originNodeViewModel, destinationNodeViewModel, additionalNodeViewModel, materialViewModel, modelElement) = BuildTestElementWithAdditionalNode();
+        //    var elementViewModel = new ElementViewModel(modelElement, originNodeViewModel, destinationNodeViewModel, materialViewModel);
 
-            elementViewModel.Origin = additionalNodeViewModel;
-            var eventChecker = new PropertyChangedEventChecker(elementViewModel);
+        //    elementViewModel.Origin = additionalNodeViewModel;
+        //    var eventChecker = new PropertyChangedEventChecker(elementViewModel);
 
-            //Act
-            originNodeViewModel.IsFixed = true;
+        //    //Act
+        //    originNodeViewModel.IsFixed = true;
 
-            //Assert
-            Assert.That(eventChecker.PropertiesRaised, Is.Empty);
-        }
+        //    //Assert
+        //    Assert.That(eventChecker.PropertiesRaised, Is.Empty);
+        //}
 
         [Test]
         public void Destination_XPropertyOfDestinationNodeChanged_ExpectPropertiesChangedEventRaised()
@@ -433,37 +433,37 @@ namespace POC3D.ViewModel.Tests
             }));
         }
 
-        [Test]
-        public void Destination_IsFixedPropertyOfDestinationNodeChanged_ExpectPropertiesChangedEventRaised()
-        {
-            //Arrange
-            var (originNodeViewModel, destinationNodeViewModel, materialViewModel, modelElement) = BuildTestElement();
-            var elementViewModel = new ElementViewModel(modelElement, originNodeViewModel, destinationNodeViewModel, materialViewModel);
+        //[Test]
+        //public void Destination_IsFixedPropertyOfDestinationNodeChanged_ExpectPropertiesChangedEventRaised()
+        //{
+        //    //Arrange
+        //    var (originNodeViewModel, destinationNodeViewModel, materialViewModel, modelElement) = BuildTestElement();
+        //    var elementViewModel = new ElementViewModel(modelElement, originNodeViewModel, destinationNodeViewModel, materialViewModel);
 
-            var eventChecker = new PropertyChangedEventChecker(elementViewModel);
+        //    var eventChecker = new PropertyChangedEventChecker(elementViewModel);
 
-            //Act
-            destinationNodeViewModel.IsFixed = true;
+        //    //Act
+        //    destinationNodeViewModel.IsFixed = true;
 
-            //Assert
-            Assert.That(eventChecker.PropertiesRaised, Is.EqualTo(new[]
-            {
-                "Destination",
-                "Length",
-                "K",
-                "Description",
-                "Geometry",
-                "ResultGeometry",
-                "Cx",
-                "Cy",
-                "Cz",
-                "TransformationMatrix",
-                "TransformationMatrixTransposed",
-                "LocalStiffnessMatrix",
-                "GlobalStiffnessMatrix",
-                "ElementCalculationViewModel"
-            }));
-        }
+        //    //Assert
+        //    Assert.That(eventChecker.PropertiesRaised, Is.EqualTo(new[]
+        //    {
+        //        "Destination",
+        //        "Length",
+        //        "K",
+        //        "Description",
+        //        "Geometry",
+        //        "ResultGeometry",
+        //        "Cx",
+        //        "Cy",
+        //        "Cz",
+        //        "TransformationMatrix",
+        //        "TransformationMatrixTransposed",
+        //        "LocalStiffnessMatrix",
+        //        "GlobalStiffnessMatrix",
+        //        "ElementCalculationViewModel"
+        //    }));
+        //}
 
         [Test]
         public void Destination_NonRelevantPropertyOfNodeChanged_ExpectPropertiesChangedEventNotRaised()
@@ -588,55 +588,55 @@ namespace POC3D.ViewModel.Tests
             }));
         }
 
-        [Test]
-        public void Destination_NodeChangedAndRelevantPropertyOfNewNodeChanged_ExpectPropertiesChangedEventRaised()
-        {
-            //Arrange
-            var (originNodeViewModel, destinationNodeViewModel, additionalNodeViewModel, materialViewModel, modelElement) = BuildTestElementWithAdditionalNode();
-            var elementViewModel = new ElementViewModel(modelElement, originNodeViewModel, destinationNodeViewModel, materialViewModel);
+        //[Test]
+        //public void Destination_NodeChangedAndRelevantPropertyOfNewNodeChanged_ExpectPropertiesChangedEventRaised()
+        //{
+        //    //Arrange
+        //    var (originNodeViewModel, destinationNodeViewModel, additionalNodeViewModel, materialViewModel, modelElement) = BuildTestElementWithAdditionalNode();
+        //    var elementViewModel = new ElementViewModel(modelElement, originNodeViewModel, destinationNodeViewModel, materialViewModel);
 
-            elementViewModel.Destination = additionalNodeViewModel;
-            var eventChecker = new PropertyChangedEventChecker(elementViewModel);
+        //    elementViewModel.Destination = additionalNodeViewModel;
+        //    var eventChecker = new PropertyChangedEventChecker(elementViewModel);
 
-            //Act
-            additionalNodeViewModel.IsFixed = true;
+        //    //Act
+        //    additionalNodeViewModel.IsFixed = true;
 
-            //Assert
-            Assert.That(eventChecker.PropertiesRaised, Is.EqualTo(new[]
-            {
-                "Destination",
-                "Length",
-                "K",
-                "Description",
-                "Geometry",
-                "ResultGeometry",
-                "Cx",
-                "Cy",
-                "Cz",
-                "TransformationMatrix",
-                "TransformationMatrixTransposed",
-                "LocalStiffnessMatrix",
-                "GlobalStiffnessMatrix",
-                "ElementCalculationViewModel"
-            }));
-        }
+        //    //Assert
+        //    Assert.That(eventChecker.PropertiesRaised, Is.EqualTo(new[]
+        //    {
+        //        "Destination",
+        //        "Length",
+        //        "K",
+        //        "Description",
+        //        "Geometry",
+        //        "ResultGeometry",
+        //        "Cx",
+        //        "Cy",
+        //        "Cz",
+        //        "TransformationMatrix",
+        //        "TransformationMatrixTransposed",
+        //        "LocalStiffnessMatrix",
+        //        "GlobalStiffnessMatrix",
+        //        "ElementCalculationViewModel"
+        //    }));
+        //}
 
-        [Test]
-        public void Destination_NodeChangedAndRelevantPropertyOfOldNodeChanged_ExpectPropertiesChangedEventNotRaised()
-        {
-            //Arrange
-            var (originNodeViewModel, destinationNodeViewModel, additionalNodeViewModel, materialViewModel, modelElement) = BuildTestElementWithAdditionalNode();
-            var elementViewModel = new ElementViewModel(modelElement, originNodeViewModel, destinationNodeViewModel, materialViewModel);
+        //[Test]
+        //public void Destination_NodeChangedAndRelevantPropertyOfOldNodeChanged_ExpectPropertiesChangedEventNotRaised()
+        //{
+        //    //Arrange
+        //    var (originNodeViewModel, destinationNodeViewModel, additionalNodeViewModel, materialViewModel, modelElement) = BuildTestElementWithAdditionalNode();
+        //    var elementViewModel = new ElementViewModel(modelElement, originNodeViewModel, destinationNodeViewModel, materialViewModel);
 
-            elementViewModel.Destination = additionalNodeViewModel;
-            var eventChecker = new PropertyChangedEventChecker(elementViewModel);
+        //    elementViewModel.Destination = additionalNodeViewModel;
+        //    var eventChecker = new PropertyChangedEventChecker(elementViewModel);
 
-            //Act
-            destinationNodeViewModel.IsFixed = true;
+        //    //Act
+        //    destinationNodeViewModel.IsFixed = true;
 
-            //Assert
-            Assert.That(eventChecker.PropertiesRaised, Is.Empty);
-        }
+        //    //Assert
+        //    Assert.That(eventChecker.PropertiesRaised, Is.Empty);
+        //}
 
         [Test]
         public void CrossSectionArea_ValueChanged_ExpectKChanged()

@@ -55,15 +55,17 @@ namespace POC3D.Controls.Matrix.Controls
             var elementIndex = 1;
             foreach (var node in problemViewModel.Nodes)
             {
-                var color = node.IsFixed ? Brushes.Red : Brushes.Green;
+                var colorX = node.IsXFixed ? Brushes.Red : Brushes.Green;
+                var colorY = node.IsYFixed ? Brushes.Red : Brushes.Green;
+                var colorZ = node.IsZFixed ? Brushes.Red : Brushes.Green;
 
-                BuildTextBlock(GlobalStiffnessMatrixContainer, $"d{elementIndex}x", 0, elementIndex * 3 - 2, color);
-                BuildTextBlock(GlobalStiffnessMatrixContainer, $"d{elementIndex}y", 0, elementIndex * 3 - 1, color);
-                BuildTextBlock(GlobalStiffnessMatrixContainer, $"d{elementIndex}z", 0, elementIndex * 3, color);
+                BuildTextBlock(GlobalStiffnessMatrixContainer, $"d{elementIndex}x", 0, elementIndex * 3 - 2, colorX);
+                BuildTextBlock(GlobalStiffnessMatrixContainer, $"d{elementIndex}y", 0, elementIndex * 3 - 1, colorY);
+                BuildTextBlock(GlobalStiffnessMatrixContainer, $"d{elementIndex}z", 0, elementIndex * 3, colorZ);
 
-                BuildTextBlock(GlobalStiffnessMatrixContainer, $"d{elementIndex}x", elementIndex * 3 - 2, 0, color);
-                BuildTextBlock(GlobalStiffnessMatrixContainer, $"d{elementIndex}y", elementIndex * 3 - 1, 0, color);
-                BuildTextBlock(GlobalStiffnessMatrixContainer, $"d{elementIndex}z", elementIndex * 3, 0, color);
+                BuildTextBlock(GlobalStiffnessMatrixContainer, $"d{elementIndex}x", elementIndex * 3 - 2, 0, colorX);
+                BuildTextBlock(GlobalStiffnessMatrixContainer, $"d{elementIndex}y", elementIndex * 3 - 1, 0, colorY);
+                BuildTextBlock(GlobalStiffnessMatrixContainer, $"d{elementIndex}z", elementIndex * 3, 0, colorZ);
 
                 elementIndex++;
             }
@@ -96,11 +98,13 @@ namespace POC3D.Controls.Matrix.Controls
             var elementIndex = 1;
             foreach (var node in problemViewModel.Nodes)
             {
-                var color = node.IsFixed ? Brushes.Red : Brushes.Green;
+                var colorX = node.IsXFixed ? Brushes.Red : Brushes.Green;
+                var colorY = node.IsYFixed ? Brushes.Red : Brushes.Green;
+                var colorZ = node.IsZFixed ? Brushes.Red : Brushes.Green;
 
-                BuildTextBlock(DisplacementsContainer, $"{fullDisplacementsVector[elementIndex * 3 - 3, 0]}", elementIndex * 3 - 2, 0, color);
-                BuildTextBlock(DisplacementsContainer, $"{fullDisplacementsVector[elementIndex * 3 - 2, 0]}", elementIndex * 3 - 1, 0, color);
-                BuildTextBlock(DisplacementsContainer, $"{fullDisplacementsVector[elementIndex * 3 - 1, 0]}", elementIndex * 3, 0, color);
+                BuildTextBlock(DisplacementsContainer, $"{fullDisplacementsVector[elementIndex * 3 - 3, 0]}", elementIndex * 3 - 2, 0, colorX);
+                BuildTextBlock(DisplacementsContainer, $"{fullDisplacementsVector[elementIndex * 3 - 2, 0]}", elementIndex * 3 - 1, 0, colorY);
+                BuildTextBlock(DisplacementsContainer, $"{fullDisplacementsVector[elementIndex * 3 - 1, 0]}", elementIndex * 3, 0, colorZ);
 
                 elementIndex++;
             }
@@ -127,11 +131,13 @@ namespace POC3D.Controls.Matrix.Controls
             var elementIndex = 1;
             foreach (var node in problemViewModel.Nodes)
             {
-                var color = node.IsFixed ? Brushes.Red : Brushes.Green;
+                var colorX = node.IsXFixed ? Brushes.Red : Brushes.Green;
+                var colorY = node.IsYFixed ? Brushes.Red : Brushes.Green;
+                var colorZ = node.IsZFixed ? Brushes.Red : Brushes.Green;
 
-                BuildTextBlock(ForcesContainer, $"{solvedReactionForces[elementIndex * 3 - 3, 0]}", elementIndex * 3 - 2, 0, color);
-                BuildTextBlock(ForcesContainer, $"{solvedReactionForces[elementIndex * 3 - 2, 0]}", elementIndex * 3 - 1, 0, color);
-                BuildTextBlock(ForcesContainer, $"{solvedReactionForces[elementIndex * 3 - 1, 0]}", elementIndex * 3, 0, color);
+                BuildTextBlock(ForcesContainer, $"{solvedReactionForces[elementIndex * 3 - 3, 0]}", elementIndex * 3 - 2, 0, colorX);
+                BuildTextBlock(ForcesContainer, $"{solvedReactionForces[elementIndex * 3 - 2, 0]}", elementIndex * 3 - 1, 0, colorY);
+                BuildTextBlock(ForcesContainer, $"{solvedReactionForces[elementIndex * 3 - 1, 0]}", elementIndex * 3, 0, colorZ);
 
                 elementIndex++;
             }

@@ -35,12 +35,11 @@ namespace POC3D.Controls.Matrix.Controls
 
             var indexes = 1;
 
-            var freeNodes = problemViewModel.Nodes
+            var nodes = problemViewModel.Nodes
                 .ToDictionary(node => indexes++, node => node)
-                .Where(x => !x.Value.IsFixed)
                 .ToList();
 
-            foreach (var rowIndex in Enumerable.Range(0, freeNodes.Count * 3))
+            foreach (var rowIndex in Enumerable.Range(0, nodes.Count * 3))
                 DisplacementsContainer.RowDefinitions.Add(new RowDefinition
                 {
                     Name = $"R{rowIndex}",
@@ -48,16 +47,23 @@ namespace POC3D.Controls.Matrix.Controls
                 });
 
             var gridRowIndex = 0;
-            foreach (var nodeKeyPair in freeNodes)
+            foreach (var nodeKeyPair in nodes)
             {
                 var elementIndex = nodeKeyPair.Key;
                 var node = nodeKeyPair.Value;
 
-                BuildTextBlock(DisplacementsContainer, $"d{elementIndex}x", gridRowIndex, 0, Brushes.Green);
-                BuildTextBlock(DisplacementsContainer, $"d{elementIndex}y", gridRowIndex + 1, 0, Brushes.Green);
-                BuildTextBlock(DisplacementsContainer, $"d{elementIndex}z", gridRowIndex + 2, 0, Brushes.Green);
+                var colorX = node.IsXFixed ? Brushes.Red : Brushes.Green;
+                var colorY = node.IsYFixed ? Brushes.Red : Brushes.Green;
+                var colorZ = node.IsZFixed ? Brushes.Red : Brushes.Green;
 
-                gridRowIndex = gridRowIndex + 3;
+                BuildTextBlock(DisplacementsContainer, $"d{elementIndex}x", gridRowIndex, 0, colorX);
+                gridRowIndex++;
+
+                BuildTextBlock(DisplacementsContainer, $"d{elementIndex}y", gridRowIndex, 0, colorY);
+                gridRowIndex++;
+
+                BuildTextBlock(DisplacementsContainer, $"d{elementIndex}z", gridRowIndex, 0, colorZ);
+                gridRowIndex++;
             }
         }
 
@@ -66,17 +72,55 @@ namespace POC3D.Controls.Matrix.Controls
             ResultsContainer.Children.Clear();
             ResultsContainer.RowDefinitions.Clear();
 
-            var resultsMatrix = problemViewModel.ProblemCalculationViewModel.SolvedDisplacementsVector;
-
-            foreach (var rowIndex in Enumerable.Range(0, resultsMatrix.Rows))
+            foreach (var index in Enumerable.Range(0, problemViewModel.Nodes.Count * 3))
                 ResultsContainer.RowDefinitions.Add(new RowDefinition
                 {
-                    Name = $"R{rowIndex}",
+                    Name = $"R{index}",
                     Height = GridLength.Auto
                 });
 
-            foreach (var rowIndex in Enumerable.Range(0, resultsMatrix.Rows))
-                BuildTextBlock(ResultsContainer, $"{resultsMatrix[rowIndex, 0]}", rowIndex, 0, Brushes.Black);
+            var resultsMatrix = problemViewModel.ProblemCalculationViewModel.SolvedDisplacementsVector;
+
+            var rowIndex = 0;
+            var gridRowIndex = 0;
+            foreach (var node in problemViewModel.Nodes)
+            {
+                if (node.IsXFixed)
+                {
+                    BuildTextBlock(ResultsContainer, $"{0}", gridRowIndex, 0, Brushes.Black);
+                }
+                else
+                {
+                    BuildTextBlock(ResultsContainer, $"{resultsMatrix[rowIndex, 0]}", gridRowIndex, 0, Brushes.Black);
+                    rowIndex++;
+                }
+
+                gridRowIndex++;
+
+                if (node.IsYFixed)
+                {
+                    BuildTextBlock(ResultsContainer, $"{0}", gridRowIndex, 0, Brushes.Black);
+                }
+                else
+                {
+                    BuildTextBlock(ResultsContainer, $"{resultsMatrix[rowIndex, 0]}", gridRowIndex, 0, Brushes.Black);
+                    rowIndex++;
+                }
+
+                gridRowIndex++;
+
+                if (node.IsZFixed)
+                {
+                    BuildTextBlock(ResultsContainer, $"{0}", gridRowIndex, 0, Brushes.Black);
+                }
+                else
+                {
+                    BuildTextBlock(ResultsContainer, $"{resultsMatrix[rowIndex, 0]}", gridRowIndex, 0, Brushes.Black);
+                    rowIndex++;
+                }
+
+                gridRowIndex++;
+            }
         }
 
         private static void ProblemViewModelChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)

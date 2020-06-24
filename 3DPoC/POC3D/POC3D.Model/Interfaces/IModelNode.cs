@@ -4,6 +4,10 @@
     {        
         ModelPoint Coordinates { get; }
 
-        bool IsFixed { get; set; }
+        bool IsXFixed { get; set; }
+        
+        bool IsYFixed { get; set; }
+
+        bool IsZFixed { get; set; }
     }
 }

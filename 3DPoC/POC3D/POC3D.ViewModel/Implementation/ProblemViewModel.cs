@@ -396,7 +396,7 @@ namespace POC3D.ViewModel.Implementation
             }
             catch (Exception ex)
             {
-                var message = $"There was an error saving the problem: {ex}";
+                var message = $"There was an error loading the problem: {ex}";
                 MessageBox.Show(message, "Error");
             }            
         }
@@ -438,6 +438,8 @@ namespace POC3D.ViewModel.Implementation
 
                 Elements.Add(new ElementViewModel(modelElement, originNodeViewModel, destinationNodeViewModel, materialViewModel));
             }
+
+            OnPropertyChanged(nameof(ProblemCalculationViewModel));
         }
     }
 }

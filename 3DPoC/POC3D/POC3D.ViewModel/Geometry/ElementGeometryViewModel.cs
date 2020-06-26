@@ -1,4 +1,5 @@
-﻿using POC3D.ViewModel.Implementation;
+﻿using POC3D.ViewModel.Configuration;
+using POC3D.ViewModel.Implementation;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 
@@ -7,8 +8,6 @@ namespace POC3D.ViewModel.Geometry
     public class ElementGeometryViewModel : GeometryViewModel<ElementViewModel>
     {
         protected static readonly Vector3D VerticalVector = new Vector3D(0, 0, 1);
-        protected static readonly Brush BarBrush = Brushes.Blue;
-        protected static readonly Brush SelectedBarBrush = Brushes.Red;
 
         public ElementGeometryViewModel(ElementViewModel elementViewModel)
             : base(elementViewModel)
@@ -17,7 +16,7 @@ namespace POC3D.ViewModel.Geometry
         
         protected override void UpdateGeometryMesh()
         {
-            MaterialBrush = ViewModel.IsSelected ? SelectedBarBrush : BarBrush;
+            MaterialBrush = ViewModel.IsSelected ? ApplicationConfiguration.SelectedBarBrush : ApplicationConfiguration.BarBrush;
 
             var vector = ViewModel.Destination.Coordinates - ViewModel.Origin.Coordinates;
 

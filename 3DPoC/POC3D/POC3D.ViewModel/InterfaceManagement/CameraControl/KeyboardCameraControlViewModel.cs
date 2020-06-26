@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using POC3D.ViewModel.Configuration;
+using System.Collections.Generic;
 using System.Windows.Input;
 using System.Windows.Media.Media3D;
 
@@ -6,8 +7,6 @@ namespace POC3D.ViewModel.InterfaceManagement.CameraControl
 {
     public class KeyboardCameraControlViewModel : BaseCameraControlViewModel
     {
-        private const double KeyboardRotationDelta = 0.5;
-
         private HashSet<Key> _pressedKeys = new HashSet<Key>();
 
         private static readonly Key _forward = Key.W;
@@ -92,27 +91,27 @@ namespace POC3D.ViewModel.InterfaceManagement.CameraControl
 
             if (_pressedKeys.Contains(_pitchUp))
             {
-                keyboardRotationY = KeyboardRotationDelta;
+                keyboardRotationY = ApplicationConfiguration.KeyboardRotationDelta;
             }
             if (_pressedKeys.Contains(_pitchDown))
             {
-                keyboardRotationY = -KeyboardRotationDelta;
+                keyboardRotationY = -ApplicationConfiguration.KeyboardRotationDelta;
             }
             if (_pressedKeys.Contains(_yawUp))
             {
-                keyboardRotationZ = KeyboardRotationDelta;
+                keyboardRotationZ = ApplicationConfiguration.KeyboardRotationDelta;
             }
             if (_pressedKeys.Contains(_yawDown))
             {
-                keyboardRotationZ = -KeyboardRotationDelta;
+                keyboardRotationZ = -ApplicationConfiguration.KeyboardRotationDelta;
             }
             if (_pressedKeys.Contains(_rollUp))
             {
-                keyboardRotationX = KeyboardRotationDelta;
+                keyboardRotationX = ApplicationConfiguration.KeyboardRotationDelta;
             }
             if (_pressedKeys.Contains(_rollDown))
             {
-                keyboardRotationX = -KeyboardRotationDelta;
+                keyboardRotationX = -ApplicationConfiguration.KeyboardRotationDelta;
             }
 
             CameraViewModel.Rotate(keyboardRotationX, keyboardRotationY, keyboardRotationZ);

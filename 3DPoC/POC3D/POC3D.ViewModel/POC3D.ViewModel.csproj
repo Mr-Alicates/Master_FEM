@@ -57,6 +57,8 @@
     <Compile Include="Calculations\ProblemCalculationViewModel.cs" />
     <Compile Include="Commands\AddMaterialCommand.cs" />
     <Compile Include="Commands\DeleteMaterialCommand.cs" />
+    <Compile Include="Configuration\ApplicationConfiguration.cs" />
+    <Compile Include="Configuration\ConfigurationViewModel.cs" />
     <Compile Include="Dialog\DialogService.cs" />
     <Compile Include="Dialog\IDialogService.cs" />
     <Compile Include="Implementation\ElementViewModel.cs" />

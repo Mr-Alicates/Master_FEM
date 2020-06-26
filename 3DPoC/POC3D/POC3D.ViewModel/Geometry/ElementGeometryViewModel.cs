@@ -20,7 +20,15 @@ namespace POC3D.ViewModel.Geometry
 
             var vector = ViewModel.Destination.Coordinates - ViewModel.Origin.Coordinates;
 
-            GraphicsHelper.BuildBarMesh(MeshGeometry3D, vector.Length, 0.5);
+            var length = vector.Length;
+
+            if(VerticalVector == -vector)
+            {
+                //This is a hack: When the vector is opposite to vertical the bar is built in the wrong direction
+                length = -length;
+            }
+
+            GraphicsHelper.BuildBarMesh(MeshGeometry3D, length, 0.5);
 
             RotationAngle = Vector3D.AngleBetween(VerticalVector, vector);
             RotationAxis = Vector3D.CrossProduct(VerticalVector, vector);

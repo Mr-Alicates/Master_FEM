@@ -75,17 +75,24 @@
             <MenuItem Header="Show list of Materials"
                 Command="{Binding InterfaceControlViewModel.ShowMaterialListingCommand}" />
 
-        </MenuItem>
+            </MenuItem>
 
-        <MenuItem Header="Problem">
+            <MenuItem Header="Problem">
 
-        <MenuItem Header="Show matrices from problem"
-                  Click="ShowGlobalMatrixInfoWindow" />
+                <MenuItem Header="Show matrices from problem"
+                    Click="ShowGlobalMatrixInfoWindow" />
 
-      </MenuItem>
+            </MenuItem>
+
+            <MenuItem Header="Configuration">
+
+                <MenuItem Header="Show configuration"
+                Command="{Binding InterfaceControlViewModel.ShowConfigurationCommand}" />
+
+            </MenuItem>
 
 
-    </Menu>
+        </Menu>
 
     <Grid Grid.Row="1">
       <Grid.ColumnDefinitions>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using POC3D.ViewModel.Base;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +9,19 @@ using System.Windows.Media;
 
 namespace POC3D.ViewModel.Configuration
 {
-    public class ConfigurationViewModel
+    public class ConfigurationViewModel : Observable
     {
-        public double GraphicsObjectSizeMultiplier { get; set; }
+        private double _graphicsObjectSizeMultiplier;
+
+        public double GraphicsObjectSizeMultiplier
+        {
+            get => _graphicsObjectSizeMultiplier;
+            set
+            {
+                _graphicsObjectSizeMultiplier = value;
+                OnPropertyChanged(nameof(GraphicsObjectSizeMultiplier));
+            }
+        }
 
         public Brush BarBrush { get; set; }
         public Brush SelectedBarBrush { get; set; }

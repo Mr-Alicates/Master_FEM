@@ -28,6 +28,8 @@ namespace POC3D.ViewModel.InterfaceManagement
         private Visibility _materialDetailsControlVisibility = Visibility.Collapsed;
         private Visibility _materialListingControlVisibility = Visibility.Collapsed;
 
+        private Visibility _configurationControlVisibility = Visibility.Collapsed;
+
         public InterfaceControlViewModel(ProblemViewModel problemViewModel, CameraViewModel cameraViewModel)
         {
             _problemViewModel = problemViewModel;
@@ -71,6 +73,8 @@ namespace POC3D.ViewModel.InterfaceManagement
 
             MaterialDetailsControlVisibility = Visibility.Collapsed;
             MaterialListingControlVisibility = Visibility.Collapsed;
+
+            ConfigurationControlVisibility = Visibility.Collapsed;
         }
 
         #region Nodes
@@ -95,6 +99,8 @@ namespace POC3D.ViewModel.InterfaceManagement
 
             MaterialDetailsControlVisibility = Visibility.Collapsed;
             MaterialListingControlVisibility = Visibility.Collapsed;
+
+            ConfigurationControlVisibility = Visibility.Collapsed;
         }
 
         private void ShowNodeListing()
@@ -130,6 +136,8 @@ namespace POC3D.ViewModel.InterfaceManagement
 
             MaterialDetailsControlVisibility = Visibility.Collapsed;
             MaterialListingControlVisibility = Visibility.Collapsed;
+
+            ConfigurationControlVisibility = Visibility.Collapsed;
         }
 
         private void AddElement()
@@ -172,6 +180,8 @@ namespace POC3D.ViewModel.InterfaceManagement
 
             MaterialDetailsControlVisibility = Visibility.Collapsed;
             MaterialListingControlVisibility = Visibility.Collapsed;
+
+            ConfigurationControlVisibility = Visibility.Collapsed;
         }
 
         private void AddForce()
@@ -203,6 +213,19 @@ namespace POC3D.ViewModel.InterfaceManagement
 
             MaterialDetailsControlVisibility = Visibility.Visible;
             MaterialListingControlVisibility = Visibility.Visible;
+        }
+
+        #endregion
+
+        #region Configuration
+
+        public ICommand ShowConfigurationCommand => new Command(ShowConfiguration);
+
+        private void ShowConfiguration()
+        {
+            HideAllControls();
+
+            ConfigurationControlVisibility = Visibility.Visible;
         }
 
         #endregion
@@ -321,6 +344,16 @@ namespace POC3D.ViewModel.InterfaceManagement
             {
                 _materialDetailsControlVisibility = value;
                 OnPropertyChanged(nameof(MaterialDetailsControlVisibility));
+            }
+        }
+
+        public Visibility ConfigurationControlVisibility
+        {
+            get => _configurationControlVisibility;
+            private set
+            {
+                _configurationControlVisibility = value;
+                OnPropertyChanged(nameof(ConfigurationControlVisibility));
             }
         }
 

@@ -10,6 +10,12 @@ namespace POC3D.ViewModel.InterfaceManagement.CameraControl
         private Vector3D _forwardVector = new Vector3D(1, 0, 0);
         private Vector3D _upVector = new Vector3D(0, 0, 1);
 
+        public CameraViewModel()
+        {
+            Move(new Point3D(5, 5, 5));
+            LookAt(new Point3D(0, 0, 0));
+        }
+
         public EventHandler OnCameraViewModelChanged;
 
         public string FriendlyPosition => $"Camera Position ({Position.X:0.##}/{Position.Y:0.##}/{Position.Z:0.##})";

@@ -1,14 +1,11 @@
-﻿using POC3D.ViewModel.Implementation;
+﻿using POC3D.ViewModel.Configuration;
+using POC3D.ViewModel.Implementation;
 using System.Windows.Media;
 
 namespace POC3D.ViewModel.Geometry
 {
     public class NodeGeometryViewModel : GeometryViewModel<NodeViewModel>
     {
-        private static readonly Brush FreeNodeBrush = Brushes.LightGreen;
-        private static readonly Brush FixedNodeBrush = Brushes.DarkGreen;
-        private static readonly Brush SelectedNodeBrush = Brushes.Red;
-
         public NodeGeometryViewModel(NodeViewModel nodeViewModel)
             : base(nodeViewModel)
         {
@@ -20,9 +17,11 @@ namespace POC3D.ViewModel.Geometry
             OffsetY = ViewModel.Y;
             OffsetZ = ViewModel.Z;
 
-            MaterialBrush = ViewModel.IsSelected ? SelectedNodeBrush : ViewModel.IsFixed ? FixedNodeBrush : FreeNodeBrush;
+            var isFixed = ViewModel.IsXFixed || ViewModel.IsYFixed || ViewModel.IsZFixed;
 
-            if (ViewModel.IsFixed)
+            MaterialBrush = ViewModel.IsSelected ? ApplicationConfiguration.SelectedNodeBrush : isFixed ? ApplicationConfiguration.FixedNodeBrush : ApplicationConfiguration.FreeNodeBrush;
+
+            if (isFixed)
                 GraphicsHelper.BuildPyramidMesh(MeshGeometry3D, 2);
             else
                 GraphicsHelper.BuildCubeMesh(MeshGeometry3D, 1);

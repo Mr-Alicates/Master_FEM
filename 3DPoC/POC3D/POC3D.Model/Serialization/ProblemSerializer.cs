@@ -84,7 +84,9 @@ namespace POC3D.Model.Serialization
                 var nodeMemento = new NodeMemento()
                 {
                     Id = modelNode.Id,
-                    IsFixed = modelNode.IsFixed,
+                    IsXFixed = modelNode.IsXFixed,
+                    IsYFixed = modelNode.IsYFixed,
+                    IsZFixed = modelNode.IsZFixed,
                     X = modelNode.Coordinates.X,
                     Y = modelNode.Coordinates.Y,
                     Z = modelNode.Coordinates.Z
@@ -147,7 +149,9 @@ namespace POC3D.Model.Serialization
             {
                 var modelNode = modelProblem.AddNode();
 
-                modelNode.IsFixed = nodeMemento.IsFixed;
+                modelNode.IsXFixed = nodeMemento.IsXFixed;
+                modelNode.IsYFixed = nodeMemento.IsYFixed;
+                modelNode.IsZFixed = nodeMemento.IsZFixed;
                 modelNode.Coordinates.X = nodeMemento.X;
                 modelNode.Coordinates.Y = nodeMemento.Y;
                 modelNode.Coordinates.Z = nodeMemento.Z;

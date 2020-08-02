@@ -5,7 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:forces="clr-namespace:POC3D.Controls.Forces"
              xmlns:elements="clr-namespace:POC3D.Controls.Elements"
-             xmlns:nodes="clr-namespace:POC3D.Controls.Nodes" xmlns:materials="clr-namespace:POC3D.Controls.Materials"
+             xmlns:nodes="clr-namespace:POC3D.Controls.Nodes" 
+             xmlns:materials="clr-namespace:POC3D.Controls.Materials" 
+             xmlns:configuration="clr-namespace:POC3D.Controls.Configuration"
              mc:Ignorable="d">
   <Grid Background="LightGray">
     <Grid.RowDefinitions>
@@ -14,41 +16,55 @@
       <RowDefinition Height="auto" />
     </Grid.RowDefinitions>
 
-    <StackPanel Grid.Row="0" Orientation="Vertical">
+        <ScrollViewer CanContentScroll="True" Grid.Row="0">
 
-      <nodes:SelectedNodeDetailsControl DataContext="{Binding Path=.}"
-                                        Visibility="{Binding Path=InterfaceControlViewModel.NodeDetailsControlVisibility}" />
+            <Grid>
 
-      <elements:SelectedElementDetailsControl DataContext="{Binding Path=.}"
-                                              Visibility="{Binding Path=InterfaceControlViewModel.ElementDetailsControlVisibility}" />
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+            
+                <StackPanel Orientation="Vertical" Grid.Column="0">
 
-      <forces:SelectedForceDetailsControl DataContext="{Binding Path=.}"
-                                          Visibility="{Binding Path=InterfaceControlViewModel.ForceDetailsControlVisibility}" />
+                      <nodes:SelectedNodeDetailsControl DataContext="{Binding Path=.}"
+                                                        Visibility="{Binding Path=InterfaceControlViewModel.NodeDetailsControlVisibility}" />
 
-      <nodes:NodeListingControl DataContext="{Binding Path=.}"
-                                Visibility="{Binding Path=InterfaceControlViewModel.NodeListingControlVisibility}" />
+                      <elements:SelectedElementDetailsControl DataContext="{Binding Path=.}"
+                                                              Visibility="{Binding Path=InterfaceControlViewModel.ElementDetailsControlVisibility}" />
 
-      <elements:ElementListingControl DataContext="{Binding Path=.}"
-                                      Visibility="{Binding Path=InterfaceControlViewModel.ElementListingControlVisibility}" />
+                      <forces:SelectedForceDetailsControl DataContext="{Binding Path=.}"
+                                                          Visibility="{Binding Path=InterfaceControlViewModel.ForceDetailsControlVisibility}" />
 
-      <forces:ForceListingControl DataContext="{Binding Path=.}"
-                                  Visibility="{Binding Path=InterfaceControlViewModel.ForceListingControlVisibility}" />
+                      <nodes:NodeListingControl DataContext="{Binding Path=.}"
+                                                Visibility="{Binding Path=InterfaceControlViewModel.NodeListingControlVisibility}" />
 
-      <elements:ElementAddingControl DataContext="{Binding Path=.}"
-                                     Visibility="{Binding Path=InterfaceControlViewModel.ElementAddingControlVisibility}" />
+                      <elements:ElementListingControl DataContext="{Binding Path=.}"
+                                                      Visibility="{Binding Path=InterfaceControlViewModel.ElementListingControlVisibility}" />
 
-      <forces:ForceAddingControl DataContext="{Binding Path=.}"
-                                 Visibility="{Binding Path=InterfaceControlViewModel.ForceAddingControlVisibility}" />
+                      <forces:ForceListingControl DataContext="{Binding Path=.}"
+                                                  Visibility="{Binding Path=InterfaceControlViewModel.ForceListingControlVisibility}" />
 
-      <materials:MaterialListingControl DataContext="{Binding Path=.}"
-                            Visibility="{Binding Path=InterfaceControlViewModel.MaterialListingControlVisibility}" />
+                      <elements:ElementAddingControl DataContext="{Binding Path=.}"
+                                                     Visibility="{Binding Path=InterfaceControlViewModel.ElementAddingControlVisibility}" />
 
-      <materials:SelectedMaterialDetailsControl DataContext="{Binding Path=.}"
-                                        Visibility="{Binding Path=InterfaceControlViewModel.MaterialDetailsControlVisibility}" />
+                      <forces:ForceAddingControl DataContext="{Binding Path=.}"
+                                                 Visibility="{Binding Path=InterfaceControlViewModel.ForceAddingControlVisibility}" />
 
-        </StackPanel>
+                      <materials:MaterialListingControl DataContext="{Binding Path=.}"
+                                            Visibility="{Binding Path=InterfaceControlViewModel.MaterialListingControlVisibility}" />
 
-    <Separator Grid.Row="1" Background="White" />
-    <forces:ProblemDetailsControl Grid.Row="2" VerticalAlignment="Bottom" DataContext="{Binding Path=.}" />
-  </Grid>
+                      <materials:SelectedMaterialDetailsControl DataContext="{Binding Path=.}"
+                                                        Visibility="{Binding Path=InterfaceControlViewModel.MaterialDetailsControlVisibility}" />
+
+                      <configuration:ConfigurationControl DataContext="{Binding Path=.}"
+                                                        Visibility="{Binding Path=InterfaceControlViewModel.ConfigurationControlVisibility}" />
+
+                        <Separator Grid.Row="1" Background="White" />
+                        <forces:ProblemDetailsControl Grid.Row="2" VerticalAlignment="Bottom" DataContext="{Binding Path=.}" />
+
+                </StackPanel>
+
+            </Grid>
+        </ScrollViewer>
+    </Grid>
 </UserControl>

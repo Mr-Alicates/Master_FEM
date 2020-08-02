@@ -1,4 +1,5 @@
-﻿using POC3D.ViewModel.Implementation;
+﻿using POC3D.ViewModel.Configuration;
+using POC3D.ViewModel.Implementation;
 using System.Windows.Media.Media3D;
 
 namespace POC3D.ViewModel.Geometry
@@ -26,7 +27,7 @@ namespace POC3D.ViewModel.Geometry
             OffsetY = originCoordinates.Y;
             OffsetZ = originCoordinates.Z;
 
-            MaterialBrush = BarBrush;
+            MaterialBrush = ApplicationConfiguration.BarBrush;
         }
     }
 }

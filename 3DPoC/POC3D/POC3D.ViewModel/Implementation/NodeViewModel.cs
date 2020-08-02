@@ -72,13 +72,33 @@ namespace POC3D.ViewModel.Implementation
             }
         }
 
-        public bool IsFixed
+        public bool IsXFixed
         {
-            get => Node.IsFixed;
+            get => Node.IsXFixed;
             set
             {
-                Node.IsFixed = value;
-                OnPropertyChanged(nameof(IsFixed));
+                Node.IsXFixed = value;
+                OnPropertyChanged(nameof(IsXFixed));
+            }
+        }
+
+        public bool IsYFixed
+        {
+            get => Node.IsYFixed;
+            set
+            {
+                Node.IsYFixed = value;
+                OnPropertyChanged(nameof(IsYFixed));
+            }
+        }
+
+        public bool IsZFixed
+        {
+            get => Node.IsZFixed;
+            set
+            {
+                Node.IsZFixed = value;
+                OnPropertyChanged(nameof(IsZFixed));
             }
         }
 

@@ -56,7 +56,9 @@ namespace POC3D.Controls.Matrix.Controls
             var index = 1;
             foreach (var node in problemViewModel.Nodes)
             {
-                var color = node.IsFixed ? Brushes.Red : Brushes.Green;
+                var isFixed = node.IsXFixed || node.IsYFixed || node.IsZFixed;
+
+                var color = isFixed ? Brushes.Red : Brushes.Green;
 
                 BuildTextBlock(CorrespondenceMatrixContainer, $"Node {node.Id}", 0, index, color);
                 BuildTextBlock(CorrespondenceMatrixContainer, $"Node {node.Id}", index, 0, color);

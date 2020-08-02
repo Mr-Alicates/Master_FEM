@@ -48,11 +48,14 @@ namespace POC3D.ViewModel.Implementation
 
             SaveProblemCommand = new Command(SaveProblem);
             LoadProblemCommand = new Command(LoadProblem);
+            NewProblemCommand = new Command(NewProblem);
         }
 
         public ICommand SaveProblemCommand { get; }
 
         public ICommand LoadProblemCommand { get; }
+
+        public ICommand NewProblemCommand { get; }
 
         public string Name => _modelProblem.Name;
 
@@ -199,7 +202,7 @@ namespace POC3D.ViewModel.Implementation
 
         public int NumberOfElements => Elements.Count;
 
-        public int NumberOfDirichletBoundaryConditions => Nodes.Count(x => x.IsFixed);
+        public int NumberOfDirichletBoundaryConditions => Nodes.Count(x => x.IsXFixed) + Nodes.Count(x => x.IsYFixed) + Nodes.Count(x => x.IsZFixed);
 
         public ProblemCalculationViewModel ProblemCalculationViewModel { get; }
 
@@ -382,7 +385,7 @@ namespace POC3D.ViewModel.Implementation
 
         private void LoadProblem()
         {
-            var loadPath = _dialogService.ShowSaveFileDialog();
+            var loadPath = _dialogService.ShowOpenFileDialog();
 
             if (string.IsNullOrEmpty(loadPath))
             {
@@ -396,9 +399,22 @@ namespace POC3D.ViewModel.Implementation
             }
             catch (Exception ex)
             {
-                var message = $"There was an error saving the problem: {ex}";
+                var message = $"There was an error loading the problem: {ex}";
                 MessageBox.Show(message, "Error");
             }            
+        }
+
+        private void NewProblem()
+        {
+            try
+            {
+                LoadProblem(new ModelProblem("new"));
+            }
+            catch (Exception ex)
+            {
+                var message = $"There was an error creating a new problem: {ex}";
+                MessageBox.Show(message, "Error");
+            }
         }
 
         private void LoadProblem(IModelProblem modelProblem)
@@ -438,6 +454,8 @@ namespace POC3D.ViewModel.Implementation
 
                 Elements.Add(new ElementViewModel(modelElement, originNodeViewModel, destinationNodeViewModel, materialViewModel));
             }
+
+            OnPropertyChanged(nameof(ProblemCalculationViewModel));
         }
     }
 }

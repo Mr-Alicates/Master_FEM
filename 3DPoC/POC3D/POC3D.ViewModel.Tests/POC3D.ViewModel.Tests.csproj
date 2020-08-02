@@ -62,6 +62,7 @@
     <Compile Include="NodeViewModelTests.cs" />
     <Compile Include="ProblemViewModelIntegrationTests.cs" />
     <Compile Include="ProblemViewModelTests.cs" />
+    <Compile Include="ProblemViewModelValidationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

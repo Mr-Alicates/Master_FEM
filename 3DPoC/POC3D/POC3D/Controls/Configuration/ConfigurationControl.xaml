@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="POC3D.Controls.Configuration.ConfigurationControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             MinWidth="300">
+  <StackPanel>
+
+    <TextBlock Text="Configuration details" HorizontalAlignment="Center" FontWeight="Bold" />
+    <Separator />
+
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+      </Grid.RowDefinitions>
+
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <TextBox Grid.Row="0"
+               Grid.Column="0"
+               Text="{Binding ConfigurationViewModel.GraphicsObjectSizeMultiplier, Mode=TwoWay}" />
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="Graphics objects size multiplier" />
+
+            <TextBox Grid.Row="1"
+               Grid.Column="0"
+               Text="{Binding ConfigurationViewModel.MouseRotationDelta, Mode=TwoWay}" />
+            <TextBlock Grid.Row="1" Grid.Column="1" Text="Mouse rotation delta" />
+
+            <TextBox Grid.Row="2"
+               Grid.Column="0"
+               Text="{Binding ConfigurationViewModel.MouseWheelSensitivity, Mode=TwoWay}" />
+            <TextBlock Grid.Row="2" Grid.Column="1" Text="Mouse wheel sensitivity" />
+
+            <TextBox Grid.Row="3"
+               Grid.Column="0"
+               Text="{Binding ConfigurationViewModel.KeyboardRotationDelta, Mode=TwoWay}" />
+            <TextBlock Grid.Row="3" Grid.Column="1" Text="Keyboard rotation delta" />
+
+
+        </Grid>
+
+    <Separator />
+
+  </StackPanel>
+</UserControl>

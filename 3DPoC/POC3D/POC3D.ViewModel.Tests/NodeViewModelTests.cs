@@ -219,40 +219,7 @@ namespace POC3D.ViewModel.Tests
                 "ResultGeometry"
             }));
         }
-
-        [Test]
-        public void IsFixed_ValueChanged_ExpectModelUpdated()
-        {
-            //Arrange
-            var modelNode = BuildTestNode();
-            var nodeViewModel = new NodeViewModel(modelNode);
-
-            //Act
-            nodeViewModel.IsFixed = true;
-
-            //Assert
-            Assert.That(modelNode.IsFixed, Is.True);
-        }
-
-        [Test]
-        public void IsFixed_ValueChanged_ExpectPropertiesChangedEventRaised()
-        {
-            //Arrange
-            var modelNode = BuildTestNode();
-            var nodeViewModel = new NodeViewModel(modelNode);
-
-            var eventChecker = new PropertyChangedEventChecker(nodeViewModel);
-
-            //Act
-            nodeViewModel.IsFixed = true;
-
-            //Assert
-            Assert.That(eventChecker.PropertiesRaised, Is.EqualTo(new[]
-            {
-                "IsFixed"
-            }));
-        }
-        
+                
         [Test]
         public void DisplacementX_ValueChanged_ExpectDisplacementUpdated()
         {

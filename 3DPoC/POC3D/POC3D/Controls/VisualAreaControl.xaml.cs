@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using POC3D.ViewModel;
+using POC3D.ViewModel.Configuration;
 using POC3D.ViewModel.Geometry;
 using POC3D.ViewModel.Implementation;
 
@@ -54,10 +55,22 @@ namespace POC3D.Controls
             MainViewModel.ProblemViewModel.Forces.CollectionChanged += ProblemForcesChanged;
 
             MainViewModel.ProblemViewModel.ProblemCalculationViewModel.PropertyChanged += ShowProblemChangedCallback;
+            MainViewModel.ConfigurationViewModel.PropertyChanged += ConfigurationChanged;
 
             UpdateCamera();
             DisplayProblem();
             Focus();
+        }
+
+        private void ConfigurationChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName == nameof(ConfigurationViewModel.GraphicsObjectSizeMultiplier))
+            {
+                if (MainViewModel.ProblemViewModel.ProblemCalculationViewModel.ShowProblem)
+                    DisplayProblem();
+                else
+                    DisplayResults();
+            }
         }
 
         private void ShowProblemChangedCallback(object sender, PropertyChangedEventArgs e)

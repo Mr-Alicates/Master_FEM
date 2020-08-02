@@ -55,15 +55,18 @@ namespace POC3D.Controls.Matrix.Controls
             var elementIndex = 1;
             foreach (var node in problemViewModel.Nodes)
             {
-                var color = node.IsFixed ? Brushes.Red : Brushes.Green;
+                var colorX = node.IsXFixed ? Brushes.Red : Brushes.Green;
+                var colorY = node.IsYFixed ? Brushes.Red : Brushes.Green;
+                var colorZ = node.IsZFixed ? Brushes.Red : Brushes.Green;
 
-                BuildTextBlock(GlobalStiffnessMatrixContainer, $"d{elementIndex}x", 0, elementIndex * 3 - 2, color);
-                BuildTextBlock(GlobalStiffnessMatrixContainer, $"d{elementIndex}y", 0, elementIndex * 3 - 1, color);
-                BuildTextBlock(GlobalStiffnessMatrixContainer, $"d{elementIndex}z", 0, elementIndex * 3, color);
+                BuildTextBlock(GlobalStiffnessMatrixContainer, $"d{elementIndex}x", 0, elementIndex * 3 - 2, colorX);
+                BuildTextBlock(GlobalStiffnessMatrixContainer, $"d{elementIndex}x", elementIndex * 3 - 2, 0, colorX);
 
-                BuildTextBlock(GlobalStiffnessMatrixContainer, $"d{elementIndex}x", elementIndex * 3 - 2, 0, color);
-                BuildTextBlock(GlobalStiffnessMatrixContainer, $"d{elementIndex}y", elementIndex * 3 - 1, 0, color);
-                BuildTextBlock(GlobalStiffnessMatrixContainer, $"d{elementIndex}z", elementIndex * 3, 0, color);
+                BuildTextBlock(GlobalStiffnessMatrixContainer, $"d{elementIndex}y", 0, elementIndex * 3 - 1, colorY);
+                BuildTextBlock(GlobalStiffnessMatrixContainer, $"d{elementIndex}y", elementIndex * 3 - 1, 0, colorY);
+
+                BuildTextBlock(GlobalStiffnessMatrixContainer, $"d{elementIndex}z", 0, elementIndex * 3, colorZ);
+                BuildTextBlock(GlobalStiffnessMatrixContainer, $"d{elementIndex}z", elementIndex * 3, 0, colorZ);
 
                 elementIndex++;
             }
@@ -94,16 +97,30 @@ namespace POC3D.Controls.Matrix.Controls
             var elementIndex = 1;
             foreach (var node in problemViewModel.Nodes)
             {
-                if (node.IsFixed)
+                if (node.IsXFixed)
                 {
                     BuildTextBlock(DisplacementsContainer, "0", elementIndex * 3 - 2, 0, Brushes.Red);
-                    BuildTextBlock(DisplacementsContainer, "0", elementIndex * 3 - 1, 0, Brushes.Red);
-                    BuildTextBlock(DisplacementsContainer, "0", elementIndex * 3, 0, Brushes.Red);
                 }
                 else
                 {
                     BuildTextBlock(DisplacementsContainer, $"d{elementIndex}x", elementIndex * 3 - 2, 0, Brushes.Green);
+                }
+
+                if (node.IsYFixed)
+                {
+                    BuildTextBlock(DisplacementsContainer, "0", elementIndex * 3 - 1, 0, Brushes.Red);
+                }
+                else
+                {
                     BuildTextBlock(DisplacementsContainer, $"d{elementIndex}y", elementIndex * 3 - 1, 0, Brushes.Green);
+                }
+
+                if (node.IsZFixed)
+                {
+                    BuildTextBlock(DisplacementsContainer, "0", elementIndex * 3, 0, Brushes.Red);
+                }
+                else
+                {
                     BuildTextBlock(DisplacementsContainer, $"d{elementIndex}z", elementIndex * 3, 0, Brushes.Green);
                 }
 
@@ -131,20 +148,34 @@ namespace POC3D.Controls.Matrix.Controls
             var elementIndex = 1;
             foreach (var node in problemViewModel.Nodes)
             {
-                if (node.IsFixed)
+                var appliedForce = problemViewModel.Forces.FirstOrDefault(force => force.Node == node);
+
+                if (node.IsXFixed)
                 {
                     BuildTextBlock(ForcesContainer, $"Reaction F{elementIndex}x", elementIndex * 3 - 2, 0, Brushes.Red);
+                }
+                else
+                {
+                    BuildTextBlock(ForcesContainer, appliedForce?.ApplicationVector.X.ToString() ?? "0",
+                        elementIndex * 3 - 2, 0, Brushes.Green);
+                }
+
+                if (node.IsYFixed)
+                {
                     BuildTextBlock(ForcesContainer, $"Reaction F{elementIndex}y", elementIndex * 3 - 1, 0, Brushes.Red);
+                }
+                else
+                {
+                    BuildTextBlock(ForcesContainer, appliedForce?.ApplicationVector.Y.ToString() ?? "0",
+                        elementIndex * 3 - 1, 0, Brushes.Green);
+                }
+
+                if (node.IsZFixed)
+                {
                     BuildTextBlock(ForcesContainer, $"Reaction F{elementIndex}z", elementIndex * 3, 0, Brushes.Red);
                 }
                 else
                 {
-                    var appliedForce = problemViewModel.Forces.FirstOrDefault(force => force.Node == node);
-
-                    BuildTextBlock(ForcesContainer, appliedForce?.ApplicationVector.X.ToString() ?? "0",
-                        elementIndex * 3 - 2, 0, Brushes.Green);
-                    BuildTextBlock(ForcesContainer, appliedForce?.ApplicationVector.Y.ToString() ?? "0",
-                        elementIndex * 3 - 1, 0, Brushes.Green);
                     BuildTextBlock(ForcesContainer, appliedForce?.ApplicationVector.Z.ToString() ?? "0",
                         elementIndex * 3, 0, Brushes.Green);
                 }

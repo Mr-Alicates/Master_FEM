@@ -12,32 +12,9 @@ namespace POC3D.ViewModel.Calculations
             //To solve the problem, the 3 displacements must be constrained
             //In this kind of problem it means 3 non-collinear fixed nodes
 
-            var fixedNodes = problemViewModel.Nodes
-                .Where(x => x.IsFixed)
-                .Select(x => x.Node.Coordinates)
-                .ToList();
-
-            if (fixedNodes.Count < 3) return false;
-
-            var firstNode = fixedNodes.First();
-
-            var restOfNodes = fixedNodes.Skip(1);
-
-            var vectors = restOfNodes
-                .Select(x => new ModelVector(firstNode, x))
-                .Select(vector => new Vector3D(vector.X, vector.Y, vector.Z))
-                .ToList();
-
-            var firstVector = vectors.First();
-
-            var restOfVectors = vectors.Skip(1);
-
-            var angles = restOfVectors
-                .Select(vector => Vector3D.AngleBetween(firstVector, vector))
-                .Where(angle => angle != 0)
-                .ToList();
-
-            return angles.Any();
+            return problemViewModel.Nodes.Any(x => x.IsXFixed) &&
+                problemViewModel.Nodes.Any(x => x.IsYFixed) &&
+                problemViewModel.Nodes.Any(x => x.IsZFixed);
         }
 
         public static NumericMatrix BuildElementLocalStiffnessMatrix(ElementViewModel elementViewModel)
@@ -87,20 +64,37 @@ namespace POC3D.ViewModel.Calculations
             var index = 0;
 
             foreach (var node in problem.Nodes)
-                if (node.IsFixed)
+            {
+                if (node.IsXFixed)
                 {
                     rawMatrix.RemoveColumn(index);
-                    rawMatrix.RemoveColumn(index);
-                    rawMatrix.RemoveColumn(index);
-
-                    rawMatrix.RemoveRow(index);
-                    rawMatrix.RemoveRow(index);
                     rawMatrix.RemoveRow(index);
                 }
                 else
                 {
-                    index = index + 3;
+                    index++;
                 }
+
+                if (node.IsYFixed)
+                {
+                    rawMatrix.RemoveColumn(index);
+                    rawMatrix.RemoveRow(index);
+                }
+                else
+                {
+                    index++;
+                }
+
+                if (node.IsZFixed)
+                {
+                    rawMatrix.RemoveColumn(index);
+                    rawMatrix.RemoveRow(index);
+                }
+                else
+                {
+                    index++;
+                }
+            }
 
             return rawMatrix;
         }
@@ -112,22 +106,39 @@ namespace POC3D.ViewModel.Calculations
             var index = 0;
 
             foreach (var node in problem.Nodes)
-                if (node.IsFixed)
+            {
+                var appliedForce = problem.Forces.FirstOrDefault(force => force.Node == node);
+
+                if (node.IsXFixed)
                 {
-                    result.RemoveRow(index);
-                    result.RemoveRow(index);
                     result.RemoveRow(index);
                 }
                 else
                 {
-                    var appliedForce = problem.Forces.FirstOrDefault(force => force.Node == node);
-
                     result[index, 0] = appliedForce?.ApplicationVector.X ?? 0;
-                    result[index + 1, 0] = appliedForce?.ApplicationVector.Y ?? 0;
-                    result[index + 2, 0] = appliedForce?.ApplicationVector.Z ?? 0;
-
-                    index = index + 3;
+                    index++;
                 }
+
+                if (node.IsYFixed)
+                {
+                    result.RemoveRow(index);
+                }
+                else
+                {
+                    result[index, 0] = appliedForce?.ApplicationVector.Y ?? 0;
+                    index++;
+                }
+
+                if (node.IsZFixed)
+                {
+                    result.RemoveRow(index);
+                }
+                else
+                {
+                    result[index, 0] = appliedForce?.ApplicationVector.Z ?? 0;
+                    index++;
+                }
+            }
 
             return result;
         }
@@ -154,24 +165,41 @@ namespace POC3D.ViewModel.Calculations
 
             foreach (var node in problem.Nodes)
             {
-                if (node.IsFixed)
+                if (node.IsXFixed)
                 {
-
                     result[index, 0] = 0;
-                    result[index + 1, 0] = 0;
-                    result[index + 2, 0] = 0;
                 }
                 else
                 {
-
                     result[index, 0] = solvedDisplacementsVector[solvedIndex, 0];
-                    result[index + 1, 0] = solvedDisplacementsVector[solvedIndex + 1, 0];
-                    result[index + 2, 0] = solvedDisplacementsVector[solvedIndex + 2, 0];
-
-                    solvedIndex = solvedIndex + 3;
+                    solvedIndex++;
                 }
 
-                index = index + 3;
+                index++;
+
+                if (node.IsYFixed)
+                {
+                    result[index, 0] = 0;
+                }
+                else
+                {
+                    result[index, 0] = solvedDisplacementsVector[solvedIndex, 0];
+                    solvedIndex++;
+                }
+
+                index++;
+
+                if (node.IsZFixed)
+                {
+                    result[index, 0] = 0;
+                }
+                else
+                {
+                    result[index, 0] = solvedDisplacementsVector[solvedIndex, 0];
+                    solvedIndex++;
+                }
+
+                index++;
             }
 
             return result;

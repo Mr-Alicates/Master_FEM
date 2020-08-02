@@ -10,6 +10,10 @@
 
         public double Z { get; set; }
 
-        public bool IsFixed { get; set; }
+        public bool IsXFixed { get; set; }
+
+        public bool IsYFixed { get; set; }
+
+        public bool IsZFixed { get; set; }
     }
 }

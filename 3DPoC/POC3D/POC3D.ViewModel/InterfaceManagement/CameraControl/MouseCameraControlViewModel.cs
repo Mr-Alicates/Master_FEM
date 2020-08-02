@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using POC3D.ViewModel.Configuration;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Media3D;
@@ -7,16 +8,9 @@ namespace POC3D.ViewModel.InterfaceManagement.CameraControl
 {
     public class MouseCameraControlViewModel : BaseCameraControlViewModel
     {
-        private const double MouseRotationDelta = 0.5;
-        private const int MouseWheelSensitivity = 5;
-
         private Dictionary<MouseButton, Point> _pressedButtons = new Dictionary<MouseButton, Point>();
         private Point _currentMousePosition = new Point();
         private double _wheelDelta;
-
-        private MouseButton _panMouseButton = MouseButton.Left;
-        private MouseButton _rotateMouseButton = MouseButton.Middle;
-        private MouseButton _orbitMouseButton = MouseButton.Right;
 
         public MouseCameraControlViewModel(ICameraViewModel cameraViewModel)
             : base(cameraViewModel)
@@ -25,7 +19,7 @@ namespace POC3D.ViewModel.InterfaceManagement.CameraControl
 
         public void ReactToMouseWheelMovement(int delta)
         {
-            _wheelDelta = delta / MouseWheelSensitivity;
+            _wheelDelta = delta / ApplicationConfiguration.MouseWheelSensitivity;
         }
 
         public void ReactToMouseDown(MouseButton mouseButton)
@@ -54,15 +48,15 @@ namespace POC3D.ViewModel.InterfaceManagement.CameraControl
         {
             DoMouseWheelMovement();
 
-            if (_pressedButtons.ContainsKey(_panMouseButton))
+            if (_pressedButtons.ContainsKey(ApplicationConfiguration.PanMouseButton))
             {
                 DoMousePanMovement();
             }
-            else if (_pressedButtons.ContainsKey(_rotateMouseButton))
+            else if (_pressedButtons.ContainsKey(ApplicationConfiguration.RotateMouseButton))
             {
                 DoMouseRotation();
             }
-            else if (_pressedButtons.ContainsKey(_orbitMouseButton))
+            else if (_pressedButtons.ContainsKey(ApplicationConfiguration.OrbitMouseButton))
             {
                 DoOrbitMovement();
             }
@@ -84,7 +78,7 @@ namespace POC3D.ViewModel.InterfaceManagement.CameraControl
 
         private void DoMousePanMovement()
         {
-            var mousePositionWhenButtonPressed = _pressedButtons[_panMouseButton];
+            var mousePositionWhenButtonPressed = _pressedButtons[ApplicationConfiguration.PanMouseButton];
             var vector = mousePositionWhenButtonPressed - _currentMousePosition;
 
             if (vector.Length != 0)
@@ -99,7 +93,7 @@ namespace POC3D.ViewModel.InterfaceManagement.CameraControl
 
         private void DoMouseRotation()
         {
-            var mousePositionWhenButtonPressed = _pressedButtons[_rotateMouseButton];
+            var mousePositionWhenButtonPressed = _pressedButtons[ApplicationConfiguration.RotateMouseButton];
             var vector = mousePositionWhenButtonPressed - _currentMousePosition;
 
             if (vector.Length != 0)
@@ -107,7 +101,7 @@ namespace POC3D.ViewModel.InterfaceManagement.CameraControl
                 vector.Normalize();
             }
 
-            vector = vector * MouseRotationDelta;
+            vector = vector * ApplicationConfiguration.MouseRotationDelta;
 
             CameraViewModel.Rotate(0, -vector.Y, vector.X);
         }
@@ -116,7 +110,7 @@ namespace POC3D.ViewModel.InterfaceManagement.CameraControl
         {
             var sphereCenter = new Point3D(0, 0, 0);
 
-            var mousePositionWhenButtonPressed = _pressedButtons[_orbitMouseButton];
+            var mousePositionWhenButtonPressed = _pressedButtons[ApplicationConfiguration.OrbitMouseButton];
             var vector = mousePositionWhenButtonPressed - _currentMousePosition;
 
             if (vector.Length != 0)

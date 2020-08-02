@@ -66,6 +66,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\Configuration\ConfigurationControl.xaml.cs">
+      <DependentUpon>ConfigurationControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ManagementControl.xaml.cs">
       <DependentUpon>ManagementControl.xaml</DependentUpon>
     </Compile>
@@ -183,6 +186,10 @@
     <Compile Include="Controls\VisualAreaControl.xaml.cs">
       <DependentUpon>VisualAreaControl.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\Configuration\ConfigurationControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\ManagementControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -66,12 +66,11 @@ namespace POC3D.Controls.Matrix.Controls
 
             var indexes = 1;
 
-            var freeNodes = problemViewModel.Nodes
+            var nodes = problemViewModel.Nodes
                 .ToDictionary(node => indexes++, node => node)
-                .Where(x => !x.Value.IsFixed)
                 .ToList();
 
-            foreach (var rowIndex in Enumerable.Range(0, freeNodes.Count * 3))
+            foreach (var rowIndex in Enumerable.Range(0, nodes.Count * 3))
                 DisplacementsContainer.RowDefinitions.Add(new RowDefinition
                 {
                     Name = $"R{rowIndex}",
@@ -79,16 +78,28 @@ namespace POC3D.Controls.Matrix.Controls
                 });
 
             var gridRowIndex = 0;
-            foreach (var nodeKeyPair in freeNodes)
+            foreach (var nodeKeyPair in nodes)
             {
                 var elementIndex = nodeKeyPair.Key;
                 var node = nodeKeyPair.Value;
 
-                BuildTextBlock(DisplacementsContainer, $"d{elementIndex}x", gridRowIndex, 0, Brushes.Green);
-                BuildTextBlock(DisplacementsContainer, $"d{elementIndex}y", gridRowIndex + 1, 0, Brushes.Green);
-                BuildTextBlock(DisplacementsContainer, $"d{elementIndex}z", gridRowIndex + 2, 0, Brushes.Green);
+                if (!node.IsXFixed)
+                {
+                    BuildTextBlock(DisplacementsContainer, $"d{elementIndex}x", gridRowIndex, 0, Brushes.Green);
+                    gridRowIndex++;
+                }
 
-                gridRowIndex = gridRowIndex + 3;
+                if (!node.IsYFixed)
+                {
+                    BuildTextBlock(DisplacementsContainer, $"d{elementIndex}y", gridRowIndex, 0, Brushes.Green);
+                    gridRowIndex++;
+                }
+
+                if (!node.IsZFixed)
+                {
+                    BuildTextBlock(DisplacementsContainer, $"d{elementIndex}z", gridRowIndex, 0, Brushes.Green);
+                    gridRowIndex++;
+                }
             }
         }
 

@@ -1,4 +1,5 @@
-﻿using System.Windows.Media;
+﻿using POC3D.ViewModel.Configuration;
+using System.Windows.Media;
 using System.Windows.Media.Media3D;
 
 namespace POC3D.ViewModel.Geometry
@@ -7,7 +8,7 @@ namespace POC3D.ViewModel.Geometry
     {
         public static void BuildCubeMesh(MeshGeometry3D mesh, double size)
         {
-            var halfSize = size / 2.0;
+            var halfSize = size * ApplicationConfiguration.GraphicsObjectSizeMultiplier / 2.0;
 
             mesh.TriangleIndices.Clear();
             mesh.Positions.Clear();
@@ -54,7 +55,7 @@ namespace POC3D.ViewModel.Geometry
 
         public static void BuildPyramidMesh(MeshGeometry3D mesh, double size)
         {
-            var halfSize = size / 2.0;
+            var halfSize = size * ApplicationConfiguration.GraphicsObjectSizeMultiplier / 2.0;
 
             mesh.TriangleIndices.Clear();
             mesh.Positions.Clear();
@@ -90,7 +91,7 @@ namespace POC3D.ViewModel.Geometry
 
         public static void BuildBarMesh(MeshGeometry3D mesh, double height, double sectionWidth)
         {
-            var halfSize = sectionWidth / 2.0;
+            var halfSize = sectionWidth * ApplicationConfiguration.GraphicsObjectSizeMultiplier / 2.0;
 
             mesh.TriangleIndices.Clear();
             mesh.Positions.Clear();
@@ -210,25 +211,27 @@ namespace POC3D.ViewModel.Geometry
 
         public static void BuildForceArrow(MeshGeometry3D mesh, double length, double width)
         {
-            var halfSize = width / 2;
-            var tenthSize = width / 10;
+            var halfSize = width / 2 * ApplicationConfiguration.GraphicsObjectSizeMultiplier;
+            var tenthSize = width / 10 * ApplicationConfiguration.GraphicsObjectSizeMultiplier;
+            var arrowLength = length * ApplicationConfiguration.GraphicsObjectSizeMultiplier;
+            var arrowWidth = width * ApplicationConfiguration.GraphicsObjectSizeMultiplier;
 
             mesh.TriangleIndices.Clear();
             mesh.Positions.Clear();
 
             mesh.Positions = new Point3DCollection
             {
-                new Point3D(-halfSize, -halfSize, width),
-                new Point3D(halfSize, -halfSize, width),
-                new Point3D(halfSize, halfSize, width),
-                new Point3D(-halfSize, halfSize, width),
+                new Point3D(-halfSize, -halfSize, arrowWidth),
+                new Point3D(halfSize, -halfSize, arrowWidth),
+                new Point3D(halfSize, halfSize, arrowWidth),
+                new Point3D(-halfSize, halfSize, arrowWidth),
                 new Point3D(0, 0, 0),
 
-                new Point3D(-tenthSize, -tenthSize, width),
-                new Point3D(tenthSize, -tenthSize, width),
-                new Point3D(tenthSize, tenthSize, width),
-                new Point3D(-tenthSize, tenthSize, width),
-                new Point3D(0, 0, length)
+                new Point3D(-tenthSize, -tenthSize, arrowWidth),
+                new Point3D(tenthSize, -tenthSize, arrowWidth),
+                new Point3D(tenthSize, tenthSize, arrowWidth),
+                new Point3D(-tenthSize, tenthSize, arrowWidth),
+                new Point3D(0, 0, arrowLength)
             };
 
             mesh.TriangleIndices = new Int32Collection
@@ -261,10 +264,10 @@ namespace POC3D.ViewModel.Geometry
         {
             var mesh = new MeshGeometry3D();
 
-            var halfSize = 0.5;
-            var tenthSize = 0.05;
+            var halfSize = 0.5 * ApplicationConfiguration.GraphicsObjectSizeMultiplier;
+            var tenthSize = 0.05 * ApplicationConfiguration.GraphicsObjectSizeMultiplier;
 
-            var length = 10;
+            var length = 10 * ApplicationConfiguration.GraphicsObjectSizeMultiplier;
 
             mesh.TriangleIndices.Clear();
             mesh.Positions.Clear();

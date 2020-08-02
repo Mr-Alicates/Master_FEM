@@ -16,6 +16,9 @@
         <RowDefinition Height="Auto" />
         <RowDefinition Height="Auto" />
         <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
       </Grid.RowDefinitions>
 
       <Grid.ColumnDefinitions>
@@ -39,10 +42,24 @@
       <TextBlock Grid.Row="2" Grid.Column="1" Text="Z coordinate" />
 
       <CheckBox Grid.Row="3"
-                Grid.Column="0"
-                HorizontalAlignment="Right"
-                IsChecked="{Binding ProblemViewModel.SelectedNode.IsFixed, Mode=TwoWay}" />
-      <TextBlock Grid.Row="3" Grid.Column="1" Text="Is fixed node" />
+          Grid.Column="0"
+          HorizontalAlignment="Right"
+          IsChecked="{Binding ProblemViewModel.SelectedNode.IsXFixed, Mode=TwoWay}" />
+      <TextBlock Grid.Row="3" Grid.Column="1" Text="Is X axis fixed" />
+
+
+      <CheckBox Grid.Row="4"
+          Grid.Column="0"
+          HorizontalAlignment="Right"
+          IsChecked="{Binding ProblemViewModel.SelectedNode.IsYFixed, Mode=TwoWay}" />
+      <TextBlock Grid.Row="4" Grid.Column="1" Text="Is Y axis fixed" />
+
+
+      <CheckBox Grid.Row="5"
+          Grid.Column="0"
+          HorizontalAlignment="Right"
+          IsChecked="{Binding ProblemViewModel.SelectedNode.IsZFixed, Mode=TwoWay}" />
+      <TextBlock Grid.Row="5" Grid.Column="1" Text="Is Z axis fixed" />
 
     </Grid>
 

@@ -48,11 +48,14 @@ namespace POC3D.ViewModel.Implementation
 
             SaveProblemCommand = new Command(SaveProblem);
             LoadProblemCommand = new Command(LoadProblem);
+            NewProblemCommand = new Command(NewProblem);
         }
 
         public ICommand SaveProblemCommand { get; }
 
         public ICommand LoadProblemCommand { get; }
+
+        public ICommand NewProblemCommand { get; }
 
         public string Name => _modelProblem.Name;
 
@@ -399,6 +402,19 @@ namespace POC3D.ViewModel.Implementation
                 var message = $"There was an error loading the problem: {ex}";
                 MessageBox.Show(message, "Error");
             }            
+        }
+
+        private void NewProblem()
+        {
+            try
+            {
+                LoadProblem(new ModelProblem("new"));
+            }
+            catch (Exception ex)
+            {
+                var message = $"There was an error creating a new problem: {ex}";
+                MessageBox.Show(message, "Error");
+            }
         }
 
         private void LoadProblem(IModelProblem modelProblem)

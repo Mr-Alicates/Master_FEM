@@ -38,14 +38,23 @@
 
             <TextBox Grid.Row="2"
                Grid.Column="0"
-               Text="{Binding ConfigurationViewModel.MouseWheelSensitivity, Mode=TwoWay}" />
-            <TextBlock Grid.Row="2" Grid.Column="1" Text="Mouse wheel sensitivity" />
+               Text="{Binding ConfigurationViewModel.MousePanDelta, Mode=TwoWay}" />
+            <TextBlock Grid.Row="2" Grid.Column="1" Text="Mouse pan delta" />
 
             <TextBox Grid.Row="3"
                Grid.Column="0"
-               Text="{Binding ConfigurationViewModel.KeyboardRotationDelta, Mode=TwoWay}" />
-            <TextBlock Grid.Row="3" Grid.Column="1" Text="Keyboard rotation delta" />
+               Text="{Binding ConfigurationViewModel.MouseWheelDelta, Mode=TwoWay}" />
+            <TextBlock Grid.Row="3" Grid.Column="1" Text="Mouse wheel delta" />
 
+            <TextBox Grid.Row="4"
+               Grid.Column="0"
+               Text="{Binding ConfigurationViewModel.KeyboardRotationDelta, Mode=TwoWay}" />
+            <TextBlock Grid.Row="4" Grid.Column="1" Text="Keyboard rotation delta" />
+
+            <TextBox Grid.Row="5"
+               Grid.Column="0"
+               Text="{Binding ConfigurationViewModel.MouseWheelSensitivity, Mode=TwoWay}" />
+            <TextBlock Grid.Row="5" Grid.Column="1" Text="Mouse wheel sensitivity" />
 
         </Grid>
 

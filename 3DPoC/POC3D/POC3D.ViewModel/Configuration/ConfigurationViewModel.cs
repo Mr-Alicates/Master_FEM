@@ -35,6 +35,8 @@ namespace POC3D.ViewModel.Configuration
 
         public double MouseRotationDelta { get; set; }
         public double MouseWheelSensitivity { get; set; }
+        public double MousePanDelta { get; set; }
+        public double MouseWheelDelta { get; set; }
 
         public double KeyboardRotationDelta { get; set; }
 

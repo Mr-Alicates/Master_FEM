@@ -95,7 +95,6 @@ namespace POC3D.ViewModel.InterfaceManagement.CameraControl
         {
             if (delta.Length != 0)
             {
-                delta.Normalize();
                 Position += delta;
             }
         }

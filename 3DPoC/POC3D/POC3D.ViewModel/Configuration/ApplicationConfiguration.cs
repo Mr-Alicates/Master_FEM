@@ -26,7 +26,9 @@ namespace POC3D.ViewModel.Configuration
                 SelectedNodeBrush = Brushes.Red,
 
                 MouseRotationDelta = 0.5,
-                MouseWheelSensitivity = 20,
+                MouseWheelSensitivity = 60,
+                MousePanDelta = 0.1,
+                MouseWheelDelta = 0.20,
 
                 KeyboardRotationDelta = 0.5,
 
@@ -64,6 +66,8 @@ namespace POC3D.ViewModel.Configuration
 
         public static double MouseRotationDelta => Configuration.MouseRotationDelta;
         public static double MouseWheelSensitivity => Configuration.MouseWheelSensitivity;
+        public static double MousePanDelta => Configuration.MousePanDelta;
+        public static double MouseWheelDelta => Configuration.MouseWheelDelta;
 
         public static double KeyboardRotationDelta => Configuration.KeyboardRotationDelta;
 

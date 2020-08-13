@@ -67,12 +67,12 @@ namespace POC3D.ViewModel.InterfaceManagement.CameraControl
             if (_wheelDelta > 0)
             {
                 _wheelDelta--;
-                CameraViewModel.Move(CameraViewModel.UnaryForward);
+                CameraViewModel.Move(CameraViewModel.UnaryForward * ApplicationConfiguration.MouseWheelDelta);
             }
             else if(_wheelDelta < 0)
             {
                 _wheelDelta++;
-                CameraViewModel.Move(-CameraViewModel.UnaryForward);
+                CameraViewModel.Move(-CameraViewModel.UnaryForward * ApplicationConfiguration.MouseWheelDelta);
             }
         }
 
@@ -88,7 +88,7 @@ namespace POC3D.ViewModel.InterfaceManagement.CameraControl
 
             var movementVector = CameraViewModel.UnaryUp * vector.Y + CameraViewModel.UnaryLeft * vector.X;
 
-            CameraViewModel.Move(movementVector);
+            CameraViewModel.Move(movementVector * ApplicationConfiguration.MousePanDelta);
         }
 
         private void DoMouseRotation()

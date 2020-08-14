@@ -21,7 +21,7 @@
         <ColumnDefinition Width="*" />
       </Grid.ColumnDefinitions>
 
-        <TextBox IsReadOnly="True" Grid.Row="0" Grid.Column="0"
+        <TextBox IsReadOnly="False" Grid.Row="0" Grid.Column="0"
             Text="{Binding ProblemViewModel.SelectedMaterial.Name, Mode=TwoWay}" />
         <TextBlock Grid.Row="0" Grid.Column="1" Text="Materal Name" />
 

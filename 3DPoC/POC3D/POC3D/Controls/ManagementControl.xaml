@@ -50,11 +50,11 @@
                       <forces:ForceAddingControl DataContext="{Binding Path=.}"
                                                  Visibility="{Binding Path=InterfaceControlViewModel.ForceAddingControlVisibility}" />
 
-                      <materials:MaterialListingControl DataContext="{Binding Path=.}"
-                                            Visibility="{Binding Path=InterfaceControlViewModel.MaterialListingControlVisibility}" />
-
-                      <materials:SelectedMaterialDetailsControl DataContext="{Binding Path=.}"
+                    <materials:SelectedMaterialDetailsControl DataContext="{Binding Path=.}"
                                                         Visibility="{Binding Path=InterfaceControlViewModel.MaterialDetailsControlVisibility}" />
+                    
+                    <materials:MaterialListingControl DataContext="{Binding Path=.}"
+                                            Visibility="{Binding Path=InterfaceControlViewModel.MaterialListingControlVisibility}" />
 
                       <configuration:ConfigurationControl DataContext="{Binding Path=.}"
                                                         Visibility="{Binding Path=InterfaceControlViewModel.ConfigurationControlVisibility}" />

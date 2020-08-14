@@ -205,7 +205,16 @@ namespace POC3D.ViewModel.InterfaceManagement
 
         public ICommand AddMaterialCommand => MaterialManagementViewModel.AddMaterialCommand;
 
+        public ICommand ShowSelectedMaterialCommand => new Command(ShowMaterialDetails);
+
         public ICommand ShowMaterialListingCommand => new Command(ShowMaterialListing);
+
+        private void ShowMaterialDetails()
+        {
+            HideAllControls();
+
+            MaterialDetailsControlVisibility = Visibility.Visible;
+        }
 
         private void ShowMaterialListing()
         {
@@ -245,6 +254,10 @@ namespace POC3D.ViewModel.InterfaceManagement
             if (e.PropertyName == nameof(_problemViewModel.SelectedForce) &&
                 _problemViewModel.SelectedForce != null)
                 ShowSelectedForceDetailsCommand.Execute(null);
+
+            if (e.PropertyName == nameof(_problemViewModel.SelectedMaterial) &&
+                _problemViewModel.SelectedMaterial != null)
+                ShowSelectedMaterialCommand.Execute(null);
         }
 
         public Visibility NodeDetailsControlVisibility

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:POC3D.Controls.Matrix.Controls"
         mc:Ignorable="d"
-        Title="Local element matrix info">
+        Title="Element matrix info">
   <Grid>
     <TabControl>
       <TabItem Header="Local Matrix">

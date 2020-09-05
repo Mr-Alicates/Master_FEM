@@ -156,9 +156,6 @@
     <Compile Include="Controls\Matrix\Controls\Helpers\Vector2Control.xaml.cs">
       <DependentUpon>Vector2Control.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Matrix\Controls\LocalElementExpandedMatrixControl.xaml.cs">
-      <DependentUpon>LocalElementExpandedMatrixControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\Matrix\Controls\LocalElementMatrixControl.xaml.cs">
       <DependentUpon>LocalElementMatrixControl.xaml</DependentUpon>
     </Compile>
@@ -303,10 +300,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\Matrix\Controls\Helpers\Vector2Control.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\Matrix\Controls\LocalElementExpandedMatrixControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

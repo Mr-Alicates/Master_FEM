@@ -12,10 +12,6 @@
         <controls:LocalElementMatrixControl DataContext="{Binding Path=.}" />
       </TabItem>
 
-      <TabItem Header="Expanded Local Matrix">
-        <controls:LocalElementExpandedMatrixControl DataContext="{Binding Path=.}" />
-      </TabItem>
-
       <TabItem Header="Transform to global coordinate system">
         <controls:TransformToGlobalCoordinateSystemControl DataContext="{Binding Path=.}" />
       </TabItem>
